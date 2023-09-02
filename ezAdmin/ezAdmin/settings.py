@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dashboard.apps.DashboardConfig'
+    'dashboard.apps.DashboardConfig',
+    'user.apps.UserConfig',
+    'crispy_forms',
+    'crispy_bootstrap5'
 ]
 
 MIDDLEWARE = [
@@ -112,11 +115,27 @@ USE_I18N = True
 
 USE_TZ = True
 
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES = [
+    BASE_DIR/ "static"
+]
+
+STATIC_ROOT = (BASE_DIR/"asert")
+
+MEDIA_ROOT = (BASE_DIR/'media')
+
+MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = 'dashboard-index'
+
+LOGIN_URL = 'user-login'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

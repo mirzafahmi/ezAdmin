@@ -1,0 +1,38 @@
+<div class="card-deck">
+    <a href = "{% url 'task-delivery-order' %}">
+        <div class="card">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Delivery Orders</h5>
+              <p class="card-text">Create or view DO</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+    </a>
+    <a href = "{% url 'task-invoices' %}">
+        <div class="card" href = ''>
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Invoices</h5>
+            <p class="card-text">Create or view invoices</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+        </div>
+    </a>    
+    <a href = "{% url 'task-proforma-invoices' %}">
+        <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Proforma Invoices</h5>
+            <p class="card-text">Create or view DO</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+        </div>
+    </a> 
+  </div>

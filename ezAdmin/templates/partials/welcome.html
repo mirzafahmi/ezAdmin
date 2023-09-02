@@ -1,0 +1,21 @@
+<div class="welcome-page">
+    {% if user.is_authenticated %} 
+    <h1>
+        Welcome to ezAdmin, {{ user.username }}
+    </h1>
+
+    {% else %}
+    <h1>
+        Welcome to ezAdmin
+    </h1>
+    {% endif %}
+    <hr>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas non enim rhoncus, porttitor urna et, volutpat ex. Nunc efficitur fermentum dolor, eu fermentum metus accumsan et. Fusce neque nisl, blandit vel fermentum ut, rhoncus a enim. Integer semper dapibus magna, ac mattis odio pulvinar vel. Integer lobortis massa vitae lacus rhoncus hendrerit sit amet efficitur quam. Proin interdum placerat tellus, et fermentum lorem. Fusce vitae neque volutpat lectus pretium ornare nec ac tellus. Nulla tempor id neque in efficitur. Phasellus purus enim, convallis vehicula dignissim ac, venenatis vel urna. Aliquam tincidunt justo nec quam consectetur, eu vulputate nisl varius. Nunc eu elementum lorem. Integer quis odio vitae est tempus auctor. Quisque dignissim iaculis turpis, eget varius metus convallis ullamcorper. Nulla eu tincidunt dui.
+        Sed eget dictum odio, sit amet blandit arcu. Nullam venenatis pharetra augue, ut consectetur sem scelerisque laoreet. Aliquam tempor lacus a massa rutrum, eu lacinia dolor lobortis. Cras nec libero a velit convallis luctus et at nisi. Mauris sed nisl ac urna tempor finibus eget non lacus. Donec eleifend cursus ex, at facilisis ligula commodo id. Proin at turpis eget dui vulputate rhoncus nec sit amet nibh. Aliquam commodo lacus at neque tincidunt vestibulum. Pellentesque consectetur sed ipsum ac ultricies. Vivamus tempor facilisis lacus, quis mollis lacus interdum eu. Sed sed est a nunc dignissim rhoncus. Aenean tempor consequat sagittis.
+        Proin eget facilisis purus, in consequat enim. Sed ex tellus, egestas nec odio id, scelerisque vulputate purus. Sed placerat convallis iaculis. Aliquam mi lacus, euismod id feugiat vitae, mollis eget mi. Mauris mollis rutrum augue ac tristique. Suspendisse potenti. Donec rhoncus sagittis porttitor. In ut neque ac ante bibendum cursus in ut nibh. Sed eget posuere lectus, in pharetra tellus. Sed eu enim quis ipsum pellentesque sagittis. Phasellus convallis laoreet libero, vel dictum justo congue et. Mauris rutrum nisi eu blandit lobortis. 
+    </p>
+    <br>
+    <br>
+    <button class = 'btn btn-info'>Learn More -> </button>
+</div>
