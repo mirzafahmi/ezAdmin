@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from .models import Product
 
 
 # Create your views here.
@@ -22,3 +23,13 @@ def invoices(request):
 @login_required
 def proforma_invoices(request):
     return render(request, 'task/proforma_invoices.html')
+
+@login_required
+def product_list(request):
+    items = Product.objects.all()
+
+    context = {
+        'items': items
+    }
+
+    return render(request, 'dashboard/product.html', context)

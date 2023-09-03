@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block tittle %}Login{% endblock %}
+{% block tittle %}Profile{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -7,14 +7,14 @@
         <div class="row mt-5">
             <div class="col-md-6 offset-md-3">
                 <div class="row p-3">
-                    <div class="col-md-8">
+                    <div class="col-md-8 offset-md-2">
                         <table class="table table-borderless">
                             <thead>
                                 <span class="h4">Profile Information</span class="h4">
                                 <a class="btn btn-info btn-sm float-right" href="{% url 'user-profile-update' %}">Edit</a>
                                 <hr>
                             </thead>
-                            <div class="col-md-4">
+                            <div class="col-md-8 offset-md-2">
                                 <img class="img-thumbnail" src="{{ user.profile.image.url }}" alt="profile-image" width="400" height="500">
                             </div>
                             <tbody>
