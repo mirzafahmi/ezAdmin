@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import validate_email, DecimalValidator
+
 import sys
 sys.path.insert(0, '/ezAdmin/validator')
 from validator.posscode import posscode_validator
@@ -19,17 +20,28 @@ class BrandName(models.Model):
     brand_name = models.CharField(max_length = 20, unique = True)
     create_date = models.DateTimeField(auto_now_add = True)
 
+    def __str__(self):
+        return self.brand_name
+
 class SalesPerson(models.Model):
     name = models.CharField(max_length = 100)
     #name_abv = abv(name)
     create_date = models.DateTimeField(auto_now_add = True)
 
+    def __str__(self):
+        return self.name
+
 class Currency(models.Model):
     name = models.CharField(max_length = 20, null = True)
+
+    def __str__(self):
+        return self.name
 
 class UOM(models.Model):
     name = models.CharField(max_length = 5, unique = True)
 
+    def __str__(self):
+        return self.name
     class Meta:
         verbose_name_plural = 'UOM'
 
