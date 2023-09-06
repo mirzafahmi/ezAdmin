@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from .models import Product, Inventory
 from .forms import ProductForm
-
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -36,6 +36,17 @@ def product_list(request):
     return render(request, 'dashboard/product.html', context)
 
 @login_required
+def product_details(request, pk):
+    items = Product.objects.get(id=pk)
+    stock = Inventory
+    context = {
+        'items': items,
+        'stock': stock
+    }
+
+    return render(request, 'dashboard/product-details.html', context)
+
+@login_required
 def product_add(request):
     items = Product.objects.all()
 
@@ -43,6 +54,8 @@ def product_add(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
+            product_name = form.cleaned_data.get('name')
+            messages.success(request, f'{product_name} has been added')
             return redirect ('dashboard-product')
     else:
         form = ProductForm()

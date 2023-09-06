@@ -28,7 +28,7 @@ class SalesPerson(models.Model):
 
 class Currency(models.Model):
     name = models.CharField(max_length = 20, unique = True)
-    #currency_code = models.CharField(max_length = 3, unique = True)
+    currency_code = models.CharField(max_length = 3, unique = True)
 
     def __str__(self):
         return self.name
@@ -47,15 +47,22 @@ class Product(models.Model):
     brand = models.ForeignKey(BrandName, on_delete = models.CASCADE)
     uom = models.ForeignKey(UOM, on_delete = models.CASCADE)
     packing = models.PositiveIntegerField()
+    status = models.CharField(max_length=2, choices=(('1','Active'),('2','Inactive')), default=1)
     create_date = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}({self.item_code})'
 
 class Inventory(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    lot_number = models.CharField(max_length = 100)
+    expiry_date = models.CharField(max_length = 100)
     quantity = models.PositiveIntegerField()
-    stock_up_date = models.DateTimeField(auto_now_add = True)
+    type = models.CharField(max_length=2,choices=(('1','Stock-in'),('2','Stock-Out')), default = 1)
+    stock_in_date = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return f'{self.product.name}({self.product.item_code})'
 
 class Customer(models.Model):
     customer_id = models.CharField(max_length = 5, unique = True)
@@ -81,18 +88,24 @@ class DeliveryMethod(models.Model):
     def __str__(self):
         return self.name
 
-class Inquiry(models.Model):
+class Quotation(models.Model):
     customer_id = models.ForeignKey(Customer, on_delete = models.CASCADE)
     product_id = models.ForeignKey(Product, on_delete = models.CASCADE)
     doc_number =  f'QT-{SalesPerson.name_abv}{models.ForeignKey(SalesPerson, on_delete = models.CASCADE)}'
-    price_per_unit = models.PositiveIntegerField(validators = [DecimalValidator(99999,2)])
-    quantity = models.PositiveIntegerField()
     create_date = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
         return self.doc_number
+
+class Quotation_Item(models.Model):
+    quotation = models.ForeignKey(Quotation, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Inventory, on_delete=models.CASCADE, blank= True, null= True)
+    price = models.FloatField(default=0)
+    quantity = models.FloatField(default=0)
+
 class OrderExecution:
-    inquiry_id = models.ForeignKey(Inquiry.doc_number, on_delete = models.CASCADE)
+    quotation_id = models.ForeignKey(Quotation.doc_number, on_delete = models.CASCADE, null = True)
     do_number = f'DO-{models.PositiveIntegerField(validators = [DecimalValidator(6,0)])}'
     inv_number = f'I-{models.PositiveIntegerField(validators = [DecimalValidator(6,0)])}'
     delivery_method = models.ForeignKey(DeliveryMethod, on_delete = models.CASCADE)

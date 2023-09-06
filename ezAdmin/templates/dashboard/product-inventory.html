@@ -8,6 +8,13 @@
     </head>
     <body>
         <div class="col-md-10 offset-md-1 table-responsive">
+            {% for message in messages %}
+            {% if message %}
+            <div class = "alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endif %}
+            {% endfor %}
             <table class="table table-borderless table-striped table-hover">
                 <span class="h4">Product Inventory</span class="h4">
                 <a class="btn btn-info btn-sm float-right" href="{% url 'dashboard-product-add' %}">Add Product</a>
@@ -26,7 +33,7 @@
                 <tbody>        
                     {% for item in items %}
                     <tr>
-                        <td>{{ item.item_code }}</td>
+                        <td><a href="{% url 'dashboard-product-details' item.id%}">{{ item.item_code }}</a></td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.brand }}</td>
                         <td>{{ item.packing }}</td>

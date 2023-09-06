@@ -1,0 +1,57 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Product Details{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<head>
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        <table class="table table-borderless table-striped table-hover">
+            <span class="h4">{{items.name}}</span class="h4">
+            <a class="btn btn-info btn-sm float-right" href="">Add Inventory</a>
+            <hr>
+            <thead class = "thead-dark">
+                <tr>
+                    <th>Item Code</th>
+                    <th>Lot Number</th>
+                    <th>Expiry Date</th>
+                    <th>Stock In Date</th>
+                    <th>Stock Out Date</th>
+                    <th>Quantity</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody>        
+                <tr>
+                    <td><a href="{% url 'dashboard-product-details' items.id %}"></a>{{items.item_code}}</td>
+                    <td>{{ stock.lot_number }}</td>
+                    <td>{{ item.brand }}</td>
+                    <td>{{ item.packing }}</td>
+                    <td>{{ item.uom }}</td>
+                    <td></td>
+                    <td>
+                        <div class = "btn-group">
+                                <a href ="">
+                                    <button type="button" class="btn btn-outline-primary btn-sm mr-1">Edit</button>
+                                </a>
+                                <a  href ="">
+                                    <button type="button" class="btn btn-outline-success btn-sm ml-1">Validate</button>
+                                </a>
+                                <a  href ="">
+                                    <button type="button" class="btn btn-outline-danger btn-sm ml-1">Delete</button>
+                                </a>
+                            </ul>
+                        </div>    
+                    </td>
+                </tr>
+            </tbody>                            
+        </table>
+    </div>
+</body>
+{% endblock %}

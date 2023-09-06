@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BrandName, SalesPerson, Currency, UOM, Product, Inventory, Customer, DeliveryMethod, Inquiry, OrderExecution
+from .models import BrandName, SalesPerson, Currency, UOM, Product, Inventory, Customer, DeliveryMethod, Quotation, OrderExecution
 
 admin.site.site_header = 'ezAdmin Administrative Dashboard View'
 
@@ -12,8 +12,8 @@ class SalesAdmin(admin.ModelAdmin):
     list_filter = ['name']
 
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ['name']
-    list_filter = ['name']
+    list_display = ['name', 'currency_code']
+    list_filter = ['currency_code']
 
 class UOMAdmin(admin.ModelAdmin):
     list_display = ['name']
@@ -24,7 +24,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['brand']
 
 class InventoryAdmin(admin.ModelAdmin):
-    list_display = ('quantity', 'stock_up_date')
+    list_display = ('quantity', 'stock_in_date')
     list_filter = ['quantity']
 
 class CustomerAdmin(admin.ModelAdmin):
@@ -36,7 +36,7 @@ class DeliveryMethodAdmin(admin.ModelAdmin):
     list_filter = ['name']
 
 class InquiryAdmin(admin.ModelAdmin):
-    list_display = ['customer_id', 'product_id', 'doc_number', 'price_per_unit', 'quantity']
+    list_display = ['customer_id', 'product_id', 'doc_number']
     list_filter = ['customer_id', 'product_id',]
 
 class OrderExecutionAdmin(admin.ModelAdmin):
@@ -52,5 +52,5 @@ admin.site.register(SalesPerson, SalesAdmin)
 admin.site.register(Currency, CurrencyAdmin)
 admin.site.register(UOM, UOMAdmin)
 admin.site.register(DeliveryMethod, DeliveryMethodAdmin)
-admin.site.register(Inquiry, InquiryAdmin)
+admin.site.register(Quotation, InquiryAdmin)
 #admin.site.register(OrderExecution, OrderExecutionAdmin)
