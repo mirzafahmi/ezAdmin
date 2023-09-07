@@ -99,21 +99,51 @@ def product_delete(request, pk):
 
 @login_required
 def product_inventory_transaction(request, pk):
-    items = Product.objects.get(id=pk)
+    inventory = Product.objects.get(id=pk)
 
     if request.method == 'POST':
         form = InventoryForm(request.POST)
         #form.fields['product'].queryset = items.name
         if form.is_valid():
             form.save()
-            product_name = items.item_code
-            messages.success(request, f"{product_name}'s inventory has been added")
+            product_name = inventory.item_code
+            messages.success(request, f"{product_name}'s inventory has been updated")
             return redirect('dashboard-product-details', pk)
     else:
         form = InventoryForm()  
 
     context = {
-        'items': items,
+        'inventory': inventory,
         'form': form
     }
+    return render(request, 'dashboard/product-inventory-transaction.html', context)
+
+@login_required
+def product_inventory_update(request, pk):
+    items = Product.objects.get(id=pk)
+
+    inventory_id = Inventory.objects.get(id=pk)
+    if request.method == 'POST':
+        form = InventoryForm(request.POST, instance = inventory_id)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard-product-details', pk)
+    else:
+        form = ProductForm(instance = inventory_id)    
+    context = {
+        'form': form
+    }
+    return render(request, 'dashboard/product-inventory-update.html', context)
+
+def product_inventory_delete(request, pk):
+    items = Inventory.objects.get(id=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect ('dashboard-product-details')
+
+    context = {
+        'deleted_item': item.name
+    }
+
     return render(request, 'dashboard/product-inventory-transaction.html', context)
