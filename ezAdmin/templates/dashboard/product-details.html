@@ -5,16 +5,24 @@
 {% block content %}
 <head>
     <style>
-        th, td {
+        tr, th, td {
             text-align: center;
+            vertical-align: middle;
         }
     </style>
 </head>
 <body>
     <div class="col-md-10 offset-md-1 table-responsive">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
         <table class="table table-borderless table-striped table-hover">
-            <span class="h4">{{items.name}}</span class="h4">
-            <a class="btn btn-info btn-sm float-right" href="">Add Inventory</a>
+            <span class="h4">{{items}}({{items.item_code}})</span class="h4">
+            <a class="btn btn-info btn-sm float-right" href="{% url 'dashboard-product-inventory-add' items.id %}">Add Inventory</a>
             <hr>
             <thead class = "thead-dark">
                 <tr>
@@ -27,14 +35,15 @@
                     <th>Activity</th>
                 </tr>
             </thead>
-            <tbody>        
+            <tbody>                
                 <tr>
-                    <td><a href="{% url 'dashboard-product-details' items.id %}"></a>{{items.item_code}}</td>
+                    {% for stock in stocks %} 
+                    <td>{{ items.item_code }}</td>
                     <td>{{ stock.lot_number }}</td>
-                    <td>{{ item.brand }}</td>
-                    <td>{{ item.packing }}</td>
-                    <td>{{ item.uom }}</td>
+                    <td>{{ stock.expiry_date }}</td>
+                    <td>{{ stock.stock_in_date }}</td>
                     <td></td>
+                    <td>{{ stock.quantity }}</td>
                     <td>
                         <div class = "btn-group">
                                 <a href ="">
@@ -50,6 +59,7 @@
                         </div>    
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>                            
         </table>
     </div>

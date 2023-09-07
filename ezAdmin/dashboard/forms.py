@@ -9,4 +9,4 @@ class ProductForm(forms.ModelForm):
 class InventoryForm(forms.ModelForm):
     class Meta:
         model = Inventory
-        fields = ['quantity', 'type']
+        fields = ['product','quantity', 'lot_number', 'expiry_date', 'quantity', 'type']

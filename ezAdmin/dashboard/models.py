@@ -51,7 +51,7 @@ class Product(models.Model):
     create_date = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return f'{self.name}({self.item_code})'
+        return self.name
 
 class Inventory(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

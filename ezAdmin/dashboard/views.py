@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Product, Inventory
-from .forms import ProductForm
+from .forms import ProductForm, InventoryForm
 from django.contrib import messages
 
 # Create your views here.
@@ -37,11 +37,11 @@ def product_list(request):
 
 @login_required
 def product_details(request, pk):
-    items = Product.objects.get(id=pk)
-    stock = Inventory
+    items = Product.objects.get(id=pk) #get the id's name/models
+    stocks = Inventory.objects.filter(product__name = items) #argument refer to Product models, then double underscore needed to refer to the product's model attribute
     context = {
         'items': items,
-        'stock': stock
+        'stocks': stocks,
     }
 
     return render(request, 'dashboard/product-details.html', context)
@@ -96,3 +96,24 @@ def product_delete(request, pk):
     }
 
     return render(request, 'dashboard/product-delete.html', context)
+
+@login_required
+def product_inventory_transaction(request, pk):
+    items = Product.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = InventoryForm(request.POST)
+        #form.fields['product'].queryset = items.name
+        if form.is_valid():
+            form.save()
+            product_name = items.item_code
+            messages.success(request, f"{product_name}'s inventory has been added")
+            return redirect('dashboard-product-details', pk)
+    else:
+        form = InventoryForm()  
+
+    context = {
+        'items': items,
+        'form': form
+    }
+    return render(request, 'dashboard/product-inventory-transaction.html', context)
