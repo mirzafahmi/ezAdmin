@@ -103,8 +103,8 @@ def product_inventory_transaction(request, pk):
     inventory = Product.objects.get(id=pk)
 
     if request.method == 'POST':
-        form = InventoryForm(request.POST)
-        #form.fields['product'].queryset = items.name
+        form = InventoryForm(request.POST, initial = {'product': inventory})
+
         if form.is_valid():
             form.save()
             product_name = inventory.item_code

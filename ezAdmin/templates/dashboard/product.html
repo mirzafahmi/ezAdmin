@@ -2,5 +2,65 @@
 {% block tittle %} Product{% endblock %}
 
 {% block content %}
-{% include 'dashboard/product-inventory.html' %}
+<head>
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <table class="table table-borderless table-striped table-hover">
+            <span class="h4">Product Inventory</span class="h4">
+            <a class="btn btn-info btn-sm float-right" href="{% url 'dashboard-product-add' %}">Add Product</a>
+            <hr>
+            <thead class = "thead-dark">
+                <tr>
+                    <th>Item Code</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Packing</th>
+                    <th>UOM</th>
+                    <th>Quantity</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody>        
+                {% for item in items %}
+                <tr>
+                    <td><a href="{% url 'dashboard-product-details' item.id%}">{{ item.item_code }}</a></td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.brand }}</td>
+                    <td>{{ item.packing }}</td>
+                    <td>{{ item.uom }}</td>
+                    <td></td>
+                    <td>
+                        <div class = "btn-group">
+                                <a href ="{% url 'dashboard-product-update' item.id %}">
+                                    <button type="button" class="btn btn-outline-primary btn-sm mr-1">Edit</button>
+                                </a>
+                                <a  href ="{% url 'user-logout' %}">
+                                    <button type="button" class="btn btn-outline-success btn-sm ml-1">Validate</button>
+                                </a>
+                                <a  href ="{% url 'dashboard-product-delete' item.id %}">
+                                    <button type="button" class="btn btn-outline-danger btn-sm ml-1">Delete</button>
+                                </a>
+                            </ul>
+                        </div>    
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>                            
+        </table>
+    </div>
+</body>
+</html>
 {% endblock %}
