@@ -35,9 +35,9 @@
                     <th>Activity</th>
                 </tr>
             </thead>
-            <tbody>                
+            <tbody>     
+                {% for stock in stocks %}            
                 <tr>
-                    {% for stock in stocks %} 
                     <td>{{ items.item_code }}</td>
                     <td>{{ stock.lot_number }}</td>
                     <td>{{ stock.expiry_date }}</td>
@@ -46,13 +46,13 @@
                     <td>{{ stock.quantity }}</td>
                     <td>
                         <div class = "btn-group">
-                                <a href ="">
+                                <a href ="{% url 'dashboard-product-inventory-update' items.id stock.id %}">
                                     <button type="button" class="btn btn-outline-primary btn-sm mr-1">Edit</button>
                                 </a>
                                 <a  href ="">
                                     <button type="button" class="btn btn-outline-success btn-sm ml-1">Validate</button>
                                 </a>
-                                <a  href ="">
+                                <a  href ="{% url 'dashboard-product-inventory-delete' items.id stock.id %}">
                                     <button type="button" class="btn btn-outline-danger btn-sm ml-1">Delete</button>
                                 </a>
                             </ul>

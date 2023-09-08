@@ -35,16 +35,6 @@ def product_list(request):
 
     return render(request, 'dashboard/product.html', context)
 
-@login_required
-def product_details(request, pk):
-    items = Product.objects.get(id=pk) #get the id's name/models
-    stocks = Inventory.objects.filter(product__name = items) #argument refer to Product models, then double underscore needed to refer to the product's model attribute
-    context = {
-        'items': items,
-        'stocks': stocks,
-    }
-
-    return render(request, 'dashboard/product-details.html', context)
 
 @login_required
 def product_add(request):
@@ -98,6 +88,17 @@ def product_delete(request, pk):
     return render(request, 'dashboard/product-delete.html', context)
 
 @login_required
+def product_details(request, pk):
+    items = Product.objects.get(id=pk) #get the id's name/models
+    stocks = Inventory.objects.filter(product__id = items.id) #argument refer to Product models, then double underscore needed to refer to the product's model attribute
+    context = {
+        'items': items,
+        'stocks': stocks,
+    }
+
+    return render(request, 'dashboard/product-details.html', context)
+
+@login_required
 def product_inventory_transaction(request, pk):
     inventory = Product.objects.get(id=pk)
 
@@ -108,7 +109,7 @@ def product_inventory_transaction(request, pk):
             form.save()
             product_name = inventory.item_code
             messages.success(request, f"{product_name}'s inventory has been updated")
-            return redirect('dashboard-product-details', pk)
+            return redirect('dashboard-product-details', inventory.id) #inventory.id will act as pk in the url of the redirect link to return after register
     else:
         form = InventoryForm()  
 
@@ -119,31 +120,34 @@ def product_inventory_transaction(request, pk):
     return render(request, 'dashboard/product-inventory-transaction.html', context)
 
 @login_required
-def product_inventory_update(request, pk):
-    items = Product.objects.get(id=pk)
-
+def product_inventory_update(request, pk , fk): #pk and fk will act as variable in the url slug, the values will be determine based on the arrangement and value based on the contexts passed in the href
     inventory_id = Inventory.objects.get(id=pk)
+
     if request.method == 'POST':
         form = InventoryForm(request.POST, instance = inventory_id)
         if form.is_valid():
             form.save()
-            return redirect('dashboard-product-details', pk)
+            return redirect('dashboard-product-details', inventory_id.product_id)
     else:
-        form = ProductForm(instance = inventory_id)    
+        form = InventoryForm(instance = inventory_id)    
     context = {
-        'form': form
+        'form': form,
+        'inventory_id': inventory_id
     }
+
     return render(request, 'dashboard/product-inventory-update.html', context)
 
-def product_inventory_delete(request, pk):
-    items = Inventory.objects.get(id=pk)
+
+
+def product_inventory_delete(request, pk, fk):
+    inventory_id = Inventory.objects.get(id=pk)
 
     if request.method == 'POST':
-        item.delete()
-        return redirect ('dashboard-product-details')
+        inventory_id.delete()
+        return redirect ('dashboard-product-details', inventory_id.product_id)
 
     context = {
-        'deleted_item': item.name
+        'inventory_id': inventory_id
     }
 
-    return render(request, 'dashboard/product-inventory-transaction.html', context)
+    return render(request, 'dashboard/product-inventory-delete.html', context)
