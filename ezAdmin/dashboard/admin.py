@@ -28,7 +28,7 @@ class InventoryAdmin(admin.ModelAdmin):
     list_filter = ['quantity']
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone_number', 'email', 'sales_person', 'address', 'posscode')
+    list_display = ('phone_number', 'email', 'sales_person', 'address', 'posscode')
     list_filter = ['sales_person']
 
 class DeliveryMethodAdmin(admin.ModelAdmin):

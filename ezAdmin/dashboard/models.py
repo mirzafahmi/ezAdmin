@@ -65,18 +65,19 @@ class Inventory(models.Model):
         return f'{self.product.name}({self.product.item_code})'
 
 class Customer(models.Model):
-    customer_id = models.CharField(max_length = 5, unique = True)
-    name = models.CharField(max_length = 100)
+    #customer_id = models.CharField(max_length = 5, unique = True)
+    company_name = models.CharField(max_length = 100)
     address = models.CharField(max_length = 100)
     posscode = models.PositiveIntegerField(validators = [posscode_validator])
     email = models.CharField(max_length = 100, validators = [validate_email])
-    phone_number = models.CharField(max_length = 100)
+    pic_name = models.CharField(max_length = 100, null = True)
+    phone_number = models.PositiveIntegerField(null = True)
     sales_person = models.ForeignKey(SalesPerson, on_delete = models.CASCADE)
     currency = models.ForeignKey(Currency, on_delete = models.CASCADE, null = True)
     create_date = models.DateTimeField(auto_now_add = True, null = True)
 
     def __str__(self):
-        return self.name
+        return self.company_name
 
 class DeliveryMethod(models.Model):
     name = models.CharField(max_length = 100)

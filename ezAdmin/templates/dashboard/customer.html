@@ -1,0 +1,72 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Customer{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <table class="table table-borderless table-striped table-hover">
+            <span class="h4">Customer List</span class="h4">
+            <a class="btn btn-info btn-sm float-right" href="{% url 'dashboard-customer-add' %}">Add Customer</a>
+            <hr>
+            <thead class = "thead-dark">
+                <tr>
+                    <th>Company Name</th>
+                    <th>Address</th>
+                    <th>Posscode</th> 
+                    <th>PIC Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Currency</th>
+                    <th>Sales Person</th>
+                    <th>Date Created</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody>        
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.company_name }}</td>
+                    <td>{{ item.address }}</td>
+                    <td>{{ item.posscode}}</td>
+                    <td>{{ item.pic_name }}</td>
+                    <td>{{ item.phone_number }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.currency }}</td>
+                    <td>{{ item.sales_person }}</td>
+                    <td>{{ item.create_date }}</td>
+                    <td>
+                        <div class = "btn-group-vertical">
+                                <a href ="{% url 'dashboard-product-update' item.id %}">
+                                    <button type="button" class="btn btn-outline-primary btn-sm btn-block">Edit</button>
+                                </a>
+                                <a  href ="{% url 'user-logout' %}">
+                                    <button type="button" class="btn btn-outline-success btn-sm btn-block">Validate</button>
+                                </a>
+                                <a  href ="{% url 'dashboard-product-delete' item.id %}">
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-block">Delete</button>
+                                </a>
+                            </ul>
+                        </div>    
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>                            
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Product, Inventory
-from .forms import ProductForm, InventoryForm
+from .models import Product, Inventory, Customer
+from .forms import ProductForm, InventoryForm, CustomerForm
 from django.contrib import messages
+from django.db.models import Sum
 
 # Create your views here.
 def index(request):
@@ -28,9 +29,16 @@ def proforma_invoices(request):
 @login_required
 def product_list(request):
     items = Product.objects.all()
-
+    stocks_total = {}
+    for item in items:
+        stocks_total.update({item.id: {
+            'stock': Inventory.objects.filter(product_id = item.id).aggregate(sum = Sum('quantity'))['sum']
+        }})
+        #stocks = 
+    #stocks = Inventory.objects.filter(product_id = 12).aggregate(sum = Sum('quantity'))
     context = {
         'items': items,
+        'stocks': stocks_total
     }
 
     return render(request, 'dashboard/product.html', context)
@@ -91,9 +99,11 @@ def product_delete(request, pk):
 def product_details(request, pk):
     items = Product.objects.get(id=pk) #get the id's name/models
     stocks = Inventory.objects.filter(product__id = items.id) #argument refer to Product models, then double underscore needed to refer to the product's model attribute
+
     context = {
         'items': items,
         'stocks': stocks,
+
     }
 
     return render(request, 'dashboard/product-details.html', context)
@@ -138,7 +148,7 @@ def product_inventory_update(request, pk , fk): #pk and fk will act as variable 
     return render(request, 'dashboard/product-inventory-update.html', context)
 
 
-
+@login_required
 def product_inventory_delete(request, pk, fk):
     inventory_id = Inventory.objects.get(id=pk)
 
@@ -151,3 +161,34 @@ def product_inventory_delete(request, pk, fk):
     }
 
     return render(request, 'dashboard/product-inventory-delete.html', context)
+
+@login_required
+def customer_list(request):
+    items = Customer.objects.all()
+
+    context = {
+        'items': items,
+    }
+
+    return render(request, 'dashboard/customer.html', context)
+
+@login_required
+def customer_add(request):
+    items = Customer.objects.all()
+
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            customer_name = form.cleaned_data.get('company_name')
+            messages.success(request, f'{customer_name} has been added')
+            return redirect ('dashboard-customer')
+    else:
+        form = CustomerForm()
+
+    context = {
+        'items': items,
+        'form': form
+    }
+
+    return render(request, 'dashboard/customer-form.html', context)

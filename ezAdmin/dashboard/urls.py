@@ -15,4 +15,6 @@ urlpatterns = [
     path('product/details/<int:pk>/inventory-add', views.product_inventory_transaction, name = 'dashboard-product-inventory-add'),
     path('product/details/<int:fk>/inventory-update/<int:pk>', views.product_inventory_update, name = 'dashboard-product-inventory-update'),
     path('product/details/<int:fk>/inventory-delete/<int:pk>', views.product_inventory_delete, name = 'dashboard-product-inventory-delete'),
+    path('customer/', views.customer_list, name = 'dashboard-customer'),
+    path('customer/add', views.customer_add, name = 'dashboard-customer-add')
 ]
