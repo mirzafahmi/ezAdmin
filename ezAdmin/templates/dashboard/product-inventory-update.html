@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Edit Product Inventory{% endblock %}
+{% block tittle %} Edit Product's Inventory{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -19,7 +19,7 @@
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <a class="btn btn-light"  href = "{% url 'dashboard-product-details' inventory_id.product_id %}"> Cancel</a>
+                        <a class="btn btn-light"  href = "{% url 'dashboard-product-inventory-list' inventory_id.product_id %}"> Cancel</a>
                         <input class="btn btn-success" type="submit" value="Update">
                     </form>
                 </div>

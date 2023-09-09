@@ -1,19 +1,19 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Delete Inventory{% endblock %}
+{% block tittle %} Delete Customer{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
-                    <h3>Deleting {{inventory_id.product.item_code}}'s' Inventory?</h3>
+                    <h3>Deleting {{customer}}'s account?</h3>
                     <hr>
                     <div class="alert alert-danger">
                         <h4>Are you sure you want to delete?</h4>
                     </div>
                     <form method = "POST">
                         {% csrf_token %}
-                        <a class="btn btn-light"  href = "{% url 'dashboard-product-inventory-list' inventory_id.product_id %}"> Cancel</a>
+                        <a class="btn btn-light"  href = "{% url 'dashboard-customer' %}"> Cancel</a>
                         <input class = "btn btn-danger" type="submit" value = "Confirm">
                     </form>    
                 </div>

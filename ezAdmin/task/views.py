@@ -7,7 +7,22 @@ from .forms import CustomerQuotationForm
 from django.contrib import messages
 
 # Create your views here.
+@login_required
+def task(request):
+    return render(request, 'dashboard/task.html')
 
+@login_required
+def delivery_order(request):
+    return render(request, 'task/delivery-order.html')
+
+@login_required
+def invoices(request):
+    return render(request, 'task/invoices.html')
+
+@login_required
+def proforma_invoices(request):
+    return render(request, 'task/proforma-invoices.html')
+    
 @login_required
 def quotation(request):
     if request.method == 'POST':

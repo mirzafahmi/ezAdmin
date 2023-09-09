@@ -11,22 +11,6 @@ def index(request):
     return render(request, 'dashboard/index.html')
 
 @login_required
-def task(request):
-    return render(request, 'dashboard/task.html')
-
-@login_required
-def delivery_order(request):
-    return render(request, 'task/delivery_order.html')
-
-@login_required
-def invoices(request):
-    return render(request, 'task/invoices.html')
-
-@login_required
-def proforma_invoices(request):
-    return render(request, 'task/proforma_invoices.html')
-
-@login_required
 def product_list(request):
     items = Product.objects.all()
     stocks_total = {}
@@ -43,7 +27,6 @@ def product_list(request):
 
     return render(request, 'dashboard/product.html', context)
 
-
 @login_required
 def product_add(request):
     items = Product.objects.all()
@@ -53,7 +36,8 @@ def product_add(request):
         if form.is_valid():
             form.save()
             product_name = form.cleaned_data.get('name')
-            messages.success(request, f'{product_name} has been added')
+            item_code = form.cleaned_data.get('item_code')
+            messages.success(request, f'{product_name} ({item_code}) has been added')
             return redirect ('dashboard-product')
     else:
         form = ProductForm()
@@ -73,6 +57,7 @@ def product_update(request, pk):
         form = ProductForm(request.POST, instance = items)
         if form.is_valid():
             form.save()
+            messages.success(request, f'{items.name} ({items.item_code}) has been updated')
             return redirect('dashboard-product')
     else:
         form = ProductForm(instance = items)    
@@ -85,8 +70,10 @@ def product_update(request, pk):
 @login_required
 def product_delete(request, pk):
     item = Product.objects.get(id=pk)
+
     if request.method == 'POST':
         item.delete()
+        messages.success(request, f'{item.item_code} has been deleted')
         return redirect ('dashboard-product')
 
     context = {
@@ -96,7 +83,7 @@ def product_delete(request, pk):
     return render(request, 'dashboard/product-delete.html', context)
 
 @login_required
-def product_details(request, pk):
+def product_inventory_list(request, pk):
     items = Product.objects.get(id=pk) #get the id's name/models
     stocks = Inventory.objects.filter(product__id = items.id) #argument refer to Product models, then double underscore needed to refer to the product's model attribute
 
@@ -117,9 +104,9 @@ def product_inventory_transaction(request, pk):
 
         if form.is_valid():
             form.save()
-            product_name = inventory.item_code
-            messages.success(request, f"{product_name}'s inventory has been updated")
-            return redirect('dashboard-product-details', inventory.id) #inventory.id will act as pk in the url of the redirect link to return after register
+            product_details = inventory
+            messages.success(request, f"{product_details.name} ({product_details.item_code}) inventory has been updated")
+            return redirect('dashboard-product-inventory-list', inventory.id) #inventory.id will act as pk in the url of the redirect link to return after register
     else:
         form = InventoryForm()  
 
@@ -132,12 +119,16 @@ def product_inventory_transaction(request, pk):
 @login_required
 def product_inventory_update(request, pk , fk): #pk and fk will act as variable in the url slug, the values will be determine based on the arrangement and value based on the contexts passed in the href
     inventory_id = Inventory.objects.get(id=pk)
+    #items = Product.objects.get(id=pk)
 
     if request.method == 'POST':
         form = InventoryForm(request.POST, instance = inventory_id)
         if form.is_valid():
             form.save()
-            return redirect('dashboard-product-details', inventory_id.product_id)
+            product_name = form.cleaned_data.get('name')
+            item_code = Product.objects.get(id = inventory_id.product_id).item_code
+            messages.success(request, f'{inventory_id.product} ({item_code}) inventory has been updated')
+            return redirect('dashboard-product-inventory-list', inventory_id.product_id)
     else:
         form = InventoryForm(instance = inventory_id)    
     context = {
@@ -154,7 +145,9 @@ def product_inventory_delete(request, pk, fk):
 
     if request.method == 'POST':
         inventory_id.delete()
-        return redirect ('dashboard-product-details', inventory_id.product_id)
+        item_code = Product.objects.get(id = inventory_id.product_id).item_code
+        messages.success(request, f'{inventory_id.product} ({item_code}) inventory has been deleted')
+        return redirect ('dashboard-product-inventory-list', inventory_id.product_id)
 
     context = {
         'inventory_id': inventory_id
@@ -170,7 +163,7 @@ def customer_list(request):
         'items': items,
     }
 
-    return render(request, 'dashboard/customer.html', context)
+    return render(request, 'customer/customer.html', context)
 
 @login_required
 def customer_add(request):
@@ -191,4 +184,39 @@ def customer_add(request):
         'form': form
     }
 
-    return render(request, 'dashboard/customer-form.html', context)
+    return render(request, 'customer/customer-form.html', context)
+
+@login_required
+def customer_update(request, pk):
+    customer = Customer.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, instance = customer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"{customer.company_name}'s account has been updated")
+            return redirect('dashboard-customer')
+    else:
+        form = CustomerForm(instance = customer)    
+        
+    context = {
+        'form': form,
+        'customer': customer
+    }
+    return render(request, 'customer/customer-update.html', context)
+
+
+@login_required
+def customer_delete(request, pk):
+    customer = Customer.objects.get(id=pk)
+
+    if request.method == 'POST':
+        customer.delete()
+        messages.success(request, f'{customer.company_name} has been deleted')
+        return redirect ('dashboard-customer')
+
+    context = {
+        'customer': customer.company_name
+    }
+
+    return render(request, 'customer/customer-delete.html', context)

@@ -45,15 +45,15 @@
                     <td></td>
                     <td>{{ stock.quantity }}</td>
                     <td>
-                        <div class = "btn-group">
-                                <a href ="{% url 'dashboard-product-inventory-update' items.id stock.id %}">
-                                    <button type="button" class="btn btn-outline-primary btn-sm mr-1">Edit</button>
+                        <div class = "d-grid">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'dashboard-product-inventory-update' items.id stock.id %}">
+                                    Edit
                                 </a>
-                                <a  href ="">
-                                    <button type="button" class="btn btn-outline-success btn-sm ml-1">Validate</button>
+                                <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                    Validate
                                 </a>
-                                <a  href ="{% url 'dashboard-product-inventory-delete' items.id stock.id %}">
-                                    <button type="button" class="btn btn-outline-danger btn-sm ml-1">Delete</button>
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'dashboard-product-inventory-delete' items.id stock.id %}">
+                                    Delete
                                 </a>
                             </ul>
                         </div>    

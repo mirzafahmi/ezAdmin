@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Product{% endblock %}
+{% block tittle %} Product's List{% endblock %}
 
 {% block content %}
 <head>
@@ -36,22 +36,22 @@
             <tbody>        
                 {% for item in items %}
                 <tr>
-                    <td><a href="{% url 'dashboard-product-details' item.id%}">{{ item.item_code }}</a></td>
+                    <td><a href="{% url 'dashboard-product-inventory-list' item.id%}">{{ item.item_code }}</a></td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.brand }}</td>
                     <td>{{ item.packing }}</td>
                     <td>{{ item.uom }}</td>
                     <td></td>
                     <td>
-                        <div class = "btn-group">
-                                <a href ="{% url 'dashboard-product-update' item.id %}">
-                                    <button type="button" class="btn btn-outline-primary btn-sm mr-1">Edit</button>
+                        <div class = "d-grid">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'dashboard-product-update' item.id %}">
+                                    Edit
                                 </a>
-                                <a  href ="{% url 'user-logout' %}">
-                                    <button type="button" class="btn btn-outline-success btn-sm ml-1">Validate</button>
+                                <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                    Validate
                                 </a>
-                                <a  href ="{% url 'dashboard-product-delete' item.id %}">
-                                    <button type="button" class="btn btn-outline-danger btn-sm ml-1">Delete</button>
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'dashboard-product-delete' item.id %}">
+                                    Delete
                                 </a>
                             </ul>
                         </div>    

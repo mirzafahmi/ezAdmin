@@ -1,11 +1,15 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Customer{% endblock %}
+{% block tittle %} Customer List{% endblock %}
 
 {% block content %}
 <head>
     <style>
         th, td {
             text-align: center;
+        }
+
+        a {
+            display: block;
         }
     </style>
 </head>
@@ -49,15 +53,15 @@
                     <td>{{ item.sales_person }}</td>
                     <td>{{ item.create_date }}</td>
                     <td>
-                        <div class = "btn-group-vertical">
-                                <a href ="{% url 'dashboard-product-update' item.id %}">
-                                    <button type="button" class="btn btn-outline-primary btn-sm btn-block">Edit</button>
+                        <div class = "d-grid">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'dashboard-customer-update' item.id %}">
+                                    Edit
                                 </a>
-                                <a  href ="{% url 'user-logout' %}">
-                                    <button type="button" class="btn btn-outline-success btn-sm btn-block">Validate</button>
+                                <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                    Validate
                                 </a>
-                                <a  href ="{% url 'dashboard-product-delete' item.id %}">
-                                    <button type="button" class="btn btn-outline-danger btn-sm btn-block">Delete</button>
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'dashboard-customer-delete' item.id %}">
+                                    Delete
                                 </a>
                             </ul>
                         </div>    

@@ -1,22 +1,22 @@
 {% extends 'partials/base.html' %}
-{% block tittle %}Login{% endblock %}
+{% block tittle %} Edit Customer's Details{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-6 offset-md-3">
-                
                 <div class="border p-3">
-                    <h3>Login Here</h3>
+                    <h3>Update {{customer.company_name}}'s Details</h3>
                     <hr>
-                    <form method = "POST">
+                    <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <input class = "btn btn-primary" type ="submit" value = "Login">
+                        <a class="btn btn-light"  href = "{% url 'dashboard-customer' %}"> Cancel</a>
+                        <input class="btn btn-primary" type="submit" value="Update">
                     </form>
                 </div>
             </div>
-        </div>
+        </div>    
     </div>
-{% endblock%}
+{% endblock %}
