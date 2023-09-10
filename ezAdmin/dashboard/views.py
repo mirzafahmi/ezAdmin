@@ -18,9 +18,6 @@ def product_list(request):
         stocks_total.update({
             item.id: Inventory.objects.filter(product_id = item.id).aggregate(sum = Sum('quantity'))['sum']
         })
-        
-    #stocks = Inventory.objects.filter(product_id = 12).aggregate(sum = Sum('quantity'))
-    
     
     context = {
         'items': items,
