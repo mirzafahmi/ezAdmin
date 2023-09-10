@@ -15,11 +15,13 @@ def product_list(request):
     items = Product.objects.all()
     stocks_total = {}
     for item in items:
-        stocks_total.update({item.id: {
-            'stock': Inventory.objects.filter(product_id = item.id).aggregate(sum = Sum('quantity'))['sum']
-        }})
-        #stocks = 
+        stocks_total.update({
+            item.id: Inventory.objects.filter(product_id = item.id).aggregate(sum = Sum('quantity'))['sum']
+        })
+        
     #stocks = Inventory.objects.filter(product_id = 12).aggregate(sum = Sum('quantity'))
+    
+    
     context = {
         'items': items,
         'stocks': stocks_total
@@ -87,10 +89,12 @@ def product_inventory_list(request, pk):
     items = Product.objects.get(id=pk) #get the id's name/models
     stocks = Inventory.objects.filter(product__id = items.id) #argument refer to Product models, then double underscore needed to refer to the product's model attribute
 
+    total = stocks.filter(type = 1).aggregate(Sum('quantity'))
+
     context = {
         'items': items,
         'stocks': stocks,
-
+        'total': total
     }
 
     return render(request, 'dashboard/product-details.html', context)
