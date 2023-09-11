@@ -101,7 +101,7 @@ def product_inventory_transaction(request, pk):
     inventory = Product.objects.get(id=pk)
 
     if request.method == 'POST':
-        form = InventoryForm(request.POST, initial = {'product': inventory})
+        form = InventoryForm(request.POST, initial={'product': inventory})
 
         if form.is_valid():
             form.save()
@@ -109,11 +109,12 @@ def product_inventory_transaction(request, pk):
             messages.success(request, f"{product_details.name} ({product_details.item_code}) inventory has been updated")
             return redirect('dashboard-product-inventory-list', inventory.id) #inventory.id will act as pk in the url of the redirect link to return after register
     else:
-        form = InventoryForm()  
+        form = InventoryForm(initial={'product': inventory})  
+
 
     context = {
         'inventory': inventory,
-        'form': form
+        'form': form,
     }
     return render(request, 'dashboard/product-inventory-transaction.html', context)
 
