@@ -42,8 +42,12 @@
                     <td>{{ stock.lot_number }}</td>
                     <td>{{ stock.expiry_date }}</td>
                     <td>{{ stock.stock_in_date }}</td>
-                    <td></td>
+                    <td>{{ stock.stock_out_date }}</td>
+                    {% if stock.type == '2'%}
+                    <td>-{{ stock.quantity }}</td>
+                    {% else %}
                     <td>{{ stock.quantity }}</td>
+                    {% endif%}
                     <td>
                         <div class = "d-grid">
                                 <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'dashboard-product-inventory-update' items.id stock.id %}">
