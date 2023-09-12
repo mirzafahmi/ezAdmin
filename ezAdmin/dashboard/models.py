@@ -195,8 +195,8 @@ class DeliveryMethod(models.Model):
 class Quotation(models.Model):
     #basics fields
     customer_id = models.ForeignKey(Customer, on_delete = models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete = models.CASCADE)
-    doc_number =  models.CharField(max_length = 20, blank= True, null= True)
+    doc_number =  models.CharField(max_length = 200, blank= True, null= True)
+    sales_person = models.ForeignKey(SalesPerson, on_delete = models.CASCADE)
     
     #utility fields
     create_date = models.DateTimeField(blank = True, null = True)
@@ -209,7 +209,7 @@ class Quotation(models.Model):
         if self.create_date is None:
             self.create_date = timezone.localtime(timezone.now())
 
-        self.doc_number = f'QT/{SalesPerson.name_acronym}/{Customer.name_acronym}/{timezone.localtime(timezone.now()).strftime("%Y"/"%m"/"%d")}'
+        self.doc_number = f'QT/{self.sales_person.name_acronym}/{self.customer_id.name_acronym}/{self.create_date.strftime("%Y""%m""%d")}'
         self.update_date = timezone.localtime(timezone.now())
         super(Quotation, self).save(*args, **kwargs)
 

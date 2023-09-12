@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BrandName, SalesPerson, Currency, UOM, Product, Inventory, Customer, DeliveryMethod, Quotation, OrderExecution
+from .models import *
 
 admin.site.site_header = 'ezAdmin Administrative Dashboard View'
 
@@ -35,9 +35,13 @@ class DeliveryMethodAdmin(admin.ModelAdmin):
     list_display = ['name', 'representative', 'price_KG', 'payment_term']
     list_filter = ['name']
 
-class InquiryAdmin(admin.ModelAdmin):
-    list_display = ['customer_id', 'product_id', 'doc_number']
-    list_filter = ['customer_id', 'product_id',]
+class QuotationAdmin(admin.ModelAdmin):
+    list_display = ['customer_id', 'doc_number']
+    list_filter = ['customer_id']
+
+class QuotationItemAdmin(admin.ModelAdmin):
+    list_display = ['quotation', 'product', 'price', 'quantity']
+    list_filter = ['quotation']
 
 class OrderExecutionAdmin(admin.ModelAdmin):
     list_display = ['inquiry_id', 'doc_number', 'delivery_method', 'tracking_number', 'create_date']
@@ -52,5 +56,6 @@ admin.site.register(SalesPerson, SalesAdmin)
 admin.site.register(Currency, CurrencyAdmin)
 admin.site.register(UOM, UOMAdmin)
 admin.site.register(DeliveryMethod, DeliveryMethodAdmin)
-admin.site.register(Quotation, InquiryAdmin)
+admin.site.register(Quotation, QuotationAdmin)
+admin.site.register(Quotation_Item, QuotationItemAdmin)
 #admin.site.register(OrderExecution, OrderExecutionAdmin)
