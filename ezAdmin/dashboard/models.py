@@ -196,7 +196,6 @@ class Quotation(models.Model):
     #basics fields
     customer_id = models.ForeignKey(Customer, on_delete = models.CASCADE)
     doc_number =  models.CharField(max_length = 200, blank= True, null= True)
-    sales_person = models.ForeignKey(SalesPerson, on_delete = models.CASCADE)
     
     #utility fields
     create_date = models.DateTimeField(blank = True, null = True)
@@ -209,12 +208,13 @@ class Quotation(models.Model):
         if self.create_date is None:
             self.create_date = timezone.localtime(timezone.now())
 
-        self.doc_number = f'QT/{self.sales_person.name_acronym}/{self.customer_id.name_acronym}/{self.create_date.strftime("%Y""%m""%d")}'
+        if self.doc_number is None:
+            self.doc_number = f'QT/{self.customer_id.sales_person.name_acronym}/{self.customer_id.name_acronym}/{self.create_date.strftime("%Y""%m""%d")}'
         self.update_date = timezone.localtime(timezone.now())
         super(Quotation, self).save(*args, **kwargs)
 
 
-class Quotation_Item(models.Model):
+class QuotationItem(models.Model):
     quotation = models.ForeignKey(Quotation, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     stock = models.ForeignKey(Inventory, on_delete=models.CASCADE, blank= True, null= True)

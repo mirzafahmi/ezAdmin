@@ -1,0 +1,70 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Quotation's List{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <table class="table table-borderless table-striped table-hover">
+            <span class="h4">Quotation Lists</span class="h4">
+            <a class="btn btn-info btn-sm float-right" href="{% url 'dashboard-product-add' %}">Add Product</a>
+            <hr>
+            <thead class = "thead-dark">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Address</th>
+                    <th>PIC Name</th>
+                    <th>PIC Number</th>
+                    <th>Quotation Number</th>
+                    <th>Item List</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody>        
+                <tr>
+                    {% for quotation in quotations %}
+                    <td>{{quotation.customer_id}}</td>
+                    <td>{{quotation.customer_id.address}}</td>
+                    <td>{{quotation.customer_id.pic_name}}</td>
+                    <td>{{quotation.customer_id.phone_number}}</td>
+                    <td><a href = "{% url 'task-quotation-update' 1 %}">{{quotation.doc_number}}</a></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div class = "d-grid">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="">
+                                    Edit
+                                </a>
+                                <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                    Validate
+                                </a>
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="">
+                                    Delete
+                                </a>
+                            </ul>
+                        </div>    
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>                            
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}
