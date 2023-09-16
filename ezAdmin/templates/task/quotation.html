@@ -18,8 +18,19 @@
                 <hr>
                 <form method="POST">
                     {% csrf_token %}
-                    {{ customer_form|crispy}}
-                    {{ product_form|crispy}}
+                    {{ quotation_form|crispy}}
+                    {{ quotationitem_formset.management_form }}
+                    {% for form in quotationitem_formset %}
+                        {{ form|crispy }}
+                    {% endfor %}
+                    </div>
+                    <div id="quotationitem-pool" style="display: none;">
+                        {% for i in quotationitem_formset.empty_form %}
+                            {{ i|crispy}}
+                        {% endfor %}
+                    </div>
+                    
+                    <button type="button" id="add_quotationitem">Add Quotation Item</button>
                     <a class="btn btn-light"  href = "{% url 'dashboard-product' %}"> Cancel</a>
                     <input class="btn btn-success" type="submit" value="Create">
                 </form>
@@ -27,4 +38,18 @@
         </div>
     </div>    
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const addButton = document.getElementById("add_quotationitem");
+        const pool = document.getElementById("quotationitem-pool");
+    
+        addButton.addEventListener("click", function() {
+            const newForm = pool.firstElementChild.cloneNode(true);
+            document.getElementById("id_form-TOTAL_FORMS").value++;
+            newForm.innerHTML = newForm.innerHTML.replace(/form-(\d+)/g, `form-${document.getElementById("id_form-TOTAL_FORMS").value - 1}`);
+            pool.appendChild(newForm);
+        });
+    });
+</script>   
 {% endblock %}
