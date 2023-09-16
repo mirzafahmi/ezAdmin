@@ -14,14 +14,14 @@
                 </div>
                 {% endif %}
                 {% endfor %}
-                <h3>Edit {{customer.customer_id}}'s Quotation ({{customer}})</h3>
+                <h3>Update {{quotation.customer_id}}'s Quotation ({{quotation}})?</h3>
                 <hr>
                 <form method="POST">
                     {% csrf_token %}
-                    {{ customer_form|crispy}}
-                    {{ product_form|crispy}}
+                    {{ quotation_form|crispy}}
+                    {{ quotationitem_formset|crispy}}
                     <a class="btn btn-light"  href = "{% url 'task-quotation-list' %}"> Cancel</a>
-                    <input class="btn btn-success" type="submit" value="Create">
+                    <input class="btn btn-success" type="submit" value="Update">
                 </form>
             </div>
         </div>

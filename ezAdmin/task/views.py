@@ -34,6 +34,7 @@ def quotation(request):
             form=QuotationItemForm,
             extra=3,  # Number of empty forms to display
         )
+
     if request.method == 'POST':
         quotation_form = QuotationForm(request.POST)
         quotationitem_formset = QuotationItemFormSet(request.POST)
@@ -49,6 +50,7 @@ def quotation(request):
                     quotationitem.quotation = quotation
                     quotationitem.save()
 
+            messages.success(request, f'{quotation} has been created')
             return redirect('task-quotation-list')
     else:
         quotation_form = QuotationForm()
@@ -62,31 +64,54 @@ def quotation(request):
 
     return render(request, 'task/quotation.html', context)
 
-class QuotationUpdate(SingleObjectMixin, FormView):
-    model = Quotation
-    template = 'quotation-update.html'
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset = Quotation.object.all())
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset = Quotation.object.all())
-        return super().post(request, *args, **kwargs)
-
-    def get_form(self, form_class = None):
-        return QuotationListFormSet(**self.get_form_kwargs(), instance = self.object)
-
-    def form_valid(self, form):
-        form.save()
-        messages.add_message(
-            self.request,
-            message.SUCCESS,
-            'Changes in quotation were saved'
+@login_required
+def quotation_update(request, pk):
+    QuotationItemFormSet = inlineformset_factory(
+            Quotation,
+            QuotationItem,
+            form=QuotationItemForm,
+            extra=3,  # Number of empty forms to display
+            can_delete = True,
         )
 
-        return render(self.request, 'task/quotation-list.html')
+    quotation = Quotation.objects.get(pk = pk)
+    quotation_form = QuotationForm(instance=quotation)
+    quotationitem_formset = QuotationItemFormSet(instance=quotation)
+    
+    if request.method == 'POST':
+        quotation_form = QuotationForm(request.POST, instance=quotation)
+        quotationitem_formset = QuotationItemFormSet(request.POST, instance=quotation)
+        
+        if quotation_form.is_valid() and quotationitem_formset.is_valid():
+            quotation_form.save()
+            quotationitem_formset.save()
 
+            messages.success(request, f'{quotation} has been updated')
+            return redirect('task-quotation-list')
+
+    context ={
+        'quotation_form': quotation_form,
+        'quotationitem_formset': quotationitem_formset,
+        'quotation': quotation
+    }
+    
+    return render(request, 'task/quotation-update.html', context)
+
+@login_required
+def quotation_delete(request, pk):
+    quotation = Quotation.objects.get(pk = pk)
+
+    if request.method == 'POST':
+        quotation.delete()
+        messages.success(request, f'{quotation} has been deleted')
+
+        return redirect('task-quotation-list')
+
+    context = {
+        'quotation': quotation
+    }
+
+    return render(request, 'task/quotation-delete.html', context)
 
 @login_required
 def quotation_details(request):
@@ -98,67 +123,3 @@ def quotation_details(request):
 
     return render(request, 'task/quotation-list.html', context)
 
-
-'''@login_required
-def quotation_update(request, pk):
-    customer = Quotation.objects.get(id = pk)
-    item = QuotationItem.objects.get(quotation_id = pk)
-    print(item)
-    if request.method == 'POST':
-        product_form = QuotationListFormSet(request.POST, instance = item)
-        print(product_form)
-        if product_form.is_valid():
-            product_form.save()
-            #product_name = form.cleaned_data.get('name')
-            #messages.success(request, f'{product_name} has been added')
-            return redirect ('task-list')
-    else:
-        product_form = QuotationListFormSet(request.POST, instance = item)
-        print(product_form)
-
-    context ={
-        'customer': customer,
-        'product_form': product_form,
-    }
-
-    return render(request, 'task/quotation-update.html', context)'''
-
-
-'''@login_required
-def quotation(request):
-    if request.method == 'POST':
-        form = QuotationItemForm2(request.POST)
-        if form.is_valid():
-            quotation = Quotation.objects.create(customer_id=form.cleaned_data['customer_id'])
-            quotation_item = form.save(commit=False)
-            quotation_item.customer_id = quotation
-            quotation_item.save()
-            return redirect('task-quotation-list')
-    else:
-        form = QuotationItemForm2()
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'task/quotation.html', context)
-
-@login_required
-def quotation_item(request):
-    print(instance)
-    if request.method == 'POST':
-        form = QuotationItemForm2(request.POST)
-        if form.is_valid():
-            quotation = Quotation.objects.create(customer_id=form.cleaned_data['customer_id'])
-            quotation_item = form.save(commit=False)
-            quotation_item.customer_id = quotation
-            quotation_item.save()
-            return redirect('task-quotation-list')
-    else:
-        form = QuotationItemForm2()
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'task/quotation.html', context)'''

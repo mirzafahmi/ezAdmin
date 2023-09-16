@@ -20,7 +20,7 @@
         {% endfor %}
         <table class="table table-borderless table-striped table-hover">
             <span class="h4">Quotation Lists</span class="h4">
-            <a class="btn btn-info btn-sm float-right" href="{% url 'dashboard-product-add' %}">Add Product</a>
+            <a class="btn btn-info btn-sm float-right" href="{% url 'task-quotation' %}">Create Quotation</a>
             <hr>
             <thead class = "thead-dark">
                 <tr>
@@ -42,19 +42,19 @@
                     <td>{{quotation.customer_id.address}}</td>
                     <td>{{quotation.customer_id.pic_name}}</td>
                     <td>{{quotation.customer_id.phone_number}}</td>
-                    <td><a href = "">{{quotation.doc_number}}</a></td>
+                    <td>{{quotation.doc_number}}</td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td>
                         <div class = "d-grid">
-                                <a class="btn btn-outline-primary btn-sm btn-block" href ="">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'task-quotation-update' quotation.id %}">
                                     Edit
                                 </a>
                                 <a class="btn btn-outline-success btn-sm btn-block" href ="">
                                     Validate
                                 </a>
-                                <a class="btn btn-outline-danger btn-sm btn-block" href ="">
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'task-quotation-delete' quotation.id %}">
                                     Delete
                                 </a>
                             </ul>
