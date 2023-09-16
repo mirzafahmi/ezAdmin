@@ -84,9 +84,7 @@ def quotation_update(request, pk):
         quotationitem_formset = QuotationItemFormSet(request.POST, instance=quotation)
         
         if quotation_form.is_valid() and quotationitem_formset.is_valid():
-            quotation_revised = quotation_form.save(commit = False)
-            quotation_revised.doc_number = f'{quotation_revised.doc_number}/R1'
-            quotation_revised.save()
+            quotation_form.save()
             quotationitem_formset.save()
 
             messages.success(request, f'{quotation} has been updated')

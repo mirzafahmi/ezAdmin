@@ -46,11 +46,11 @@
                     <td>{{ item.company_name }}</td>
                     <td>{{ item.address }}</td>
                     <td>{{ item.posscode}}</td>
-                    <td>{{ item.pic_name }}</td>
+                    <td>{{ item.pic_name|upper }}</td>
                     <td>{{ item.phone_number }}</td>
                     <td>{{ item.email }}</td>
-                    <td>{{ item.currency }}</td>
-                    <td>{{ item.sales_person }}</td>
+                    <td>{{ item.currency.currency_code }}</td>
+                    <td>{{ item.sales_person|upper }}</td>
                     <td>{{ item.create_date }}</td>
                     <td>
                         <div class = "d-grid">

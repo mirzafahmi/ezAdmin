@@ -47,7 +47,7 @@
                     <td>{{quotation.customer_id.currency.currency_code}} {{value|floatformat:2}}</td>
                     {% endif %}
                     {% endfor %}
-                    <td></td>
+                    <td>{{quotation.rev_number}}</td>
                     <td>
                         <div class = "d-grid">
                                 <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'task-quotation-update' quotation.id %}">

@@ -15,11 +15,11 @@ def product_list(request):
     items = Product.objects.all()
     stocks_total = {}
     for item in items:
-        stocks_total.update({
-            item.id: 
-            int(Inventory.objects.filter(product_id = item.id).filter(type = '1').aggregate(sum = Sum('quantity'))['sum']) 
-            - (int(Inventory.objects.filter(product_id = item.id).filter(type = '2').aggregate(sum = Sum('quantity'))['sum'])
-        )})
+        stock_in = Inventory.objects.filter(product_id = item.id).filter(type = '1').aggregate(sum = Sum('quantity'))['sum'] or 0
+        stock_out = Inventory.objects.filter(product_id = item.id).filter(type = '2').aggregate(sum = Sum('quantity'))['sum'] or 0
+
+        stocks_total.update({item.id: stock_in - stock_out})
+
     
     context = {
         'items': items,

@@ -58,7 +58,6 @@ class Currency(models.Model):
     #basics fields
     name = models.CharField(max_length = 20, unique = True)
     currency_code = models.CharField(max_length = 3, unique = True)
-    rev_number = 1
 
     #utility fields
     create_date = models.DateTimeField(blank = True, null = True)
@@ -198,6 +197,7 @@ class Quotation(models.Model):
     customer_id = models.ForeignKey(Customer, on_delete = models.CASCADE)
     doc_number =  models.CharField(unique = True, max_length = 200, blank= True, null= True)
     end_number = 1
+    rev_number = 1
 
     #utility fields
     create_date = models.DateTimeField(blank = True, null = True)
