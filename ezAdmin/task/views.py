@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.forms import inlineformset_factory, formset_factory
 from django.views.generic import (TemplateView, ListView, CreateView, DetailView, DeleteView, FormView)
 from django.views.generic.detail import SingleObjectMixin
+from django.db.models import Sum, F, FloatField
 
 # Create your views here.
 @login_required
@@ -83,7 +84,9 @@ def quotation_update(request, pk):
         quotationitem_formset = QuotationItemFormSet(request.POST, instance=quotation)
         
         if quotation_form.is_valid() and quotationitem_formset.is_valid():
-            quotation_form.save()
+            quotation_revised = quotation_form.save(commit = False)
+            quotation_revised.doc_number = f'{quotation_revised.doc_number}/R1'
+            quotation_revised.save()
             quotationitem_formset.save()
 
             messages.success(request, f'{quotation} has been updated')
@@ -117,8 +120,16 @@ def quotation_delete(request, pk):
 def quotation_details(request):
     quotations = Quotation.objects.all()
 
+    quotation_total = {}
+    for quotation in quotations:
+        quotation_total.update({
+            quotation.id: 
+            QuotationItem.objects.filter(quotation_id = quotation.id).aggregate(total = Sum(F('price') * F('quantity')))['total']
+        })
+    
     context ={
-        'quotations': quotations
+        'quotations': quotations,
+        'quotation_total': quotation_total
     }
 
     return render(request, 'task/quotation-list.html', context)

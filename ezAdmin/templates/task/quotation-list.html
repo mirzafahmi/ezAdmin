@@ -29,7 +29,6 @@
                     <th>PIC Name</th>
                     <th>PIC Number</th>
                     <th>Quotation Number</th>
-                    <th>Item List</th>
                     <th>Total</th>
                     <th>Status</th>
                     <th>Activity</th>
@@ -43,8 +42,11 @@
                     <td>{{quotation.customer_id.pic_name}}</td>
                     <td>{{quotation.customer_id.phone_number}}</td>
                     <td>{{quotation.doc_number}}</td>
-                    <td></td>
-                    <td></td>
+                    {% for key, value in quotation_total.items %}
+                    {% if quotation.id == key%}
+                    <td>{{quotation.customer_id.currency.currency_code}} {{value|floatformat:2}}</td>
+                    {% endif %}
+                    {% endfor %}
                     <td></td>
                     <td>
                         <div class = "d-grid">

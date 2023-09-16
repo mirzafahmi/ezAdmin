@@ -58,6 +58,7 @@ class Currency(models.Model):
     #basics fields
     name = models.CharField(max_length = 20, unique = True)
     currency_code = models.CharField(max_length = 3, unique = True)
+    rev_number = 1
 
     #utility fields
     create_date = models.DateTimeField(blank = True, null = True)
