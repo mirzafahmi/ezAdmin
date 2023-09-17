@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+    {% load humanize %}
     <div class="col-md-10 offset-md-1 table-responsive">
         {% for message in messages %}
         {% if message %}
@@ -46,7 +47,7 @@
                     {% if stock.type == '2'%}
                     <td>-{{ stock.quantity }}</td>
                     {% else %}
-                    <td>{{ stock.quantity }}</td>
+                    <td>{{ stock.quantity|floatformat }}</td>
                     {% endif%}
                     <td>
                         <div class = "d-grid">

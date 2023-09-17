@@ -1,0 +1,10 @@
+{% load crispy_forms_tags %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy}}
+    {{ form.quotation_details|crispy }}
+    {{ form.quotation_item_details|crispy }}
+    <a class="btn btn-light"  href = "{% url 'task-list' %}"> Cancel</a>
+    <input class="btn btn-success" type="submit" value="Create">
+</form>

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import validate_email, DecimalValidator
 from django.utils import timezone
+from django.db.models import Q
 
 import sys
 sys.path.insert(0, '/ezAdmin/validator')
@@ -228,10 +229,10 @@ class QuotationItem(models.Model):
     price = models.FloatField(default=0)
     quantity = models.FloatField(default=0)
 
-class OrderExecution:
+class OrderExecution(models.Model):
     quotation_id = models.ForeignKey(Quotation, on_delete = models.CASCADE, null = True)
-    do_number = f'DO-{models.PositiveIntegerField(validators = [DecimalValidator(6,0)])}'
-    inv_number = f'I-{models.PositiveIntegerField(validators = [DecimalValidator(6,0)])}'
+    do_number = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    inv_number = models.CharField(max_length=20, unique=True, blank=True, null=True)
     delivery_method = models.ForeignKey(DeliveryMethod, on_delete = models.CASCADE)
     tracking_number = models.CharField(max_length = 100)
     
@@ -244,4 +245,34 @@ class OrderExecution:
             self.create_date = timezone.localtime(timezone.now())
 
         self.update_date = timezone.localtime(timezone.now())
+
+        if not self.do_number:
+            self.do_number = self.generate_unique_number('DO-')
+        if not self.inv_number:
+            self.inv_number = self.generate_unique_number('I-')
+
         super(OrderExecution, self).save(*args, **kwargs)
+
+
+
+    def generate_unique_number(self, prefix):
+        # Get the latest OrderExecution instances with the same prefix
+        latest_numbers = OrderExecution.objects.filter(
+            Q(do_number__startswith=prefix) | Q(inv_number__startswith=prefix)
+        ).values_list('do_number', 'inv_number')
+
+        # Extract the numeric part and find the maximum
+        max_number = 0
+        for do, inv in latest_numbers:
+            for number_field in [do, inv]:
+                if number_field and number_field.startswith(prefix):
+                    numeric_part = number_field[len(prefix):]
+                    try:
+                        numeric_value = int(numeric_part)
+                        max_number = max(max_number, numeric_value)
+                    except ValueError:
+                        print('no suffiex interger')
+
+        # Increment the maximum number and return the new number
+        new_number = f'{prefix}{max_number + 1:06d}'
+        return new_number

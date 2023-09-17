@@ -11,6 +11,7 @@
 </head>
 <body>
     <div class="col-md-10 offset-md-1 table-responsive">
+        {% load humanize %}
         {% for message in messages %}
         {% if message %}
         <div class = "alert alert-{{ message.tags }}">
@@ -47,7 +48,7 @@
                     <td>{{quotation.customer_id.currency.currency_code}} {{value|floatformat:2}}</td>
                     {% endif %}
                     {% endfor %}
-                    <td>{{quotation.rev_number}}</td>
+                    <td></td>
                     <td>
                         <div class = "d-grid">
                                 <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'task-quotation-update' quotation.id %}">

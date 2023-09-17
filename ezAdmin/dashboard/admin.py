@@ -44,7 +44,7 @@ class QuotationItemAdmin(admin.ModelAdmin):
     list_filter = ['quotation']
 
 class OrderExecutionAdmin(admin.ModelAdmin):
-    list_display = ['inquiry_id', 'doc_number', 'delivery_method', 'tracking_number', 'create_date']
+    list_display = ['quotation_id', 'do_number','inv_number', 'delivery_method', 'tracking_number', 'create_date']
     list_filter = ['create_date', 'delivery_method',]
 
 # Register your models here.
@@ -58,4 +58,4 @@ admin.site.register(UOM, UOMAdmin)
 admin.site.register(DeliveryMethod, DeliveryMethodAdmin)
 admin.site.register(Quotation, QuotationAdmin)
 admin.site.register(QuotationItem, QuotationItemAdmin)
-#admin.site.register(OrderExecution, OrderExecutionAdmin)
+admin.site.register(OrderExecution, OrderExecutionAdmin)

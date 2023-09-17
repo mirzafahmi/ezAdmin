@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'task.apps.TaskConfig',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

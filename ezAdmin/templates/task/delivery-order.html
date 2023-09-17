@@ -1,18 +1,31 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Delivery Order {% endblock %}
+{% block tittle %} Quotation{% endblock %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<body>
-  <div class="col-md-10 offset-md-1 table-responsive">
-    <div class="jumbotron">
-      <h1 class="display-4">Delivery Orders</h1>
-      <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-      <hr class="my-4">
-      <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-      <a class="btn btn-primary btn-lg" href="#" role="button">Coming Soon</a>
-    </div>
-  </div>
-</body>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="border p-3">
+                {% for message in messages %}
+                {% if message %}
+                <div class = "alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <h3>Create DO and Invoice</h3>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy}}
+                    {{ form.quotation_details|crispy }}
+                    {{ form.quotation_item_details|crispy }}
+                    <a class="btn btn-light"  href = "{% url 'task-list' %}"> Cancel</a>
+                    <input class="btn btn-success" type="submit" value="Create">
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
 {% endblock %}
-
-

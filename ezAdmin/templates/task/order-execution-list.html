@@ -1,0 +1,69 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Quotation's List{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        {% load humanize %}
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <table class="table table-borderless table-striped table-hover">
+            <span class="h4">Quotation Lists</span class="h4">
+            <a class="btn btn-info btn-sm float-right" href="{% url 'task-quotation' %}">Create Quotation</a>
+            <hr>
+            <thead class = "thead-dark">
+                <tr>
+                    <th>Document Number</th>
+                    <th>Delivery Method</th>
+                    <th>Tracking Number</th>
+                    <th>Customer Name</th>
+                    <th>Quotation ID</th>
+                    <th width = '200'>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>        
+                <tr>
+                    {% for order_execution in order_executions %}
+                    <td>{{ order_execution.do_number }} <br> & <br>{{ order_execution.inv_number }}</td>
+                    <td>{{ order_execution.delivery_method }}</td>
+                    <td>{{ order_execution.tracking_number }}</td>
+                    <td>{{ order_execution.quotation_id.customer_id }}</td>
+                    <td>{{ order_execution.quotation_id.id }}</td>
+                    <td width = '200'>
+                        {% for quotation_item in order_execution.quotation_id.quotationitem_set.all %}
+                        {{ quotation_item.product.item_code }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for quotation_item in order_execution.quotation_id.quotationitem_set.all %}
+                        {{ quotation_item.price|floatformat:2 }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for quotation_item in order_execution.quotation_id.quotationitem_set.all %}
+                        {{ quotation_item.quantity }}<br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>                            
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

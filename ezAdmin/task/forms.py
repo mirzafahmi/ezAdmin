@@ -29,31 +29,44 @@ class QuotationItemForm(forms.ModelForm):
             model = QuotationItem
             fields = ['product', 'quantity', 'price']
 
-class QuotationItemForm2(forms.ModelForm):
+class OrderExecutionForm(forms.ModelForm):
     class Meta:
-        model = QuotationItem
-        fields = ['product', 'quantity', 'price']
+        model = OrderExecution
+        fields = ['quotation_id', 'do_number', 'inv_number', 'delivery_method', 'tracking_number']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
-        self.fields['customer_id'] = forms.ModelChoiceField(
-            queryset = Customer.objects.all(),
+
+        print(f"Form instance: {self.instance}")
+        print(f"quotation_id: {self.instance.quotation_id}")
+        print(f"Type of quotation_id: {type(self.instance.quotation_id)}")
+
+        # Add fields for Quotation details
+        self.fields['quotation_details'] = forms.CharField(
+            widget=forms.Textarea(attrs={'readonly': 'readonly'}),
             required=False,
-            empty_label='Select an existing csutomer',
-            widget=forms.Select(attrs={'class': 'form-control'}),
         )
 
-    def clean(self):
-        cleaned_data = super().clean()
-        customer_name = cleaned_data.get('customer_id')
-        
-        try:
-            customer = Quotation.objects.get(customer_id = customer_name)
-        except Quotation.DoesNotExist:
-            customer = Quotation.objects.create(customer_id = customer_name)
+        # Add fields for QuotationItem details
+        self.fields['quotation_item_details'] = forms.CharField(
+            widget=forms.Textarea(attrs={'readonly': 'readonly'}),
+            required=False,
+        )
 
-        # Update the author field in the form
-        self.instance.quotation = customer
+        if self.instance.quotation_id:
+            # Retrieve and populate Quotation details
+            quotation = self.instance.quotation_id
 
-        return cleaned_data
+            quotation_details = f"Quotation Details: {quotation.doc_number}"  # Replace with actual details
+            self.initial['quotation_details'] = quotation_details
+
+            # Retrieve and populate QuotationItem details
+            quotation_items = QuotationItem.objects.filter(quotation=quotation.id)
+            quotation_item_details = "\n".join([f"Item: {item.name}, Price: {item.price}" for item in quotation_items])
+            self.initial['quotation_item_details'] = quotation_item_details
+
+            print(quotation_details)
+            print('1')
+            print(quotation_item_details)
+            print('2')
+            print(self.fields['quotation_item_details'])

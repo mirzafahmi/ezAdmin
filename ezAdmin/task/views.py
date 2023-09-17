@@ -132,3 +132,42 @@ def quotation_details(request):
 
     return render(request, 'task/quotation-list.html', context)
 
+def order_execution_list(request):
+    order_executions = OrderExecution.objects.all().select_related('quotation_id__customer_id')
+
+    context = {
+        'order_executions': order_executions
+        }
+
+    return render(request, 'task/order-execution-list.html', context)
+
+
+def order_execution_add(request):
+    if request.method == 'POST':
+        form = OrderExecutionForm(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            print(form.data)
+            order_execution = form.save()
+            # Redirect or perform other actions
+            return redirect('task-list')
+    else:
+        form = OrderExecutionForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'task/delivery-order.html', context)
+
+
+def order_execution_details(request, pk):
+    order = OrderExecution.objects.get(pk=pk)
+
+    quotation = Quotation.objects.get(quotation_id = order.quotation_id)
+
+    quotation_item = QuotationItem.object.filter(id = quotation.id)
+
+    return render(request, 'task/delivery-order.html', context)
+
+
