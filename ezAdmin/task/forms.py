@@ -32,41 +32,6 @@ class QuotationItemForm(forms.ModelForm):
 class OrderExecutionForm(forms.ModelForm):
     class Meta:
         model = OrderExecution
-        fields = ['quotation_id', 'do_number', 'inv_number', 'delivery_method', 'tracking_number']
+        fields = ['quotation_id', 'delivery_method', 'tracking_number']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        print(f"Form instance: {self.instance}")
-        print(f"quotation_id: {self.instance.quotation_id}")
-        print(f"Type of quotation_id: {type(self.instance.quotation_id)}")
-
-        # Add fields for Quotation details
-        self.fields['quotation_details'] = forms.CharField(
-            widget=forms.Textarea(attrs={'readonly': 'readonly'}),
-            required=False,
-        )
-
-        # Add fields for QuotationItem details
-        self.fields['quotation_item_details'] = forms.CharField(
-            widget=forms.Textarea(attrs={'readonly': 'readonly'}),
-            required=False,
-        )
-
-        if self.instance.quotation_id:
-            # Retrieve and populate Quotation details
-            quotation = self.instance.quotation_id
-
-            quotation_details = f"Quotation Details: {quotation.doc_number}"  # Replace with actual details
-            self.initial['quotation_details'] = quotation_details
-
-            # Retrieve and populate QuotationItem details
-            quotation_items = QuotationItem.objects.filter(quotation=quotation.id)
-            quotation_item_details = "\n".join([f"Item: {item.name}, Price: {item.price}" for item in quotation_items])
-            self.initial['quotation_item_details'] = quotation_item_details
-
-            print(quotation_details)
-            print('1')
-            print(quotation_item_details)
-            print('2')
-            print(self.fields['quotation_item_details'])
+        

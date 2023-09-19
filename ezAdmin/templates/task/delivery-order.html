@@ -16,16 +16,63 @@
                 {% endfor %}
                 <h3>Create DO and Invoice</h3>
                 <hr>
-                <form method="POST">
+                <form method="post" id="order-execution-form">
                     {% csrf_token %}
                     {{ form|crispy}}
-                    {{ form.quotation_details|crispy }}
-                    {{ form.quotation_item_details|crispy }}
-                    <a class="btn btn-light"  href = "{% url 'task-list' %}"> Cancel</a>
-                    <input class="btn btn-success" type="submit" value="Create">
                 </form>
+                
+                <div>
+                    <p><strong>Customer:</strong> <span id="quotation_customer"></span></p>
+                    <p><strong>Doc Number:</strong> <span id="quotation_doc_number"></span></p>
+                    <p><strong>Quotation Items:</strong></p>
+                    <ul id="quotation_items">
+                        <!-- Quotation items will be displayed here -->
+                    </ul>
+                </div>
             </div>
         </div>
     </div>    
 </div>
 {% endblock %}
+
+{% block javascript%}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_quotation_id').on('change', function() {
+                var quotationId = $(this).val();  // Get the selected quotation_id
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url 'task-ajax-order-execution' %}',  // Replace with the actual URL
+                    data: {'quotation_id': quotationId},
+                    success: function(data) {
+                        if ('error' in data) {
+                            // Handle the error
+                            console.error('Error:', data.error);
+                        } else {
+                            // Update the DOM with the received data
+                            $('#quotation_customer').text(data.quotation.customer_id);
+                            $('#quotation_doc_number').text(data.quotation.doc_number);
+                            
+                            // Clear previous quotation items if needed
+                            $('#quotation_items').empty();
+
+                            // Loop through quotation items and append to the DOM
+                            for (var i = 0; i < data.quotation_items.length; i++) {
+                                var item = data.quotation_items[i];
+                                var itemHtml = '<li>Product: ' + item.product + ', Price: ' + item.price + ', Quantity: ' + item.quantity + '</li>';
+                                $('#quotation_items').append(itemHtml);
+                            }
+                        }
+                    },
+                    error: function() {
+                        console.error('AJAX request failed');
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock %}
+

@@ -1,41 +1,50 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Order Executions</h1>
-  <ul>
-    {% for order_execution in order_executions %}
-      <li>
-        <strong>DO Number:</strong> {{ order_execution.do_number }}<br>
-        <strong>INV Number:</strong> {{ order_execution.inv_number }}<br>
-        <strong>Delivery Method:</strong> {{ order_execution.delivery_method }}<br>
-        <strong>Tracking Number:</strong> {{ order_execution.tracking_number }}<br>
+  <button id="update-button">Update Details</button>
+  <div>DO Number: <span id="do-number"></span></div>
+  <div>Invoice Number: <span id="inv-number"></span></div>
+  <div>Delivery Method: <span id="delivery-method"></span></div>
+  <div>Tracking Number: <span id="tracking-number"></span></div>
+  <div>Quotation Details:</div>
+  <div>Doc Number: <span id="doc-number"></span></div>
+  <div>Customer Name: <span id="customer-name"></span></div>
+  <div>Quotation Items:</div>
+  <ul id="quotation-items"></ul>
+  
+{% endblock %}
 
-        <!-- Display related Quotation and QuotationItem information -->
-        <strong>Customer Name:</strong> {{ order_execution.quotation_id.customer_id.name }}<br>
-        <strong>Quotation ID:</strong> {{ order_execution.quotation_id.id }}<br>
+{% block javascript %}
 
-        <!-- Loop through related QuotationItems -->
-        <ul>
-          {% with total_price=0 %}
-          {% for quotation_item in order_execution.quotation_id.quotationitem_set.all %}
-            <li>
-              <strong>Product:</strong> {{ quotation_item.product.name }}<br>
-              <strong>Price:</strong> {{ quotation_item.price }}<br>
-              <strong>Quantity:</strong> {{ quotation_item.quantity }}<br>
-              <strong>Subtotal:</strong> {{ quotation_item.price|floatformat:"2" }} x {{ quotation_item.quantity }} = {{ quotation_item.price|floatformat:"2"|floatmultiply:quotation_item.quantity|floatformat:"2" }}<br>
-              {% with subtotal=quotation_item.price|floatmultiply:quotation_item.quantity %}
-                {% with total_price=total_price|floatadd:subtotal %}
-                {% endwith %}
-              {% endwith %}
-            </li>
-          {% endfor %}
-          <li><strong>Total Price:</strong> {{ total_price|floatformat:"2" }}</li>
-          {% endwith %}
-        </ul>
+$(document).ready(function () {
+  $('#update-button').on('click', function () {
+      var orderExecutionId = /* Get the order execution ID from somewhere */;
+      $.ajax({
+          type: 'GET',
+          url: '/task/test/',
+          data: {
+              order_execution_id: orderExecutionId,
+          },
+          success: function (data) {
+              // Update HTML elements with data received from the server
+              $('#do-number').text(data.order_execution_details.do_number);
+              $('#inv-number').text(data.order_execution_details.inv_number);
+              $('#delivery-method').text(data.order_execution_details.delivery_method);
+              $('#tracking-number').text(data.order_execution_details.tracking_number);
 
-        <!-- Add more fields as needed -->
-      </li>
-    {% endfor %}
-  </ul>
-  <a class="btn btn-light" href="{% url 'task-list' %}">Back to Task List</a>
+              // Update quotation details
+              $('#doc-number').text(data.quotation_details.doc_number);
+              $('#customer-name').text(data.quotation_details.customer_name);
+
+              // Update quotation item details
+              var quotationItemsHtml = '';
+              $.each(data.quotation_item_details, function (index, item) {
+                  quotationItemsHtml += '<li>' + item.product_name + ': ' + item.price + ', Quantity: ' + item.quantity + '</li>';
+              });
+              $('#quotation-items').html(quotationItemsHtml);
+          },
+      });
+  });
+});
+
 {% endblock %}

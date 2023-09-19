@@ -9,6 +9,7 @@ from django.forms import inlineformset_factory, formset_factory
 from django.views.generic import (TemplateView, ListView, CreateView, DetailView, DeleteView, FormView)
 from django.views.generic.detail import SingleObjectMixin
 from django.db.models import Sum, F, FloatField
+from django.http import JsonResponse
 
 # Create your views here.
 @login_required
@@ -146,19 +147,47 @@ def order_execution_add(request):
     if request.method == 'POST':
         form = OrderExecutionForm(request.POST)
         if form.is_valid():
-            # Save the form data to the database
-            print(form.data)
-            order_execution = form.save()
-            # Redirect or perform other actions
-            return redirect('task-list')
+            form.save()
+            selected_quotation = form.cleaned_data.get('quotation')
+
+        return redirect('task-list')
+    
     else:
         form = OrderExecutionForm()
-
+    
     context = {
         'form': form
     }
-
+                
     return render(request, 'task/delivery-order.html', context)
+
+def ajax_order_execution_add(request):
+    quotation_id = request.GET.get('quotation_id')
+    try:
+        quotation = Quotation.objects.get(id=quotation_id)
+        quotation_items = QuotationItem.objects.filter(quotation=quotation)
+        # Prepare the data you want to send back as JSON
+        data = {
+            'quotation': {
+                'customer_id': quotation.customer_id.company_name,
+                'doc_number': quotation.doc_number,
+                # Add more fields as needed
+            },
+            'quotation_items': [
+                {
+                    'product': item.product.name,
+                    'price': item.price,
+                    'quantity': item.quantity,
+                    # Add more fields as needed
+                }
+                for item in quotation_items
+            ],
+        }
+        return JsonResponse(data)
+
+    except Quotation.DoesNotExist:
+        return JsonResponse({'error': 'Quotation not found'})
+
 
 
 def order_execution_details(request, pk):
@@ -171,3 +200,37 @@ def order_execution_details(request, pk):
     return render(request, 'task/delivery-order.html', context)
 
 
+from django.http import JsonResponse
+
+def ajax_order_execution_details(request):
+    order_execution_id = request.GET.get('order_execution_id')
+    try:
+        order_execution = OrderExecution.objects.get(id=order_execution_id)
+        quotation = order_execution.quotation_id
+        quotation_items = QuotationItem.objects.filter(quotation=quotation)
+        # Create a dictionary with the required details
+        data = {
+            'order_execution_details': {
+                'do_number': order_execution.do_number,
+                'inv_number': order_execution.inv_number,
+                'delivery_method': order_execution.delivery_method.name,
+                'tracking_number': order_execution.tracking_number,
+            },
+            'quotation_details': {
+                'doc_number': quotation.doc_number,
+                'customer_name': quotation.customer_id.name,
+                # Add more fields as needed
+            },
+            'quotation_item_details': [],
+        }
+        # Populate quotation item details
+        for item in quotation_items:
+            data['quotation_item_details'].append({
+                'product_name': item.product.name,
+                'price': item.price,
+                'quantity': item.quantity,
+                # Add more fields as needed
+            })
+        return JsonResponse(data)
+    except OrderExecution.DoesNotExist:
+        return JsonResponse({'error': 'Order Execution not found'}, status=404)
