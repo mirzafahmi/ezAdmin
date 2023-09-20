@@ -1,50 +1,35 @@
-{% extends 'base.html' %}
+{% extends 'partials/base.html' %}
+{% block tittle %} Quotation{% endblock %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-  <button id="update-button">Update Details</button>
-  <div>DO Number: <span id="do-number"></span></div>
-  <div>Invoice Number: <span id="inv-number"></span></div>
-  <div>Delivery Method: <span id="delivery-method"></span></div>
-  <div>Tracking Number: <span id="tracking-number"></span></div>
-  <div>Quotation Details:</div>
-  <div>Doc Number: <span id="doc-number"></span></div>
-  <div>Customer Name: <span id="customer-name"></span></div>
-  <div>Quotation Items:</div>
-  <ul id="quotation-items"></ul>
-  
-{% endblock %}
-
-{% block javascript %}
-
-$(document).ready(function () {
-  $('#update-button').on('click', function () {
-      var orderExecutionId = /* Get the order execution ID from somewhere */;
-      $.ajax({
-          type: 'GET',
-          url: '/task/test/',
-          data: {
-              order_execution_id: orderExecutionId,
-          },
-          success: function (data) {
-              // Update HTML elements with data received from the server
-              $('#do-number').text(data.order_execution_details.do_number);
-              $('#inv-number').text(data.order_execution_details.inv_number);
-              $('#delivery-method').text(data.order_execution_details.delivery_method);
-              $('#tracking-number').text(data.order_execution_details.tracking_number);
-
-              // Update quotation details
-              $('#doc-number').text(data.quotation_details.doc_number);
-              $('#customer-name').text(data.quotation_details.customer_name);
-
-              // Update quotation item details
-              var quotationItemsHtml = '';
-              $.each(data.quotation_item_details, function (index, item) {
-                  quotationItemsHtml += '<li>' + item.product_name + ': ' + item.price + ', Quantity: ' + item.quantity + '</li>';
-              });
-              $('#quotation-items').html(quotationItemsHtml);
-          },
-      });
-  });
-});
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="border p-3">
+                {% for message in messages %}
+                {% if message %}
+                <div class = "alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <h3>Create Quotation</h3>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ quotation_form|crispy}}
+                    {{ quotationitem_formset.management_form }}
+                    {% for form in quotationitem_formset %}
+                        {{ form|crispy }}
+                    {% endfor %}
+                    
+                    <a class="btn btn-light"  href = "{% url 'dashboard-product' %}"> Cancel</a>
+                    <input class="btn btn-success" type="submit" value="Create">
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
 
 {% endblock %}

@@ -67,6 +67,44 @@ def quotation(request):
     return render(request, 'task/quotation.html', context)
 
 @login_required
+def test(request):
+    QuotationItemFormSet = inlineformset_factory(
+            Quotation,
+            QuotationItem,
+            form=QuotationItemForm,
+            extra=3,  # Number of empty forms to display
+        )
+
+    if request.method == 'POST':
+        quotation_form = QuotationForm(request.POST)
+        quotationitem_formset = QuotationItemFormSet(request.POST)
+
+        if quotation_form.is_valid() and quotationitem_formset.is_valid():
+            # Save the Quotation form first
+            quotation = quotation_form.save()
+
+            # Iterate through the QuotationItem forms and associate them with the saved Quotation
+            for quotationitem_form in quotationitem_formset:
+                if quotationitem_form.cleaned_data:
+                    quotationitem = quotationitem_form.save(commit=False)
+                    quotationitem.quotation = quotation
+                    quotationitem.save()
+
+            messages.success(request, f'{quotation} has been created')
+            return redirect('task-quotation-list')
+    else:
+        quotation_form = QuotationForm()
+        quotationitem_formset = QuotationItemFormSet(queryset=QuotationItem.objects.none())
+
+
+    context ={
+        'quotation_form': quotation_form,
+        'quotationitem_formset': quotationitem_formset,
+    }
+
+    return render(request, 'task/test.html', context)
+
+@login_required
 def quotation_update(request, pk):
     QuotationItemFormSet = inlineformset_factory(
             Quotation,
@@ -171,6 +209,9 @@ def ajax_order_execution_add(request):
             'quotation': {
                 'customer_id': quotation.customer_id.company_name,
                 'doc_number': quotation.doc_number,
+                'company_address': quotation.customer_id.address,
+                'pic_name': quotation.customer_id.pic_name,
+                'pic_phone_number': quotation.customer_id.phone_number,
                 # Add more fields as needed
             },
             'quotation_items': [
@@ -202,35 +243,3 @@ def order_execution_details(request, pk):
 
 from django.http import JsonResponse
 
-def ajax_order_execution_details(request):
-    order_execution_id = request.GET.get('order_execution_id')
-    try:
-        order_execution = OrderExecution.objects.get(id=order_execution_id)
-        quotation = order_execution.quotation_id
-        quotation_items = QuotationItem.objects.filter(quotation=quotation)
-        # Create a dictionary with the required details
-        data = {
-            'order_execution_details': {
-                'do_number': order_execution.do_number,
-                'inv_number': order_execution.inv_number,
-                'delivery_method': order_execution.delivery_method.name,
-                'tracking_number': order_execution.tracking_number,
-            },
-            'quotation_details': {
-                'doc_number': quotation.doc_number,
-                'customer_name': quotation.customer_id.name,
-                # Add more fields as needed
-            },
-            'quotation_item_details': [],
-        }
-        # Populate quotation item details
-        for item in quotation_items:
-            data['quotation_item_details'].append({
-                'product_name': item.product.name,
-                'price': item.price,
-                'quantity': item.quantity,
-                # Add more fields as needed
-            })
-        return JsonResponse(data)
-    except OrderExecution.DoesNotExist:
-        return JsonResponse({'error': 'Order Execution not found'}, status=404)

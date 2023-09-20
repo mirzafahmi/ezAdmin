@@ -19,16 +19,33 @@
                 <form method="post" id="order-execution-form">
                     {% csrf_token %}
                     {{ form|crispy}}
+
+                    <div>
+                        <p><strong>Customer:</strong> <span id="quotation_customer"></span></p>
+                        <p><strong>Adress:</strong> <span id="quotation_customer_address"></span></p>
+                        <p><strong>PIC Name:</strong> <span id="quotation_pic_name"></span></p>
+                        <p><strong>PIC Phone Number:</strong> <span id="quotation_pic_phone_number"></span></p>
+                        <p><strong>Doc Number:</strong> <span id="quotation_doc_number"></span></p>
+                        <p><strong>Quotation Items:</strong></p>
+                        <table class="table table-borderless table-striped table-hover">
+                            <thead class = "thead-dark">
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quotation_items">        
+                                <!-- list of item in the quotation -->
+                            </tbody>                            
+                        </table>
+                    </div>
+
+                    <div class="text-center mt-4" id="submit-button-container">
+                        <input class="btn btn-primary" type="submit" value="Proceed">
+                    </div>
                 </form>
-                
-                <div>
-                    <p><strong>Customer:</strong> <span id="quotation_customer"></span></p>
-                    <p><strong>Doc Number:</strong> <span id="quotation_doc_number"></span></p>
-                    <p><strong>Quotation Items:</strong></p>
-                    <ul id="quotation_items">
-                        <!-- Quotation items will be displayed here -->
-                    </ul>
-                </div>
             </div>
         </div>
     </div>    
@@ -40,6 +57,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+
+            $('#submit-button-container').hide();
+
             $('#id_quotation_id').on('change', function() {
                 var quotationId = $(this).val();  // Get the selected quotation_id
                 $.ajax({
@@ -53,17 +73,40 @@
                         } else {
                             // Update the DOM with the received data
                             $('#quotation_customer').text(data.quotation.customer_id);
+                            $('#quotation_customer_address').text(data.quotation.company_address);
+                            $('#quotation_pic_name').text(data.quotation.pic_name);
+                            $('#quotation_pic_phone_number').text(data.quotation.pic_phone_number);
+                            console.log(data)
                             $('#quotation_doc_number').text(data.quotation.doc_number);
                             
                             // Clear previous quotation items if needed
                             $('#quotation_items').empty();
-
+                            
+                            var total = 0;
                             // Loop through quotation items and append to the DOM
                             for (var i = 0; i < data.quotation_items.length; i++) {
                                 var item = data.quotation_items[i];
-                                var itemHtml = '<li>Product: ' + item.product + ', Price: ' + item.price + ', Quantity: ' + item.quantity + '</li>';
-                                $('#quotation_items').append(itemHtml);
+                                var subtotal = Number(item.price) * Number(item.quantity);
+                                var itemHtmls = '<tr>' + 
+                                    '<td>' + item.product + '</td>' + 
+                                    '<td>' + item.price + '</td>' + 
+                                    '<td>' + item.quantity + '</td>' + 
+                                    '<td>' + subtotal.toFixed(2) + '</td>' +
+                                    '</tr>';
+                                $('#quotation_items').append(itemHtmls);
+
+                                total += subtotal
                             }
+
+                            var totalHtml = '<tr>' +
+                                '<td colspan="3" style="text-align: right;">Total:</td>' + 
+                                '<td>' + total.toFixed(2) + '</td>' +
+                                '</tr>' + '<br>';
+                            $('#quotation_items').append(totalHtml);
+
+                            $('#submit-button-container').show();
+
+                            
                         }
                     },
                     error: function() {
