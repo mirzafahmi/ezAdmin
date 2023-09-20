@@ -8,7 +8,7 @@ class CustomerQuotationForm(forms.ModelForm):
         fields = ['company_name', 'address', 'posscode','pic_name', 'email', 'phone_number', 'sales_person', 'currency']
 
 class QuotationForm(forms.ModelForm):
-    #customer_id = forms.ModelChoiceField(queryset = Customer.objects.all(),required = True) 
+    
     class Meta:
         model = Quotation
         fields = ['customer_id', 'doc_number']
@@ -24,6 +24,14 @@ class QuotationForm(forms.ModelForm):
             
         return quotation
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Disable the doc_number field
+        self.fields['doc_number'].widget.attrs['disabled'] = 'disabled'
+
+        self.fields['doc_number'].widget.attrs['placeholder'] = 'Auto-generated'
+
 class QuotationItemForm(forms.ModelForm):
     class Meta:
             model = QuotationItem
@@ -34,4 +42,3 @@ class OrderExecutionForm(forms.ModelForm):
         model = OrderExecution
         fields = ['quotation_id', 'delivery_method', 'tracking_number']
 
-        

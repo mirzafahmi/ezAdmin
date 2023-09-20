@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container">
     <div class="row mt-5">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-12">
             <div class="border p-3">
                 {% for message in messages %}
                 {% if message %}
@@ -18,18 +18,106 @@
                 <hr>
                 <form method="POST">
                     {% csrf_token %}
-                    {{ quotation_form|crispy}}
+                    <div class="form-group">
+                      {{ quotation_form.customer_id.label_tag }}
+                      {{ quotation_form.customer_id }}
+                  </div>
+                  <div class="form-group">
+                      {{ quotation_form.doc_number.label_tag }}
+                      {{ quotation_form.doc_number }}
+                  </div>
+                    <p><strong>Adress:</strong> <span id="quotation_customer_address"></span></p>
+                    <p><strong>PIC Name:</strong> <span id="quotation_pic_name"></span></p>
+                    <p><strong>PIC Phone Number:</strong> <span id="quotation_pic_phone_number"></span></p>
+                    <p><strong>Email:</strong> <span id="quotation_email"></span></p>
+                    <p><strong>Sales Person:</strong> <span id="quotation_sales_person"></span></p>
+                    
                     {{ quotationitem_formset.management_form }}
-                    {% for form in quotationitem_formset %}
-                        {{ form|crispy }}
-                    {% endfor %}
+                    <table class="table table-borderless table-striped table-hover">
+                      <thead class = "thead-dark">
+                          <tr>
+                              <th>Product</th>
+                              <th>Item Code</th>
+                              <th>Price</th>
+                              <th>Quantity</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for form in quotationitem_formset %}
+                          <tr>
+                              <td>{{ form.product }}</td>
+                              <td id = 'item_code'></td>
+                              <td>{{ form.price }}</td>
+                              <td>{{ form.quantity }}</td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                    </table>
                     
                     <a class="btn btn-light"  href = "{% url 'dashboard-product' %}"> Cancel</a>
-                    <input class="btn btn-success" type="submit" value="Create">
-                </form>
+                    <input class="btn btn-primary" type="submit" value="Create">
+                  </form>
             </div>
         </div>
     </div>    
 </div>
+
+{% endblock %}
+
+{% block javascript%}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+          
+
+            $('#id_customer_id').on('change', function() {
+                var customerId = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url 'task-ajax-quotation' %}',  // Replace with the actual URL
+                    data: {'customer_id': customerId},
+                    success: function(data) {
+                        if ('error' in data) {
+                            // Handle the error
+                            console.error('Error:', data.error);
+                        } else {
+                            // Update the DOM with the received data
+                            $('#quotation_customer_address').text(data.address);
+                            $('#quotation_pic_name').text(data.pic_name);
+                            $('#quotation_pic_phone_number').text(data.phone_number);
+                            $('#quotation_email').text(data.email);
+                            $('#quotation_sales_person').text(data.sales_person);
+                            
+                            // Clear previous quotation items if needed
+                            
+                        }
+                    },
+                    error: function() {
+                        console.error('AJAX request failed');
+                    }
+                });
+            });
+            $('#id_product').on('change', function(){
+              var productID = $(this).val();
+              $.ajax({
+                type: 'GET',
+                url: '{% url 'task-ajax-quotation' %}',
+                data: {'product_id': productID},
+                success: function(data){
+                  if ('error' in data) {
+                    // Handle the error
+                    console.error('Error:', data.error);
+                } else {
+                  $('#item_code').text(data.item_code);
+                  }
+                },
+                error: function() {
+                  console.error('AJAX request failed');
+                }
+              });
+            });
+        });
+    </script>
 
 {% endblock %}

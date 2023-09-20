@@ -197,7 +197,7 @@ class Quotation(models.Model):
     #basics fields
     customer_id = models.ForeignKey(Customer, on_delete = models.CASCADE)
     doc_number =  models.CharField(unique = True, max_length = 200, blank= True, null= True)
-    end_number = 1
+    end_number = 0
     rev_number = 1
 
     #utility fields

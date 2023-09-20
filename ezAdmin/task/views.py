@@ -105,6 +105,28 @@ def test(request):
     return render(request, 'task/test.html', context)
 
 @login_required
+def ajax_quotation(request):
+    print(request)
+    customer_id = request.GET.get('customer_id')
+    #product_id = request.GET.get('product_id')
+    try:
+        customer = Customer.objects.get(id = customer_id)
+        #product = Product.objects.get(id = product_id)
+        data = {
+            'address': customer.address,
+            'pic_name': customer.pic_name,   
+            'phone_number': customer.phone_number,   
+            'email': customer.email,
+            'sales_person': customer.sales_person.name,
+            #'item_code': product.item_code,
+        }
+        return JsonResponse(data)
+
+    except Quotation.DoesNotExist:
+        return JsonResponse({'error': 'Customer not found'})
+
+
+@login_required
 def quotation_update(request, pk):
     QuotationItemFormSet = inlineformset_factory(
             Quotation,
