@@ -223,7 +223,7 @@ class Quotation(models.Model):
 
 
 class QuotationItem(models.Model):
-    quotation = models.ForeignKey(Quotation, on_delete=models.CASCADE)
+    quotation = models.ForeignKey(Quotation, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     stock = models.ForeignKey(Inventory, on_delete=models.CASCADE, blank= True, null= True)
     price = models.FloatField(default=0)

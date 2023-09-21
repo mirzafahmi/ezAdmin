@@ -38,6 +38,7 @@ def quotation(request):
         )
 
     if request.method == 'POST':
+        print(request.POST)
         quotation_form = QuotationForm(request.POST)
         quotationitem_formset = QuotationItemFormSet(request.POST)
 
@@ -76,6 +77,7 @@ def test(request):
         )
 
     if request.method == 'POST':
+        print(request.POST)
         quotation_form = QuotationForm(request.POST)
         quotationitem_formset = QuotationItemFormSet(request.POST)
 
@@ -129,34 +131,39 @@ def ajax_quotation(request):
 @login_required
 def quotation_update(request, pk):
     QuotationItemFormSet = inlineformset_factory(
-            Quotation,
-            QuotationItem,
-            form=QuotationItemForm,
-            extra=3,  # Number of empty forms to display
-            can_delete = True,
-        )
+        Quotation,
+        QuotationItem,
+        form=QuotationItemForm,
+        extra=3,  # Number of empty forms to display
+        can_delete=True,
+    )
 
-    quotation = Quotation.objects.get(pk = pk)
-    quotation_form = QuotationForm(instance=quotation)
-    quotationitem_formset = QuotationItemFormSet(instance=quotation)
-    
+    quotation = Quotation.objects.get(pk=pk)
+
     if request.method == 'POST':
         quotation_form = QuotationForm(request.POST, instance=quotation)
         quotationitem_formset = QuotationItemFormSet(request.POST, instance=quotation)
-        
+
         if quotation_form.is_valid() and quotationitem_formset.is_valid():
-            quotation_form.save()
+            # Save the Quotation form first
+            quotation = quotation_form.save()
+            
+            # Set the quotation instance for the formset before saving
+            quotationitem_formset.instance = quotation
             quotationitem_formset.save()
 
             messages.success(request, f'{quotation} has been updated')
             return redirect('task-quotation-list')
+    else:
+        quotation_form = QuotationForm(instance=quotation)
+        quotationitem_formset = QuotationItemFormSet(instance=quotation)
 
-    context ={
+    context = {
         'quotation_form': quotation_form,
         'quotationitem_formset': quotationitem_formset,
-        'quotation': quotation
+        'quotation': quotation,
     }
-    
+
     return render(request, 'task/quotation-update.html', context)
 
 @login_required
