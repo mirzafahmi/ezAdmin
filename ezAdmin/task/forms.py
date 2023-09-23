@@ -40,7 +40,7 @@ class QuotationForm(forms.ModelForm):
 class QuotationItemForm(forms.ModelForm):
     class Meta:
             model = QuotationItem
-            fields = ['quotation', 'product', 'quantity', 'price']
+            fields = ['quotation', 'product', 'quantity', 'price', 'id']
     
     def __init__(self, *args, **kwargs):
         quotation_instance = kwargs.pop('quotation_instance', None)

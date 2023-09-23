@@ -144,19 +144,28 @@ def quotation_update(request, pk):
         quotation_form = QuotationForm(request.POST, instance=quotation)
         quotationitem_formset = QuotationItemFormSet(request.POST, instance=quotation)
 
+        
         if quotation_form.is_valid() and quotationitem_formset.is_valid():
             # Save the Quotation form first
             quotation = quotation_form.save()
-            
+
+
             # Set the quotation instance for the formset before saving
-            quotationitem_formset.instance = quotation
             quotationitem_formset.save()
 
             messages.success(request, f'{quotation} has been updated')
             return redirect('task-quotation-list')
+            
+        else:
+            '''for form in quotationitem_formset:
+                print(form.instance.id)
+            #print(quotationitem_formset.instance)'''
+            print(quotationitem_formset.errors)
+
     else:
         quotation_form = QuotationForm(instance=quotation)
         quotationitem_formset = QuotationItemFormSet(instance=quotation)
+
 
     context = {
         'quotation_form': quotation_form,
