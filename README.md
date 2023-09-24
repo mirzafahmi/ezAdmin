@@ -77,25 +77,33 @@ Navigate to the directory where your Django project is located. You should be in
 ## To-do/add-on features
 
 1. User Registration/Log-In function and page
-<label for="file">Progress:  </label> ![](https://geps.dev/progress/100)
+  <br>
+  <label for="file">Progress:  </label> ![](https://geps.dev/progress/100)
 
 2. Customer, Quotation and order execution fuctionality and page
-<label for="file">Progress:  </label> ![](https://geps.dev/progress/100)
+  <br>
+  <label for="file">Progress:  </label> ![](https://geps.dev/progress/100)
 
 3. Product and inventory registration and CRUD function
-<label for="file">Progress:  </label> ![](https://geps.dev/progress/100)
+  <br>
+  <label for="file">Progress:  </label> ![](https://geps.dev/progress/100)
 
 4. Modify the models and server functionality based on new plan
-<label for="file">Progress:  </label> ![](https://geps.dev/progress/20)
+  <br>
+  <label for="file">Progress:  </label> ![](https://geps.dev/progress/20)
 
 5. Analyze and create visualization page for forecasting
-<label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
+  <br>
+  <label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
 
 6. Auto generate ISO/GDPMD-related documentation based on system data
-<label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
+  <br>
+  <label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
 
 7. Create inventory for raw material functionality and page
-<label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
+  <br>
+  <label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
 
 8. Create production log functionality, page and connection with finished goods model
-<label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
+  <br>
+  <label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
