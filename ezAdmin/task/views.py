@@ -10,6 +10,10 @@ from django.views.generic import (TemplateView, ListView, CreateView, DetailView
 from django.views.generic.detail import SingleObjectMixin
 from django.db.models import Sum, F, FloatField
 from django.http import JsonResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.conf import settings 
+
 
 # Create your views here.
 @login_required
@@ -225,7 +229,7 @@ def order_execution_add(request):
             form.save()
             selected_quotation = form.cleaned_data.get('quotation')
 
-        return redirect('task-list')
+        return redirect('task-order-execution-list')
     
     else:
         form = OrderExecutionForm()
@@ -234,7 +238,7 @@ def order_execution_add(request):
         'form': form
     }
                 
-    return render(request, 'task/delivery-order.html', context)
+    return render(request, 'task/order-execution.html', context)
 
 def ajax_order_execution_add(request):
     quotation_id = request.GET.get('quotation_id')
@@ -280,3 +284,32 @@ def order_execution_details(request, pk):
 
 from django.http import JsonResponse
 
+
+def quotation_pdf(request, pk):
+    # Your HTML content generation logic here
+    template = get_template('task/pdf/quotation.html')
+
+    quotation = Quotation.objects.get(pk = pk )
+
+    quotation_items = quotation.quotationitem_set.all
+    context = {
+        'customer':{
+            'company_name': quotation.customer_id,
+            'address': quotation.customer_id.address,
+            'pic': quotation.customer_id.pic_name,
+            'phone_number': quotation.customer_id.phone_number,
+            'email': quotation.customer_id.email
+            },
+        'products': quotation_items
+        }
+    html = template.render(context)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{quotation.doc_number}.pdf"'
+
+    # Create a PDF from the HTML
+    pisa.CreatePDF(
+        html, dest=response,
+        link_callback=lambda uri, rel: settings.MEDIA_ROOT + uri if settings.MEDIA_URL and uri.startswith(settings.MEDIA_URL) else uri
+    )
+    return response

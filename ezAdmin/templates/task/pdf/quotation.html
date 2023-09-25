@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotation</title>
+    <!-- Add any CSS styles here to format your PDF -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .quotation-details {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #wrapped-address {
+            width: 20px; /* Set a specific width for the paragraph */
+            word-wrap: break-word; /* Enable text wrapping */
+        }
+    </style>
+</head>
+<body>
+    {% load mathfilters %}
+    <div class="container">
+        <div class="header">
+            <div class="vendor-details">
+                <p><strong>ezAdmin Sdn. Bhd.</strong> <br>
+                    1St Floor Wisma Ocm, <br> 
+                    Jalan Hang Jebat, <br> 
+                    50150, Wilayah Persekutuan, Malaysia <br>
+                    hq.ezadm1n@gmail.com
+                </p>
+            </div>
+            <hr>
+            <h1>Quotation</h1>
+        </div>
+        <div class="quotation-details wrapped-paragraph">
+            <p>
+                <strong>{{customer.company_name}}</strong> <br>
+                <span id = 'wrapped-address'>{{customer.address}}</span> <br>
+                {{customer.pic_name}} <br>
+                {{customer.phone_number}} <br>
+                {{customer.email}}
+            </p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Code</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Sub Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products%}
+                <tr>
+                    <td>{{product.product.item_code}}</td>
+                    <td>{{product.product}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.price|mul:product.quantity}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="total">
+            <p><strong>Total:</strong> $500.00</p>
+        </div>
+    </div>
+</body>
+</html>

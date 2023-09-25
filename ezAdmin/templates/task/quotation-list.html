@@ -35,7 +35,7 @@
                     <td>{{quotation.customer_id.address}}</td>
                     <td>{{quotation.customer_id.pic_name}}</td>
                     <td>{{quotation.customer_id.phone_number}}</td>
-                    <td>{{quotation.doc_number}}</td>
+                    <td><a href ="{% url 'task-quotation-pdf' quotation.id %}">{{quotation.doc_number}}</a></td>
                     {% for key, value in quotation_total.items %}
                     {% if quotation.id == key%}
                     <td>{{quotation.customer_id.currency.currency_code}} {{value|floatformat:2}}</td>

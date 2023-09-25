@@ -107,3 +107,11 @@ Navigate to the directory where your Django project is located. You should be in
 8. Create production log functionality, page and connection with finished goods model
   
     <label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
+
+9. Create filter function at relevant page
+    
+    <label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
+
+10. Create models field to upload file
+    
+    <label for="file">Progress:  </label> ![](https://geps.dev/progress/0)
