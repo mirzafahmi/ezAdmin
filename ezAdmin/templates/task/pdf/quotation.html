@@ -11,7 +11,6 @@
         }
         .container {
             width: 100%;
-            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -32,15 +31,38 @@
             text-align: left;
         }
         #wrapped-address {
-            width: 20px; /* Set a specific width for the paragraph */
-            word-wrap: break-word; /* Enable text wrapping */
+            width: 20px;
+            word-wrap: break-word;
+        }
+        .customer-details {
+            width:30%;
+            word-wrap: break-word;
+        }
+        @page {
+            size: a4 portrait;
+        @frame header_frame {           /* Static Frame */
+            -pdf-frame-content: header_content;
+        }
+        @frame content_frame {          /* Content Frame */
+            left: 50pt; 
+            width: 512pt; 
+            top: 150pt; 
+            height: 632pt;
+        }
+        @frame footer_frame {           /* Another static Frame */
+            -pdf-frame-content: footer_content;
+            /*left: 50pt; */
+            width: 512pt; 
+            top: 772pt; 
+            height: 20pt;
+            }
         }
     </style>
 </head>
 <body>
     {% load mathfilters %}
     <div class="container">
-        <div class="header">
+        <div class="header" id = 'header_content'>
             <div class="vendor-details">
                 <p><strong>ezAdmin Sdn. Bhd.</strong> <br>
                     1St Floor Wisma Ocm, <br> 
@@ -53,9 +75,9 @@
             <h1>Quotation</h1>
         </div>
         <div class="quotation-details wrapped-paragraph">
-            <p>
+            <p class ='customer-details'>
                 <strong>{{customer.company_name}}</strong> <br>
-                <span id = 'wrapped-address'>{{customer.address}}</span> <br>
+                <span id = 'wrapped-address'>{{customer.address}}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span> <br>
                 {{customer.pic_name}} <br>
                 {{customer.phone_number}} <br>
                 {{customer.email}}

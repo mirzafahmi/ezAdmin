@@ -282,9 +282,6 @@ def order_execution_details(request, pk):
     return render(request, 'task/delivery-order.html', context)
 
 
-from django.http import JsonResponse
-
-
 def quotation_pdf(request, pk):
     # Your HTML content generation logic here
     template = get_template('task/pdf/quotation.html')
@@ -305,7 +302,9 @@ def quotation_pdf(request, pk):
     html = template.render(context)
 
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="{quotation.doc_number}.pdf"'
+    #response['Content-Disposition'] = f'attachment; filename="{quotation.doc_number}.pdf"'
+    response['Content-Disposition'] = f'inline; filename="{quotation.doc_number}.pdf"'
+
 
     # Create a PDF from the HTML
     pisa.CreatePDF(
