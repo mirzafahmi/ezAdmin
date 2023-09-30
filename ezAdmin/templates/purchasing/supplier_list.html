@@ -22,8 +22,8 @@
                     <th>Representative Name</th>
                     <th>Phone Number</th>
                     <th>Email</th>
-                    <th>Activity</th>
                     <th>Create Date</th>
+                    <th>Activity</th>
                 </tr>
             </thead>
             <tbody> 
@@ -37,13 +37,13 @@
                     <td>{{supplier.create_date}}</td>
                     <td>
                         <div class = "d-grid">
-                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-supplier-update' pk=supplier.id %}">
                                     Edit
                                 </a>
                                 <a class="btn btn-outline-success btn-sm btn-block" href ="">
                                     Validate
                                 </a>
-                                <a class="btn btn-outline-danger btn-sm btn-block" href ="">
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'purchasing-supplier-delete' pk=supplier.id %}">
                                     Delete
                                 </a>
                             </ul>
