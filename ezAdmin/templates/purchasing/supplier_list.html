@@ -1,0 +1,59 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Supplier's List{% endblock %}
+
+{% block content %}
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <table class="table table-borderless table-striped table-hover">
+            <span class="h4">Supplier List</span class="h4">
+            <a class="btn btn-info btn-sm float-right" href="{% url 'purchasing-supplier-create' %}">Add Supllier</a>
+            <hr>
+            <thead class = "thead-dark">
+                <tr>
+                    <th>Company Name</th>
+                    <th>Address</th>
+                    <th>Representative Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Activity</th>
+                    <th>Create Date</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {% for supplier in suppliers %}       
+                <tr>
+                    <td>{{supplier.company_name}}</td>
+                    <td>{{supplier.address}}</td>
+                    <td>{{supplier.representative_name}}</td>
+                    <td>{{supplier.phone_number}}</td>
+                    <td>{{supplier.email}}</td>
+                    <td>{{supplier.create_date}}</td>
+                    <td>
+                        <div class = "d-grid">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{">
+                                    Edit
+                                </a>
+                                <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                    Validate
+                                </a>
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="">
+                                    Delete
+                                </a>
+                            </ul>
+                        </div>    
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>                            
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

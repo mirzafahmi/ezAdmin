@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'user.apps.UserConfig',
     'task.apps.TaskConfig',
+    'purchasing.apps.PurchasingConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.humanize',
