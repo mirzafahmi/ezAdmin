@@ -13,6 +13,9 @@ class Supplier(models.Model):
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
+    def __str__(self):
+        return f'{self.company_name}'
+
     def save(self, *args, **kwargs):
         if self.create_date is None:
             self.create_date = timezone.localtime(timezone.now())
@@ -34,6 +37,9 @@ class PurchasingDocument(models.Model):
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
+
+    def __str__(self):
+        return f'{self.po_number}({self.supplier})'
 
     def save(self, *args, **kwargs):
         if self.create_date is None:

@@ -3,8 +3,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, UpdateView, DeleteView
-from .models import Supplier
-from .forms import SupplierForm
+from .models import *
+from .forms import *
 from django.contrib import messages
 
 class SupplierListView(LoginRequiredMixin, ListView):
@@ -52,3 +52,25 @@ class SupplierDeleteView(LoginRequiredMixin,DeleteView):
         messages.success(self.request, f'{supplier_name} deleted successfully!')
 
         return response
+
+class PurchasingDocumentListView(LoginRequiredMixin, ListView):
+    model = PurchasingDocument
+    template_name = 'purchasing/purchasing_document_list.html'
+    context_object_name = 'purchasing_documents'  # The variable name in the template
+
+    # You can customize the queryset if needed
+    def get_queryset(self):
+
+        return PurchasingDocument.objects.all()
+
+class PurchasingDocumentCreateView(LoginRequiredMixin,CreateView):
+    model = PurchasingDocument
+    form_class = PurchasingDocumentForm
+    template_name = 'purchasing/purchasing_document_create.html'
+    success_url = reverse_lazy('purchasing-supplier-list')
+
+    def form_valid(self, form):
+        po_number = form.cleaned_data['po_number']
+        messages.success(self.request, f'{po_number} created successfully!')
+
+        return super().form_valid(form)
