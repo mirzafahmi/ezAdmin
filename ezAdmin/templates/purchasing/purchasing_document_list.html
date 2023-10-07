@@ -37,13 +37,13 @@
                     <td>{{purchasing_document.create_date}}</td>
                     <td>
                         <div class = "d-grid">
-                                <a class="btn btn-outline-primary btn-sm btn-block" href ="">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-purchasing-document-update' purchasing_document.id %}">
                                     Edit
                                 </a>
                                 <a class="btn btn-outline-success btn-sm btn-block" href ="">
                                     Validate
                                 </a>
-                                <a class="btn btn-outline-danger btn-sm btn-block" href ="">
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'purchasing-purchasing-document-delete' purchasing_document.id %}">
                                     Delete
                                 </a>
                             </ul>

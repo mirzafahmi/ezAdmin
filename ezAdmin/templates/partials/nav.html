@@ -18,14 +18,14 @@
           <a class="nav-link" href="{% url 'dashboard-customer' %}">Customer</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'purchasing-supplier-list' %}">Purchasing</a>
+          <a class="nav-link" href="{% url 'purchasing-main' %}">Purchasing</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
             Dropdown
           </a>
           <div class="dropdown-menu">
-            <a class="task-quotation-details" href="{% url 'purchasing-purchasing-document-list' %}">Purchasing Document</a>
+            <a class="dropdown-item task-quotation-details" href="{% url 'purchasing-purchasing-document-list' %}">Purchasing Document</a>
             <a class="dropdown-item" href="#">Another action</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>

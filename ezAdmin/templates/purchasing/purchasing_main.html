@@ -1,0 +1,35 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Purchasing Task{% endblock %}
+
+{% block content %}
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        <div class="card-deck">
+            <a href = "{% url 'purchasing-supplier-list' %}">
+                <div class="card">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">Supplier Tab</h5>
+                    <p class="card-text">Create or view Supplier</p>
+                    </div>
+                    <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </a>
+            <a href = "{% url 'purchasing-purchasing-document-list' %}">
+                <div class="card" href = ''>
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Purchasing Document Tab</h5>
+                    <p class="card-text">Create or view Purchasing Document</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+                </div>
+            </a>    
+        </div>
+    </div>
+</body>
+{% endblock %}

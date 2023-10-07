@@ -1,6 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Add Purchasing Document{% endblock %}
-{% load crispy_forms_tags %}
+{% block tittle %} Delete Prurchasing Document{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -14,13 +13,15 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                    <h3>Add Purchasing Document</h3>
+                    <h3>Deleting Purchasing Document</h3>
                     <hr>
-                    <form method="POST" enctype="multipart/form-data">
+                    <div class="alert alert-danger">
+                        <h4>Are you sure you want to delete {{purchasing_document.po_number}}?</h4>
+                    </div>
+                    <form method = "POST">
                         {% csrf_token %}
-                        {{ form|crispy}}
                         <a class="btn btn-light"  href = "{% url 'purchasing-purchasing-document-list' %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Create Purchasing Document">
+                        <input class = "btn btn-danger" type="submit" value = "Confirm">
                     </form>
                 </div>
             </div>

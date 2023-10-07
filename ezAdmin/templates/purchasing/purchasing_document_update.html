@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Add Purchasing Document{% endblock %}
+{% block tittle %} Update Purchasing Document{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -7,20 +7,20 @@
         <div class="row mt-5">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
-                    {% for message in messages %}
                     {% if message %}
+                    {% for message in messages %}
                     <div class = "alert alert-{{ message.tags }}">
                         {{ message }}
                     </div>
-                    {% endif %}
                     {% endfor %}
-                    <h3>Add Purchasing Document</h3>
+                    {% endif %}
+                    <h3>Update {{purchasing_document.po_number}} Details?</h3>
                     <hr>
-                    <form method="POST" enctype="multipart/form-data">
+                    <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <a class="btn btn-light"  href = "{% url 'purchasing-purchasing-document-list' %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Create Purchasing Document">
+                        <a class="btn btn-light" href = "{% url 'purchasing-purchasing-document-list' %}"> Cancel</a>
+                        <input class="btn btn-success" type="submit" value="Update Purchasing Document">
                     </form>
                 </div>
             </div>

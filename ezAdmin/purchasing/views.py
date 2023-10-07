@@ -74,3 +74,30 @@ class PurchasingDocumentCreateView(LoginRequiredMixin,CreateView):
         messages.success(self.request, f'{po_number} created successfully!')
 
         return super().form_valid(form)
+
+class PurchasingDocumentUpdateView(LoginRequiredMixin, UpdateView):
+    model = PurchasingDocument
+    form_class = PurchasingDocumentForm
+    template_name = 'purchasing/purchasing_document_update.html'
+    success_url = reverse_lazy('purchasing-supplier-list')
+    context_object_name = 'purchasing_document'
+
+    def form_valid(self, form):
+        purchasing_document = self.get_object().po_number
+        messages.success(self.request, f'{purchasing_document} updated successfully!')
+
+        return super().form_valid(form)
+
+
+class PurchasingDocumentDeleteView(LoginRequiredMixin,DeleteView):
+    model = PurchasingDocument
+    template_name = 'purchasing/purchasing_document_delete.html'
+    context_object_name = 'purchasing_document'
+    success_url = reverse_lazy('purchasing-purchasing-document-list')
+
+    def delete(self, request, *args, **kwargs):
+        purchasing_document = self.get_object().company_name
+        response = super().delete(request, *args, **kwargs)
+        messages.success(self.request, f'{purchasing_document} deleted successfully!')
+
+        return response
