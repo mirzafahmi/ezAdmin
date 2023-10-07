@@ -4,7 +4,7 @@
 
             {% if user.is_authenticated %} 
             <h1>
-                Welcome to ezAdmin, {{ user.username }}
+                Welcome to ezAdmin, {{ user.username|capfirst }}
             </h1>
 
             {% else %}

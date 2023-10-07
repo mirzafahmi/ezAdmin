@@ -5,30 +5,20 @@
 <body>
     <div class="col-md-10 offset-md-1 table-responsive">
         <div class="card-deck">
-            <a href = "{% url 'purchasing-supplier-list' %}">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                    <h5 class="card-title">Supplier Tab</h5>
-                    <p class="card-text">Create or view Supplier</p>
-                    </div>
-                    <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </a>
-            <a href = "{% url 'purchasing-purchasing-document-list' %}">
-                <div class="card" href = ''>
-                <img src="..." class="card-img-top" alt="...">
+            <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Purchasing Document Tab</h5>
-                    <p class="card-text">Create or view Purchasing Document</p>
+                    <h3 class="card-title">Supplier Tab</h3>
+                    <p class="card-text">To view, create, update and delete supplier list.</p>
+                    <a href="{% url 'purchasing-supplier-list' %}" class="btn btn-primary">View Supplier List</a>
                 </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Purchasing Document Tab</h3>
+                    <p class="card-text">To view, create, update and delete purchasing document list.</p>
+                    <a href="{% url 'purchasing-purchasing-document-list' %}" class="btn btn-primary">View Purchasing Document List</a>
                 </div>
-                </div>
-            </a>    
+            </div>
         </div>
     </div>
 </body>

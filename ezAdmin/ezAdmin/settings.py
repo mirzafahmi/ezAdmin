@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'purchasing.apps.PurchasingConfig',
     'crispy_forms',
     'crispy_bootstrap5',
+    'fontawesomefree',
     'django.contrib.humanize',
     'mathfilters'
 ]

@@ -5,54 +5,20 @@
 <body>
     <div class="col-md-10 offset-md-1 table-responsive">
         <div class="card-deck">
-            <a href = "{% url 'task-order-execution-list' %}">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                    <h5 class="card-title">Delivery Orders</h5>
-                    <p class="card-text">Create or view DO</p>
-                    </div>
-                    <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </a>
-            <a href = "{% url 'task-order-execution-list' %}">
-                <div class="card" href = ''>
-                <img src="..." class="card-img-top" alt="...">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Invoices</h5>
-                    <p class="card-text">Create or view invoices</p>
+                    <h3 class="card-title">Order Execution Tab</h3>
+                    <p class="card-text">To view, create, update and delete order execution list.</p>
+                    <a href="{% url 'task-order-execution-list' %}" class="btn btn-primary">View Order Execution List</a>
                 </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
-                </div>
-            </a>    
-            <a href = "{% url 'task-proforma-invoices' %}">
-                <div class="card">
-                <img src="..." class="card-img-top" alt="...">
+            </div>
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Proforma Invoices</h5>
-                    <p class="card-text">Create or view PI</p>
+                    <h3 class="card-title">Quotation Tab</h3>
+                    <p class="card-text">To view, create, update and delete quoatation list.</p>
+                    <a href="{% url 'task-quotation-list' %}" class="btn btn-primary">View Quotation List</a>
                 </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
-                </div>
-            </a> 
-            <a href = "{% url 'task-quotation-list' %}">
-                <div class="card">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Quotation</h5>
-                    <p class="card-text">Create or view QT</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
-                </div>
-            </a> 
+            </div>
         </div>
     </div>
 </body>
