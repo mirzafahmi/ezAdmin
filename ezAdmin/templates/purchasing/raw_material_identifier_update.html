@@ -1,0 +1,29 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Update Purchasing Document{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    {% if message %}
+                    {% for message in messages %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <h3>Update {{identifier.parent_item_code}} Details?</h3>
+                    <hr>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <a class="btn btn-light" href = "{% url 'purchasing-raw-material-identifier-list' %}"> Cancel</a>
+                        <input class="btn btn-success" type="submit" value="Update Identifier">
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+{% endblock %}

@@ -12,4 +12,8 @@ urlpatterns = [
     path('purchasing/purchasing_document/list', PurchasingDocumentListView.as_view(), name='purchasing-purchasing-document-list'),
     path('purchasing/purchasing_document/<int:pk>/update/', PurchasingDocumentUpdateView.as_view(), name='purchasing-purchasing-document-update'),
     path('purchasing/purchasing_document/<int:pk>/delete/', PurchasingDocumentDeleteView.as_view(), name='purchasing-purchasing-document-delete'),
+    path('purchasing/raw_material_identifier/create', RawMaterialIdentifierCreateView.as_view(), name='purchasing-raw-material-identifier-create'),
+    path('purchasing/raw_material_identifier/list', RawMaterialIdentifierListView.as_view(), name='purchasing-raw-material-identifier-list'),
+    path('purchasing/raw_material_identifier/<int:pk>/update/', RawMaterialIdentifierUpdateView.as_view(), name='purchasing-raw-material-identifier-update'),
+    path('purchasing/raw_material_identifier/<int:pk>/delete/', RawMaterialIdentifierDeleteView.as_view(), name='purchasing-raw-material-identifier-delete'),
 ]

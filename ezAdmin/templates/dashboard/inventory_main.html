@@ -1,0 +1,25 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Inventory{% endblock %}
+
+{% block content %}
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        <div class="card-deck">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Raw Material Tab</h3>
+                    <p class="card-text">To view, create, update and delete raw material inventory list.</p>
+                    <a href="{% url 'dashboard-inventory-raw-material-main' %}" class="btn btn-primary">View Raw Material Inventory</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Finished Goods Tab</h3>
+                    <p class="card-text">To view, create, update and delete finished product list.</p>
+                    <a href="{% url 'dashboard-product' %}" class="btn btn-primary">View Finished Goods Inventory</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

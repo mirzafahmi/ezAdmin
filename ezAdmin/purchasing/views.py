@@ -101,3 +101,52 @@ class PurchasingDocumentDeleteView(LoginRequiredMixin,DeleteView):
         messages.success(self.request, f'{purchasing_document} deleted successfully!')
 
         return response
+
+class RawMaterialIdentifierCreateView(LoginRequiredMixin,CreateView):
+    model = RawMaterialIdentifier
+    form_class = RawMaterialIdentifierForm
+    template_name = 'purchasing/raw_material_identifier_create.html'
+    success_url = reverse_lazy('purchasing-raw-material-identifier-list')
+
+    def form_valid(self, form):
+        identifier = form.cleaned_data['parent_item_code']
+        messages.success(self.request, f'{identifier} created successfully!')
+
+        return super().form_valid(form)
+
+class RawMaterialIdentifierListView(LoginRequiredMixin, ListView):
+    model = RawMaterialIdentifier
+    template_name = 'purchasing/raw_material_identifier_list.html'
+    context_object_name = 'identifiers'  # The variable name in the template
+
+    # You can customize the queryset if needed
+    def get_queryset(self):
+
+        return RawMaterialIdentifier.objects.all()
+
+class RawMaterialIdentifierUpdateView(LoginRequiredMixin, UpdateView):
+    model = RawMaterialIdentifier
+    form_class = RawMaterialIdentifierForm
+    template_name = 'purchasing/raw_material_identifier_update.html'
+    success_url = reverse_lazy('purchasing-raw-material-identifier-list')
+    context_object_name = 'identifier'
+
+    def form_valid(self, form):
+        identifier = self.get_object().parent_item_code
+        messages.success(self.request, f'{identifier} updated successfully!')
+
+        return super().form_valid(form)
+
+
+class RawMaterialIdentifierDeleteView(LoginRequiredMixin,DeleteView):
+    model = RawMaterialIdentifier
+    template_name = 'purchasing/raw_material_identifier_delete.html'
+    context_object_name = 'identifier'
+    success_url = reverse_lazy('purchasing-raw-material-identifier-list')
+
+    def delete(self, request, *args, **kwargs):
+        identifier = self.get_object().parent_item_code
+        response = super().delete(request, *args, **kwargs)
+        messages.success(self.request, f'{identifier} deleted successfully!')
+
+        return response

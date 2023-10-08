@@ -11,3 +11,7 @@ class PurchasingDocumentForm(forms.ModelForm):
         model = PurchasingDocument
         fields = ['supplier', 'po_number', 'po_doc', 'invoice_number', 'invoice_doc', 'packing_list', 'pl_doc', 'k1_form', 'k1_doc']
         
+class RawMaterialIdentifierForm(forms.ModelForm):
+    class Meta:
+        model = RawMaterialIdentifier
+        fields = ['parent_item_code']

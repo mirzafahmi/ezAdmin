@@ -1,0 +1,51 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Raw Material Identifier List{% endblock %}
+
+{% block content %}
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <table class="table table-borderless table-striped table-hover">
+            <span class="h4">Raw Material Identifier List</span class="h4">
+            <a class="btn btn-info btn-sm float-right" href="{% url 'purchasing-raw-material-identifier-create' %}">Add Identifier</a>
+            <hr>
+            <thead class = "thead-dark">
+                <tr>
+                    <th>Identifier</th>
+                    <th>Created Date</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {% for identifier in identifiers %}       
+                <tr>
+                    <td>{{identifier.parent_item_code}}</td>
+                    <td>{{identifier.create_date}}</td>
+                    <td>
+                        <div class = "d-grid">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-raw-material-identifier-update' identifier.id %}">
+                                    Edit
+                                </a>
+                                <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                    Validate
+                                </a>
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'purchasing-raw-material-identifier-delete' identifier.id %}">
+                                    Delete
+                                </a>
+                            </ul>
+                        </div>    
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>                            
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

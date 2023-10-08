@@ -1,0 +1,25 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Inventory{% endblock %}
+
+{% block content %}
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        <div class="card-deck">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Raw Material Identifier Tab</h3>
+                    <p class="card-text">To view, create, update and delete raw material identifier list.</p>
+                    <a href="{% url 'purchasing-raw-material-identifier-list' %}" class="btn btn-primary">View Raw Material Identifier</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Raw Material Inventory Tab</h3>
+                    <p class="card-text">To view, create, update and delete raw material list.</p>
+                    <a href="" class="btn btn-primary">View Raw Material Inventory Inventory</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
