@@ -20,14 +20,19 @@
       
       footer {
           background-color: #f1f1f1;
-          padding: 10px;
+          padding: 1px;
           margin-top: auto; /* This pushes the footer to the bottom */
       }
 
       .main {
           max-width: 1400px; /* Set your desired maximum width */
           margin: 0 auto; /* Center the container */
-          padding: 10px;
+          padding: 1px;
+      }
+      .stack-icon{
+        width: 20px; /* Adjust the width to your desired size */
+        height: 20px; /* Adjust the height to your desired size */
+        margin: 2px; /* Optional: Add some margin between icons */
       }
     </style>
 
@@ -40,8 +45,8 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'icon/favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'icon/favicon.ico' %}" type="image/x-icon">
     
     <title>ezAdmin | {% block tittle %}{% endblock %}</title>
   </head>
@@ -65,9 +70,10 @@
   </body>
   <footer class="bg-dark text-center text-white">
     <!-- Grid container -->
-    <div class="container p-1">
+    <div class="container">
       <!-- Section: Social media -->
-      <section class="">
+      <section class="text-center">
+        Contact at: <br>
         <!-- Facebook 
         <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
           ><i class="fab fa-facebook-f"></i
@@ -89,21 +95,29 @@
         ></a>-->
   
         <!-- Linkedin -->
-        <a class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/in/mirza-fahmi/" role="button" target="_blank">
+        <a class="btn btn-outline-light btn-floating" href="https://www.linkedin.com/in/mirza-fahmi/" role="button" target="_blank">
           <i class="fab fa-linkedin-in"></i>
         </a>
   
         <!-- Github -->
-        <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/mirzafahmi" role="button" target="_blank">
+        <a class="btn btn-outline-light btn-floating" href="https://github.com/mirzafahmi" role="button" target="_blank">
           <i class="fab fa-github"></i>
         </a>
       </section>
       <!-- Section: Social media -->
     </div>
     <!-- Grid container -->
-  
+    <div class = "text-center pb-1">
+      Powered by: <br>
+      <img class = 'stack-icon' src="{% static 'icon/html.ico' %}" alt="HTML Icon">
+      <img class = 'stack-icon' src="{% static 'icon/css.ico' %}" alt="CSS Icon">
+      <img class = 'stack-icon' src="{% static 'icon/javascript.ico' %}" alt="javascript Icon">
+      <img class = 'stack-icon' src="{% static 'icon/python.ico' %}" alt="python Icon">
+      <img class = 'stack-icon' src="{% static 'icon/django.ico' %}" alt="django Icon">
+      <img class = 'stack-icon' src="{% static 'icon/sqlite.ico' %}" alt="sqllite Icon">
+    </div>
     <!-- Copyright -->
-    <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+    <div class="text-center" style="background-color: rgba(0, 0, 0, 0.2);">
       © 2023 Copyright: <a class="text-white" href="">ezAdmin</a>
     </div>
     <!-- Copyright -->

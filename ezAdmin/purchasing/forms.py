@@ -15,3 +15,8 @@ class RawMaterialIdentifierForm(forms.ModelForm):
     class Meta:
         model = RawMaterialIdentifier
         fields = ['parent_item_code']
+
+class RawMaterialComponentForm(forms.ModelForm):
+    class Meta:
+        model = RawMaterialComponent
+        fields = ['component', 'spec', 'identifier']

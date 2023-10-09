@@ -150,3 +150,52 @@ class RawMaterialIdentifierDeleteView(LoginRequiredMixin,DeleteView):
         messages.success(self.request, f'{identifier} deleted successfully!')
 
         return response
+
+class RawMaterialComponentCreateView(LoginRequiredMixin,CreateView):
+    model = RawMaterialComponent
+    form_class = RawMaterialComponentForm
+    template_name = 'purchasing/raw_material_component_create.html'
+    success_url = reverse_lazy('purchasing-raw-material-component-list')
+
+    def form_valid(self, form):
+        component = form.cleaned_data['component']
+        messages.success(self.request, f'{component} for {form.cleaned_data["identifier"]} created successfully!')
+
+        return super().form_valid(form)
+
+class RawMaterialComponentListView(LoginRequiredMixin, ListView):
+    model = RawMaterialComponent
+    template_name = 'purchasing/raw_material_component_list.html'
+    context_object_name = 'components'  # The variable name in the template
+
+    # You can customize the queryset if needed
+    def get_queryset(self):
+
+        return RawMaterialComponent.objects.all()
+
+class RawMaterialComponentUpdateView(LoginRequiredMixin, UpdateView):
+    model = RawMaterialComponent
+    form_class = RawMaterialComponentForm
+    template_name = 'purchasing/raw_material_component_update.html'
+    success_url = reverse_lazy('purchasing-raw-material-component-list')
+    context_object_name = 'component'
+
+    def form_valid(self, form):
+        component = self.get_object()
+        messages.success(self.request, f'{component.component} for {component.identifier} updated successfully!')
+
+        return super().form_valid(form)
+
+
+class RawMaterialComponentDeleteView(LoginRequiredMixin,DeleteView):
+    model = RawMaterialComponent
+    template_name = 'purchasing/raw_material_component_delete.html'
+    context_object_name = 'component'
+    success_url = reverse_lazy('purchasing-raw-material-component-list')
+
+    def delete(self, request, *args, **kwargs):
+        component = self.get_object()
+        response = super().delete(request, *args, **kwargs)
+        messages.success(self.request, f'{component.component} for {component.identifier} deleted successfully!')
+
+        return response

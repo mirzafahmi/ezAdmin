@@ -55,6 +55,9 @@ class RawMaterialIdentifier(models.Model):
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
+    def __str__(self):
+        return f'{self.parent_item_code}'
+
     def save(self, *args, **kwargs):
         if self.create_date is None:
             self.create_date = timezone.localtime(timezone.now())

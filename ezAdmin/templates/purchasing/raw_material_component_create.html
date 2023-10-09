@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Update Identifier{% endblock %}
+{% block tittle %} Add Raw Material Component{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -7,20 +7,20 @@
         <div class="row mt-5">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
-                    {% if message %}
                     {% for message in messages %}
+                    {% if message %}
                     <div class = "alert alert-{{ message.tags }}">
                         {{ message }}
                     </div>
-                    {% endfor %}
                     {% endif %}
-                    <h3>Update {{identifier.parent_item_code}} Details?</h3>
+                    {% endfor %}
+                    <h3>Add Raw Material Component</h3>
                     <hr>
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <a class="btn btn-light" href = "{% url 'purchasing-raw-material-identifier-list' %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Update Identifier">
+                        <a class="btn btn-light"  href = "{% url 'purchasing-raw-material-component-list' %}"> Cancel</a>
+                        <input class="btn btn-success" type="submit" value="Create Component">
                     </form>
                 </div>
             </div>

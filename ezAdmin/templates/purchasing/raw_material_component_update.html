@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Update Identifier{% endblock %}
+{% block tittle %} Update Purchasing Document{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -14,13 +14,13 @@
                     </div>
                     {% endfor %}
                     {% endif %}
-                    <h3>Update {{identifier.parent_item_code}} Details?</h3>
+                    <h3>Update {{component.component}} component for {{component.identifier}} Details?</h3>
                     <hr>
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <a class="btn btn-light" href = "{% url 'purchasing-raw-material-identifier-list' %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Update Identifier">
+                        <a class="btn btn-light" href = "{% url 'purchasing-raw-material-component-list' %}"> Cancel</a>
+                        <input class="btn btn-success" type="submit" value="Update Component">
                     </form>
                 </div>
             </div>
