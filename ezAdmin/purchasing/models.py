@@ -75,6 +75,9 @@ class RawMaterialComponent(models.Model):
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
+    def __str__(self):
+        return f'{self.component} for {self.identifier}'
+
     def save(self, *args, **kwargs):
         if self.create_date is None:
             self.create_date = timezone.localtime(timezone.now())
@@ -86,10 +89,14 @@ class RawMaterialComponent(models.Model):
 class BOMComponent(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     raw_material_component = models.ForeignKey(RawMaterialComponent, on_delete=models.CASCADE)
-    quantitiy_used = models.FloatField(default=0)
+    quantity_used = models.FloatField(default=0)
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
+
+    def __str__(self):
+        return f'{self.raw_material_component} for {self.product}'
+    
 
     def save(self, *args, **kwargs):
         if self.create_date is None:
@@ -103,6 +110,8 @@ class ProductionLog(models.Model):
     rH = models.PositiveIntegerField()
     temperature = models.PositiveIntegerField()
     BOMComponents = models.ManyToManyField(BOMComponent)
+    lot_number = models.CharField(max_length=200, blank = True, null = True)
+    exp_date = models.CharField(max_length=200, blank = True, null = True)
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)

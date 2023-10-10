@@ -20,3 +20,8 @@ class RawMaterialComponentForm(forms.ModelForm):
     class Meta:
         model = RawMaterialComponent
         fields = ['component', 'spec', 'identifier']
+
+class BOMComponentForm(forms.ModelForm):
+    class Meta:
+        model = BOMComponent
+        fields = ['product', 'raw_material_component', 'quantity_used']

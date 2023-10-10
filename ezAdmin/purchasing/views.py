@@ -199,3 +199,52 @@ class RawMaterialComponentDeleteView(LoginRequiredMixin,DeleteView):
         messages.success(self.request, f'{component.component} for {component.identifier} deleted successfully!')
 
         return response
+
+class BOMComponentCreateView(LoginRequiredMixin,CreateView):
+    model = BOMComponent
+    form_class = BOMComponentForm
+    template_name = 'purchasing/BOM_component_create.html'
+    success_url = reverse_lazy('purchasing-BOM-component-list')
+
+    def form_valid(self, form):
+        BOMcomponent = form.cleaned_data['product']
+        messages.success(self.request, f'{BOMcomponent} for {form.cleaned_data["product"]} created successfully!')
+
+        return super().form_valid(form)
+
+class BOMComponentListView(LoginRequiredMixin, ListView):
+    model = BOMComponent
+    template_name = 'purchasing/BOM_component_list.html'
+    context_object_name = 'BOMcomponents'  # The variable name in the template
+
+    # You can customize the queryset if needed
+    def get_queryset(self):
+
+        return BOMComponent.objects.all()
+
+class BOMComponentUpdateView(LoginRequiredMixin, UpdateView):
+    model = BOMComponent
+    form_class = BOMComponentForm
+    template_name = 'purchasing/BOM_component_update.html'
+    success_url = reverse_lazy('purchasing-BOM-component-list')
+    context_object_name = 'BOMcomponent'
+
+    def form_valid(self, form):
+        BOMcomponent = self.get_object()
+        messages.success(self.request, f'{BOMcomponent.raw_material_component} updated successfully!')
+
+        return super().form_valid(form)
+
+
+class BOMComponentDeleteView(LoginRequiredMixin,DeleteView):
+    model = BOMComponent
+    template_name = 'purchasing/BOM_component_delete.html'
+    context_object_name = 'BOMcomponent'
+    success_url = reverse_lazy('purchasing-BOM-component-list')
+
+    def delete(self, request, *args, **kwargs):
+        BOMcomponent = self.get_object()
+        response = super().delete(request, *args, **kwargs)
+        messages.success(self.request, f'{BOMcomponent.raw_material_component} deleted successfully!')
+
+        return response

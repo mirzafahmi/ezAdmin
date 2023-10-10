@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Delete Purchasing Document{% endblock %}
+{% block tittle %} Delete BOMComponent{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -13,14 +13,14 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                    <h3>Deleting Purchasing Document</h3>
+                    <h3>Deleting BOMComponent</h3>
                     <hr>
                     <div class="alert alert-danger">
-                        <h4>Are you sure you want to delete {{purchasing_document.po_number}}?</h4>
+                        <h4>Are you sure you want to delete {{BOMcomponent.raw_material_component}} for {{BOMComponent.product.item_code}}?</h4>
                     </div>
                     <form method = "POST">
                         {% csrf_token %}
-                        <a class="btn btn-light"  href = "{% url 'purchasing-purchasing-document-list' %}"> Cancel</a>
+                        <a class="btn btn-light"  href = "{% url 'purchasing-BOM-component-list' %}"> Cancel</a>
                         <input class = "btn btn-danger" type="submit" value = "Confirm">
                     </form>
                 </div>

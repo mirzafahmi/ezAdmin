@@ -120,7 +120,7 @@ class Product(models.Model):
         self.update_date = timezone.localtime(timezone.now())
         super(Product, self).save(*args, **kwargs)
 
-class Inventory(models.Model):
+class Inventory(models.Model): #change to finishedgoodinventory
     #basics fields
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     lot_number = models.CharField(max_length = 100)
