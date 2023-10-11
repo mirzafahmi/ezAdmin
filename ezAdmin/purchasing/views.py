@@ -2,10 +2,13 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
 from .models import *
 from .forms import *
 from django.contrib import messages
+
+class PurchasingMainView(LoginRequiredMixin, TemplateView):
+    template_name = 'purchasing/purchasing_main.html'
 
 class SupplierListView(LoginRequiredMixin, ListView):
     model = Supplier
@@ -87,7 +90,6 @@ class PurchasingDocumentUpdateView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, f'{purchasing_document} updated successfully!')
 
         return super().form_valid(form)
-
 
 class PurchasingDocumentDeleteView(LoginRequiredMixin,DeleteView):
     model = PurchasingDocument
@@ -185,7 +187,6 @@ class RawMaterialComponentUpdateView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, f'{component.component} for {component.identifier} updated successfully!')
 
         return super().form_valid(form)
-
 
 class RawMaterialComponentDeleteView(LoginRequiredMixin,DeleteView):
     model = RawMaterialComponent
