@@ -24,4 +24,8 @@ urlpatterns = [
     path('purchasing/BOM_component/list', BOMComponentListView.as_view(), name='purchasing-BOM-component-list'),
     path('purchasing/BOM_component/<int:pk>/update/', BOMComponentUpdateView.as_view(), name='purchasing-BOM-component-update'),
     path('purchasing/BOM_component/<int:pk>/delete/', BOMComponentDeleteView.as_view(), name='purchasing-BOM-component-delete'),
+    path('purchasing/raw_material_inventory/create', RawMaterialInventoryCreateView.as_view(), name='purchasing-raw-material-inventory-create'),
+    path('purchasing/raw_material_inventory/list', RawMaterialInventoryListView.as_view(), name='purchasing-raw-material-inventory-list'),
+    path('purchasing/raw_material_inventory/<int:pk>/update/', RawMaterialInventoryUpdateView.as_view(), name='purchasing-raw-material-inventory-update'),
+    path('purchasing/raw_material_inventory/<int:pk>/delete/', RawMaterialInventoryDeleteView.as_view(), name='purchasing-raw-material-inventory-delete'),
 ]

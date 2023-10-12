@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import validate_email, DecimalValidator
-from dashboard.models import Product
+from dashboard.models import Product, Currency
 from django.utils import timezone
 
 class Supplier(models.Model):
@@ -9,6 +9,7 @@ class Supplier(models.Model):
     representative_name = models.CharField(max_length=200, blank = True, null = True)
     phone_number = models.PositiveIntegerField(null = True)
     email = models.CharField(max_length = 100, validators = [validate_email], blank = True, null = True)
+    currency_trade = models.ForeignKey(Currency, on_delete=models.CASCADE)
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
@@ -27,13 +28,15 @@ class Supplier(models.Model):
 class PurchasingDocument(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete = models.CASCADE)
     po_number = models.CharField(max_length=200, blank = True, null = True)
-    po_doc = models.FileField(upload_to='purchase_documents/PO')
+    po_doc = models.FileField(upload_to='purchasing_documents/PO')
     invoice_number = models.CharField(max_length=200, blank = True, null = True)
-    invoice_doc = models.FileField(upload_to='purchase_documents/invoice')
+    invoice_doc = models.FileField(upload_to='purchasing_documents/invoice')
     packing_list = models.CharField(max_length=200, blank = True, null = True)
-    pl_doc = models.FileField(upload_to='purchase_documents/PL')
+    pl_doc = models.FileField(upload_to='purchasing_documents/PL')
     k1_form = models.CharField(max_length=200, blank = True, null = True)
-    k1_doc = models.FileField(upload_to='purchase_documents/K1')
+    k1_doc = models.FileField(upload_to='purchasing_documents/K1')
+    AWB_number = models.CharField(max_length=200, blank = True, null = True)
+    AWB_doc = models.FileField(upload_to='purchasing_documents/AWB')
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
@@ -127,17 +130,26 @@ class ProductionLog(models.Model):
 
 class RawMaterialInventory(models.Model):
     component = models.ForeignKey(RawMaterialComponent, on_delete=models.CASCADE)
-    lot = models.CharField(max_length=200, blank = True, null = True)
-    exp_date = models.DateTimeField()
-    price_unit = models.CharField(max_length=200, blank = True, null = True)
+    quantity = models.PositiveIntegerField()
+    lot_number = models.CharField(max_length=200, blank = True, null = True)
+    exp_date = models.CharField(max_length=200, blank = True, null = True)
+    price_per_unit = models.CharField(max_length=200, blank = True, null = True)
+    stock_type = models.CharField(max_length=2,choices=(('1','Stock-in'),('2','Stock-Out')), default = 1)
+    purchasing_doc = models.ForeignKey(PurchasingDocument, on_delete=models.CASCADE)
 
-    create_date = models.DateTimeField(blank = True, null = True)
-    update_date = models.DateTimeField(blank = True, null = True)
+    #utility fields
+    stock_in_date = models.DateTimeField(blank = True, null = True)
+    stock_out_date = models.DateTimeField(blank = True, null = True)
+    validation_date = models.DateTimeField(blank = True, null = True)
+
+    def __str__(self):
+        return f'{self.component}({self.purchasing_doc})'
 
     def save(self, *args, **kwargs):
-        if self.create_date is None:
-            self.create_date = timezone.localtime(timezone.now())
+        if self.stock_type is '1':
+            self.stock_in_date = timezone.localtime(timezone.now())
+        if self.stock_type is '2':
+            self.stock_out_date = timezone.localtime(timezone.now())
 
-        self.update_date = timezone.localtime(timezone.now())
-
+        self.validation_date = timezone.localtime(timezone.now())
         super(RawMaterialInventory, self).save(*args, **kwargs)
