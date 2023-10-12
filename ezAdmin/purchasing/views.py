@@ -248,3 +248,52 @@ class BOMComponentDeleteView(LoginRequiredMixin,DeleteView):
         messages.success(self.request, f'{BOMcomponent.raw_material_component} deleted successfully!')
 
         return response
+
+class RawMaterialInventoryCreateView(LoginRequiredMixin,CreateView):
+    model = RawMaterialInventory
+    form_class = RawMaterialInventoryForm
+    template_name = 'purchasing/raw_material_inventory_create.html'
+    success_url = reverse_lazy('purchasing-raw-material-inventory-list')
+
+    def form_valid(self, form):
+        RawMaterialInventory = form.cleaned_data
+        messages.success(self.request, f'{RawMaterialInventory["component"]} log of {RawMaterialInventory["purchasing_doc"]} created successfully!')
+
+        return super().form_valid(form)
+
+class RawMaterialInventoryListView(LoginRequiredMixin, ListView):
+    model = RawMaterialInventory
+    template_name = 'purchasing/raw_material_inventory_list.html'
+    context_object_name = 'RawMaterialInventories'  # The variable name in the template
+
+    # You can customize the queryset if needed
+    def get_queryset(self):
+
+        return RawMaterialInventory.objects.all()
+
+class RawMaterialInventoryUpdateView(LoginRequiredMixin, UpdateView):
+    model = RawMaterialInventory
+    form_class = RawMaterialInventoryForm
+    template_name = 'purchasing/raw_material_inventory_update.html'
+    success_url = reverse_lazy('purchasing-raw-material-inventory-list')
+    context_object_name = 'RawMaterialInventory'
+
+    def form_valid(self, form):
+        RawMaterialInventory = self.get_object()
+        messages.success(self.request, f'{RawMaterialInventory.component} updated successfully!')
+
+        return super().form_valid(form)
+
+
+class RawMaterialInventoryDeleteView(LoginRequiredMixin,DeleteView):
+    model = RawMaterialInventory
+    template_name = 'purchasing/raw_material_inventory_delete.html'
+    context_object_name = 'RawMaterialInventory'
+    success_url = reverse_lazy('purchasing-raw-material-inventory-list')
+
+    def delete(self, request, *args, **kwargs):
+        RawMaterialInventory = self.get_object()
+        response = super().delete(request, *args, **kwargs)
+        messages.success(self.request, f'{RawMaterialInventory.component} deleted successfully!')
+
+        return response
