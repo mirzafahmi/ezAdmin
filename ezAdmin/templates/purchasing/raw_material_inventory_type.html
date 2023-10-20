@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Raw Material Inventory Log Type{% endblock %}
+
+{% block content %}
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        <h2 class = "text-center">Raw Material Inventory Log Type Page</h2>
+        <hr>
+        <div class="card-deck">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Raw Material Stock-In Tab</h3>
+                    <p class="card-text">To log stock-in for raw material inventory.</p>
+                    <a href="{% url 'purchasing-supplier-list' %}" class="btn btn-primary">Log Stock-In Raw Material Inventory</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Raw Material Stock-Outn Tab</h3>
+                    <p class="card-text">To log stock-in for raw material inventory.</p>
+                    <a href="{% url 'purchasing-purchasing-document-list' %}" class="btn btn-primary">Log Stock-In Raw Material Inventory</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
