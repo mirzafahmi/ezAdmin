@@ -6,6 +6,9 @@ from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
 from .models import *
 from .forms import *
 from django.contrib import messages
+from django.http import JsonResponse
+from django.views import View
+from django.shortcuts import get_object_or_404
 
 class PurchasingMainView(LoginRequiredMixin, TemplateView):
     template_name = 'purchasing/purchasing_main.html'
@@ -250,17 +253,55 @@ class BOMComponentDeleteView(LoginRequiredMixin,DeleteView):
 
         return response
 
+class RawMaterialInventoryLogMainView(LoginRequiredMixin, TemplateView):
+    template_name = 'purchasing/raw_material_inventory_log_main.html'
+
 class RawMaterialInventoryCreateView(LoginRequiredMixin,CreateView):
     model = RawMaterialInventory
     form_class = RawMaterialInventoryForm
     template_name = 'purchasing/raw_material_inventory_create.html'
     success_url = reverse_lazy('purchasing-raw-material-inventory-list')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial']['stock_type'] = self.kwargs.get('stock_type', '1')  # Default to stock-in
+        return kwargs
+
     def form_valid(self, form):
         RawMaterialInventory = form.cleaned_data
+        print(RawMaterialInventory)
         messages.success(self.request, f'{RawMaterialInventory["component"]} log of {RawMaterialInventory["purchasing_doc"]} created successfully!')
 
         return super().form_valid(form)
+
+class RawMaterialInventoryAJAX(View):
+    def get(self, request, *args, **kwargs):
+        component_id = request.GET.get('component_id')
+        stock_type = request.GET.get('type')
+
+        print("Component ID:", component_id)
+        print("Stock Type:", stock_type)
+
+        if stock_type == '2':
+            raw_material = RawMaterialInventory.objects.filter(
+                component_id=component_id,
+                stock_type='1',  # Stock In
+            ).extra(
+                select={'formatted_date': "(exp_date || '-01')"}
+            ).order_by('formatted_date').first()
+
+        if raw_material:
+                fifo_info = {
+                    'lot_number': raw_material.lot_number,
+                    'exp_date': raw_material.exp_date,
+                    'price_per_unit': raw_material.price_per_unit,
+                    'purchasing_doc': raw_material.purchasing_doc_id,  # Assuming purchasing_doc is a ForeignKey
+                }
+
+                print(raw_material.purchasing_doc_id)
+                return JsonResponse(fifo_info)
+
+        return JsonResponse(fifo_info)
 
 class RawMaterialInventoryListView(LoginRequiredMixin, ListView):
     model = RawMaterialInventory

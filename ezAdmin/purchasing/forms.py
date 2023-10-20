@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+import requests
 
 class SupplierForm(forms.ModelForm):
     class Meta:
@@ -29,7 +30,60 @@ class BOMComponentForm(forms.ModelForm):
 class RawMaterialInventoryForm(forms.ModelForm):
     class Meta:
         model = RawMaterialInventory
-        fields = ['component', 'lot_number', 'exp_date', 'quantity', 'stock_type', 'price_per_unit', 'purchasing_doc']
+        fields = ['component', 'quantity', 'stock_type', 'price_per_unit', 'purchasing_doc', 'lot_number', 'exp_date']
+
+    def __init__(self, *args, **kwargs):
+        super(RawMaterialInventoryForm, self).__init__(*args, **kwargs)
+        self.fields['lot_number'].required = False
+        self.fields['exp_date'].required = False
+
+        if 'stock_type' in self.initial:
+            self.fields['stock_type'].disabled = True
+
+        # Get the stock type from the initial data or the form data
+        stock_type = self.initial.get('stock_type') or self.data.get('stock_type')
+
+        # If stock type is '2', filter the component queryset based on stock-in entries
+        if stock_type == '2':
+            stocked_in_components = RawMaterialInventory.objects.filter(stock_type='1').values_list('component_id', flat=True).distinct()
+            self.fields['component'].queryset = RawMaterialComponent.objects.filter(id__in=stocked_in_components)
+        else:
+            # If stock type is '1' or other, don't apply any additional filtering
+            self.fields['component'].queryset = RawMaterialComponent.objects.all()
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        stock_type = cleaned_data.get('stock_type')
+
+        # If stock_type is '1' (Stock In), ensure lot_number and exp_date are provided
+        if stock_type == '1':
+            if not cleaned_data.get('lot_number'):
+                self.add_error('lot_number', 'This field is required for Stock In.')
+            if not cleaned_data.get('exp_date'):
+                self.add_error('exp_date', 'This field is required for Stock In.')
+
+        return cleaned_data
+
+    '''def clean(self):
+        cleaned_data = super().clean()
+        stock_type = cleaned_data.get('stock_type')
+
+        if stock_type == '2':  # Stock-Out
+            component_id = cleaned_data.get('component').id
+
+            # Fetch FIFO stocks using AJAX to update lot_number and exp_date fields
+            fifo_stocks = self.fetch_fifo_stocks(component_id)
+            cleaned_data['fifo_stocks'] = fifo_stocks
+
+        return cleaned_data
+
+    def fetch_fifo_stocks(self, component_id):
+        # Replace 'http://localhost:8000/get_fifo_stocks/' with your actual endpoint
+        url = f'http://localhost:8000/get_fifo_stocks/?component_id={component_id}'
+        response = requests.get(url)
+        data = response.json()
+        return data.get('fifo_stocks', [])'''
 
 class RawMaterialInventoryInForm(forms.ModelForm):
     class Meta:

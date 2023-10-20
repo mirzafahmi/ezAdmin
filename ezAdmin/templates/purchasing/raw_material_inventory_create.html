@@ -14,16 +14,78 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                    <h3>Add Raw Material Inventory</h3>
+                    {% if form.initial.stock_type == '1' %}
+                    <h3>Log-In Raw Material Inventory</h3>
+                    {% endif %}
+                    {% if form.initial.stock_type == '2' %}
+                    <h3>Log-Out Raw Material Inventory</h3>
+                    {% endif %}
                     <hr>
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <a class="btn btn-light"  href = "{% url 'purchasing-raw-material-inventory-list' %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Create Inventory">
+                        <a class="btn btn-light"  href = "{% url 'purchasing-raw-material-inventory-main' %}"> Cancel</a>
+                        <input class="btn btn-success" type="submit" value="Create Inventory Log">
                     </form>
                 </div>
             </div>
         </div>    
     </div>
+
+    <script>
+        $(document).ready(function () {
+            // Function to set the readonly state based on a flag
+            function setReadonlyState(flag) {
+                $('#id_lot_number').prop('readonly', flag);
+                $('#id_exp_date').prop('readonly', flag);
+                $('#id_price_per_unit').prop('readonly', flag);
+                $('#id_purchasing_doc').prop('readonly', flag);
+            }
+
+            // Check the local storage for the readonly flag
+            var readonlyFlag = localStorage.getItem('readonlyFlag');
+        
+            // If the flag is set, apply readonly state
+            if (readonlyFlag === 'true') {
+                setReadonlyState(true);
+            }
+        
+            // Listen for changes in the component field
+            $('#id_component').on('change', function () {
+                var componentId = $(this).val();
+                var type = $('#id_stock_type').val();  // Assuming stock_type has the ID id_stock_type
+
+                // Make AJAX request to fetch FIFO information
+                if (type === '2') {
+                    $.ajax({
+                        url: '{% url 'purchasing-raw-material-inventory-ajax' %}',  // Replace with your actual endpoint
+                        method: 'GET',
+                        data: {
+                            component_id: componentId,
+                            type: type
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            // Update form fields with retrieved information
+                            $('#id_lot_number').val(data.lot_number);
+                            $('#id_exp_date').val(data.exp_date);
+                            $('#id_price_per_unit').val(data.price_per_unit);
+                            $('#id_purchasing_doc').val(data.purchasing_doc);
+        
+                            // Set readonly state and store the flag in local storage
+                            setReadonlyState(true);
+                            localStorage.setItem('readonlyFlag', 'true');
+                        },
+                        error: function () {
+                            console.log('Error fetching FIFO information.');
+                        }
+                    });
+                } else {
+                    // If the type is not '2', remove readonly attribute and clear the flag
+                    setReadonlyState(false);
+                    localStorage.removeItem('readonlyFlag');
+                }
+            });
+        });        
+    </script>
 {% endblock %}
