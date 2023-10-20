@@ -1,9 +1,9 @@
 from django.urls import path
 from .views import *
-from django.views.generic import TemplateView
+
 
 urlpatterns = [
-    path('purchasing/main', TemplateView.as_view(template_name = 'purchasing/purchasing_main.html'), name = 'purchasing-main'),
+    path('purchasing/main', PurchasingMainView.as_view(), name = 'purchasing-main'),
     path('purchasing/supplier/create', SupplierCreateView.as_view(), name='purchasing-supplier-create'),
     path('purchasing/supplier/list', SupplierListView.as_view(), name='purchasing-supplier-list'),
     path('purchasing/supplier/<int:pk>/update/', SupplierUpdateView.as_view(), name='purchasing-supplier-update'),

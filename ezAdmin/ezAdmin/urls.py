@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('ezadminadminpage/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path('', include('dashboard.urls')),
     path('', include('user.urls')),
     path('', include('task.urls')),

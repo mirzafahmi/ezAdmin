@@ -39,10 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'dashboard.apps.DashboardConfig',
     'user.apps.UserConfig',
     'task.apps.TaskConfig',
     'purchasing.apps.PurchasingConfig',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
     'crispy_forms',
     'crispy_bootstrap5',
     'fontawesomefree',
@@ -58,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'ezAdmin.urls'
@@ -160,3 +168,21 @@ EMAIL_HOST_PASSWORD = apps_pass
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default Django authentication backend
+    'allauth.account.auth_backends.AuthenticationBackend',  # Django Allauth authentication backend
+]
+
+'''ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3  # Token expiration time
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180  # Cooldown period'''
+
+# Set the email templates
+#ACCOUNT_EMAIL_CONFIRMATION_SIGNUP_MESSAGE = 'account/confirmation_signup_message.txt'
+#ACCOUNT_EMAIL_CONFIRMATION_SIGNUP_SUBJECT = 'account/confirmation_signup_subject.txt'
+
+
+SITE_ID = 1

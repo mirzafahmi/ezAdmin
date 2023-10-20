@@ -5,6 +5,8 @@ from .models import Product, Inventory, Customer
 from .forms import ProductForm, InventoryForm, CustomerForm
 from django.contrib import messages
 from django.db.models import Sum
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 def index(request):
@@ -224,3 +226,10 @@ def customer_delete(request, pk):
     }
 
     return render(request, 'customer/customer-delete.html', context)
+
+class InventoryMainView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/inventory_main.html'
+
+class RawMaterialMainView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/raw_material_main.html'
+
