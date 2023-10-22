@@ -1,0 +1,23 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Raw Material Inventory List (Identifier Based){% endblock %}
+
+{% block content %}
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        <h2 class = "text-center">Raw Material Inventory List (Identifier Based) Page</h2>
+        <hr>
+        <div class="card-deck">
+        {% for RawMaterialInventoryIdentifierBased in RawMaterialInventoriesIdentifierBaseds %}    
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">{{RawMaterialInventoryIdentifierBased.0}} Inventory Tab</h3>
+                    <p class="card-text">To view, create, update and delete {{RawMaterialInventoryIdentifierBased.0}} inventory log.</p>
+                    <a href="{% url 'purchasing-raw-material-inventory-identifier-component-based-list' RawMaterialInventoryIdentifierBased.1 %}" class="btn btn-primary">View {{RawMaterialInventoryIdentifierBased.0}} inventory</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        
+    </div>
+</body>
+{% endblock %}

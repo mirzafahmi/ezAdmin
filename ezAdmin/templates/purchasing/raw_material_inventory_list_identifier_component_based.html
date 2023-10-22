@@ -1,0 +1,22 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Raw Material Inventory List {% endblock %}
+
+{% block content %}
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        <h2 class = "text-center">Raw Material Inventory List For {{parent_item_code}} Page</h2>
+        <hr>
+        <div class="card-deck">
+        {% for raw_material_inventory_list_identifier_component_based in raw_material_inventory_list_identifier_component_baseds %}    
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">{{raw_material_inventory_list_identifier_component_based.name}} Inventory Tab</h3>
+                    <p class="card-text">To view, create, update and delete {{raw_material_inventory_list_identifier_component_based.name}} inventory log for {{parent_item_code}}.</p>
+                    <a href="{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list' identifier_id=identifier_id component_id=raw_material_inventory_list_identifier_component_based.id %}" class="btn btn-primary">View {{raw_material_inventory_list_identifier_component_based.name}} inventory</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>    
+    </div>
+</body>
+{% endblock %}

@@ -30,4 +30,7 @@ urlpatterns = [
     path('purchasing/raw_material_inventory/list', RawMaterialInventoryListView.as_view(), name='purchasing-raw-material-inventory-list'),
     path('purchasing/raw_material_inventory/<int:pk>/update/', RawMaterialInventoryUpdateView.as_view(), name='purchasing-raw-material-inventory-update'),
     path('purchasing/raw_material_inventory/<int:pk>/delete/', RawMaterialInventoryDeleteView.as_view(), name='purchasing-raw-material-inventory-delete'),
+    path('purchasing/raw_material_inventory/identifer_based/list', RawMaterialInventoryIdentifierBasedListView.as_view(), name='purchasing-raw-material-inventory-identifier-based-list'),
+    path('purchasing/raw_material_inventory/identifer:<int:identifier_id>/component/list', RawMaterialInventoryIdentifierComponentBasedListView.as_view(), name='purchasing-raw-material-inventory-identifier-component-based-list'),
+    path('purchasing/raw_material_inventory/identifer:<int:identifier_id>/component:<int:component_id>/list', RawMaterialInventoryIdentifierComponentBasedLogListView.as_view(), name='purchasing-raw-material-inventory-identifier-component-based-log-list'),
 ]

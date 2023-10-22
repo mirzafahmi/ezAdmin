@@ -313,6 +313,67 @@ class RawMaterialInventoryListView(LoginRequiredMixin, ListView):
 
         return RawMaterialInventory.objects.all()
 
+class RawMaterialInventoryIdentifierBasedListView(LoginRequiredMixin, ListView):
+    model = RawMaterialInventory
+    template_name = 'purchasing/raw_material_inventory_list_identifier_based.html'
+    context_object_name = 'RawMaterialInventoriesIdentifierBaseds'  # The variable name in the template
+
+    # You can customize the queryset if needed
+    def get_queryset(self):
+        # Use select_related to fetch the related RawMaterialComponent and RawMaterialIdentifier
+        queryset = RawMaterialInventory.objects.values_list('component__identifier__parent_item_code', 'component__identifier_id').distinct()
+
+        return queryset
+
+class RawMaterialInventoryIdentifierComponentBasedListView(LoginRequiredMixin, ListView):
+    model = RawMaterialInventory
+    template_name = 'purchasing/raw_material_inventory_list_identifier_component_based.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        identifier_id = self.kwargs.get('identifier_id')
+        identifier = get_object_or_404(RawMaterialIdentifier, id=identifier_id)
+
+        queryset = RawMaterialInventory.objects.filter(component__identifier=identifier)
+        
+        # Extracting a list of distinct components and their IDs
+        distinct_components = queryset.values_list('component__component', flat=True).distinct()
+        distinct_components_ids = queryset.values_list('component_id', flat=True).distinct()
+
+        # Creating a list of dictionaries for components with their ID and name
+        components_list = [{'id': component_id, 'name': component_name} for component_id, component_name in zip(distinct_components_ids, distinct_components)]
+
+        # Adding the extracted data to the context
+        context['raw_material_inventory_list_identifier_component_baseds'] = components_list
+        context['parent_item_code'] = identifier
+        context['identifier_id'] = identifier_id
+
+        return context
+
+class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin, ListView):
+    model = RawMaterialInventory
+    template_name = 'purchasing/raw_material_inventory_list_identifier_component_based_log.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        component_id = self.kwargs.get('component_id')
+
+        #identifier = get_object_or_404(RawMaterialIdentifier, id=identifier_id)
+
+        queryset = RawMaterialInventory.objects.filter(component__id=component_id)
+
+        distinct_components = queryset.values_list('component__component').distinct()
+
+        context['RawMaterialInventoriesIdentifierComponentBasedLogs'] = queryset
+        context['component_id'] = component_id
+        context['component'] = queryset.values_list('component__identifier__parent_item_code', 'component__component').distinct()
+
+        print(queryset)
+
+        return context
+
 class RawMaterialInventoryUpdateView(LoginRequiredMixin, UpdateView):
     model = RawMaterialInventory
     form_class = RawMaterialInventoryForm
