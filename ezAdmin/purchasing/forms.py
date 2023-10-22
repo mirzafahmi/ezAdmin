@@ -42,11 +42,25 @@ class RawMaterialInventoryForm(forms.ModelForm):
 
         # Get the stock type from the initial data or the form data
         stock_type = self.initial.get('stock_type') or self.data.get('stock_type')
+        identifier_id = self.initial.get('identifier_id') or self.data.get('identifier_id')
+        component_id = self.initial.get('component_id') or self.data.get('component_id')
+
+        #disable the component and auto select the component
+        '''if identifier_id and component_id:
+            try:
+                identifier = RawMaterialIdentifier.objects.get(pk=identifier_id)
+                component = RawMaterialComponent.objects.get(pk=component_id, identifier=identifier)
+                self.fields['component'].initial = component
+                # Disable the component field
+                self.fields['component'].disabled = True
+            except RawMaterialIdentifier.DoesNotExist or RawMaterialComponent.DoesNotExist:
+                pass'''
 
         # If stock type is '2', filter the component queryset based on stock-in entries
         if stock_type == '2':
             stocked_in_components = RawMaterialInventory.objects.filter(stock_type='1').values_list('component_id', flat=True).distinct()
             self.fields['component'].queryset = RawMaterialComponent.objects.filter(id__in=stocked_in_components)
+    
         else:
             # If stock type is '1' or other, don't apply any additional filtering
             self.fields['component'].queryset = RawMaterialComponent.objects.all()
@@ -64,58 +78,3 @@ class RawMaterialInventoryForm(forms.ModelForm):
                 self.add_error('exp_date', 'This field is required for Stock In.')
 
         return cleaned_data
-
-    '''def clean(self):
-        cleaned_data = super().clean()
-        stock_type = cleaned_data.get('stock_type')
-
-        if stock_type == '2':  # Stock-Out
-            component_id = cleaned_data.get('component').id
-
-            # Fetch FIFO stocks using AJAX to update lot_number and exp_date fields
-            fifo_stocks = self.fetch_fifo_stocks(component_id)
-            cleaned_data['fifo_stocks'] = fifo_stocks
-
-        return cleaned_data
-
-    def fetch_fifo_stocks(self, component_id):
-        # Replace 'http://localhost:8000/get_fifo_stocks/' with your actual endpoint
-        url = f'http://localhost:8000/get_fifo_stocks/?component_id={component_id}'
-        response = requests.get(url)
-        data = response.json()
-        return data.get('fifo_stocks', [])'''
-
-class RawMaterialInventoryInForm(forms.ModelForm):
-    class Meta:
-        model = RawMaterialInventory
-        fields = ['component', 'quantity', 'lot_number', 'exp_date', 'price_per_unit', 'purchasing_doc']
-        widgets = {
-            'component': forms.Select(attrs={'class': 'form-control'}),
-            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
-            'lot_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'exp_date': forms.TextInput(attrs={'class': 'form-control'}),
-            'price_per_unit': forms.TextInput(attrs={'class': 'form-control'}),
-            'purchasing_doc': forms.Select(attrs={'class': 'form-control'}),
-        }
-
-    stock_type = forms.CharField(widget=forms.HiddenInput(), initial='1')  # Set stock_type to '1' for Stock-In
-
-class RawMaterialInventoryOutForm(forms.ModelForm):
-    class Meta:
-        model = RawMaterialInventory
-        fields = ['component', 'quantity', 'lot_number', 'exp_date', 'price_per_unit', 'purchasing_doc']
-        widgets = {
-            'component': forms.Select(attrs={'class': 'form-control'}),
-            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
-            'lot_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'exp_date': forms.TextInput(attrs={'class': 'form-control'}),
-            'price_per_unit': forms.TextInput(attrs={'class': 'form-control'}),
-            'purchasing_doc': forms.Select(attrs={'class': 'form-control'}),
-        }
-
-    stock_type = forms.CharField(widget=forms.HiddenInput(), initial='2')  # Set stock_type to '2' for Stock-Out
-    stock_in_record = forms.ModelChoiceField(
-        queryset=RawMaterialInventory.objects.filter(stock_type='1'),  # Filter only stock-in records
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        label='Select Stock-In Record'
-    )

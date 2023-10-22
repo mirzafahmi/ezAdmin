@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
 from .models import *
@@ -264,7 +264,9 @@ class RawMaterialInventoryCreateView(LoginRequiredMixin,CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        
         kwargs['initial']['stock_type'] = self.kwargs.get('stock_type', '1')  # Default to stock-in
+
         return kwargs
 
     def form_valid(self, form):
@@ -282,6 +284,10 @@ class RawMaterialInventoryAJAX(View):
         print("Component ID:", component_id)
         print("Stock Type:", stock_type)
 
+        print('hi')
+
+        print(request.GET)
+
         if stock_type == '2':
             raw_material = RawMaterialInventory.objects.filter(
                 component_id=component_id,
@@ -292,6 +298,7 @@ class RawMaterialInventoryAJAX(View):
 
         if raw_material:
                 fifo_info = {
+                    'component': raw_material.component,
                     'lot_number': raw_material.lot_number,
                     'exp_date': raw_material.exp_date,
                     'price_per_unit': raw_material.price_per_unit,
@@ -300,7 +307,7 @@ class RawMaterialInventoryAJAX(View):
 
                 print(raw_material.purchasing_doc_id)
                 return JsonResponse(fifo_info)
-
+        #create else for the type 1 to handle the value
         return JsonResponse(fifo_info)
 
 class RawMaterialInventoryListView(LoginRequiredMixin, ListView):
@@ -351,6 +358,78 @@ class RawMaterialInventoryIdentifierComponentBasedListView(LoginRequiredMixin, L
 
         return context
 
+class RawMaterialInventoryIdentifierComponentBasedLogCreateMainView(LoginRequiredMixin, TemplateView):
+    template_name = 'purchasing/raw_material_inventory_identifier_component_based_log_create_main.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        component_id = self.kwargs.get('component_id')
+
+        #identifier = get_object_or_404(RawMaterialIdentifier, id=identifier_id)
+
+        queryset = RawMaterialInventory.objects.filter(component__id=component_id)
+
+        distinct_components = queryset.values_list('component__component').distinct()
+
+        context['RawMaterialInventoriesIdentifierComponentBasedLogs'] = queryset
+        context['identifier_id'] = queryset.values_list('component__identifier__id').distinct()[0][0]
+        context['component_id'] = component_id
+        context['component'] = queryset.values_list('component__identifier__parent_item_code', 'component__component').distinct()
+
+        return context
+    
+
+
+class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMixin, CreateView):
+    model = RawMaterialInventory
+    form_class = RawMaterialInventoryForm
+    template_name = 'purchasing/raw_material_inventory_identifier_component_based_log_create.html'
+    success_url = reverse_lazy('purchasing-raw-material-inventory-list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial']['identifier_id'] = self.kwargs.get('identifier_id')
+        kwargs['initial']['component_id'] = self.kwargs.get('component_id')
+        kwargs['initial']['stock_type'] = self.kwargs.get('stock_type', '1')  # Default to stock-in
+
+        print(kwargs)
+        return kwargs
+
+    def form_valid(self, form):
+        RawMaterialInventory = form.cleaned_data
+
+        messages.success(self.request, f'{RawMaterialInventory["component"]} log of {RawMaterialInventory["purchasing_doc"]} created successfully!')
+
+        return super().form_valid(form)
+
+class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View):
+    def get(self, request, *args, **kwargs):
+        component_id = request.GET.get('component_id')
+        stock_type = request.GET.get('type')
+
+        print(request)
+
+        if stock_type == '2':
+            raw_material = RawMaterialInventory.objects.filter(
+                component_id=component_id,
+                stock_type='1',  # Stock In
+            ).extra(
+                select={'formatted_date': "(exp_date || '-01')"}
+            ).order_by('formatted_date').first()
+
+        if raw_material:
+                fifo_info = {
+                    'lot_number': raw_material.lot_number,
+                    'exp_date': raw_material.exp_date,
+                    'price_per_unit': raw_material.price_per_unit,
+                    'purchasing_doc': raw_material.purchasing_doc_id,  # Assuming purchasing_doc is a ForeignKey
+                }
+
+                return JsonResponse(fifo_info)
+
+        return JsonResponse(fifo_info)
+
 class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin, ListView):
     model = RawMaterialInventory
     template_name = 'purchasing/raw_material_inventory_identifier_component_based_log_list.html'
@@ -367,6 +446,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin
         distinct_components = queryset.values_list('component__component').distinct()
 
         context['RawMaterialInventoriesIdentifierComponentBasedLogs'] = queryset
+        context['identifier_id'] = queryset.values_list('component__identifier__id').distinct()[0][0]
         context['component_id'] = component_id
         context['component'] = queryset.values_list('component__identifier__parent_item_code', 'component__component').distinct()
 
