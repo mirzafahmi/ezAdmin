@@ -47,13 +47,13 @@
                     <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.purchasing_doc}}</td>
                     <td>
                         <div class = "d-grid">
-                                <a class="btn btn-outline-primary btn-sm btn-block" href ="">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-raw-material-inventory-identifier-component-based-log-update' RawMaterialInventoriesIdentifierComponentBasedLog.component.identifier.id RawMaterialInventoriesIdentifierComponentBasedLog.component.id RawMaterialInventoriesIdentifierComponentBasedLog.id %}">
                                     Edit
                                 </a>
                                 <a class="btn btn-outline-success btn-sm btn-block" href ="">
                                     Validate
                                 </a>
-                                <a class="btn btn-outline-danger btn-sm btn-block" href ="">
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'purchasing-raw-material-inventory-identifier-component-based-log-delete' RawMaterialInventoriesIdentifierComponentBasedLog.component.identifier.id RawMaterialInventoriesIdentifierComponentBasedLog.component.id RawMaterialInventoriesIdentifierComponentBasedLog.id %}">
                                     Delete
                                 </a>
                             </ul>

@@ -315,7 +315,7 @@ class RawMaterialInventoryListView(LoginRequiredMixin, ListView):
 
 class RawMaterialInventoryIdentifierBasedListView(LoginRequiredMixin, ListView):
     model = RawMaterialInventory
-    template_name = 'purchasing/raw_material_inventory_list_identifier_based.html'
+    template_name = 'purchasing/raw_material_inventory_identifier_based_main.html'
     context_object_name = 'RawMaterialInventoriesIdentifierBaseds'  # The variable name in the template
 
     # You can customize the queryset if needed
@@ -327,7 +327,7 @@ class RawMaterialInventoryIdentifierBasedListView(LoginRequiredMixin, ListView):
 
 class RawMaterialInventoryIdentifierComponentBasedListView(LoginRequiredMixin, ListView):
     model = RawMaterialInventory
-    template_name = 'purchasing/raw_material_inventory_list_identifier_component_based.html'
+    template_name = 'purchasing/raw_material_inventory_identifier_component_based_main.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -353,7 +353,7 @@ class RawMaterialInventoryIdentifierComponentBasedListView(LoginRequiredMixin, L
 
 class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin, ListView):
     model = RawMaterialInventory
-    template_name = 'purchasing/raw_material_inventory_list_identifier_component_based_log.html'
+    template_name = 'purchasing/raw_material_inventory_identifier_component_based_log_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -370,9 +370,37 @@ class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin
         context['component_id'] = component_id
         context['component'] = queryset.values_list('component__identifier__parent_item_code', 'component__component').distinct()
 
-        print(queryset)
-
         return context
+
+class RawMaterialInventoryIdentifierComponentBasedLogUpdateView(LoginRequiredMixin, UpdateView):
+    model = RawMaterialInventory
+    form_class = RawMaterialInventoryForm
+    template_name = 'purchasing/raw_material_inventory_identifier_component_based_update.html'
+    context_object_name = 'raw_material_inventory'
+
+    def get_success_url(self):
+        return reverse_lazy('purchasing-raw-material-inventory-identifier-component-based-log-list', args=[self.object.component.identifier.id, self.object.component.id])
+
+    def form_valid(self, form):
+        RawMaterialInventory = self.get_object()
+        messages.success(self.request, f'{RawMaterialInventory.component} updated successfully!')
+
+        return super().form_valid(form)
+
+class RawMaterialInventoryIdentifierComponentBasedLogDeleteView(LoginRequiredMixin,DeleteView):
+    model = RawMaterialInventory
+    template_name = 'purchasing/raw_material_inventory_identifier_component_based_delete.html'
+    context_object_name = 'raw_material_inventory'
+
+    def get_success_url(self):
+        return reverse_lazy('purchasing-raw-material-inventory-identifier-component-based-log-list', args=[self.object.component.identifier.id, self.object.component.id])
+
+    def delete(self, request, *args, **kwargs):
+        RawMaterialInventory = self.get_object()
+        response = super().delete(request, *args, **kwargs)
+        messages.success(self.request, f'{RawMaterialInventory.component} deleted successfully!')
+
+        return response
 
 class RawMaterialInventoryUpdateView(LoginRequiredMixin, UpdateView):
     model = RawMaterialInventory
