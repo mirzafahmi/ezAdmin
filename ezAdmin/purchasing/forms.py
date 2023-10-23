@@ -46,19 +46,23 @@ class RawMaterialInventoryForm(forms.ModelForm):
         identifier_id = self.initial.get('identifier_id') or self.data.get('identifier_id')
         component_id = self.initial.get('component_id') or self.data.get('component_id')
 
-        # If stock type is '2', filter the component queryset based on stock-in entries
+        # If stock type is '2', filter the component queryset based on stock-in entries and its related component only
         if stock_type == '2':
-            stocked_in_components = RawMaterialInventory.objects.filter(stock_type='1').values_list('component_id', flat=True).distinct()
+            stocked_in_components = RawMaterialInventory.objects.filter(stock_type='1', component__identifier_id = identifier_id).values_list('component_id', flat=True).distinct()
             self.fields['component'].queryset = RawMaterialComponent.objects.filter(id__in=stocked_in_components)
     
         else:
-            # If stock type is '1' or other, don't apply any additional filtering
-            self.fields['component'].queryset = RawMaterialComponent.objects.all()
+            stocked_in_components = RawMaterialInventory.objects.filter(component__identifier_id = identifier_id).values_list('component_id', flat=True).distinct()
+            self.fields['component'].queryset = RawMaterialComponent.objects.filter(id__in=stocked_in_components)
 
 
     def clean(self):
         cleaned_data = super().clean()
         stock_type = cleaned_data.get('stock_type')
+        quantity = cleaned_data.get('quantity')
+        component = cleaned_data.get('component')
+        purchasing_doc = cleaned_data.get('purchasing_doc')
+        lot_number = cleaned_data.get('lot_number')
 
         # If stock_type is '1' (Stock In), ensure lot_number and exp_date are provided
         if stock_type == '1':
@@ -66,5 +70,6 @@ class RawMaterialInventoryForm(forms.ModelForm):
                 self.add_error('lot_number', 'This field is required for Stock In.')
             if not cleaned_data.get('exp_date'):
                 self.add_error('exp_date', 'This field is required for Stock In.')
+        
 
         return cleaned_data

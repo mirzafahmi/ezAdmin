@@ -2,8 +2,9 @@ from django.db import models
 from django.core.validators import validate_email, DecimalValidator
 from dashboard.models import Product, Currency
 from django.utils import timezone
+from mixins.modify_case_fields_mixin import *
 
-class Supplier(models.Model):
+class Supplier(CapitalcaseFieldsMixin, models.Model):
     company_name = models.CharField(max_length=200, unique=True)
     address = models.CharField(max_length=200)
     representative_name = models.CharField(max_length=200, blank = True, null = True)
@@ -13,6 +14,8 @@ class Supplier(models.Model):
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
+
+    exempt_fields = ['email']
 
     def __str__(self):
         return f'{self.company_name}'
@@ -52,7 +55,7 @@ class PurchasingDocument(models.Model):
 
         super(PurchasingDocument, self).save(*args, **kwargs)
 
-class RawMaterialIdentifier(models.Model):
+class RawMaterialIdentifier(UppercaseFieldsMixin, models.Model):
     parent_item_code = models.CharField(max_length=20, unique=True)
 
     create_date = models.DateTimeField(blank = True, null = True)
@@ -70,7 +73,7 @@ class RawMaterialIdentifier(models.Model):
         super(RawMaterialIdentifier, self).save(*args, **kwargs)
 
 
-class RawMaterialComponent(models.Model):
+class RawMaterialComponent(CapitalcaseFieldsMixin, models.Model):
     component = models.CharField(max_length=20, unique=True, blank=True, null=True)
     spec = models.CharField(max_length=200, blank = True, null = True)
     identifier = models.ForeignKey(RawMaterialIdentifier, on_delete=models.CASCADE)
@@ -128,7 +131,7 @@ class ProductionLog(models.Model):
         super(ProductionLog, self).save(*args, **kwargs)
 
 
-class RawMaterialInventory(models.Model):
+class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
     component = models.ForeignKey(RawMaterialComponent, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     lot_number = models.CharField(max_length=200, blank = True, null = True)
@@ -142,10 +145,15 @@ class RawMaterialInventory(models.Model):
     stock_out_date = models.DateTimeField(blank = True, null = True)
     validation_date = models.DateTimeField(blank = True, null = True)
 
+    exempt_fields = ['lot_number']
+
     def __str__(self):
         return f'{self.component}({self.purchasing_doc})'
 
     def save(self, *args, **kwargs):
+        self.lot_number = self.lot_number.upper()
+
+        # add self.stock_xx_date = None if any stock type selected or updated
         if self.stock_type is '1':
             self.stock_in_date = timezone.localtime(timezone.now())
         if self.stock_type is '2':

@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.views import View
 from django.shortcuts import get_object_or_404
+from django.db.models import F, Sum, Value
+from django.db.models.functions import Coalesce
 
 class PurchasingMainView(LoginRequiredMixin, TemplateView):
     template_name = 'purchasing/purchasing_main.html'
@@ -282,7 +284,6 @@ class RawMaterialInventoryAJAX(View):
         component_id = request.GET.get('component_id')
         stock_type = request.GET.get('type')
 
-        print(component_id)
         if stock_type == '2':
             raw_material = RawMaterialInventory.objects.filter(
                 component_id=component_id,
@@ -377,8 +378,6 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateMainView(LoginRequire
 
         return context
     
-
-
 class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMixin, CreateView):
     model = RawMaterialInventory
     form_class = RawMaterialInventoryForm
@@ -397,7 +396,6 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMix
         kwargs['initial']['component_id'] = self.kwargs.get('component_id')
         kwargs['initial']['stock_type'] = self.kwargs.get('stock_type', '1')  # Default to stock-in
 
-        print(kwargs)
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -420,9 +418,14 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMix
         return context
 
     def form_valid(self, form):
-        RawMaterialInventory = form.cleaned_data
+        raw_material_inventory = form.save(commit=False)
 
-        messages.success(self.request, f'{RawMaterialInventory["component"]} log of {RawMaterialInventory["purchasing_doc"]} created successfully!')
+        component = raw_material_inventory.component
+        purchasing_doc = raw_material_inventory.purchasing_doc
+
+        raw_material_inventory.save()
+
+        messages.success(self.request, f'{component} log of {purchasing_doc} created successfully!')
 
         return super().form_valid(form)
 
@@ -431,32 +434,53 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View):
         identifier_id = request.GET.get('identifier_id')
         component_id = request.GET.get('component_id')
         stock_type = request.GET.get('type')
+        quantity = int(request.GET.get('quantity', 0))
 
-        print(component_id)
         if stock_type == '2':
-            raw_material = RawMaterialInventory.objects.filter(
+            current_raw_material = None
+
+            # 1. Filter stock type 1 (Stock In) items, ordered by FIFO criteria.
+            stock_in_items = RawMaterialInventory.objects.filter(
                 component_id=component_id,
-                stock_type='1',  # Stock In
-            ).extra(
-                select={'formatted_date': "(exp_date || '-01')"}
-            ).order_by('formatted_date').first()
+                stock_type='1',
+            ).order_by('exp_date')
+            print(stock_in_items)
+            for stock_in_item in stock_in_items:
+                # 2. Get stock items with the same lot number and purchasing document in stock type 2 (Stock Out).
+                stock_out_items = RawMaterialInventory.objects.filter(
+                    component_id=component_id,
+                    stock_type='2',
+                    purchasing_doc=stock_in_item.purchasing_doc,
+                    lot_number=stock_in_item.lot_number,
+                    exp_date=stock_in_item.exp_date,
+                )
+                print(stock_in_item.exp_date)
+                print(stock_in_item.exp_date)
+                print(stock_out_items)
+                # 3. Deduct quantity based on stock_out_items.
+                quantity_type_1 = stock_in_item.quantity
+                quantity_type_2 = stock_out_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+                available_quantity = quantity_type_1 - quantity_type_2
+                print(available_quantity)
+                if quantity <= available_quantity:
+                    current_raw_material = stock_in_item
+                    break  # Quantity found, exit the loop.
 
-            if raw_material:
-                    fifo_info = {
-                        'component': raw_material.component.id,
-                        'lot_number': raw_material.lot_number,
-                        'exp_date': raw_material.exp_date,
-                        'price_per_unit': raw_material.price_per_unit,
-                        'purchasing_doc': raw_material.purchasing_doc_id,  # Assuming purchasing_doc is a ForeignKey
-                    }
-
-                    return JsonResponse(fifo_info)
+            response_data = {
+            'component': current_raw_material.component.id,
+            'lot_number': current_raw_material.lot_number,
+            'exp_date': current_raw_material.exp_date,
+            'price_per_unit': current_raw_material.price_per_unit,
+            'purchasing_doc': current_raw_material.purchasing_doc_id,  # Assuming purchasing_doc is a ForeignKey
+            }
+            print(current_raw_material)
+            return JsonResponse(response_data)
         else:
-            fifo_info = {
+            response_data = {
                 'component': component_id
             }
         #create else for the type 1 to handle the value
-        return JsonResponse(fifo_info)
+        return JsonResponse(response_data)
 
 class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin, ListView):
     model = RawMaterialInventory
@@ -485,6 +509,14 @@ class RawMaterialInventoryIdentifierComponentBasedLogUpdateView(LoginRequiredMix
     form_class = RawMaterialInventoryForm
     template_name = 'purchasing/raw_material_inventory_identifier_component_based_update.html'
     context_object_name = 'raw_material_inventory'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial']['identifier_id'] = self.kwargs.get('identifier_id')
+        kwargs['initial']['component_id'] = self.kwargs.get('component_id')
+        kwargs['initial']['stock_type'] = self.kwargs.get('stock_type', '1')  # Default to stock-in
+
+        return kwargs
 
     def get_success_url(self):
         return reverse_lazy('purchasing-raw-material-inventory-identifier-component-based-log-list', args=[self.object.component.identifier.id, self.object.component.id])
