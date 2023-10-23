@@ -28,6 +28,7 @@ class BOMComponentForm(forms.ModelForm):
         fields = ['product', 'raw_material_component', 'quantity_used']
 
 class RawMaterialInventoryForm(forms.ModelForm):
+    data_overide = forms.BooleanField(required=False)
     class Meta:
         model = RawMaterialInventory
         fields = ['component', 'quantity', 'stock_type', 'price_per_unit', 'purchasing_doc', 'lot_number', 'exp_date']
@@ -44,17 +45,6 @@ class RawMaterialInventoryForm(forms.ModelForm):
         stock_type = self.initial.get('stock_type') or self.data.get('stock_type')
         identifier_id = self.initial.get('identifier_id') or self.data.get('identifier_id')
         component_id = self.initial.get('component_id') or self.data.get('component_id')
-
-        #disable the component and auto select the component
-        '''if identifier_id and component_id:
-            try:
-                identifier = RawMaterialIdentifier.objects.get(pk=identifier_id)
-                component = RawMaterialComponent.objects.get(pk=component_id, identifier=identifier)
-                self.fields['component'].initial = component
-                # Disable the component field
-                self.fields['component'].disabled = True
-            except RawMaterialIdentifier.DoesNotExist or RawMaterialComponent.DoesNotExist:
-                pass'''
 
         # If stock type is '2', filter the component queryset based on stock-in entries
         if stock_type == '2':

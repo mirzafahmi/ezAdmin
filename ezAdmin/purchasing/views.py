@@ -278,16 +278,11 @@ class RawMaterialInventoryCreateView(LoginRequiredMixin,CreateView):
 
 class RawMaterialInventoryAJAX(View):
     def get(self, request, *args, **kwargs):
+        identifier_id = request.GET.get('identifier_id')
         component_id = request.GET.get('component_id')
         stock_type = request.GET.get('type')
 
-        print("Component ID:", component_id)
-        print("Stock Type:", stock_type)
-
-        print('hi')
-
-        print(request.GET)
-
+        print(component_id)
         if stock_type == '2':
             raw_material = RawMaterialInventory.objects.filter(
                 component_id=component_id,
@@ -296,17 +291,20 @@ class RawMaterialInventoryAJAX(View):
                 select={'formatted_date': "(exp_date || '-01')"}
             ).order_by('formatted_date').first()
 
-        if raw_material:
-                fifo_info = {
-                    'component': raw_material.component,
-                    'lot_number': raw_material.lot_number,
-                    'exp_date': raw_material.exp_date,
-                    'price_per_unit': raw_material.price_per_unit,
-                    'purchasing_doc': raw_material.purchasing_doc_id,  # Assuming purchasing_doc is a ForeignKey
-                }
+            if raw_material:
+                    fifo_info = {
+                        'component': raw_material.component.id,
+                        'lot_number': raw_material.lot_number,
+                        'exp_date': raw_material.exp_date,
+                        'price_per_unit': raw_material.price_per_unit,
+                        'purchasing_doc': raw_material.purchasing_doc_id,  # Assuming purchasing_doc is a ForeignKey
+                    }
 
-                print(raw_material.purchasing_doc_id)
-                return JsonResponse(fifo_info)
+                    return JsonResponse(fifo_info)
+        else:
+            fifo_info = {
+                'component': component_id
+            }
         #create else for the type 1 to handle the value
         return JsonResponse(fifo_info)
 
@@ -385,7 +383,13 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMix
     model = RawMaterialInventory
     form_class = RawMaterialInventoryForm
     template_name = 'purchasing/raw_material_inventory_identifier_component_based_log_create.html'
-    success_url = reverse_lazy('purchasing-raw-material-inventory-list')
+
+    def get_success_url(self):
+        identifier_id = self.kwargs.get('identifier_id')
+        component_id = self.kwargs.get('component_id')
+        stock_type = self.kwargs.get('stock_type', '1')
+
+        return reverse_lazy('purchasing-raw-material-inventory-identifier-component-based-log-list', args=[identifier_id, component_id])
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -396,6 +400,25 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMix
         print(kwargs)
         return kwargs
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        identifier_id = self.kwargs.get('identifier_id')
+        component_id = self.kwargs.get('component_id')
+        stock_type = self.kwargs.get('stock_type', '1')
+
+        identifier_name = RawMaterialIdentifier.objects.get(id = identifier_id)
+        component_name = RawMaterialComponent.objects.get(id = component_id)
+
+        context['identifier_id'] = identifier_id
+        context['component_id'] = component_id
+        context['stock_type'] = stock_type
+
+        context['identifier_name'] = identifier_name
+        context['component_name'] = component_name
+
+        return context
+
     def form_valid(self, form):
         RawMaterialInventory = form.cleaned_data
 
@@ -405,11 +428,11 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMix
 
 class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View):
     def get(self, request, *args, **kwargs):
+        identifier_id = request.GET.get('identifier_id')
         component_id = request.GET.get('component_id')
         stock_type = request.GET.get('type')
 
-        print(request)
-
+        print(component_id)
         if stock_type == '2':
             raw_material = RawMaterialInventory.objects.filter(
                 component_id=component_id,
@@ -418,16 +441,21 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View):
                 select={'formatted_date': "(exp_date || '-01')"}
             ).order_by('formatted_date').first()
 
-        if raw_material:
-                fifo_info = {
-                    'lot_number': raw_material.lot_number,
-                    'exp_date': raw_material.exp_date,
-                    'price_per_unit': raw_material.price_per_unit,
-                    'purchasing_doc': raw_material.purchasing_doc_id,  # Assuming purchasing_doc is a ForeignKey
-                }
+            if raw_material:
+                    fifo_info = {
+                        'component': raw_material.component.id,
+                        'lot_number': raw_material.lot_number,
+                        'exp_date': raw_material.exp_date,
+                        'price_per_unit': raw_material.price_per_unit,
+                        'purchasing_doc': raw_material.purchasing_doc_id,  # Assuming purchasing_doc is a ForeignKey
+                    }
 
-                return JsonResponse(fifo_info)
-
+                    return JsonResponse(fifo_info)
+        else:
+            fifo_info = {
+                'component': component_id
+            }
+        #create else for the type 1 to handle the value
         return JsonResponse(fifo_info)
 
 class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin, ListView):
