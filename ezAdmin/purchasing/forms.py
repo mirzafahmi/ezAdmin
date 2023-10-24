@@ -1,6 +1,7 @@
 from django import forms
 from .models import *
 import requests
+from mixins.validation_mixin import QuantityValidationMixin
 
 class SupplierForm(forms.ModelForm):
     class Meta:
@@ -27,7 +28,7 @@ class BOMComponentForm(forms.ModelForm):
         model = BOMComponent
         fields = ['product', 'raw_material_component', 'quantity_used']
 
-class RawMaterialInventoryForm(forms.ModelForm):
+class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
     data_overide = forms.BooleanField(required=False)
     class Meta:
         model = RawMaterialInventory
@@ -55,6 +56,9 @@ class RawMaterialInventoryForm(forms.ModelForm):
             stocked_in_components = RawMaterialInventory.objects.filter(component__identifier_id = identifier_id).values_list('component_id', flat=True).distinct()
             self.fields['component'].queryset = RawMaterialComponent.objects.filter(id__in=stocked_in_components)
 
+    def calculate_available_quantity(self, component_id):
+        current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
+        return current_raw_material_quantity
 
     def clean(self):
         cleaned_data = super().clean()
@@ -66,10 +70,20 @@ class RawMaterialInventoryForm(forms.ModelForm):
 
         # If stock_type is '1' (Stock In), ensure lot_number and exp_date are provided
         if stock_type == '1':
-            if not cleaned_data.get('lot_number'):
-                self.add_error('lot_number', 'This field is required for Stock In.')
-            if not cleaned_data.get('exp_date'):
-                self.add_error('exp_date', 'This field is required for Stock In.')
-        
-
+            if not lot_number:
+                self.add_error('lot_number', 'Lot Number is required for Stock In.')
+            if not lot_number:
+                self.add_error('exp_date', 'Expiry Date is required for Stock In.')
+            if quantity <= 0:
+                self.add_error('quantity', "Stock in quantity must be more than 0.")
+        else:
+            if quantity <= 0:
+                self.add_error('quantity', "Stock out quantity must be more than 0.")
+            
+            component_id = component.id  # Assuming component has an 'id' field
+            available_quantity = self.calculate_available_quantity(component_id)
+            if quantity > available_quantity if available_quantity is not None else 0:
+                self.add_error('quantity', "Quantity exceeds available quantity.")
+            print(available_quantity)
+            
         return cleaned_data

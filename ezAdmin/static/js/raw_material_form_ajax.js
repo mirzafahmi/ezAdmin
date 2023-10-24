@@ -1,76 +1,43 @@
-{% extends 'partials/base.html' %}
-{% block tittle %} Add Raw Material Inventory{% endblock %}
-{% load crispy_forms_tags %}
+function performAjaxAction(action, baseUrl) {
+    $(document).ready(function (action, baseUrl) {
+        // Function to set the readonly state based on a flag
+        function setReadonlyState(flag) {
+            $('#id_lot_number').prop('readonly', flag);
+            $('#id_exp_date').prop('readonly', flag);
+            $('#id_price_per_unit').prop('readonly', flag);
+            $('#id_purchasing_doc').prop('readonly', flag);
+        }
 
-{% block content %}
-    <div class="container">
-        <div class="row mt-5">
-            <div class="col-md-6 offset-md-3">
-                <div class="border p-3">
-                    {% for message in messages %}
-                    {% if message %}
-                    <div class = "alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                    {% if form.initial.stock_type == '1' %}
-                    <h3>Log-In Raw Material Inventory ({{component_name}})</h3>
-                    {% endif %}
-                    {% if form.initial.stock_type == '2' %}
-                    <h3>Log-Out Raw Material Inventory</h3>
-                    {% endif %}
-                    <hr>
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{ form|crispy}}
-                        <a class="btn btn-light"  href = "{% url 'purchasing-raw-material-inventory-identifier-component-based-log-create-main' identifier_id component_id %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Create Inventory Log">
-                    </form>
-                </div>
-            </div>
-        </div>    
-    </div>
-    <!-- add logic to the stock out thus it can stock out more than stock in -->
-    <script>
-        $(document).ready(function () {
-            // Function to set the readonly state based on a flag
-            function setReadonlyState(flag) {
-                $('#id_lot_number').prop('readonly', flag);
-                $('#id_exp_date').prop('readonly', flag);
-                $('#id_price_per_unit').prop('readonly', flag);
-                $('#id_purchasing_doc').prop('readonly', flag);
-            }
+        // Check the local storage for the readonly flag
+        var readonlyFlag = localStorage.getItem('readonlyFlag');
+    
+        // If the flag is set, apply readonly state
+        if (readonlyFlag === 'true') {
+            setReadonlyState(true);
+        }
 
-            // Check the local storage for the readonly flag
-            var readonlyFlag = localStorage.getItem('readonlyFlag');
+        function getUrlParameter(name) {
+            var regex = new RegExp(name + ':([^&;]+?)(&|#|;|$)');
+            var results = regex.exec(window.location.href);
+            if (!results) return null;
+            if (!results[1]) return '';
+
+            // Split the value by '/'
+            var values = results[1].split('/');
+            
+            // Get the first value
+            var desiredValue = values[0];
+            
+            return decodeURIComponent(desiredValue.replace(/\+/g, ' '));
+        }            
+
+        var identifierId = getUrlParameter('identifier');
+        var componentId = getUrlParameter('component');
+        var stockType = getUrlParameter('type');
         
-            // If the flag is set, apply readonly state
-            if (readonlyFlag === 'true') {
-                setReadonlyState(true);
-            }
-
-            function getUrlParameter(name) {
-                var regex = new RegExp(name + ':([^&;]+?)(&|#|;|$)');
-                var results = regex.exec(window.location.href);
-                if (!results) return null;
-                if (!results[1]) return '';
-
-                // Split the value by '/'
-                var values = results[1].split('/');
-                
-                // Get the first value
-                var desiredValue = values[0];
-                
-                return decodeURIComponent(desiredValue.replace(/\+/g, ' '));
-            }            
-
-            var identifierId = getUrlParameter('identifier');
-            var componentId = getUrlParameter('component');
-            var stockType = getUrlParameter('type');
-        
+        if (action === 'create') {
             function fetchComponentOptions(identifierId, componentId, stockType) {
-                var baseUrl = '{% url 'purchasing-raw-material-inventory-identifier-component-based-log-create-ajax' %}';
+                var baseUrl = baseUrl;
                 var ajaxUrl = baseUrl + '?component_id=' + componentId + '&type=' + stockType;
 
                 $.ajax({
@@ -112,11 +79,6 @@
                                     var quantityField = $('#id_quantity');
                                     var selectedQuantity = parseFloat(quantityField.val());
                                     console.log(selectedQuantity)
-                                    /*if (selectedQuantity > availableQuantity) {
-                                        // Raise an error and disable form submission
-                                        quantityField.val('');  // Clear the field
-                                        alert('Quantity exceeds available quantity.');
-                                    }*/
                                 },
                                 error: function () {
                                     console.log('Error fetching FIFO information.');
@@ -138,13 +100,15 @@
             if (identifierId && componentId && stockType) {
                 fetchComponentOptions(identifierId, componentId, stockType);
             }
+        }
 
-            // Listen for changes in the component field
-            $('#id_component').on('change', function () {
+        // Listen for changes in the component field
+        if (action === 'update') {
+            $('#id_component').on('change', function (action, baseUrl) {
                 var componentId = $(this).val();
                 var type = $('#id_stock_type').val();  // Assuming stock_type has the ID id_stock_type
 
-                var baseUrl = '{% url 'purchasing-raw-material-inventory-ajax' %}';
+                var baseUrl = baseUrl;
                 var ajaxUrl = baseUrl + '?component_id=' + componentId + '&type=' + type;
 
 
@@ -180,17 +144,17 @@
                     localStorage.removeItem('readonlyFlag');
                 }
             });
-            
-            var checkboxField = $('#id_data_overide');
+        }
+        
+        var checkboxField = $('#id_data_overide');
 
-            checkboxField.on('change', function() {
-                if (checkboxField.prop('checked')) {
-                    setReadonlyState(false);
-                } else {
-                    setReadonlyState(true);
-                }
-            });
+        checkboxField.on('change', function() {
+            if (checkboxField.prop('checked')) {
+                setReadonlyState(false);
+            } else {
+                setReadonlyState(true);
+            }
+        });
 
-        });        
-    </script>
-{% endblock %}
+    });        
+}

@@ -1,6 +1,7 @@
 {% extends 'partials/base.html' %}
 {% block tittle %} Update Raw Material Inventory{% endblock %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
     <div class="container">
@@ -26,4 +27,9 @@
             </div>
         </div>    
     </div>
+    <script>
+        var baseUrl = '{% url 'purchasing-raw-material-inventory-identifier-component-based-log-create-ajax' %}'
+        var action = 'update'
+        performAjaxAction(action, baseUrl);
+    </script>
 {% endblock %}

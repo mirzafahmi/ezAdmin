@@ -11,6 +11,7 @@ from django.views import View
 from django.shortcuts import get_object_or_404
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
+from mixins.validation_mixin import QuantityValidationMixin
 
 class PurchasingMainView(LoginRequiredMixin, TemplateView):
     template_name = 'purchasing/purchasing_main.html'
@@ -429,7 +430,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMix
 
         return super().form_valid(form)
 
-class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View):
+class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View, QuantityValidationMixin):
     def get(self, request, *args, **kwargs):
         identifier_id = request.GET.get('identifier_id')
         component_id = request.GET.get('component_id')
@@ -437,49 +438,24 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View):
         quantity = int(request.GET.get('quantity', 0))
 
         if stock_type == '2':
-            current_raw_material = None
+            current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
 
-            # 1. Filter stock type 1 (Stock In) items, ordered by FIFO criteria.
-            stock_in_items = RawMaterialInventory.objects.filter(
-                component_id=component_id,
-                stock_type='1',
-            ).order_by('exp_date')
-            print(stock_in_items)
-            for stock_in_item in stock_in_items:
-                # 2. Get stock items with the same lot number and purchasing document in stock type 2 (Stock Out).
-                stock_out_items = RawMaterialInventory.objects.filter(
-                    component_id=component_id,
-                    stock_type='2',
-                    purchasing_doc=stock_in_item.purchasing_doc,
-                    lot_number=stock_in_item.lot_number,
-                    exp_date=stock_in_item.exp_date,
-                )
-                print(stock_in_item.exp_date)
-                print(stock_in_item.exp_date)
-                print(stock_out_items)
-                # 3. Deduct quantity based on stock_out_items.
-                quantity_type_1 = stock_in_item.quantity
-                quantity_type_2 = stock_out_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
-                available_quantity = quantity_type_1 - quantity_type_2
-                print(available_quantity)
-                if quantity <= available_quantity:
-                    current_raw_material = stock_in_item
-                    break  # Quantity found, exit the loop.
+            if current_raw_material_quantity is not None:
+                response_data = {
+                    'component': current_raw_material.component.id,
+                    'lot_number': current_raw_material.lot_number,
+                    'exp_date': current_raw_material.exp_date,
+                    'price_per_unit': current_raw_material.price_per_unit,
+                    'purchasing_doc': current_raw_material.purchasing_doc_id,
+                    'available_quantity': current_raw_material_quantity
+                }
+            else:
+                response_data = {'component': component_id, 'available_quantity': 0}
 
-            response_data = {
-            'component': current_raw_material.component.id,
-            'lot_number': current_raw_material.lot_number,
-            'exp_date': current_raw_material.exp_date,
-            'price_per_unit': current_raw_material.price_per_unit,
-            'purchasing_doc': current_raw_material.purchasing_doc_id,  # Assuming purchasing_doc is a ForeignKey
-            }
-            print(current_raw_material)
-            return JsonResponse(response_data)
         else:
             response_data = {
                 'component': component_id
             }
-        #create else for the type 1 to handle the value
         return JsonResponse(response_data)
 
 class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin, ListView):
