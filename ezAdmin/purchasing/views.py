@@ -8,7 +8,7 @@ from .forms import *
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views import View
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
 from mixins.validation_mixin import QuantityValidationMixin
@@ -379,10 +379,24 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateMainView(LoginRequire
 
         return context
     
-class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMixin, CreateView):
+class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMixin, CreateView, QuantityValidationMixin):
     model = RawMaterialInventory
     form_class = RawMaterialInventoryForm
     template_name = 'purchasing/raw_material_inventory_identifier_component_based_log_create.html'
+
+    '''def get(self, request, *args, **kwargs):
+        identifier_id = self.kwargs.get('identifier_id')
+        component_id = self.kwargs.get('component_id')
+        stock_type = self.kwargs.get('stock_type')
+
+        if stock_type == '2':
+            current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
+
+            if current_raw_material_quantity == None :
+                url = reverse('purchasing-raw-material-inventory-identifier-component-based-log-create-main', args=[identifier_id, component_id]) + '?alert=true'
+                return redirect(url)
+
+        return super().get(request, *args, **kwargs)'''
 
     def get_success_url(self):
         identifier_id = self.kwargs.get('identifier_id')
@@ -447,10 +461,14 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View, QuantityVa
                     'exp_date': current_raw_material.exp_date,
                     'price_per_unit': current_raw_material.price_per_unit,
                     'purchasing_doc': current_raw_material.purchasing_doc_id,
-                    'available_quantity': current_raw_material_quantity
+                    'available_quantity': current_raw_material_quantity,
                 }
             else:
-                response_data = {'component': component_id, 'available_quantity': 0}
+                response_data = {
+                    'component': component_id, 
+                    'available_quantity': 0, 
+                    'alert': True
+                    }
 
         else:
             response_data = {

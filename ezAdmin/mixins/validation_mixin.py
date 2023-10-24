@@ -23,7 +23,7 @@ class QuantityValidationMixin:
                     lot_number=stock_in_item.lot_number,
                     exp_date=stock_in_item.exp_date,
                 )
-                print(stock_in_item.exp_date)
+
             else:
                 stock_out_items = RawMaterialInventory.objects.filter(
                     component_id=component_id,
@@ -38,9 +38,6 @@ class QuantityValidationMixin:
             quantity_type_1 = stock_in_item.quantity
             quantity_type_2 = stock_out_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
             available_quantity = quantity_type_1 - quantity_type_2
-            print('type1', quantity_type_1)
-            print('typ',quantity_type_2)
-            print(available_quantity)
 
             if available_quantity < 0:
                 current_raw_material_quantity = available_quantity

@@ -24,4 +24,53 @@
         </div>
     </div>
 </body>
+<script>
+    $(document).ready(function () {
+        var identifierId = getUrlParameter('identifier');
+        var componentId = getUrlParameter('component');
+        var stockType = getUrlParameter('type');
+
+        $.ajax({
+            url: ajaxUrl,
+            method: 'GET',
+            data: {
+                identifier_id: identifierId,
+                component_id: componentId,
+                type: stockType
+            },
+            dataType: 'json',
+            success: function (data) {
+            
+                if (stockType === '2') {
+                    $.ajax({
+                        url: ajaxUrl,  // Replace with your actual endpoint
+                        method: 'GET',
+                        data: {
+                            identifier_id: identifierId,
+                            component_id: componentId,
+                            type: stockType
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            var showAlert = data.alert
+                        },
+                        error: function () {
+                            console.log('Error fetching Alert information.');
+                        }
+                    });
+                }
+            },
+            error: function () {
+                console.log('Error fetching component options.');
+            }
+        });
+        var showAlert = {{ show_alert|yesno:"true,false" }};
+
+            if (showAlert) {
+                // You can use JavaScript to display an alert, for example:
+                alert('This is an alert message.');
+            }
+    })
+    
+</script>
 {% endblock %}

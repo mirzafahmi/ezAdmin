@@ -1,5 +1,5 @@
-function performAjaxAction(action, baseUrl) {
-    $(document).ready(function (action, baseUrl) {
+function performAjaxAction() {
+    $(document).ready(function () {
         // Function to set the readonly state based on a flag
         function setReadonlyState(flag) {
             $('#id_lot_number').prop('readonly', flag);
@@ -34,12 +34,14 @@ function performAjaxAction(action, baseUrl) {
         var identifierId = getUrlParameter('identifier');
         var componentId = getUrlParameter('component');
         var stockType = getUrlParameter('type');
-        
+        console.log(identifierId)
+        console.log(componentId)
+        console.log(stockType)
+
         if (action === 'create') {
             function fetchComponentOptions(identifierId, componentId, stockType) {
-                var baseUrl = baseUrl;
                 var ajaxUrl = baseUrl + '?component_id=' + componentId + '&type=' + stockType;
-
+                
                 $.ajax({
                     url: ajaxUrl,
                     method: 'GET',
@@ -94,9 +96,8 @@ function performAjaxAction(action, baseUrl) {
                     error: function () {
                         console.log('Error fetching component options.');
                     }
-                });
-            }
-            
+                });    
+            };
             if (identifierId && componentId && stockType) {
                 fetchComponentOptions(identifierId, componentId, stockType);
             }
@@ -104,11 +105,10 @@ function performAjaxAction(action, baseUrl) {
 
         // Listen for changes in the component field
         if (action === 'update') {
-            $('#id_component').on('change', function (action, baseUrl) {
+            $('#id_component').on('change', function () {
                 var componentId = $(this).val();
                 var type = $('#id_stock_type').val();  // Assuming stock_type has the ID id_stock_type
 
-                var baseUrl = baseUrl;
                 var ajaxUrl = baseUrl + '?component_id=' + componentId + '&type=' + type;
 
 

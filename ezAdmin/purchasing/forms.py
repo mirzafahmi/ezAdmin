@@ -39,13 +39,28 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
         self.fields['lot_number'].required = False
         self.fields['exp_date'].required = False
 
+        if 'component_id' in self.initial:
+            self.fields['component'].disabled = True
         if 'stock_type' in self.initial:
             self.fields['stock_type'].disabled = True
-
+        
         # Get the stock type from the initial data or the form data
         stock_type = self.initial.get('stock_type') or self.data.get('stock_type')
         identifier_id = self.initial.get('identifier_id') or self.data.get('identifier_id')
         component_id = self.initial.get('component_id') or self.data.get('component_id')
+        inventory_log = getattr(self, 'instance', None).pk
+        
+        if stock_type == '2':
+            if not inventory_log:
+                available_quantity = self.calculate_available_quantity(component_id)
+                self.fields['quantity'].widget.attrs['placeholder'] = f'Maximum quantity available is {available_quantity} pcs' if available_quantity is not None else 'Stock is unavailable'
+                
+            else:
+                available_quantity = self.calculate_available_quantity(component_id, inventory_log)
+                self.fields['quantity'].widget.attrs['placeholder'] = f'Maximum quantity available is {available_quantity} pcs' if available_quantity is not None else 'Stock is unavailable'
+            
+
+        self.initial['component'] = component_id
 
         # If stock type is '2', filter the component queryset based on stock-in entries and its related component only
         if stock_type == '2':
@@ -56,7 +71,7 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
             stocked_in_components = RawMaterialInventory.objects.filter(component__identifier_id = identifier_id).values_list('component_id', flat=True).distinct()
             self.fields['component'].queryset = RawMaterialComponent.objects.filter(id__in=stocked_in_components)
 
-    def calculate_available_quantity(self, component_id, inventory_log):
+    def calculate_available_quantity(self, component_id, inventory_log = None):
         current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id, inventory_log)
         return current_raw_material_quantity
 
@@ -68,7 +83,7 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
         purchasing_doc = cleaned_data.get('purchasing_doc')
         lot_number = cleaned_data.get('lot_number')
         inventory_log = getattr(self, 'instance', None).pk
-        print(inventory_log)
+
         # If stock_type is '1' (Stock In), ensure lot_number and exp_date are provided
         if stock_type == '1':
             if not lot_number:
@@ -91,10 +106,5 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
                 available_quantity = self.calculate_available_quantity(component_id, inventory_log)
                 if quantity > available_quantity if available_quantity is not None else 0:
                     self.add_error('quantity', "Quantity exceeds available quantity.")
-
-            print('from form')
-            print(quantity)
-            print(available_quantity)
-            print(available_quantity+quantity)
             
         return cleaned_data
