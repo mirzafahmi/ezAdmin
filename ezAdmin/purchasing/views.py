@@ -34,7 +34,7 @@ class SupplierCreateView(LoginRequiredMixin,CreateView):
 
     def form_valid(self, form):
         supplier_name = form.cleaned_data['company_name']
-        messages.success(self.request, f'{supplier_name} created successfully!')
+        messages.success(self.request, f'{supplier_name} account created successfully!')
 
         return super().form_valid(form)
 
@@ -46,7 +46,7 @@ class SupplierUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         supplier_name = self.get_object().company_name
-        messages.success(self.request, f'{supplier_name} updated successfully!')
+        messages.success(self.request, f'{supplier_name} account updated successfully!')
 
         return super().form_valid(form)
 
@@ -76,7 +76,7 @@ class PurchasingDocumentCreateView(LoginRequiredMixin,CreateView):
     model = PurchasingDocument
     form_class = PurchasingDocumentForm
     template_name = 'purchasing/purchasing_document_create.html'
-    success_url = reverse_lazy('purchasing-supplier-list')
+    success_url = reverse_lazy('purchasing-purchasing-document-list')
 
     def form_valid(self, form):
         po_number = form.cleaned_data['po_number']
@@ -88,7 +88,7 @@ class PurchasingDocumentUpdateView(LoginRequiredMixin, UpdateView):
     model = PurchasingDocument
     form_class = PurchasingDocumentForm
     template_name = 'purchasing/purchasing_document_update.html'
-    success_url = reverse_lazy('purchasing-supplier-list')
+    success_url = reverse_lazy('purchasing-purchasing-document-list')
     context_object_name = 'purchasing_document'
 
     def form_valid(self, form):

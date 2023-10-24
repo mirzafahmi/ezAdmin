@@ -6,12 +6,12 @@ from mixins.validation_mixin import QuantityValidationMixin
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
-        fields = ['company_name', 'address', 'representative_name', 'phone_number', 'email']
+        fields = ['company_name', 'address', 'representative_name', 'phone_number', 'email', 'currency_trade']
 
 class PurchasingDocumentForm(forms.ModelForm):
     class Meta:
         model = PurchasingDocument
-        fields = ['supplier', 'po_number', 'po_doc', 'invoice_number', 'invoice_doc', 'packing_list', 'pl_doc', 'k1_form', 'k1_doc']
+        fields = ['supplier', 'po_number', 'po_doc', 'invoice_number', 'invoice_doc', 'packing_list', 'pl_doc', 'k1_form', 'k1_doc', 'AWB_number', 'AWB_doc']
         
 class RawMaterialIdentifierForm(forms.ModelForm):
     class Meta:
