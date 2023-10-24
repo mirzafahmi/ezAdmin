@@ -56,8 +56,8 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
             stocked_in_components = RawMaterialInventory.objects.filter(component__identifier_id = identifier_id).values_list('component_id', flat=True).distinct()
             self.fields['component'].queryset = RawMaterialComponent.objects.filter(id__in=stocked_in_components)
 
-    def calculate_available_quantity(self, component_id):
-        current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
+    def calculate_available_quantity(self, component_id, inventory_log):
+        current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id, inventory_log)
         return current_raw_material_quantity
 
     def clean(self):
@@ -67,7 +67,8 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
         component = cleaned_data.get('component')
         purchasing_doc = cleaned_data.get('purchasing_doc')
         lot_number = cleaned_data.get('lot_number')
-
+        inventory_log = getattr(self, 'instance', None).pk
+        print(inventory_log)
         # If stock_type is '1' (Stock In), ensure lot_number and exp_date are provided
         if stock_type == '1':
             if not lot_number:
@@ -80,10 +81,20 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
             if quantity <= 0:
                 self.add_error('quantity', "Stock out quantity must be more than 0.")
             
-            component_id = component.id  # Assuming component has an 'id' field
-            available_quantity = self.calculate_available_quantity(component_id)
-            if quantity > available_quantity if available_quantity is not None else 0:
-                self.add_error('quantity', "Quantity exceeds available quantity.")
+            if not inventory_log:
+                component_id = component.id  # Assuming component has an 'id' field
+                available_quantity = self.calculate_available_quantity(component_id)
+                if quantity > available_quantity if available_quantity is not None else 0:
+                    self.add_error('quantity', "Quantity exceeds available quantity.")
+            else:
+                component_id = component.id  # Assuming component has an 'id' field
+                available_quantity = self.calculate_available_quantity(component_id, inventory_log)
+                if quantity > available_quantity if available_quantity is not None else 0:
+                    self.add_error('quantity', "Quantity exceeds available quantity.")
+
+            print('from form')
+            print(quantity)
             print(available_quantity)
+            print(available_quantity+quantity)
             
         return cleaned_data
