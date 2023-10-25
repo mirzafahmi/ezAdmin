@@ -12,9 +12,7 @@ breadcrumbs = Breadcrumbs(
 
 urlpatterns = [
     path('', views.index, name = 'dashboard-index'),
-    path('inventory/main', views.InventoryMainView.as_view(), name = 'dashboard-inventory-main'),
-    path('inventory/raw_material/main', views.RawMaterialMainView.as_view(), name = 'dashboard-inventory-raw-material-main'),
-    path('inventory/finished-product/', views.product_list, name = 'dashboard-product'),
+    path('inventory_main/finished_product/', views.product_list, name = 'dashboard-product'),
     path('inventory/finished-product/add', views.product_add, name = 'dashboard-product-add'),
     path('inventory/finished-product/update/<int:pk>/', views.product_update, name = 'dashboard-product-update'),
     path('inventory/finished-product/delete/<int:pk>/', views.product_delete, name = 'dashboard-product-delete'),

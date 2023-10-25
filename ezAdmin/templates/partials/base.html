@@ -57,7 +57,11 @@
 
     <div class="container-fluid main bg-light">
       <div class="col-md-10 offset-md-1">
-        {% include "partials/breadcrumbs.html" %}
+        <nav class = "bg-light" aria-label="breadcrumb">
+          <ol id="breadcrumbs-container" class="breadcrumb bg-light">
+            <li class="breadcrumb-item active" aria-current="page"><a href=""></a></li>
+          </ol>
+        </nav>
       </div>
       {% block content %}
 
@@ -69,7 +73,69 @@
 
 
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Get a reference to the container where breadcrumbs will be rendered
+        var breadcrumbsContainer = document.getElementById('breadcrumbs-container');
+
+        // Function to get breadcrumbs based on the current URL
+        function getBreadcrumbs() {
+          var path = window.location.pathname;
+      
+          // Split the path into segments
+          var segments = path.split('/').filter(Boolean);
+
+          var breadcrumbs = [];
+      
+          // Capitalize the first letter of each segment
+          for (var i = 0; i < segments.length; i++) {
+            var segment = segments[i];
+            var formattedSegment = segment.replace(/_/g, ' ')
+                                          .replace(/\b\w/g, function(match) {
+                                              return match.toUpperCase();
+                                          });
+            
+            // Construct the URL up to the current level
+            var url = '/' + segments.slice(0, i + 1).join('/');
     
+            breadcrumbs.push({
+                'label': formattedSegment,
+                'url': url
+            });
+        }
+
+          console.log(breadcrumbs)
+          return breadcrumbs;
+      }
+  
+      // Function to render breadcrumbs in the container
+      function renderBreadcrumbs(breadcrumbs) {
+          breadcrumbsContainer.innerHTML = ''; // Clear existing content
+
+          // Iterate over the breadcrumbs to create <li> elements
+          breadcrumbs.forEach(function (breadcrumb, index) {
+              // Create a new <li> element
+              var listItem = document.createElement('li');
+              listItem.className = 'breadcrumb-item';
+
+              // Create a new <a> element
+              var link = document.createElement('a');
+              link.href = breadcrumb.url;
+              link.textContent = breadcrumb.label;
+
+              // Append the <a> element to the <li> element
+              listItem.appendChild(link);
+
+              // Append the <li> element to the breadcrumbsContainer
+              breadcrumbsContainer.appendChild(listItem);
+          });
+      }
+
+      // Get and render breadcrumbs when the page loads
+      var initialBreadcrumbs = getBreadcrumbs();
+      renderBreadcrumbs(initialBreadcrumbs);
+  });
+  </script>
   </body>
   <footer class="bg-dark text-center text-white">
     <!-- Grid container -->

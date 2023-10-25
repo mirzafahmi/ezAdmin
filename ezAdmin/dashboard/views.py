@@ -227,12 +227,6 @@ def customer_delete(request, pk):
 
     return render(request, 'customer/customer-delete.html', context)
 
-class InventoryMainView(LoginRequiredMixin, TemplateView):
-    template_name = 'dashboard/inventory_main.html'
-
-class RawMaterialMainView(LoginRequiredMixin, TemplateView):
-    template_name = 'dashboard/raw_material_main.html'
-
 class BasedMainView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/raw_material_main.html'
 
