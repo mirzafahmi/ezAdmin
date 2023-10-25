@@ -2,6 +2,14 @@ from django.urls import path
 from . import views
 from django.views.generic import TemplateView
 
+
+'''
+breadcrumbs = Breadcrumbs(
+    ("Home", "/"),
+    ("Inventory Main Page", "/inventory/main/"),
+    ("Raw Material Inventory Main Page", "/inventory/raw_material/main/"),
+)'''
+
 urlpatterns = [
     path('', views.index, name = 'dashboard-index'),
     path('inventory/main', views.InventoryMainView.as_view(), name = 'dashboard-inventory-main'),

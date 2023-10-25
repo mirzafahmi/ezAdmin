@@ -12,9 +12,27 @@ from django.shortcuts import get_object_or_404, redirect
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
 from mixins.validation_mixin import QuantityValidationMixin
+from view_breadcrumbs import (
+    BaseBreadcrumbMixin,
+    CreateBreadcrumbMixin,
+    DeleteBreadcrumbMixin,
+    DetailBreadcrumbMixin,
+    ListBreadcrumbMixin,
+    UpdateBreadcrumbMixin,
+)
 
-class PurchasingMainView(LoginRequiredMixin, TemplateView):
+class PurchasingMainView(LoginRequiredMixin, BaseBreadcrumbMixin, TemplateView):
+    crumbs = [
+        {"text": "Home", "url": "/"},
+        {"text": "Inventory Main Page", "url": "inventory/main"},
+    ]
     template_name = 'purchasing/purchasing_main.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["breadcrumbs"] = self.get_breadcrumbs()
+        return context
 
 class SupplierListView(LoginRequiredMixin, ListView):
     model = Supplier

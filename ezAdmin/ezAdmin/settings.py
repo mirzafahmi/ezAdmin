@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'fontawesomefree',
     'django.contrib.humanize',
-    'mathfilters'
+    'mathfilters',
+    'view_breadcrumbs',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +66,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware'
+    'allauth.account.middleware.AccountMiddleware',
+    'view_breadcrumbs.middleware.BreadcrumbsMiddleware',
 ]
 
 ROOT_URLCONF = 'ezAdmin.urls'
@@ -81,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'view_breadcrumbs.context_processors.breadcrumbs',
             ],
         },
     },
@@ -186,3 +189,7 @@ ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180  # Cooldown period'''
 
 
 SITE_ID = 1
+
+BREADCRUMBS_TEMPLATE = "partials/breadcrumbs.html"
+
+BREADCRUMBS_HOME_LABEL = "Home"

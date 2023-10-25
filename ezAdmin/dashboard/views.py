@@ -233,3 +233,14 @@ class InventoryMainView(LoginRequiredMixin, TemplateView):
 class RawMaterialMainView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/raw_material_main.html'
 
+class BasedMainView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/raw_material_main.html'
+
+    def get(self, request):
+        breadcrumbs_json = request.GET.get('breadcrumbs')
+        breadcrumbs = json.loads(breadcrumbs_json) if breadcrumbs_json else []
+
+        context = {
+            'breadcrumbs': breadcrumbs,
+        }
+        return render(request, 'partials/base.html', context)
