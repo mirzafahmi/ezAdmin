@@ -358,15 +358,13 @@ class RawMaterialInventoryIdentifierComponentBasedListView(LoginRequiredMixin, L
 
         return context
 
-class RawMaterialInventoryIdentifierComponentBasedLogCreateMainView(LoginRequiredMixin, TemplateView):
+class RawMaterialInventoryIdentifierComponentBasedLogCreateMainView(LoginRequiredMixin, TemplateView, QuantityValidationMixin):
     template_name = 'purchasing/raw_material_inventory_identifier_component_based_log_create_main.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         component_id = self.kwargs.get('component_id')
-
-        #identifier = get_object_or_404(RawMaterialIdentifier, id=identifier_id)
 
         queryset = RawMaterialInventory.objects.filter(component__id=component_id)
 
@@ -383,20 +381,6 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMix
     model = RawMaterialInventory
     form_class = RawMaterialInventoryForm
     template_name = 'purchasing/raw_material_inventory_identifier_component_based_log_create.html'
-
-    '''def get(self, request, *args, **kwargs):
-        identifier_id = self.kwargs.get('identifier_id')
-        component_id = self.kwargs.get('component_id')
-        stock_type = self.kwargs.get('stock_type')
-
-        if stock_type == '2':
-            current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
-
-            if current_raw_material_quantity == None :
-                url = reverse('purchasing-raw-material-inventory-identifier-component-based-log-create-main', args=[identifier_id, component_id]) + '?alert=true'
-                return redirect(url)
-
-        return super().get(request, *args, **kwargs)'''
 
     def get_success_url(self):
         identifier_id = self.kwargs.get('identifier_id')
@@ -451,6 +435,12 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View, QuantityVa
         stock_type = request.GET.get('type')
         quantity = int(request.GET.get('quantity', 0))
 
+        response_data = {
+            'component': component_id,
+            'available_quantity': None,
+            'alert': False,
+        }
+
         if stock_type == '2':
             current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
 
@@ -467,13 +457,27 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View, QuantityVa
                 response_data = {
                     'component': component_id, 
                     'available_quantity': 0, 
-                    'alert': True
                     }
 
-        else:
-            response_data = {
-                'component': component_id
-            }
+        if stock_type == None:
+            current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
+            component = RawMaterialComponent.objects.get(id=component_id)
+            if current_raw_material is None:
+                response_data = {
+                        'component': component_id,
+                        'component_name': component.component, 
+                        'identifier_name': component.identifier.parent_item_code, 
+                        'available_quantity': 'Empty', 
+                        'alert': True
+                    }
+            else:
+                response_data = {
+                        'component': component_id,
+                        'component': RawMaterialComponent.objects.get(id = component_id).component, 
+                        'available_quantity': 'Empty', 
+                        'alert': False
+                    }
+
         return JsonResponse(response_data)
 
 class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin, ListView):

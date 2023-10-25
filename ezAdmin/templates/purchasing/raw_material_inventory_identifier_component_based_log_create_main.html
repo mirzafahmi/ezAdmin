@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Raw Material Stock-Out for {{component.0.1}} of {{component.0.0}} Tab</h3>
                     <p class="card-text">To log stock-out for raw material inventory.</p>
-                    <a href="{% url 'purchasing-raw-material-inventory-identifier-component-based-log-create' identifier_id component_id 2 %}" class="btn btn-primary">Log Stock-In Raw Material Inventory</a>
+                    <a id="log-out-link" href="{% url 'purchasing-raw-material-inventory-identifier-component-based-log-create' identifier_id component_id 2 %}" class="btn btn-primary">Log Stock-In Raw Material Inventory</a>
                 </div>
             </div>
         </div>
@@ -26,50 +26,65 @@
 </body>
 <script>
     $(document).ready(function () {
+        console.log('from ajax main')
+
+        function disableLink() {
+            $('#log-out-link')
+            .removeClass('btn-primary')
+            .addClass('btn-secondary')
+            .off('click')
+            .click(function (e) {
+                e.preventDefault(); // Prevent the default link behavior
+            });
+        }
+
+        function getUrlParameter(name) {
+            var regex = new RegExp(name + ':([^&;]+?)(&|#|;|$)');
+            var results = regex.exec(window.location.href);
+            if (!results) return null;
+            if (!results[1]) return '';
+
+            // Split the value by '/'
+            var values = results[1].split('/');
+            
+            // Get the first value
+            var desiredValue = values[0];
+            
+            return decodeURIComponent(desiredValue.replace(/\+/g, ' '));
+        } 
+
         var identifierId = getUrlParameter('identifier');
         var componentId = getUrlParameter('component');
         var stockType = getUrlParameter('type');
 
+        const logLink = document.getElementById("log-link");
+        var baseUrl = '{% url 'purchasing-raw-material-inventory-identifier-component-based-log-create-ajax' %}'
+        var ajaxUrl = baseUrl + '?component_id=' + componentId
+
         $.ajax({
-            url: ajaxUrl,
+            url: ajaxUrl,  // Replace with your actual endpoint
             method: 'GET',
             data: {
                 identifier_id: identifierId,
                 component_id: componentId,
-                type: stockType
             },
             dataType: 'json',
             success: function (data) {
-            
-                if (stockType === '2') {
-                    $.ajax({
-                        url: ajaxUrl,  // Replace with your actual endpoint
-                        method: 'GET',
-                        data: {
-                            identifier_id: identifierId,
-                            component_id: componentId,
-                            type: stockType
-                        },
-                        dataType: 'json',
-                        success: function (data) {
-                            var showAlert = data.alert
-                        },
-                        error: function () {
-                            console.log('Error fetching Alert information.');
-                        }
+                var showAlert = data.alert
+                var componentName = data.component_name
+                var identifier = data.identifier_name
+                console.log(showAlert)
+                if (showAlert) {
+                    disableLink()
+                    $('#log-out-link').click(function () {
+                        alert(componentName + ' for ' + identifier + ' inventory is empty, please stock up the inventory.');
                     });
                 }
             },
             error: function () {
-                console.log('Error fetching component options.');
+                console.log('Error fetching Alert information.');
             }
         });
-        var showAlert = {{ show_alert|yesno:"true,false" }};
-
-            if (showAlert) {
-                // You can use JavaScript to display an alert, for example:
-                alert('This is an alert message.');
-            }
     })
     
 </script>

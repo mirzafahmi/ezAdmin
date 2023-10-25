@@ -41,62 +41,43 @@ function performAjaxAction() {
         if (action === 'create') {
             function fetchComponentOptions(identifierId, componentId, stockType) {
                 var ajaxUrl = baseUrl + '?component_id=' + componentId + '&type=' + stockType;
-                
-                $.ajax({
-                    url: ajaxUrl,
-                    method: 'GET',
-                    data: {
-                        identifier_id: identifierId,
-                        component_id: componentId,
-                        type: stockType
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        // Update component field with retrieved options
-                        $('#id_component').val(data.component).prop('readonly', true);
                         
-                        // Set readonly state and store the flag in local storage
-                        if (stockType === '2') {
-                            $.ajax({
-                                url: ajaxUrl,  // Replace with your actual endpoint
-                                method: 'GET',
-                                data: {
-                                    identifier_id: identifierId,
-                                    component_id: componentId,
-                                    type: stockType
-                                },
-                                dataType: 'json',
-                                success: function (data) {
-                                    // Update form fields with retrieved information
-                                    $('#id_lot_number').val(data.lot_number);
-                                    $('#id_exp_date').val(data.exp_date);
-                                    $('#id_price_per_unit').val(data.price_per_unit);
-                                    $('#id_purchasing_doc').val(data.purchasing_doc);
-                
-                                    // Set readonly state and store the flag in local storage
-                                    setReadonlyState(true);
-                                    localStorage.setItem('readonlyFlag', 'true');
+                    // Set readonly state and store the flag in local storage
+                    if (stockType === '2') {
+                        $.ajax({
+                            url: ajaxUrl,  // Replace with your actual endpoint
+                            method: 'GET',
+                            data: {
+                                identifier_id: identifierId,
+                                component_id: componentId,
+                                type: stockType
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                // Update form fields with retrieved information
+                                $('#id_lot_number').val(data.lot_number);
+                                $('#id_exp_date').val(data.exp_date);
+                                $('#id_price_per_unit').val(data.price_per_unit);
+                                $('#id_purchasing_doc').val(data.purchasing_doc);
+            
+                                // Set readonly state and store the flag in local storage
+                                setReadonlyState(true);
+                                localStorage.setItem('readonlyFlag', 'true');
 
-                                    var availableQuantity = data.available_quantity;
-                                    var quantityField = $('#id_quantity');
-                                    var selectedQuantity = parseFloat(quantityField.val());
-                                    console.log(selectedQuantity)
-                                },
-                                error: function () {
-                                    console.log('Error fetching FIFO information.');
-                                }
-                            });
-                        } else {
-                            // If the type is not '2', remove readonly attribute and clear the flag
-                            setReadonlyState(false);
-                            localStorage.removeItem('readonlyFlag');
-                        }
-                        
-                    },
-                    error: function () {
-                        console.log('Error fetching component options.');
+                                var availableQuantity = data.available_quantity;
+                                var quantityField = $('#id_quantity');
+                                var selectedQuantity = parseFloat(quantityField.val());
+                                console.log(selectedQuantity)
+                            },
+                            error: function () {
+                                console.log('Error fetching FIFO information.');
+                            }
+                        });
+                    } else {
+                        // If the type is not '2', remove readonly attribute and clear the flag
+                        setReadonlyState(false);
+                        localStorage.removeItem('readonlyFlag');
                     }
-                });    
             };
             if (identifierId && componentId && stockType) {
                 fetchComponentOptions(identifierId, componentId, stockType);
