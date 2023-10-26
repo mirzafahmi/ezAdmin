@@ -12,6 +12,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def index(request):
     return render(request, 'dashboard/index.html')
 
+def keep_session_alive(request):
+    # Accessing the session will update its last access time
+    request.session.modified = True
+    return HttpResponse(status=200)
+
 @login_required
 def product_list(request):
     items = Product.objects.all()

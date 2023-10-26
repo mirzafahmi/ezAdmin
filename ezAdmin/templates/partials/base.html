@@ -85,7 +85,7 @@
           // Split the path into segments
           var segments = path.split('/').filter(Boolean);
 
-          var breadcrumbs = [];
+          var breadcrumbs = [{ label: "Home", url: "/" }];
       
           // Capitalize the first letter of each segment
           for (var i = 0; i < segments.length; i++) {
@@ -111,7 +111,7 @@
       // Function to render breadcrumbs in the container
       function renderBreadcrumbs(breadcrumbs) {
           breadcrumbsContainer.innerHTML = ''; // Clear existing content
-
+        if (breadcrumbs.length > 1) {
           // Iterate over the breadcrumbs to create <li> elements
           breadcrumbs.forEach(function (breadcrumb, index) {
               // Create a new <li> element
@@ -129,6 +129,7 @@
               // Append the <li> element to the breadcrumbsContainer
               breadcrumbsContainer.appendChild(listItem);
           });
+        }
       }
 
       // Get and render breadcrumbs when the page loads

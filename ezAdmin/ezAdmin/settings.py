@@ -66,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'dashboard.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = 'ezAdmin.urls'
@@ -187,6 +188,43 @@ ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180  # Cooldown period'''
 
 SITE_ID = 1
 
-BREADCRUMBS_TEMPLATE = "partials/breadcrumbs.html"
+SESSION_COOKIE_AGE = 1800
 
-BREADCRUMBS_HOME_LABEL = "Home"
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',  # Set the desired log level (INFO, DEBUG, ERROR, etc.)
+    },
+}
+
+# Celery configuration in settings.py
+import os
+from celery import Celery
+
+app = Celery('ezAdmin')
+app.config_from_object('django.conf:settings', namespace='CELERY')
+
+# Load task modules from all registered Django app configs
+app.autodiscover_tasks()
+
+# Celery broker settings (e.g., using Redis as a message broker)
+app.conf.broker_url = 'redis://localhost:6379/0'
+app.conf.result_backend = 'redis://localhost:6379/0'
+
+# Celery beat schedule
+app.conf.beat_schedule = {
+    'log-session-timeout-info': {
+        'task': 'ezAdmin.tasks.log_session_timeout_info',
+        'schedule': 10.0,  # Adjust the interval as needed (e.g., every 2 minutes)
+    },
+} 
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
