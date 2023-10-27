@@ -25,3 +25,18 @@ html {
       margin: 0 auto; /* Center the container */
       padding: 10px;
   }
+  .stack-icon{
+    width: 20px; /* Adjust the width to your desired size */
+    height: 20px; /* Adjust the height to your desired size */
+    margin: 2px; /* Optional: Add some margin between icons */
+  }
+  .custom-active {
+    /* Your custom styling for the active item */
+    color: #6c757d; /* Change the text color to red as an example */
+    /* Add any other styles you want to customize */
+  }
+  .dropdown:hover>.dropdown-menu {
+    display: block;
+  }
+  
+  

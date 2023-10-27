@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'django.contrib.humanize',
     'mathfilters',
-    'celery',
+    #'celery',
 ]
 
 MIDDLEWARE = [
@@ -191,7 +191,7 @@ SITE_ID = 1
 
 SESSION_COOKIE_AGE = 1800
 
-LOGGING = {
+'''LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
@@ -231,4 +231,4 @@ app.conf.beat_schedule = {
         'task': 'ezAdmin.tasks.log_session_timeout_info',
         'schedule': 10.0,  # Adjust the interval as needed (e.g., every 2 minutes)
     },
-}
+}'''

@@ -2,7 +2,7 @@ import logging
 from django.utils import timezone
 from django.conf import settings
 import datetime
-from ezAdmin.tasks.tasks import log_session_timeout_info
+#from ezAdmin.tasks.tasks import log_session_timeout_info
 
 
 logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ class SessionTimeoutMiddleware:
                 logger.info(f'Remaining session time: {remaining_time:.2f} seconds')
 
             # Pass last_activity to the Celery task
-            log_session_timeout_info.delay(last_activity)
+            #log_session_timeout_info.delay(last_activity)
 
         # Update the last activity timestamp in the session
         request.session['last_activity'] = timezone.now().isoformat()

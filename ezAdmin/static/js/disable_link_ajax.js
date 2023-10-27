@@ -13,13 +13,13 @@ function disableLinkAjaxAction() {
         }
 
         function getUrlParameter(name) {
-            var regex = new RegExp(name + ':([^&;]+?)(&|#|;|$)');
+            var regex = new RegExp(name + ':([^&;]+?)(&|#|;|$|-)');
             var results = regex.exec(window.location.href);
             if (!results) return null;
             if (!results[1]) return '';
 
             // Split the value by '/'
-            var values = results[1].split('/');
+            var values = results[1].split('[/|-]');
             
             // Get the first value
             var desiredValue = values[0];
@@ -30,6 +30,9 @@ function disableLinkAjaxAction() {
         var identifierId = getUrlParameter('identifier');
         var componentId = getUrlParameter('component');
         var stockType = getUrlParameter('type');
+        console.log(identifierId)
+        console.log(componentId)
+        console.log(stockType)
 
         const logLink = document.getElementById("log-link");
         var ajaxUrl = baseUrl + '?component_id=' + componentId
