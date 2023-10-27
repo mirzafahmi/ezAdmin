@@ -1,0 +1,342 @@
+Folder PATH listing for volume Acer
+Volume serial number is 8848-0649
+C:.
+|   .gitignore
+|   README.md
+|   requirement.txt
+|   todo.txt
+|   tree
+|   tree.txt
+|   
+\---ezAdmin
+    |   celerybeat-schedule.bak
+    |   celerybeat-schedule.dat
+    |   celerybeat-schedule.dir
+    |   credential.py
+    |   DB Browser (SQLite).lnk
+    |   db.sqlite3
+    |   manage.py
+    | 
+    +---ezAdmin
+    |   |   asgi.py
+    |   |   celery.py
+    |   |   settings.py
+    |   |   urls.py
+    |   |   wsgi.py
+    |   |   __init__.py
+    |   |   
+    |   +---tasks
+    |   |   |   tasks.py
+    |   |   |   __init__.py
+    |   |   |   
+    |   |   \---__pycache__
+    |   |           __init__.cpython-310.pyc
+    |   |           
+    |   \---__pycache__
+    |           celery.cpython-310.pyc
+    |           settings.cpython-310.pyc
+    |           settings.cpython-311.pyc
+    |           tasks.cpython-310.pyc
+    |           urls.cpython-310.pyc
+    |           urls.cpython-311.pyc
+    |           wsgi.cpython-310.pyc
+    |           wsgi.cpython-311.pyc
+    |           __init__.cpython-310.pyc
+    |           __init__.cpython-311.pyc
+    |           
+    +---media
+    |   |   default-avatar.png
+    |   |   
+    |   +---Profile_images
+    |   |       malaysian.png
+    |   |       malaysian_CYbWIVH.png
+    |   |       malaysian_Wv35k8g.png
+    |   |       
+    |   \---purchasing_documents
+    |       +---AWB
+    |       |       TRAN_17598429.pdf
+    |       |       
+    |       +---invoice
+    |       |       CI_AMYMV23090501A.pdf
+    |       |       proposal.pdf
+    |       |       QT_CR7_ASB_20230924-6.pdf
+    |       |       
+    |       +---K1
+    |       |       Curriculum_Vitae_Ahmad_Mirza_Fahmi.pdf.pdf
+    |       |       DO-009276-MEDILABZ_SERVICES.pdf
+    |       |       QT_CR7_ASB_20230924-5.pdf
+    |       |       
+    |       +---PL
+    |       |       db_system_mediven.pdf
+    |       |       PL_AMYMV23090501A.pdf
+    |       |       QT_CR7_ASB_20230924-5.pdf
+    |       |       
+    |       \---PO
+    |               PO-001710-GUANGZHOU_WONDFO_BIOTECH.pdf
+    |               QT_CR7_ASB_20230924-11.pdf
+    |               QT_CR7_ASB_20230926-1.pdf
+    |               
+    +---mixins
+    |   |   modify_case_fields_mixin.py
+    |   |   validation_mixin.py
+    |   |   
+    |   \---__pycache__
+    |           modify_case_fields_mixin.cpython-310.pyc
+    |           modify_case_fields_mixin.cpython-311.pyc
+    |           uppercase_fields_mixin.cpython-310.pyc
+    |           validation_mixin.cpython-310.pyc
+    |           validation_mixin.cpython-311.pyc
+    |           
+    +---purchasing
+    |   |   admin.py
+    |   |   apps.py
+    |   |   forms.py
+    |   |   models.py
+    |   |   tests.py
+    |   |   urls.py
+    |   |   views.py
+    |   |   __init__.py
+    |   |   
+    |   +---migrations
+    |   |   |   0001_initial.py
+    |   |   |   0002_rename_quantitiy_used_bomcomponent_quantity_used_and_more.py
+    |   |   |   0003_rename_lot_rawmaterialinventory_lot_number_and_more.py
+    |   |   |   0004_rawmaterialinventory_purchasing_doc.py
+    |   |   |   0005_alter_rawmaterialinventory_exp_date.py
+    |   |   |   0006_purchasingdocument_awb_doc_and_more.py
+    |   |   |   0007_remove_rawmaterialinventory_create_date_and_more.py
+    |   |   |   __init__.py
+    |   |   |   
+    |   |   \---__pycache__
+    |   |           0001_initial.cpython-310.pyc
+    |   |           0001_initial.cpython-311.pyc
+    |   |           0002_rename_quantitiy_used_bomcomponent_quantity_used_and_more.cpython-310.pyc
+    |   |           0002_rename_quantitiy_used_bomcomponent_quantity_used_and_more.cpython-311.pyc
+    |   |           0003_rename_lot_rawmaterialinventory_lot_number_and_more.cpython-310.pyc
+    |   |           0003_rename_lot_rawmaterialinventory_lot_number_and_more.cpython-311.pyc
+    |   |           0004_rawmaterialinventory_purchasing_doc.cpython-310.pyc
+    |   |           0004_rawmaterialinventory_purchasing_doc.cpython-311.pyc
+    |   |           0005_alter_rawmaterialinventory_exp_date.cpython-310.pyc
+    |   |           0005_alter_rawmaterialinventory_exp_date.cpython-311.pyc
+    |   |           0006_purchasingdocument_awb_doc_and_more.cpython-310.pyc
+    |   |           0006_purchasingdocument_awb_doc_and_more.cpython-311.pyc
+    |   |           0007_remove_rawmaterialinventory_create_date_and_more.cpython-310.pyc
+    |   |           0007_remove_rawmaterialinventory_create_date_and_more.cpython-311.pyc
+    |   |           0007_rename_create_date_rawmaterialinventory_stock_in_date_and_more.cpython-311.pyc
+    |   |           __init__.cpython-310.pyc
+    |   |           __init__.cpython-311.pyc
+    |   |           
+    |   \---__pycache__
+    |           admin.cpython-310.pyc
+    |           admin.cpython-311.pyc
+    |           apps.cpython-310.pyc
+    |           apps.cpython-311.pyc
+    |           forms.cpython-310.pyc
+    |           forms.cpython-311.pyc
+    |           models.cpython-310.pyc
+    |           models.cpython-311.pyc
+    |           urls.cpython-310.pyc
+    |           urls.cpython-311.pyc
+    |           views.cpython-310.pyc
+    |           views.cpython-311.pyc
+    |           __init__.cpython-310.pyc
+    |           __init__.cpython-311.pyc
+    |           
+    +---static
+    |   +---css
+    |   |       style.css
+    |   |       
+    |   +---icon
+    |   |       css.ico
+    |   |       django.ico
+    |   |       favicon.ico
+    |   |       html.ico
+    |   |       javascript.ico
+    |   |       python.ico
+    |   |       sqlite.ico
+    |   |       sqlite3.ico
+    |   |       
+    |   \---js
+    |           breadcrumbs_nav.js
+    |           raw_material_form_ajax.js
+    |           
+    +---task
+    |   |   admin.py
+    |   |   apps.py
+    |   |   forms.py
+    |   |   models.py
+    |   |   tests.py
+    |   |   urls.py
+    |   |   views.py
+    |   |   __init__.py
+    |   |   
+    |   +---migrations
+    |   |   |   __init__.py
+    |   |   |   
+    |   |   \---__pycache__
+    |   |           __init__.cpython-310.pyc
+    |   |           __init__.cpython-311.pyc
+    |   |           
+    |   +---templatetags
+    |   |   |   custom_filters.py
+    |   |   |   __init__.py
+    |   |   |   
+    |   |   \---__pycache__
+    |   |           custom_filters.cpython-310.pyc
+    |   |           custom_filters.cpython-311.pyc
+    |   |           __init__.cpython-310.pyc
+    |   |           __init__.cpython-311.pyc
+    |   |           
+    |   \---__pycache__
+    |           admin.cpython-310.pyc
+    |           admin.cpython-311.pyc
+    |           apps.cpython-310.pyc
+    |           apps.cpython-311.pyc
+    |           forms.cpython-310.pyc
+    |           forms.cpython-311.pyc
+    |           models.cpython-310.pyc
+    |           models.cpython-311.pyc
+    |           urls.cpython-310.pyc
+    |           urls.cpython-311.pyc
+    |           views.cpython-310.pyc
+    |           views.cpython-311.pyc
+    |           __init__.cpython-310.pyc
+    |           __init__.cpython-311.pyc
+    |           
+    +---templates
+    |   +---customer
+    |   |       customer-delete.html
+    |   |       customer-form.html
+    |   |       customer-update.html
+    |   |       customer.html
+    |   |       
+    |   +---dashboard
+    |   |       index.html
+    |   |       inventory_main.html
+    |   |       product-delete.html
+    |   |       product-details.html
+    |   |       product-form.html
+    |   |       product-inventory-delete.html
+    |   |       product-inventory-transaction.html
+    |   |       product-inventory-update.html
+    |   |       product-update.html
+    |   |       product.html
+    |   |       raw_material_main.html
+    |   |       staff.html
+    |   |       task.html
+    |   |       
+    |   +---partials
+    |   |       base.html
+    |   |       breadcrumbs.html
+    |   |       nav.html
+    |   |       topnav.html
+    |   |       welcome.html
+    |   |       
+    |   +---purchasing
+    |   |       BOM_component_create.html
+    |   |       BOM_component_delete.html
+    |   |       BOM_component_list.html
+    |   |       BOM_component_update.html
+    |   |       purchasing_document_create.html
+    |   |       purchasing_document_delete.html
+    |   |       purchasing_document_list.html
+    |   |       purchasing_document_update.html
+    |   |       purchasing_main.html
+    |   |       raw_material_component_create.html
+    |   |       raw_material_component_delete.html
+    |   |       raw_material_component_list.html
+    |   |       raw_material_component_update.html
+    |   |       raw_material_identifier_create.html
+    |   |       raw_material_identifier_delete.html
+    |   |       raw_material_identifier_list.html
+    |   |       raw_material_identifier_update.html
+    |   |       raw_material_inventory_create.html
+    |   |       raw_material_inventory_delete.html
+    |   |       raw_material_inventory_identifier_based_main.html
+    |   |       raw_material_inventory_identifier_component_based_delete.html
+    |   |       raw_material_inventory_identifier_component_based_log_create.html
+    |   |       raw_material_inventory_identifier_component_based_log_create_main.html
+    |   |       raw_material_inventory_identifier_component_based_log_list.html
+    |   |       raw_material_inventory_identifier_component_based_main.html
+    |   |       raw_material_inventory_identifier_component_based_update.html
+    |   |       raw_material_inventory_list.html
+    |   |       raw_material_inventory_log_main.html
+    |   |       raw_material_inventory_update.html
+    |   |       supplier_create.html
+    |   |       supplier_delete.html
+    |   |       supplier_list.html
+    |   |       supplier_update.html
+    |   |       
+    |   +---task
+    |   |   |   invoices.html
+    |   |   |   order-execution-list.html
+    |   |   |   order-execution.html
+    |   |   |   proforma-invoices.html
+    |   |   |   quotation-delete.html
+    |   |   |   quotation-list.html
+    |   |   |   quotation-update.html
+    |   |   |   quotation.html
+    |   |   |   test.html
+    |   |   |   
+    |   |   \---pdf
+    |   |           quotation.html
+    |   |           
+    |   \---user
+    |           login.html
+    |           logout.html
+    |           password-reset-complete.html
+    |           password-reset-confirm.html
+    |           password-reset-done.html
+    |           password-reset.html
+    |           profile-update.html
+    |           profile.html
+    |           register.html
+    |           
+    +---user
+    |   |   admin.py
+    |   |   apps.py
+    |   |   forms.py
+    |   |   models.py
+    |   |   signals.py
+    |   |   tests.py
+    |   |   urls.py
+    |   |   views.py
+    |   |   __init__.py
+    |   |   
+    |   +---migrations
+    |   |   \---__pycache__
+    |   |           __init__.cpython-311.pyc
+    |   |           
+    |   \---__pycache__
+    |           admin.cpython-310.pyc
+    |           admin.cpython-311.pyc
+    |           apps.cpython-310.pyc
+    |           apps.cpython-311.pyc
+    |           forms.cpython-310.pyc
+    |           forms.cpython-311.pyc
+    |           models.cpython-310.pyc
+    |           models.cpython-311.pyc
+    |           signals.cpython-310.pyc
+    |           signals.cpython-311.pyc
+    |           urls.cpython-310.pyc
+    |           urls.cpython-311.pyc
+    |           views.cpython-310.pyc
+    |           views.cpython-311.pyc
+    |           __init__.cpython-310.pyc
+    |           __init__.cpython-311.pyc
+    |           
+    +---validator
+    |   |   abbreaviation.py
+    |   |   posscode.py
+    |   |   
+    |   \---__pycache__
+    |           abbreaviation.cpython-310.pyc
+    |           abbreaviation.cpython-311.pyc
+    |           posscode.cpython-310.pyc
+    |           posscode.cpython-311.pyc
+    |           
+    \---__pycache__
+            celery.cpython-310.pyc
+            credential.cpython-310.pyc
+            credential.cpython-311.pyc
+            

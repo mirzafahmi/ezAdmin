@@ -2,7 +2,7 @@ import logging
 from django.utils import timezone
 from django.conf import settings
 import datetime
-from tasks.tasks import log_session_timeout_info
+from ezAdmin.tasks.tasks import log_session_timeout_info
 
 
 logger = logging.getLogger(__name__)
