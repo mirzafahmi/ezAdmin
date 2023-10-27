@@ -12,8 +12,10 @@
         {% endif %}
         {% endfor %}
         <table class="table table-borderless table-striped table-hover">
-            <span class="h4">Product Inventory</span class="h4">
-            <a class="btn btn-info btn-sm float-right" href="{% url 'dashboard-product-add' %}">Add Product</a>
+            <div class="hstack">
+                <span class="h4">Product Inventory</span class="h4">
+                <a class="btn btn-info btn-sm ms-auto" href="{% url 'dashboard-product-add' %}">Add Product</a>
+            </div>
             <hr>
             <thead class = "thead-dark">
                 <tr>

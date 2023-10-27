@@ -7,36 +7,75 @@ html {
     height: 100%;
 }
 
-  body {
-      margin: 0;
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-  }
-  
-  footer {
-      background-color: #f1f1f1;
-      padding: 10px;
-      margin-top: auto; /* This pushes the footer to the bottom */
-  }
+body {
+    margin: 0;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
-  .main {
-      max-width: 1400px; /* Set your desired maximum width */
-      margin: 0 auto; /* Center the container */
-      padding: 10px;
-  }
-  .stack-icon{
-    width: 20px; /* Adjust the width to your desired size */
-    height: 20px; /* Adjust the height to your desired size */
-    margin: 2px; /* Optional: Add some margin between icons */
-  }
-  .custom-active {
-    /* Your custom styling for the active item */
-    color: #6c757d; /* Change the text color to red as an example */
-    /* Add any other styles you want to customize */
-  }
-  .dropdown:hover>.dropdown-menu {
-    display: block;
-  }
-  
-  
+footer {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-top: auto; /* This pushes the footer to the bottom */
+}
+
+.main {
+    max-width: 1400px; /* Set your desired maximum width */
+    margin: 0 auto; /* Center the container */
+    padding: 10px;
+}
+.stack-icon{
+  width: 20px; 
+  height: 20px; 
+  margin: 2px; 
+}
+
+.custom-active {
+  /* Your custom styling for the active item */
+  color: #6c757d; /* Change the text color to red as an example */
+  /* Add any other styles you want to customize */
+}
+.dropdown-menu {
+  display: none;
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* Adjust the duration as needed */
+}
+
+/* Add a delay to the appearance of the dropdown on hover */
+.dropdown:hover > .dropdown-menu {
+  display: block;
+  opacity: 1;
+  transition-delay: 1s; /* Adjust the delay as needed */
+}
+
+.sticky-dropdown {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Adjust the z-index as needed */
+}
+
+/* Style for the dropdown caret */
+.dropdown-caret {
+  display: inline-block;
+  margin-left: .255em;
+  vertical-align: .255em;
+  border-top: .3em solid;
+  border-right: .3em solid transparent;
+  border-bottom: 0;
+  border-left: .3em solid transparent;
+  color: #6c757d;
+  margin-left: -3px;
+}
+
+.dropdown-caret:hover {
+  color: wheat;
+}
+.nav-link-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+#main-page{
+  height: 100vh;
+}

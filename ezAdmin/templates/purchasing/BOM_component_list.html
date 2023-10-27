@@ -12,8 +12,10 @@
         {% endif %}
         {% endfor %}
         <table class="table table-borderless table-striped table-hover">
-            <span class="h4">BOM Components List</span class="h4">
-            <a class="btn btn-info btn-sm float-right" href="{% url 'purchasing-BOM-component-create' %}">Add BOMComponent</a>
+            <div class="hstack">
+                <span class="h4">BOM Components List</span class="h4">
+                <a class="btn btn-info btn-sm ms-auto" href="{% url 'purchasing-BOM-component-create' %}">Add BOMComponent</a>
+            </div>
             <hr>
             <thead class = "thead-dark">
                 <tr>

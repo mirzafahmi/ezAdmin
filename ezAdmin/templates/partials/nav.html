@@ -1,39 +1,46 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
-  <div class="container">
-
+  <div class="container col-md-10 offset-md-1">
     <a class="navbar-brand" href="{% url 'dashboard-index' %}">ezAdmin</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse hstack gap-3" id="navbarSupportedContent">
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="{% url 'purchasing-main' %}">Purchasing</a>
         </li>
-        <li class="nav-item dropdown">
-          <a id = "nav-label" class="nav-link dropdown-toggle" href="{% url 'task-list' %}" role="button" data-toggle="dropdown" aria-expanded="false">
-            Order
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'task-order-execution-list' %}">Order Execution</a>
-            <a class="dropdown-item" href="{% url 'task-quotation-list' %}">Quotation</a>
-            <a class="dropdown-item" href="{% url 'dashboard-customer' %}">Customer List</a>
+        <li class="nav-item dropdown sticky-dropdown">
+          <div class="nav-link-wrapper">
+              <a class="nav-link nav-label" href="{% url 'task-list' %}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Order 
+              </a>
+              <span class="dropdown-caret"></span>
           </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a id = "nav-label" class="nav-link dropdown-toggle" href="{% url 'dashboard-inventory-main' %}" role="button" data-toggle="dropdown" aria-expanded="false">
-            Store
-          </a>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url 'task-order-execution-list' %}">Order Execution</a>
+              <a class="dropdown-item" href="{% url 'task-quotation-list' %}">Quotation</a>
+              <a class="dropdown-item" href="{% url 'dashboard-customer' %}">Customer List</a>
+          </div>
+        </li>      
+        <li class="nav-item dropdown sticky-dropdown">
+          <div class="nav-link-wrapper">
+            <a class="nav-link nav-label" href="{% url 'dashboard-inventory-main' %}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Store 
+            </a>
+            <span class="dropdown-caret"></span>
+          </div>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="{% url 'dashboard-product' %}">Product List</a>
             <a class="dropdown-item" href="">Product Based Inventory</a>
           </div>
         </li>
-        <li class="nav-item dropdown">
-          <a id = "nav-label" class="nav-link dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-expanded="false">
-            Production
-          </a>
+        <li class="nav-item dropdown sticky-dropdown">
+          <div class="nav-link-wrapper">
+            <a class="nav-link nav-label" href="{% url 'purchasing-supplier-list' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Production
+            </a>
+            <span class="dropdown-caret"></span>
+          </div>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="{% url 'purchasing-raw-material-identifier-list' %}">Identifier List</a>
             <a class="dropdown-item" href="{% url 'purchasing-raw-material-component-list' %}">Component List</a>
@@ -41,10 +48,13 @@
             <a class="dropdown-item" href="{% url 'purchasing-raw-material-inventory-identifier-based-list' %}">Raw Material Identifier Based List</a>
           </div>
         </li>
-        <li class="nav-item dropdown">
-          <a id = "nav-label" class="nav-link dropdown-toggle" href="{% url 'purchasing-main' %}" role="button" data-toggle="dropdown" aria-expanded="false">
-            Purchasing
-          </a>
+        <li class="nav-item dropdown sticky-dropdown">
+          <div class="nav-link-wrapper">
+            <a  class="nav-link nav-label" href="{% url 'purchasing-main' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Purchasing
+            </a>
+            <span class="dropdown-caret"></span>
+          </div>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="{% url 'purchasing-supplier-list' %}">Supplier List</a>
             <a class="dropdown-item" href="{% url 'purchasing-purchasing-document-list' %}">Purchasing Document</a>
@@ -54,13 +64,13 @@
       
 
       {% if user.is_authenticated %}
-      <ul class = "navbar-nav ml-auto">
-        <li class = "register-button pr-1">
+      <ul class = "navbar-nav ms-auto">
+        <li class = "register-button px-1">
           <a href ="{% url 'user-profile' %}">
             <button type="button" class="btn btn-success">Profile</button>
           </a>
         </li>
-        <li class = "log-in-button pl-1">
+        <li class = "log-in-button px-1">
           <a  href ="{% url 'user-logout' %}">
             <button type="button" class="btn btn-danger">Logout</button>
           </a>
@@ -68,13 +78,13 @@
       </ul>
 
       {% else %}
-      <ul class = "navbar-nav ml-auto">
-        <li class = "register-button p-1">
+      <ul class = "navbar-nav ms-auto">
+        <li class = "register-button px-1">
           <a href ="{% url 'user-register' %}">
             <button type="button" class="btn btn-success">Register</button>
           </a>
         </li>
-        <li class = "log-in-button p-1">
+        <li class = "log-in-button px-1">
           <a  href ="{% url 'user-login' %}">
             <button type="button" class="btn btn-primary">Login</button>
           </a>
@@ -86,15 +96,43 @@
   </div>    
 </nav>
 <script>
-  $(document).ready(function() {
-    $("#nav-label").on("click", function(e) {
+  $(document).ready(function () {
+    // Click event for dropdown caret and nav label
+    $('.sticky-dropdown .nav-label, .sticky-dropdown .dropdown-caret').click(function (e) {
       e.preventDefault();
+      e.stopPropagation();
+  
+      var dropdown = $(this).closest('.sticky-dropdown');
+      var isSticky = dropdown.css('position') === 'sticky';
+  
+      if ($(this).hasClass('dropdown-caret')) {
+        dropdown.css('position', isSticky ? 'static' : 'sticky');
+      } else {
+        var href = dropdown.find('.nav-label').attr('href');
+        if (href) {
+          window.location.href = href;
+        }
+      }
     });
-    
-    $(".dropdown-item").on("click", function(e) {
+  
+    // Close the dropdown if clicked outside of it
+    $(document).on('click', function (e) {
+      if (!$(e.target).closest('.sticky-dropdown').length) {
+        $('.sticky-dropdown').css('position', 'static');
+      }
+    });
+  
+    // Get the dropdown items
+    var dropdownItems = $('.sticky-dropdown .dropdown-menu a');
+  
+    // Add a click event handler to each dropdown item
+    dropdownItems.click(function (e) {
       e.preventDefault();
-      window.location.href = $(this).attr("href");
+      window.location.href = $(this).attr('href');
     });
+  
+    console.log('from navbar');
   });
-  console.log('from navbar')
+  
 </script>
+

@@ -1,5 +1,8 @@
 function performAjaxAction() {
   $(document).ready(function () {
+    divCheckboxField = document.getElementById('div_id_data_overide');
+    divCheckboxField.classList.add('form-switch');
+    
     // Function to set the readonly state based on a flag
     function setReadonlyState(flag) {
       $("#id_lot_number").prop("readonly", flag);
