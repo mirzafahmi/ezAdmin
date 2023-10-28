@@ -21,7 +21,7 @@
                         {% csrf_token %}
                         {{ form|crispy}}
                         <a class="btn btn-light" href = "{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list' raw_material_inventory.component.identifier.id raw_material_inventory.component.id %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Update Inventory">
+                        <input class="btn btn-primary" type="submit" value="Update Inventory">
                     </form>
                 </div>
             </div>

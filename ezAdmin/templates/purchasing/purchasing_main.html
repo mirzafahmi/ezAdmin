@@ -3,22 +3,22 @@
 
 {% block content %}
 <body>
-    <div class="col-md-10 offset-md-1 table-responsive">
+    <div class="container-md">
         <h2 class = "text-center">Purchasing Main Page</h2>
         <hr>
-        <div class="card-deck">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
+        <div class="card-deck row gap-2">
+            <div class="card col">
+                <div class="card-body d-flex flex-column">
                     <h3 class="card-title">Supplier Tab</h3>
-                    <p class="card-text">To view, create, update and delete supplier list.</p>
-                    <a href="{% url 'purchasing-supplier-list' %}" class="btn btn-primary">View Supplier List</a>
+                    <p class="card-text py-3">To view, create, update and delete supplier list.</p>
+                    <a class="btn btn-primary mt-auto" href="{% url 'purchasing-supplier-list' %}">View Supplier List</a>
                 </div>
             </div>
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
+            <div class="card col">
+                <div class="card-body d-flex flex-column">
                     <h3 class="card-title">Purchasing Document Tab</h3>
-                    <p class="card-text">To view, create, update and delete purchasing document list.</p>
-                    <a href="{% url 'purchasing-purchasing-document-list' %}" class="btn btn-primary">View Purchasing Document List</a>
+                    <p class="card-text py-3">To view, create, update and delete purchasing document list.</p>
+                    <a class="btn btn-primary mt-auto" href="{% url 'purchasing-purchasing-document-list' %}">View Purchasing Document List</a>
                 </div>
             </div>
         </div>

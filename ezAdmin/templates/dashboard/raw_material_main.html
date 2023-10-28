@@ -3,48 +3,36 @@
 
 {% block content %}
 <body>
-    <div class="col-md-10 offset-md-1 table-responsive">
-        <h2 class = "text-center">Raw Material Main Page</h2>
+    <div class="container-md">
+        <h2 class ="text-center">Raw Material Main Page</h2>
         <hr>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <h3 class="card-title">Raw Material Identifier Tab</h3>
-                        <p class="card-text">To view, create, update and delete raw material identifier list.</p>
-                        <br>
-                        <a href="{% url 'purchasing-raw-material-identifier-list' %}" class="btn btn-primary">View Raw Material Identifier</a>
-                    </div>
+        <div class="card-deck row gy-4">
+            <div class="col-4">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Raw Material Identifier Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete raw material identifier list.</p>
+                    <a class="btn btn-primary mt-auto" href="{% url 'purchasing-raw-material-identifier-list' %}">View Raw Material Identifier</a>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <h3 class="card-title">Raw Material Component Tab</h3>
-                        <p class="card-text">To view, create, update and delete raw material component list.</p>
-                        <br>
-                        <a href="{% url 'purchasing-raw-material-component-list' %}" class="btn btn-primary">View Raw Material Component</a>
-                    </div>
+            <div class="col-4">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Raw Material Component Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete raw material component list.</p>
+                    <a class="btn btn-primary mt-auto" href="{% url 'purchasing-raw-material-component-list' %}">View Raw Material Component</a>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <h3 class="card-title">Raw Material BOMComponent Tab</h3>
-                        <p class="card-text">To view, create, update and delete raw material BOMcomponent list.</p>
-                        <br>
-                        <a href="{% url 'purchasing-BOM-component-list' %}" class="btn btn-primary">View BOMMaterial Component</a>
-                    </div>
+            <div class="col-4">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Raw Material BOMComponent Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete raw material BOMcomponent list.</p>
+                    <a class="btn btn-primary mt-auto" href="{% url 'purchasing-BOM-component-list' %}">View BOMMaterial Component</a>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <h3 class="card-title">Raw Material Inventory Tab</h3>
-                        <p class="card-text">To view, create, update and delete raw material inventory list.</p>
-                        <br>
-                        <a href="{% url 'purchasing-raw-material-inventory-identifier-based-list' %}" class="btn btn-primary">View Raw Material Inventory</a>
-                    </div>
+            <div class="col-4">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Raw Material Inventory Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete raw material inventory list.</p>
+                    <a class="btn btn-primary mt-auto" href="{% url 'purchasing-raw-material-inventory-identifier-based-list' %}">View Raw Material Inventory</a>
                 </div>
             </div>
         </div>

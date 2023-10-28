@@ -33,106 +33,29 @@
 
     <title>ezAdmin | {% block title %}{% endblock %}</title>
 </head>
+<body>
+  {% include 'partials/nav.html' %}
 
-  </head>
-  <body>
-
-    {% include 'partials/nav.html' %}
-
-    <div id="main-page" class="container-fluid main bg-light">
-      <div class="col-md-10 offset-md-1">
-        <nav class = "bg-light" aria-label="breadcrumb">
-          <ol id="breadcrumbs-container" class="breadcrumb bg-light">
-            
-          </ol>
-        </nav>
-      </div>
-      {% block content %}
-
-      {% endblock %}
-
-      {% block javascript%}
-
-      {% endblock%}
-
-
+  <div id="main-page" class="container-fluid main bg-light">
+    <div class="container-md">
+      <nav class = "bg-light" aria-label="breadcrumb">
+        <ol id="breadcrumbs-container" class="breadcrumb bg-light">
+          
+        </ol>
+      </nav>
     </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Get a reference to the container where breadcrumbs will be rendered
-        var breadcrumbsContainer = document.getElementById('breadcrumbs-container');
-
-        // Function to get breadcrumbs based on the current URL
-        function getBreadcrumbs() {
-          var path = window.location.pathname;
-      
-          // Split the path into segments
-          var segments = path.split('/').filter(Boolean);
-
-          var breadcrumbs = [{ label: "Home", url: "/" }];
-      
-          // Capitalize the first letter of each segment
-          for (var i = 0; i < segments.length; i++) {
-            var segment = segments[i];
-            var formattedSegment = segment.replace(/_/g, ' ')
-                                          .replace(/\b\w/g, function(match) {
-                                              return match.toUpperCase();
-                                          });
-            
-            // Construct the URL up to the current level
-            var url = '/' + segments.slice(0, i + 1).join('/');
     
-            breadcrumbs.push({
-                'label': formattedSegment,
-                'url': url
-            });
-        }
+    {% block content %}
 
-          console.log(breadcrumbs)
-          return breadcrumbs;
-      }
-  
-      // Function to render breadcrumbs in the container
-      function renderBreadcrumbs(breadcrumbs) {
-          breadcrumbsContainer.innerHTML = ''; // Clear existing content
-        if (breadcrumbs.length > 1) {
-          // Iterate over the breadcrumbs to create <li> elements
-          breadcrumbs.forEach(function (breadcrumb, index) {
-              // Create a new <li> element
-              var listItem = document.createElement('li');
-              listItem.className = 'breadcrumb-item';
+    {% endblock %}
 
-              // Create a new <a> element
-              var link = document.createElement('a');
-              link.href = breadcrumb.url;
-              link.textContent = breadcrumb.label;
+    {% block javascript%}
 
-              // Append the <a> element to the <li> element
-              listItem.appendChild(link);
+    {% endblock%}
 
-              // Append the <li> element to the breadcrumbsContainer
-              breadcrumbsContainer.appendChild(listItem);
 
-              if (index === breadcrumbs.length - 1) {
-                listItem.classList.add('custom-active');
-                //listItem.setAttribute('aria-current', 'page');
-            }
-          });
-        }
-      }
+  </div>
 
-      // Get and render breadcrumbs when the page loads
-      var initialBreadcrumbs = getBreadcrumbs();
-      renderBreadcrumbs(initialBreadcrumbs);
-      
-      var lastBreadcrumbLink = breadcrumbsContainer.querySelector('li:last-child a');
-
-      // Add the custom class to the last breadcrumb link
-      lastBreadcrumbLink.classList.add('custom-active');
-      
-  });
-  </script>
-  </body>
   <footer class="bg-dark text-center text-white">
     <!-- Grid container -->
     <div class="container">
@@ -187,4 +110,81 @@
     </div>
     <!-- Copyright -->
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Get a reference to the container where breadcrumbs will be rendered
+      var breadcrumbsContainer = document.getElementById('breadcrumbs-container');
+
+      // Function to get breadcrumbs based on the current URL
+      function getBreadcrumbs() {
+        var path = window.location.pathname;
+    
+        // Split the path into segments
+        var segments = path.split('/').filter(Boolean);
+
+        var breadcrumbs = [{ label: "Home", url: "/" }];
+    
+        // Capitalize the first letter of each segment
+        for (var i = 0; i < segments.length; i++) {
+          var segment = segments[i];
+          var formattedSegment = segment.replace(/_/g, ' ')
+                                        .replace(/\b\w/g, function(match) {
+                                            return match.toUpperCase();
+                                        });
+          
+          // Construct the URL up to the current level
+          var url = '/' + segments.slice(0, i + 1).join('/');
+  
+          breadcrumbs.push({
+              'label': formattedSegment,
+              'url': url
+          });
+        }
+
+        console.log(breadcrumbs)
+        return breadcrumbs;
+      }
+
+      // Function to render breadcrumbs in the container
+      function renderBreadcrumbs(breadcrumbs) {
+          breadcrumbsContainer.innerHTML = ''; // Clear existing content
+        if (breadcrumbs.length > 1) {
+          // Iterate over the breadcrumbs to create <li> elements
+          breadcrumbs.forEach(function (breadcrumb, index) {
+              // Create a new <li> element
+              var listItem = document.createElement('li');
+              listItem.className = 'breadcrumb-item';
+
+              // Create a new <a> element
+              var link = document.createElement('a');
+              link.href = breadcrumb.url;
+              link.textContent = breadcrumb.label;
+
+              // Append the <a> element to the <li> element
+              listItem.appendChild(link);
+
+              // Append the <li> element to the breadcrumbsContainer
+              breadcrumbsContainer.appendChild(listItem);
+
+              if (index === breadcrumbs.length - 1) {
+                listItem.classList.add('custom-active');
+                //listItem.setAttribute('aria-current', 'page');
+            }
+          });
+        }
+      }
+
+      // Get and render breadcrumbs when the page loads
+      var initialBreadcrumbs = getBreadcrumbs();
+      renderBreadcrumbs(initialBreadcrumbs);
+      
+      var lastBreadcrumbLink = breadcrumbsContainer.querySelector('li:last-child a');
+
+      // Add the custom class to the last breadcrumb link
+      lastBreadcrumbLink.classList.add('custom-active');
+      
+      });
+</script>
+</body>
 </html>

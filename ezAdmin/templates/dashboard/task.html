@@ -1,24 +1,24 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Task{% endblock %}
+{% block tittle %} Order{% endblock %}
 
 {% block content %}
 <body>
-    <div class="col-md-10 offset-md-1 table-responsive">
-        <h2 class = "text-center">Task Main Page</h2>
+    <div class="container-md">
+        <h2 class = "text-center">Order Main Page</h2>
         <hr>
-        <div class="card-deck">
-            <div class="card">
-                <div class="card-body">
+        <div class="card-deck row gy-4">
+            <div class="col">
+                <div class="card card-body d-flex flex-column">
                     <h3 class="card-title">Order Execution Tab</h3>
-                    <p class="card-text">To view, create, update and delete order execution list.</p>
-                    <a href="{% url 'task-order-execution-list' %}" class="btn btn-primary">View Order Execution List</a>
+                    <p class="card-text py-3">To view, create, update and delete order execution list.</p>
+                    <a class="btn btn-primary mt-auto" href="{% url 'task-order-execution-list' %}">View Order Execution List</a>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body">
+            <div class="col">
+                <div class="card card-body d-flex flex-column">
                     <h3 class="card-title">Quotation Tab</h3>
-                    <p class="card-text">To view, create, update and delete quoatation list.</p>
-                    <a href="{% url 'task-quotation-list' %}" class="btn btn-primary">View Quotation List</a>
+                    <p class="card-text py-3">To view, create, update and delete quoatation list.</p>
+                    <a class="btn btn-primary mt-auto" href="{% url 'task-quotation-list' %}">View Quotation List</a>
                 </div>
             </div>
         </div>
