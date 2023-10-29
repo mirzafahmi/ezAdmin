@@ -163,7 +163,35 @@ class RawMaterialComponentCreateView(LoginRequiredMixin,CreateView):
     model = RawMaterialComponent
     form_class = RawMaterialComponentForm
     template_name = 'purchasing/raw_material_component_create.html'
-    success_url = reverse_lazy('purchasing-raw-material-component-list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if 'identifier_id' in self.kwargs:
+            kwargs['initial']['identifier_id'] = self.kwargs.get('identifier_id')
+
+        return kwargs
+
+    def get_success_url(self):
+        # Check if the identifier_id is in the URL
+        if 'identifier_id' in self.kwargs:
+            identifier_id = self.kwargs['identifier_id']  # Get the 'identifier_name' parameter
+            # Construct the success URL with the 'identifier_name'
+            return reverse('purchasing-raw-material-inventory-identifier-component-based-list', kwargs={'identifier_id': identifier_id})
+        else:
+            return reverse_lazy('purchasing-raw-material-component-list')
+    
+    def get_cancel_url(self):
+        if 'identifier_id' in self.kwargs:
+            identifier_id = self.kwargs['identifier_id']  # Get the 'identifier_name' parameter
+            # Construct the success URL with the 'identifier_name'
+            return reverse('purchasing-raw-material-inventory-identifier-component-based-list', kwargs={'identifier_id': identifier_id})
+        else:
+            return reverse_lazy('purchasing-raw-material-component-list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cancel_url'] = self.get_cancel_url()
+        return context
 
     def form_valid(self, form):
         component = form.cleaned_data['component']
@@ -273,7 +301,8 @@ class RawMaterialInventoryCreateView(LoginRequiredMixin,CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        
+
+        kwargs['initial']['identifier_id'] = self.kwargs.get('identifier_id')
         kwargs['initial']['stock_type'] = self.kwargs.get('stock_type', '1')  # Default to stock-in
 
         return kwargs
@@ -334,7 +363,7 @@ class RawMaterialInventoryIdentifierBasedListView(LoginRequiredMixin, ListView):
     # You can customize the queryset if needed
     def get_queryset(self):
         # Use select_related to fetch the related RawMaterialComponent and RawMaterialIdentifier
-        queryset = RawMaterialInventory.objects.values_list('component__identifier__parent_item_code', 'component__identifier_id').distinct()
+        queryset = RawMaterialIdentifier.objects.values_list('parent_item_code', 'id').distinct()
 
         return queryset
 
@@ -348,11 +377,11 @@ class RawMaterialInventoryIdentifierComponentBasedListView(LoginRequiredMixin, L
         identifier_id = self.kwargs.get('identifier_id')
         identifier = get_object_or_404(RawMaterialIdentifier, id=identifier_id)
 
-        queryset = RawMaterialInventory.objects.filter(component__identifier=identifier)
+        queryset = RawMaterialComponent.objects.filter(identifier=identifier)
         
         # Extracting a list of distinct components and their IDs
-        distinct_components = queryset.values_list('component__component', flat=True).distinct()
-        distinct_components_ids = queryset.values_list('component_id', flat=True).distinct()
+        distinct_components = queryset.values_list('component', flat=True).distinct()
+        distinct_components_ids = queryset.values_list('id', flat=True).distinct()
 
         # Creating a list of dictionaries for components with their ID and name
         components_list = [{'id': component_id, 'name': component_name} for component_id, component_name in zip(distinct_components_ids, distinct_components)]
@@ -370,6 +399,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateMainView(LoginRequire
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        identifier_id = self.kwargs.get('identifier_id')
         component_id = self.kwargs.get('component_id')
 
         queryset = RawMaterialInventory.objects.filter(component__id=component_id)
@@ -377,7 +407,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateMainView(LoginRequire
         distinct_components = queryset.values_list('component__component').distinct()
 
         context['RawMaterialInventoriesIdentifierComponentBasedLogs'] = queryset
-        context['identifier_id'] = queryset.values_list('component__identifier__id').distinct()[0][0]
+        context['identifier_id'] = identifier_id
         context['component_id'] = component_id
         context['component'] = queryset.values_list('component__identifier__parent_item_code', 'component__component').distinct()
 
@@ -493,6 +523,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        identifier_id = self.kwargs.get('identifier_id')
         component_id = self.kwargs.get('component_id')
 
         #identifier = get_object_or_404(RawMaterialIdentifier, id=identifier_id)
@@ -502,7 +533,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin
         distinct_components = queryset.values_list('component__component').distinct()
 
         context['RawMaterialInventoriesIdentifierComponentBasedLogs'] = queryset
-        context['identifier_id'] = queryset.values_list('component__identifier__id').distinct()[0][0]
+        context['identifier_id'] = identifier_id
         context['component_id'] = component_id
         context['component'] = queryset.values_list('component__identifier__parent_item_code', 'component__component').distinct()
 

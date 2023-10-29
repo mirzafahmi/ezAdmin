@@ -6,18 +6,12 @@
     <div class="container-md">
         <div class="hstack align-items-center">
             <h2 class = "text-center flex-grow-1">Raw Material Inventory List For {{parent_item_code}} Page</h2>
-            <a class="btn btn-success btn-sm ms-auto" href="">Add Inventory Log</a>
+            <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-raw-material-inventory-identifier-based-component-create' identifier_id %}">Add Component</a>
         </div>
         <hr>
         <div class="card-deck row gy-4">
             {% for raw_material_inventory_list_identifier_component_based in raw_material_inventory_list_identifier_component_baseds %}
-            {% if forloop.counter0|divisibleby:3 %}
             <div class="col-4">
-            {% elif forloop.counter0|divisibleby:2 %}
-                <div class="col-6">
-            {% else %}
-                <div class="col-12">
-            {% endif %}
                 <div class="card card-body d-flex flex-column">
                     <h3 class="card-title">{{raw_material_inventory_list_identifier_component_based.name}} Inventory Tab</h3>
                     <p class="card-text py-3">To view, create, update and delete {{raw_material_inventory_list_identifier_component_based.name}} inventory log for {{parent_item_code}}.</p>

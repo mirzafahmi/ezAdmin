@@ -22,6 +22,17 @@ class RawMaterialComponentForm(forms.ModelForm):
     class Meta:
         model = RawMaterialComponent
         fields = ['component', 'spec', 'identifier']
+    
+    def __init__(self, *args, **kwargs):
+        super(RawMaterialComponentForm, self).__init__(*args, **kwargs)
+
+        identifier_id = self.initial.get('identifier_id') or self.data.get('identifier_id')
+
+        if 'identifier_id' in self.initial:
+            self.fields['identifier'].disabled = True
+            self.initial['identifier'] = identifier_id
+        else:
+            self.fields['identifier'].disabled = False
 
 class BOMComponentForm(forms.ModelForm):
     class Meta:
@@ -50,6 +61,7 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
         component_id = self.initial.get('component_id') or self.data.get('component_id')
         inventory_log = getattr(self, 'instance', None).pk
         
+        #set maximum stock can be log out
         if stock_type == '2':
             if not inventory_log:
                 available_quantity = self.calculate_available_quantity(component_id)
@@ -62,14 +74,16 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
 
         self.initial['component'] = component_id
 
+        #set query dropdown list
         # If stock type is '2', filter the component queryset based on stock-in entries and its related component only
         if stock_type == '2':
             stocked_in_components = RawMaterialInventory.objects.filter(stock_type='1', component__identifier_id = identifier_id).values_list('component_id', flat=True).distinct()
             self.fields['component'].queryset = RawMaterialComponent.objects.filter(id__in=stocked_in_components)
     
         else:
-            stocked_in_components = RawMaterialInventory.objects.filter(component__identifier_id = identifier_id).values_list('component_id', flat=True).distinct()
-            self.fields['component'].queryset = RawMaterialComponent.objects.filter(id__in=stocked_in_components)
+            #the comment one is not in used as we cannot filter the inventory models as it dont have componennt id of not stock in componennt
+            #stocked_in_components = RawMaterialInventory.objects.filter(component__identifier_id = identifier_id).values_list('component_id', flat=True).distinct()
+            self.fields['component'].queryset = RawMaterialComponent.objects.filter(id=component_id)
 
     def calculate_available_quantity(self, component_id, inventory_log = None):
         current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id, inventory_log)

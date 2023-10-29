@@ -7,16 +7,14 @@
         <h2 class = "text-center">Raw Material Inventory List (Identifier Based) Page</h2>
         <hr>
         <div class="row gy-4">
-        {% for RawMaterialInventoryIdentifierBased in RawMaterialInventoriesIdentifierBaseds %}    
-            <div class="col-4" >
+        {% for RawMaterialInventoryIdentifierBased in RawMaterialInventoriesIdentifierBaseds %}   
+            <div class="col-4">
                 <div class="card card-body d-flex flex-column">
                     <h3 class="card-title">{{RawMaterialInventoryIdentifierBased.0}} Inventory Tab</h3>
                     <p class="card-text py-3">To view, create, update and delete {{RawMaterialInventoryIdentifierBased.0}} inventory log.</p>
                     <a class="btn btn-primary mt-auto" href="{% url 'purchasing-raw-material-inventory-identifier-component-based-list' RawMaterialInventoryIdentifierBased.1 %}">View {{RawMaterialInventoryIdentifierBased.0}} inventory</a>
                 </div>
             </div>
-            {{ forloop.counter0 }} {# This will print the zero-based index #}
-            {{ forloop.counter }} {# This will print the one-based index #}
         {% endfor %}
         </div>
         

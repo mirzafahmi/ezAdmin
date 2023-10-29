@@ -24,14 +24,14 @@
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <a class="btn btn-light"  href = "{% url 'purchasing-raw-material-inventory-main' %}"> Cancel</a>
+                        <a class="btn btn-light"  href = ""> Cancel</a>
                         <input class="btn btn-success" type="submit" value="Create Inventory Log">
                     </form>
                 </div>
             </div>
         </div>    
     </div>
-    <!-- add logic to the stock out thus it can stock out more than stock in -->
+    <!-- add logic to the stock out thus it can stock out more than stock in 
     <script>
         $(document).ready(function () {
             // Function to set the readonly state based on a flag
@@ -58,7 +58,7 @@
                 // Make AJAX request to fetch FIFO information
                 if (type === '2') {
                     $.ajax({
-                        url: '{% url 'purchasing-raw-material-inventory-ajax' %}',  // Replace with your actual endpoint
+                        url: '',  // Replace with your actual endpoint
                         method: 'GET',
                         data: {
                             component_id: componentId,
@@ -88,4 +88,5 @@
             });
         });        
     </script>
+    -->
 {% endblock %}

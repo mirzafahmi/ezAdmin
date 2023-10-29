@@ -74,7 +74,7 @@ class RawMaterialIdentifier(UppercaseFieldsMixin, models.Model):
 
 
 class RawMaterialComponent(CapitalcaseFieldsMixin, models.Model):
-    component = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    component = models.CharField(max_length=200, blank=True, null=True)
     spec = models.CharField(max_length=200, blank = True, null = True)
     identifier = models.ForeignKey(RawMaterialIdentifier, on_delete=models.CASCADE)
 
