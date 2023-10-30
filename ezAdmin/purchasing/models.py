@@ -145,6 +145,7 @@ class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
     stock_in_date = models.DateTimeField(blank = True, null = True)
     stock_out_date = models.DateTimeField(blank = True, null = True)
     validation_date = models.DateTimeField(blank = True, null = True)
+    log_date = models.DateTimeField(blank = True, null = True)
 
     exempt_fields = ['lot_number']
 
@@ -164,6 +165,9 @@ class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
 
         if self.stock_type == '2':
             self.stock_out_date = timezone.localtime(timezone.now())
+        
+        if self.log_date is None:
+            self.log_date = timezone.localtime(timezone.now())
 
         self.validation_date = timezone.localtime(timezone.now())
         super(RawMaterialInventory, self).save(*args, **kwargs)

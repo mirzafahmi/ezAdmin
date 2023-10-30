@@ -559,6 +559,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
     def get(self, request, *args, **kwargs):
         identifier_id = request.GET.get('identifier_id')
         component_id = request.GET.get('component_id')
+        stock_in_tag = request.GET.get('stock_in_tag')  # Added parameter for filtering
 
         stock_in_items = RawMaterialInventory.objects.filter(
             component_id=component_id,
@@ -566,26 +567,48 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
         ).order_by('exp_date')
 
         response_data = []
-
-        for stock_in_item in stock_in_items:
-            #modify stock out items name as if filter based tag
+        print(identifier_id)
+        print(component_id)
+        if stock_in_tag:
+            # If stock_in_tag is provided, filter based on it
             stock_tag_baseds = RawMaterialInventory.objects.filter(
-                stock_in_tag=stock_in_item.stock_in_tag
+                stock_in_tag=stock_in_tag
             )
             for stock_tag_based in stock_tag_baseds:
                 response_data.append({
-                                'identifier': stock_tag_based.component.identifier,
-                                'component': stock_tag_based.component.id,
-                                'quantity': stock_tag_based.quantity,
-                                'lot': stock_tag_based.lot_number,
-                                'expiry_date': stock_tag_based.exp_date,
-                                'stock_in_date': stock_tag_based.stock_in_date,
-                                'stock_out_date': stock_tag_based.stock_out_date,
-                                'price_per_unit': stock_tag_based.price_per_unit,
-                                'purchasing_document': stock_tag_based.purchasing_doc,
-                            })
+                    'identifier': stock_tag_based.component.identifier.parent_item_code,
+                    'component': stock_tag_based.component.id,
+                    'quantity': stock_tag_based.quantity,
+                    'lot': stock_tag_based.lot_number,
+                    'expiry_date': stock_tag_based.exp_date,
+                    'stock_in_date': stock_tag_based.stock_in_date,
+                    'stock_out_date': stock_tag_based.stock_out_date,
+                    'price_per_unit': stock_tag_based.price_per_unit,
+                    'purchasing_document': stock_tag_based.purchasing_doc.id,
+                })
+            print('from stock tag')
+        else:
+            # If stock_in_tag is not provided, generate data for buttons
+            for stock_in_item in stock_in_items:
+                stock_tag_baseds = RawMaterialInventory.objects.filter(
+                    stock_in_tag=stock_in_item.stock_in_tag
+                )
+                for stock_tag_based in stock_tag_baseds:
+                    response_data.append({
+                        'identifier': stock_tag_based.component.identifier.parent_item_code,
+                        'component': stock_tag_based.component.id,
+                        'quantity': stock_tag_based.quantity,
+                        'lot': stock_tag_based.lot_number,
+                        'expiry_date': stock_tag_based.exp_date,
+                        'stock_in_date': stock_tag_based.stock_in_date,
+                        'stock_out_date': stock_tag_based.stock_out_date,
+                        'price_per_unit': stock_tag_based.price_per_unit,
+                        'purchasing_document': stock_tag_based.purchasing_doc.id,
+                    })
+                print('from else')
 
         return JsonResponse(response_data, safe=False)
+
             
 
 class RawMaterialInventoryIdentifierComponentBasedLogUpdateView(LoginRequiredMixin, UpdateView):

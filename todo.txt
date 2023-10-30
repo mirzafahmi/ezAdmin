@@ -9,3 +9,4 @@ todo:
 -modify alertbox - done
 -singular vs plural
 
+- lot number dictate the override data in log create form
