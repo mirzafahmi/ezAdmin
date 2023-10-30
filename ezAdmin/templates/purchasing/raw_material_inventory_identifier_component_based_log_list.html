@@ -2,6 +2,12 @@
 {% block tittle %} Raw Material Inventory List{% endblock %}
 
 {% block content %}
+<style>
+    a.no-decoration {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
 <body>
     <div class="col-md-10 offset-md-1 table-responsive">
         {% for message in messages %}
@@ -17,6 +23,11 @@
                 <a class="btn btn-success btn-sm float-right ms-auto" href="{% url 'purchasing-raw-material-inventory-identifier-component-based-log-create-main' identifier_id component_id %}">Add Inventory Log</a>
             </div>
             <hr>
+            <div class="btn-group-horizontal" id="filter-label" role="group" aria-label="horizontal radio toggle button group">
+                <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="vbtn-radio1"><a class="no-decoration" href="{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list' identifier_id component_id%}">Main Page</a></label>
+            </div>
+            <br>
             <thead class = "table-dark">
                 <tr>
                     <th>Identifier</th>
@@ -31,7 +42,7 @@
                     <th>Activity</th>
                 </tr>
             </thead>
-            <tbody> 
+            <tbody id="logs-table-body"> 
                 {% for RawMaterialInventoriesIdentifierComponentBasedLog in RawMaterialInventoriesIdentifierComponentBasedLogs %}       
                 <tr>
                     <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.component.identifier}}</td>
@@ -67,5 +78,79 @@
         </table>
     </div>
 </body>
-</html>
+<script>
+    $(document).ready(function () {
+        function filterBasedStockinID() {
+            function getUrlParameter(name) {
+                var regex = new RegExp(name + ':([^&;]+?)(&|#|;|$|-)');
+                var results = regex.exec(window.location.href);
+                if (!results) return null;
+                if (!results[1]) return '';
+    
+                // Split the value by '/'
+                var values = results[1].split('[/|-]');
+                
+                // Get the first value
+                var desiredValue = values[0];
+                
+                return decodeURIComponent(desiredValue.replace(/\+/g, ' '));
+            }
+
+            var identifierId = getUrlParameter("identifier");
+            var componentId = getUrlParameter("component");
+
+            $.ajax({
+                url: '{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list-ajax' %}',
+                method: 'GET',
+                data: {
+                    identifier_id: identifierId,
+                    component_id: componentId,
+                },
+                dataType: "json",
+                success: function (data) {
+                    $('#logs-table-body').empty();
+                    console.log(data)
+                    data.forEach(function(log) {
+                        $('#filter-label').append(
+                            '<input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">' + 
+                            '<label class="btn btn-outline-primary" for="vbtn-radio2">' + log.lot + '</label>'
+                        );
+                        $('#logs-table-body').append(`
+                            <tr>
+                                <td>${log.identifier}</td>
+                                <td>${log.component}</td>
+                                <td>${log.quantity}</td>
+                                <td>${log.lot}</td>
+                                <td>${log.expiry_date}</td>
+                                <td>${log.stock_in_date}</td>
+                                <td>${log.stock_out_date}</td>
+                                <td>${log.price_per_unit}</td>
+                                <td>${log.purchasing_document}</td>
+                                <td>
+                                    <div class = "d-grid">
+                                            <a class="btn btn-outline-primary btn-sm btn-block" href ="">
+                                                Edit
+                                            </a>
+                                            <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                                Validate
+                                            </a>
+                                            <a class="btn btn-outline-danger btn-sm btn-block" href ="">
+                                                Delete
+                                            </a>
+                                        </ul>
+                                    </div>    
+                                </td>
+                            </tr>
+                        `);
+                    });
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            })
+        };
+
+        filterBasedStockinID()
+    })
+</script>
 {% endblock %}

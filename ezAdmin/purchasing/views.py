@@ -555,6 +555,39 @@ class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin
 
         return context
 
+class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredMixin, ListView):
+    def get(self, request, *args, **kwargs):
+        identifier_id = request.GET.get('identifier_id')
+        component_id = request.GET.get('component_id')
+
+        stock_in_items = RawMaterialInventory.objects.filter(
+            component_id=component_id,
+            stock_type='1',
+        ).order_by('exp_date')
+
+        response_data = []
+
+        for stock_in_item in stock_in_items:
+            #modify stock out items name as if filter based tag
+            stock_tag_baseds = RawMaterialInventory.objects.filter(
+                stock_in_tag=stock_in_item.stock_in_tag
+            )
+            for stock_tag_based in stock_tag_baseds:
+                response_data.append({
+                                'identifier': stock_tag_based.component.identifier,
+                                'component': stock_tag_based.component.id,
+                                'quantity': stock_tag_based.quantity,
+                                'lot': stock_tag_based.lot_number,
+                                'expiry_date': stock_tag_based.exp_date,
+                                'stock_in_date': stock_tag_based.stock_in_date,
+                                'stock_out_date': stock_tag_based.stock_out_date,
+                                'price_per_unit': stock_tag_based.price_per_unit,
+                                'purchasing_document': stock_tag_based.purchasing_doc,
+                            })
+
+        return JsonResponse(response_data, safe=False)
+            
+
 class RawMaterialInventoryIdentifierComponentBasedLogUpdateView(LoginRequiredMixin, UpdateView):
     model = RawMaterialInventory
     form_class = RawMaterialInventoryForm
