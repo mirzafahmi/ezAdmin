@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 import requests
 from mixins.validation_mixin import QuantityValidationMixin
+from django.core.exceptions import ValidationError
 
 class SupplierForm(forms.ModelForm):
     class Meta:
@@ -33,6 +34,23 @@ class RawMaterialComponentForm(forms.ModelForm):
             self.initial['identifier'] = identifier_id
         else:
             self.fields['identifier'].disabled = False
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        component = cleaned_data.get('component')
+        identifier = cleaned_data.get('identifier')
+
+        if component and identifier:
+            # Check if a similar component already exists for the identifier
+            similar_components = RawMaterialComponent.objects.filter(
+                identifier=identifier,
+                component__iexact=component  # Case-insensitive comparison
+            ).exclude(pk=self.instance.pk if self.instance else None)
+
+            if similar_components.exists():
+                self.add_error("component", "A similar component already exists for this identifier.")
+
+        return cleaned_data
 
 class BOMComponentForm(forms.ModelForm):
     class Meta:
@@ -43,7 +61,10 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
     data_overide = forms.BooleanField(required=False)
     class Meta:
         model = RawMaterialInventory
-        fields = ['component', 'quantity', 'stock_type', 'price_per_unit', 'purchasing_doc', 'lot_number', 'exp_date']
+        fields = ['component', 'quantity', 'stock_type', 'price_per_unit', 'purchasing_doc', 'lot_number', 'exp_date', 'stock_in_tag']
+        widgets = {
+            'stock_in_tag': forms.HiddenInput(),  # Hide the related_stock_in field
+        }
 
     def __init__(self, *args, **kwargs):
         super(RawMaterialInventoryForm, self).__init__(*args, **kwargs)
@@ -88,7 +109,7 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
     def calculate_available_quantity(self, component_id, inventory_log = None):
         current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id, inventory_log)
         return current_raw_material_quantity
-
+    
     def clean(self):
         cleaned_data = super().clean()
         stock_type = cleaned_data.get('stock_type')
@@ -111,12 +132,12 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
                 self.add_error('quantity', "Stock out quantity must be more than 0.")
             
             if not inventory_log:
-                component_id = component.id  # Assuming component has an 'id' field
+                component_id = component.id
                 available_quantity = self.calculate_available_quantity(component_id)
                 if quantity > available_quantity if available_quantity is not None else 0:
                     self.add_error('quantity', "Quantity exceeds available quantity.")
             else:
-                component_id = component.id  # Assuming component has an 'id' field
+                component_id = component.id 
                 available_quantity = self.calculate_available_quantity(component_id, inventory_log)
                 if quantity > available_quantity if available_quantity is not None else 0:
                     self.add_error('quantity', "Quantity exceeds available quantity.")

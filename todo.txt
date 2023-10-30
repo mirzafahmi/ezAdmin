@@ -1,9 +1,11 @@
 todo:
 
--rework navbar
--modify all component and bom component follow ajax view raw mat inventory
+-rework navbar - done
+-modify all component and bom component follow ajax view raw mat inventory 
 -create bom logic 
 -add create account verication
 -add permission based on group 
 -create master list of available asset
--modify alertbox done
+-modify alertbox - done
+-singular vs plural
+

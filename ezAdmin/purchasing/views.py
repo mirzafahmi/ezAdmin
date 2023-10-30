@@ -114,10 +114,22 @@ class RawMaterialIdentifierCreateView(LoginRequiredMixin,CreateView):
     model = RawMaterialIdentifier
     form_class = RawMaterialIdentifierForm
     template_name = 'purchasing/raw_material_identifier_create.html'
-    success_url = reverse_lazy('purchasing-raw-material-identifier-list')
+
+    def get_success_url(self):
+        if 'identifier_create' in self.request.get_full_path():
+            return reverse('purchasing-raw-material-inventory-identifier-based-list')
+        else:
+            return reverse('purchasing-raw-material-identifier-list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['cancel_url'] = self.get_success_url()  # Use the success URL as cancel URL for simplicity
+        
+        return context
 
     def form_valid(self, form):
-        identifier = form.cleaned_data['parent_item_code']
+        identifier = form.cleaned_data['parent_item_code'].upper()
         messages.success(self.request, f'{identifier} created successfully!')
 
         return super().form_valid(form)
@@ -475,11 +487,13 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View, QuantityVa
             'component': component_id,
             'available_quantity': None,
             'alert': False,
+            'related_stock_in': None,
         }
 
         if stock_type == '2':
             current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
-
+            print(current_raw_material)
+            #print(current_raw_material.stock_in_tag.id)
             if current_raw_material_quantity is not None:
                 response_data = {
                     'component': current_raw_material.component.id,
@@ -488,6 +502,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View, QuantityVa
                     'price_per_unit': current_raw_material.price_per_unit,
                     'purchasing_doc': current_raw_material.purchasing_doc_id,
                     'available_quantity': current_raw_material_quantity,
+                    'stock_in_tag': current_raw_material.stock_in_tag.id,
                 }
             else:
                 response_data = {
@@ -498,6 +513,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View, QuantityVa
         if stock_type == None:
             current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
             component = RawMaterialComponent.objects.get(id=component_id)
+            print(current_raw_material_quantity)
             if current_raw_material is None:
                 response_data = {
                         'component': component_id,

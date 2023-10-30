@@ -24,6 +24,10 @@ class CapitalcaseFieldsMixin(models.Model):
 class UppercaseFieldsMixin(models.Model):
     exempt_fields = []
 
+    def uppercase_words(self, value):
+        # Split the string into words, capitalize each word, and join them back
+        return ' '.join(word.upper() for word in value.split())
+
     def save(self, *args, **kwargs):
         for field in self._meta.fields:
             if isinstance(field, models.CharField):
@@ -31,7 +35,8 @@ class UppercaseFieldsMixin(models.Model):
                 if field_name not in self.exempt_fields:
                     value = getattr(self, field_name)
                     if value:
-                        setattr(self, field_name, value.capitalize())
+                        uppercase_value = self.uppercase_words(value)
+                        setattr(self, field_name, uppercase_value)
         super(UppercaseFieldsMixin, self).save(*args, **kwargs)
 
     class Meta:

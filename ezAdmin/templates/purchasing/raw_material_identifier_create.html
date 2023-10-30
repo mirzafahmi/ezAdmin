@@ -19,7 +19,7 @@
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <a class="btn btn-light"  href = "{% url 'purchasing-raw-material-identifier-list' %}"> Cancel</a>
+                        <a class="btn btn-light"  href = "{{ cancel_url }}"> Cancel</a>
                         <input class="btn btn-success" type="submit" value="Create Identifier">
                     </form>
                 </div>

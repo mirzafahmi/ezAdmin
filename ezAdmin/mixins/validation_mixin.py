@@ -19,18 +19,14 @@ class QuantityValidationMixin:
                 stock_out_items = RawMaterialInventory.objects.filter(
                     component_id=component_id,
                     stock_type='2',
-                    purchasing_doc=stock_in_item.purchasing_doc,
-                    lot_number=stock_in_item.lot_number,
-                    exp_date=stock_in_item.exp_date,
+                    stock_in_tag=stock_in_item.stock_in_tag
                 )
 
             else:
                 stock_out_items = RawMaterialInventory.objects.filter(
                     component_id=component_id,
                     stock_type='2',
-                    purchasing_doc=stock_in_item.purchasing_doc,
-                    lot_number=stock_in_item.lot_number,
-                    exp_date=stock_in_item.exp_date,
+                    stock_in_tag=stock_in_item.stock_in_tag
                 )
                 stock_out_items = stock_out_items.exclude(pk=inventory_log)
     

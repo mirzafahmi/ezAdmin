@@ -91,6 +91,7 @@ class RawMaterialComponent(CapitalcaseFieldsMixin, models.Model):
         self.update_date = timezone.localtime(timezone.now())
 
         super(RawMaterialComponent, self).save(*args, **kwargs)
+    
 
 class BOMComponent(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -130,7 +131,6 @@ class ProductionLog(models.Model):
 
         super(ProductionLog, self).save(*args, **kwargs)
 
-
 class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
     component = models.ForeignKey(RawMaterialComponent, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
@@ -139,6 +139,7 @@ class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
     price_per_unit = models.CharField(max_length=200, blank = True, null = True)
     stock_type = models.CharField(max_length=2,choices=(('1','Stock-in'),('2','Stock-Out')), default = 1)
     purchasing_doc = models.ForeignKey(PurchasingDocument, on_delete=models.CASCADE)
+    stock_in_tag = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='stock_in_tag_entries')
 
     #utility fields
     stock_in_date = models.DateTimeField(blank = True, null = True)
@@ -154,9 +155,14 @@ class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
         self.lot_number = self.lot_number.upper()
 
         # add self.stock_xx_date = None if any stock type selected or updated
-        if self.stock_type is '1':
+        if self.stock_type == '1':
+            super().save(*args, **kwargs)
+            self.stock_in_tag = self
+
             self.stock_in_date = timezone.localtime(timezone.now())
-        if self.stock_type is '2':
+            super().save(update_fields=['stock_in_tag'])
+
+        if self.stock_type == '2':
             self.stock_out_date = timezone.localtime(timezone.now())
 
         self.validation_date = timezone.localtime(timezone.now())

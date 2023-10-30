@@ -1,6 +1,5 @@
 function disableLinkAjaxAction() {
     $(document).ready(function () {
-        console.log('from ajax main')
 
         function disableLink() {
             $('#log-out-link')
@@ -30,6 +29,7 @@ function disableLinkAjaxAction() {
         var identifierId = getUrlParameter('identifier');
         var componentId = getUrlParameter('component');
         var stockType = getUrlParameter('type');
+        console.log('from disable link')
         console.log(identifierId)
         console.log(componentId)
         console.log(stockType)

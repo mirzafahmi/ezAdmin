@@ -39,9 +39,9 @@ function performAjaxAction() {
     var identifierId = getUrlParameter("identifier");
     var componentId = getUrlParameter("component");
     var stockType = getUrlParameter("type");
-    console.log(identifierId);
-    console.log(componentId);
-    console.log(stockType);
+    console.log('identifier id ' + identifierId);
+    console.log('component id ' +componentId);
+    console.log('stock type ' +stockType);
 
     if (action === "create") {
       function fetchComponentOptions(identifierId, componentId, stockType) {
@@ -65,6 +65,7 @@ function performAjaxAction() {
               $("#id_exp_date").val(data.exp_date);
               $("#id_price_per_unit").val(data.price_per_unit);
               $("#id_purchasing_doc").val(data.purchasing_doc);
+              $('#id_stock_in_tag').val(data.stock_in_tag);
 
               // Set readonly state and store the flag in local storage
               setReadonlyState(true);
