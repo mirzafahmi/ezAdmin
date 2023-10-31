@@ -576,15 +576,21 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
             )
             for stock_tag_based in stock_tag_baseds:
                 response_data.append({
+                    'log_id': stock_tag_based.id,
                     'identifier': stock_tag_based.component.identifier.parent_item_code,
-                    'component': stock_tag_based.component.id,
+                    'identifier_id': stock_tag_based.component.identifier.id,
+                    'component': stock_tag_based.component.component,
+                    'component_id': stock_tag_based.component.id,
                     'quantity': stock_tag_based.quantity,
                     'lot': stock_tag_based.lot_number,
                     'expiry_date': stock_tag_based.exp_date,
                     'stock_in_date': stock_tag_based.stock_in_date,
                     'stock_out_date': stock_tag_based.stock_out_date,
                     'price_per_unit': stock_tag_based.price_per_unit,
-                    'purchasing_document': stock_tag_based.purchasing_doc.id,
+                    'purchasing_document': stock_tag_based.purchasing_doc.po_number,
+                    'company_name': stock_tag_based.purchasing_doc.supplier.company_name,
+                    'stock_in_tag': stock_tag_based.stock_in_tag.id,
+                    'stock_type': stock_tag_based.stock_type
                 })
             print('from stock tag')
         else:
@@ -593,6 +599,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                 stock_tag_baseds = RawMaterialInventory.objects.filter(
                     stock_in_tag=stock_in_item.stock_in_tag
                 )
+                
                 for stock_tag_based in stock_tag_baseds:
                     response_data.append({
                         'identifier': stock_tag_based.component.identifier.parent_item_code,
@@ -603,9 +610,9 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                         'stock_in_date': stock_tag_based.stock_in_date,
                         'stock_out_date': stock_tag_based.stock_out_date,
                         'price_per_unit': stock_tag_based.price_per_unit,
-                        'purchasing_document': stock_tag_based.purchasing_doc.id,
+                        'purchasing_document': stock_tag_based.purchasing_doc.po_number,
+                        'stock_in_tag': stock_tag_based.stock_in_tag.id,
                     })
-                print('from else')
 
         return JsonResponse(response_data, safe=False)
 

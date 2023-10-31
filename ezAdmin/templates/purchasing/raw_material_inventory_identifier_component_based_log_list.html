@@ -100,56 +100,88 @@
         var identifierId = getUrlParameter("identifier");
         var componentId = getUrlParameter("component");
         var stockType = getUrlParameter("type");
+
         // Function to generate dynamic buttons for filter based on stock_in_tag
-        function generateFilterButtons(data) {
+        function generateFilterButtonsAndLoadLogs(data) {
             data.forEach(function (log) {
                 var radioId = 'vbtn-radio-' + log.lot.replace(/\s+/g, '-').toLowerCase();
-                console.log(log.identifier)
-                console.log(log.lot)
                 $('#filter-label').append(
-                    '<input type="radio" class="btn-check" name="vbtn-radio" id="' + radioId + '" autocomplete="off">' +
-                    '<label class="btn btn-outline-primary" for="' + radioId + '">' +
-                    '<a href="#" class="ajax-link" data-identifier="' + log.identifier + '" data-component="' + log.component + '" data-stock-in-tag="' + log.lot + '">' + log.lot + '</a>' +
-                    '</label>'
+                    `<input type="radio" class="btn-check" name="vbtn-radio" id="${radioId}" data-identifier="${log.identifier}" data-component="${log.component}" data-stock-in-tag="${log.stock_in_tag}">` +
+                    `<label class="btn btn-outline-primary me-1" for="${radioId}" data-identifier="${log.identifier}" data-component="${log.component}" data-stock-in-tag="${log.stock_in_tag}">${log.lot === '-'? log.purchasing_document: log.lot}</label>`
                 );
             });
-        };
-        console.log('ajax button')
+    
+            // Event listener for label clicks to load logs when the associated radio button is triggered
+            $('#filter-label').on('change', 'label', function () {
+                var identifier = $(this).data('identifier');
+                var component = $(this).data('component');
+                var stockInTag = $(this).data('stock-in-tag');
+                loadLogs(identifier, component, stockInTag);
+            });
+    
+            // Event listener for radio button clicks, you might still use it independently if needed
+            $('#filter-label').on('change', 'input[type="radio"]', function () {
+                var identifier = $(this).data('identifier');
+                var component = $(this).data('component');
+                var stockInTag = $(this).data('stock-in-tag');
+                loadLogs(identifier, component, stockInTag);
+            });
+        }
+
         // Function to load logs based on stock_in_tag when a button is clicked
         function loadLogs(identifier, component, stockInTag) {
-            $.ajax({
-                url: '{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list-ajax' %}',
-                method: 'GET',
-                data: {
-                    identifier_id: identifierId,
-                    component_id: componentId,
-                    stock_in_tag: stockInTag,
-                },
-                dataType: "json",
-                success: function (data) {
-                    $('#logs-table-body').empty();
-                    console.log(data)
-                    data.forEach(function (log) {
-                        $('#logs-table-body').append(`
+        $.ajax({
+            url: "{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list-ajax' %}",
+            method: 'GET',
+            data: {
+                identifier_id: identifier,
+                component_id: component,
+                stock_in_tag: stockInTag,
+            },
+            dataType: "json",
+            success: function (data) {
+                function formatCustomDate(dateString) {
+                    if (dateString) {
+                        var date = new Date(dateString);
+                        var options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                        return new Intl.DateTimeFormat('en-US', options).format(date);
+                    } else {
+                        return 'None';
+                    }
+                }
+
+                $('#logs-table-body').empty();
+                data.forEach(function (log) {
+                    var formattedStockInDate = formatCustomDate(log.stock_in_date);
+                    var formattedStockOutDate = formatCustomDate(log.stock_out_date);
+                    console.log(log.component_id)
+                    console.log(log.identifier_id)
+                    console.log(log.log_id)
+
+                    var editUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/inventory_log_create_main/stock_type:${log.stock_type}-log:${log.log_id}-update`
+                    var deleteUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/inventory_log_create_main/stock_type:${log.stock_type}-log:${log.log_id}-delete`
+
+                    console.log(editUrl)
+                    $('#logs-table-body').append(`
                             <tr>
                                 <td>${log.identifier}</td>
-                                <td>${log.component}</td>
+                                <td>${log.component} for ${log.identifier}</td>
                                 <td>${log.quantity}</td>
                                 <td>${log.lot}</td>
                                 <td>${log.expiry_date}</td>
-                                <td>${log.stock_in_date}</td>
-                                <td>${log.stock_out_date}</td>
+                                <td>${formattedStockInDate}</td>
+                                <td>${formattedStockOutDate}</td>
                                 <td>${log.price_per_unit}</td>
-                                <td>${log.purchasing_document}</td>
+                                <td>${log.purchasing_document}(${log.company_name})</td>
                                 <td>
                                     <div class="d-grid">
-                                        <a class="btn btn-outline-primary btn-sm btn-block" href="">
+                                        <a class="btn btn-outline-primary btn-sm btn-block" href="${editUrl}">
                                             Edit
                                         </a>
                                         <a class="btn btn-outline-success btn-sm btn-block" href="">
                                             Validate
                                         </a>
-                                        <a class="btn btn-outline-danger btn-sm btn-block" href="">
+                                        <a class="btn btn-outline-danger btn-sm btn-block" href="${deleteUrl}">
                                             Delete
                                         </a>
                                     </div>
@@ -163,34 +195,22 @@
                 }
             });
         };
-        console.log("AJAX URL:", '{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list-ajax' %}');
 
         // Initial AJAX call to generate filter buttons
         $.ajax({
-            url: '{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list-ajax' %}',
+            url: "{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list-ajax' %}",
             method: 'GET',
             data: {
-                identifier_id: identifierId,
-                component_id: componentId,
+                identifier_id: '{{ identifier_id }}',  // Pass the Django template variables here
+                component_id: '{{ component_id }}',
             },
             dataType: "json",
             success: function (data) {
-                generateFilterButtons(data);
-                console.log(data)
-                
+                generateFilterButtonsAndLoadLogs(data);
             },
             error: function (error) {
                 console.log('Error:', error);
             }
-        });
-    
-        // Event listener for radio buttons to load logs when clicked
-        $('#filter-label').on('change', 'input[type="radio"]', function () {
-            var identifier = $(this).find('a.ajax-link').data('identifier');
-            var component = $(this).find('a.ajax-link').data('component');
-            var stockInTag = $(this).find('a.ajax-link').data('stock-in-tag');
-    
-            loadLogs(identifier, component, stockInTag);
         });
     });    
 </script>
