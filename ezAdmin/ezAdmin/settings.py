@@ -191,6 +191,10 @@ SITE_ID = 1
 
 SESSION_COOKIE_AGE = 1800
 
+#DATE_FORMAT = 'j/M/Y'
+
+#DATETIME_FORMAT = 'j/M/Y-P'
+
 '''LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

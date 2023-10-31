@@ -542,16 +542,28 @@ class RawMaterialInventoryIdentifierComponentBasedLogListView(LoginRequiredMixin
         identifier_id = self.kwargs.get('identifier_id')
         component_id = self.kwargs.get('component_id')
 
-        #identifier = get_object_or_404(RawMaterialIdentifier, id=identifier_id)
-
         queryset = RawMaterialInventory.objects.filter(component__id=component_id)
 
         distinct_components = queryset.values_list('component__component').distinct()
 
+        stock_in_items = RawMaterialInventory.objects.filter(
+            component_id=component_id,
+            stock_type='1',
+        ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+        stock_out_items = RawMaterialInventory.objects.filter(
+            component_id=component_id,
+            stock_type='2',
+        ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+        balance_quantity_component_based = stock_in_items - stock_out_items
+
         context['RawMaterialInventoriesIdentifierComponentBasedLogs'] = queryset
+        context['exists_flag'] = queryset.exists()
         context['identifier_id'] = identifier_id
         context['component_id'] = component_id
         context['component'] = queryset.values_list('component__identifier__parent_item_code', 'component__component').distinct()
+        context['balance'] = balance_quantity_component_based
 
         return context
 
@@ -567,13 +579,25 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
         ).order_by('exp_date')
 
         response_data = []
-        print(identifier_id)
-        print(component_id)
+
         if stock_in_tag:
             # If stock_in_tag is provided, filter based on it
             stock_tag_baseds = RawMaterialInventory.objects.filter(
                 stock_in_tag=stock_in_tag
             )
+
+            stock_in_tag_based = RawMaterialInventory.objects.filter(
+                stock_in_tag=stock_in_tag,
+                stock_type='1',
+            ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+            stock_out_tag_based = RawMaterialInventory.objects.filter(
+                stock_in_tag=stock_in_tag,
+                stock_type='2',
+            ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+            balance_quantity_tag_based = stock_in_tag_based - stock_out_tag_based
+
             for stock_tag_based in stock_tag_baseds:
                 response_data.append({
                     'log_id': stock_tag_based.id,
@@ -590,14 +614,17 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                     'purchasing_document': stock_tag_based.purchasing_doc.po_number,
                     'company_name': stock_tag_based.purchasing_doc.supplier.company_name,
                     'stock_in_tag': stock_tag_based.stock_in_tag.id,
-                    'stock_type': stock_tag_based.stock_type
+                    'stock_type': stock_tag_based.stock_type,
+                    'balance': balance_quantity_tag_based,
                 })
-            print('from stock tag')
+
         else:
             # If stock_in_tag is not provided, generate data for buttons
             for stock_in_item in stock_in_items:
+                
                 stock_tag_baseds = RawMaterialInventory.objects.filter(
-                    stock_in_tag=stock_in_item.stock_in_tag
+                    stock_in_tag=stock_in_item.stock_in_tag,
+                    stock_type=stock_in_item.stock_type,
                 )
                 
                 for stock_tag_based in stock_tag_baseds:
@@ -612,6 +639,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                         'price_per_unit': stock_tag_based.price_per_unit,
                         'purchasing_document': stock_tag_based.purchasing_doc.po_number,
                         'stock_in_tag': stock_tag_based.stock_in_tag.id,
+                        'stock_type': stock_tag_based.stock_type,
                     })
 
         return JsonResponse(response_data, safe=False)
