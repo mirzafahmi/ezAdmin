@@ -8,13 +8,13 @@
             <div class="col-md-6 offset-md-3">
                 
                 <div class="border p-3">
-                    <h3>Login Here</h3>
+                    <h3 class="text-center">Login Here</h3>
                     <hr>
-                    <form method = "POST">
+                    <form method = "POST" class="d-flex flex-column">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <input class = "btn btn-primary" type ="submit" value = "Login">
-                        <a class = "mx-4" href = "{% url 'password_reset' %}"> Forget Password? </a>
+                        <input class = "btn btn-primary my-3" type ="submit" value = "Login">
+                        <a class = "mx-4 text-center" href = "{% url 'password_reset' %}"> Forget Password? </a>
                     </form>
                 </div>
             </div>

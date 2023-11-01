@@ -12,11 +12,12 @@
     {% endfor %}
     <div class="container-md">
         <div class="hstack align-items-center">
-            <h2 class = "text-center flex-grow-1">Raw Material Inventory List For {{parent_item_code}} Page</h2>
+            <h2 class = "text-center flex-grow-1">Raw Material Inventory List For {{parent_item_code}} Identifier Page</h2>
             <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-raw-material-inventory-identifier-based-component-create' identifier_id %}">Add Component</a>
         </div>
         <hr>
         <div class="card-deck row gy-4">
+            {% if exists_flag %}
             {% for raw_material_inventory_list_identifier_component_based in raw_material_inventory_list_identifier_component_baseds %}
             <div class="col-4">
                 <div class="card card-body d-flex flex-column">
@@ -26,6 +27,15 @@
                 </div>
             </div>
             {% endfor %}
+            {% else %}
+                <div class="text-center">
+                    <div class="fw-bold">
+                        <hr>
+                        No component available, please add component for this identifier
+                        <hr>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </body>

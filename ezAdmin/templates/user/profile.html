@@ -7,19 +7,19 @@
         <div class="row mt-2">
             <div class="col-md-6 offset-md-3">
                 <div class="row p-3">
-                    <div class="col-md-8 offset-md-2">
+                    <div class="col-md-8 offset-md-2 d-flex flex-column">
                         <table class="table table-borderless">
                             <thead>
                                 <div class="hstack">
                                     <span class="h4">Profile Information</span class="h4">
-                                    <a class="btn btn-info btn-sm ms-auto" href="{% url 'user-profile-update' %}">Edit</a>
+                                    <a class="btn btn-primary btn-sm ms-auto" href="{% url 'user-profile-update' %}">Edit</a>
                                 </div>
                                 <hr>
                             </thead>
-                            <div class="col-md-8 offset-md-2">
+                            <div class="col-md-8 offset-md-2 my-3">
                                 <img class="img-thumbnail" src="{{ user.profile.image.url }}" alt="profile-image" width="400" height="500">
                             </div>
-                            <tbody>
+                            <tbody class="mt-3">
                                 <tr>
                                     <th scope="row">Name</th>
                                     <td>{{ user.username }}</td>
@@ -38,7 +38,7 @@
                                 </tr>
                             </tbody>                            
                         </table>
-                        <a class="btn btn-outline-info btn-block" href="{% url 'admin:index' %}">Redirect to Admin Page</a>
+                        <a class="btn btn-outline-primary btn-block" href="{% url 'admin:index' %}">Redirect to Admin Page</a>
                     </div>
                 </div>
             </div>

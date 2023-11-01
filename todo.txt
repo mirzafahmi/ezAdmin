@@ -8,5 +8,15 @@ todo:
 -create master list of available asset
 -modify alertbox - done
 -singular vs plural
+-notification for threshold
 
 - lot number dictate the override data in log create form
+
+-modify modal for ajax filter at rawmat inventory log list
+
+-purchasing features
+    -approved vendored
+    -all documents (prf, quotation, ssm, due deligience)
+
+-hr features
+    -training record

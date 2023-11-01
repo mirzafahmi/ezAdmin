@@ -394,7 +394,8 @@ class RawMaterialInventoryIdentifierComponentBasedListView(LoginRequiredMixin, L
         # Extracting a list of distinct components and their IDs
         distinct_components = queryset.values_list('component', flat=True).distinct()
         distinct_components_ids = queryset.values_list('id', flat=True).distinct()
-
+        print(queryset)
+        print(queryset.exists())
         # Creating a list of dictionaries for components with their ID and name
         components_list = [{'id': component_id, 'name': component_name} for component_id, component_name in zip(distinct_components_ids, distinct_components)]
 
@@ -402,6 +403,7 @@ class RawMaterialInventoryIdentifierComponentBasedListView(LoginRequiredMixin, L
         context['raw_material_inventory_list_identifier_component_baseds'] = components_list
         context['parent_item_code'] = identifier
         context['identifier_id'] = identifier_id
+        context['exists_flag'] = queryset.exists()
 
         return context
 

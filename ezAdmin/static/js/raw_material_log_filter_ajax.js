@@ -95,7 +95,7 @@ function rawMaterialLogFilter(){
                                     <td>${formattedStockOutDate}</td>
                                     <td>${log.price_per_unit}</td>
                                     <td>
-                                        <a href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-doc-id="${log.purchasing_document_id}">
+                                        <a class="modal-link href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-doc-id="${log.purchasing_document_id}">
                                             ${log.purchasing_document}(${log.company_name})
                                         </a>
                                     </td>
@@ -114,6 +114,7 @@ function rawMaterialLogFilter(){
                                     </td>
                                 </tr>
                             `);
+                            $('#logs-table-body a.modal-link').css('cursor', 'pointer');
                     });
                     $('#table-footer').empty();
                     $('#table-footer').append(`
