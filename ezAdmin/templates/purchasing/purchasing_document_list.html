@@ -24,6 +24,7 @@
                     <th>Invoice Details</th>
                     <th>Packing List Details</th>
                     <th>K1 Form Details</th>
+                    <th>AWB Details</th>
                     <th>Create Date</th>
                     <th>Activity</th>
                 </tr>
@@ -36,6 +37,7 @@
                     <td><a href="{{ purchasing_document.invoice_doc.url }}" target="_blank">{{purchasing_document.invoice_number}}</a></td>
                     <td><a href="{{ purchasing_document.pl_doc.url }}" target="_blank">{{purchasing_document.packing_list}}</a></td>
                     <td><a href="{{ purchasing_document.k1_doc.url }}" target="_blank">{{purchasing_document.k1_form}}</a></td>
+                    <td><a href="{{ purchasing_document.AWB_doc.url }}" target="_blank">{{purchasing_document.AWB_number}}</a></td>
                     <td>{{purchasing_document.create_date}}</td>
                     <td>
                         <div class = "d-grid">

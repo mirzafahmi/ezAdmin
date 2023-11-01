@@ -571,7 +571,8 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
     def get(self, request, *args, **kwargs):
         identifier_id = request.GET.get('identifier_id')
         component_id = request.GET.get('component_id')
-        stock_in_tag = request.GET.get('stock_in_tag')  # Added parameter for filtering
+        stock_in_tag = request.GET.get('stock_in_tag') 
+        purchasing_doc = request.GET.get('purchasing_doc')
 
         stock_in_items = RawMaterialInventory.objects.filter(
             component_id=component_id,
@@ -598,6 +599,8 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
 
             balance_quantity_tag_based = stock_in_tag_based - stock_out_tag_based
 
+            #get data for purchasing doc
+
             for stock_tag_based in stock_tag_baseds:
                 response_data.append({
                     'log_id': stock_tag_based.id,
@@ -612,11 +615,30 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                     'stock_out_date': stock_tag_based.stock_out_date,
                     'price_per_unit': stock_tag_based.price_per_unit,
                     'purchasing_document': stock_tag_based.purchasing_doc.po_number,
+                    'purchasing_document_id': stock_tag_based.purchasing_doc.id,
                     'company_name': stock_tag_based.purchasing_doc.supplier.company_name,
                     'stock_in_tag': stock_tag_based.stock_in_tag.id,
                     'stock_type': stock_tag_based.stock_type,
                     'balance': balance_quantity_tag_based,
                 })
+        elif purchasing_doc:
+            purchasing_doc_details = PurchasingDocument.objects.filter(id=purchasing_doc).first()
+            print(purchasing_doc_details.AWB_doc)
+            print(purchasing_doc_details.po_doc)
+            response_data.append({
+                'supplier': purchasing_doc_details.supplier.company_name,
+                'po_number': purchasing_doc_details.po_number,
+                'po_doc': str(purchasing_doc_details.po_doc),
+                'invoice_number': purchasing_doc_details.invoice_number,
+                'invoice_doc': str(purchasing_doc_details.invoice_doc),
+                'packing_list': purchasing_doc_details.packing_list,
+                'pl_doc': str(purchasing_doc_details.pl_doc),
+                'k1_form': purchasing_doc_details.k1_form,
+                'k1_doc': str(purchasing_doc_details.k1_doc),
+                'AWB_number': purchasing_doc_details.AWB_number,
+                'AWB_doc': str(purchasing_doc_details.AWB_doc),
+                'create_date': purchasing_doc_details.create_date,
+            })
 
         else:
             # If stock_in_tag is not provided, generate data for buttons
@@ -631,18 +653,26 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                     response_data.append({
                         'identifier': stock_tag_based.component.identifier.parent_item_code,
                         'component': stock_tag_based.component.id,
-                        'quantity': stock_tag_based.quantity,
+                        #'quantity': stock_tag_based.quantity,
                         'lot': stock_tag_based.lot_number,
-                        'expiry_date': stock_tag_based.exp_date,
-                        'stock_in_date': stock_tag_based.stock_in_date,
-                        'stock_out_date': stock_tag_based.stock_out_date,
-                        'price_per_unit': stock_tag_based.price_per_unit,
-                        'purchasing_document': stock_tag_based.purchasing_doc.po_number,
+                        #'expiry_date': stock_tag_based.exp_date,
+                        #'stock_in_date': stock_tag_based.stock_in_date,
+                        #'stock_out_date': stock_tag_based.stock_out_date,
+                        #'price_per_unit': stock_tag_based.price_per_unit,
                         'stock_in_tag': stock_tag_based.stock_in_tag.id,
-                        'stock_type': stock_tag_based.stock_type,
+                        #'stock_type': stock_tag_based.stock_type,
+                        'supplier': stock_tag_based.purchasing_doc.supplier.company_name,
+                        'purchasing_document': stock_tag_based.purchasing_doc.po_number,
+                        'invoice_number': stock_tag_based.purchasing_doc.invoice_number,
+                        'packing_list': stock_tag_based.purchasing_doc.packing_list,
+                        'k1_form': stock_tag_based.purchasing_doc.k1_form,
+                        'AWB_number': stock_tag_based.purchasing_doc.AWB_number,
                     })
-
+                    
         return JsonResponse(response_data, safe=False)
+
+'''class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredMixin, ListView):
+    def get(self, request, *args, **kwargs):'''
 
             
 

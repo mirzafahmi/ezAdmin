@@ -57,7 +57,17 @@
                     <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.stock_in_date}}</td>
                     <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.stock_out_date}}</td>
                     <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.price_per_unit}}</td>
-                    <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.purchasing_doc}}</td>
+                    <td>
+                        <a 
+                        href="#staticBackdrop" 
+                        class="modal-link"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#staticBackdrop" 
+                        data-doc-id="{{ RawMaterialInventoriesIdentifierComponentBasedLog.purchasing_doc.id }}"
+                        >
+                            {{RawMaterialInventoriesIdentifierComponentBasedLog.purchasing_doc}}
+                        </a>
+                    </td>     
                     <td>
                         <div class = "d-grid">
                                 <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-raw-material-inventory-identifier-component-based-log-update' RawMaterialInventoriesIdentifierComponentBasedLog.component.identifier.id RawMaterialInventoriesIdentifierComponentBasedLog.component.id RawMaterialInventoriesIdentifierComponentBasedLog.stock_type RawMaterialInventoriesIdentifierComponentBasedLog.id %}">
@@ -92,30 +102,42 @@
                 {% endif %}
             </tfoot>                     
         </table>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Launch static backdrop modal
-        </button>
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-fullscreen">
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  ...
+                    <table class="table table-borderless table-striped table-hover">
+                        <thead class ="table-dark">
+                            <tr>
+                                <th>Supplier Name</th>
+                                <th>PO Details</th>
+                                <th>Invoice Details</th>
+                                <th>Packing List Details</th>
+                                <th>K1 Form Details</th>
+                                <th>AWB Details</th>
+                                <th>Create Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchasingDocModal"> 
+                            
+                        </tbody> 
+                    </table>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Understood</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
-          </div>      
+        </div>
     </div>
 </body>
 <script>
     var baseUrl = "{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list-ajax' %}"
-    rawMaterialLogFilter();   
+    rawMaterialLogFilter();
+    generateModals();
 </script>
 {% endblock %}
