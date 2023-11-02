@@ -18,20 +18,12 @@
             </div>
             <hr>
             <div class="btn-group-horizontal mb-3" id="filter-label" role="group" aria-label="horizontal radio toggle button group">
-                <input type="radio" class="btn-check" id="vbtn-radio1" name="vbtn-radio"  autocomplete="off" checked>
+                <input type="radio" class="btn-check" id="vbtn-radio1" name="vbtn-radio"  autocomplete="off" checked data-component="main-page">
                 <label class="btn btn-outline-primary" for="vbtn-radio1">
-                    <a class="no-decoration" href="">
+                    <a class="no-decoration">
                         Main Page
                     </a>
                 </label>
-                {% for unique_component in unique_components %}
-                <input type="radio" class="btn-check" id="{{ unique_component }}-component" name="vbtn-radio" data-component="{{unique_component}}">
-                <label class="btn btn-outline-primary" for="{{ unique_component }}-component">
-                    <a class="no-decoration">
-                        {{ unique_component }}
-                    </a>
-                </label>
-                {% endfor %}
             </div>
             <thead class = "table-dark">
                 <tr>

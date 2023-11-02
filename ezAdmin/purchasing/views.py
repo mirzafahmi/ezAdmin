@@ -216,90 +216,68 @@ class RawMaterialComponentCreateView(LoginRequiredMixin,CreateView):
 class RawMaterialComponentListView(LoginRequiredMixin, ListView):
     model = RawMaterialComponent
     template_name = 'purchasing/raw_material_component_list.html'
-    #context_object_name = 'components'  # The variable name in the template
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        components = RawMaterialComponent.objects.all()
-
-        component = RawMaterialComponent.objects.values_list('component', flat=True)
-
-        # Extract words and phrases (splitting on commas)
-        all_words = ','.join(component)
-        all_words_list = all_words.split(',')
-        
-        simple_words = set() #store only distint data
-
-        for word in all_words_list:
-            if 'for' not in word.lower():  # Exclude words with 'for'
-                simple_words.add(word)
-
-        context['components'] = components
-        context['unique_components'] = simple_words
-
-        return context
+    context_object_name = 'components'  # The variable name in the template
 
     # You can customize the queryset if needed
     def get_queryset(self):
 
-        return RawMaterialComponent.objects.all()
+        return RawMaterialComponent.objects.all().order_by('identifier')
 
 class RawMaterialComponentListViewAJAX(View):
     def get(self, request, *args, **kwargs):
         component_name = request.GET.get('component_name')
-        print(component_name)
+
         filter_data =[]
 
         if component_name:
-            # Filter the model objects based on the component name
-            filtered_objects = RawMaterialComponent.objects.filter(component__icontains=component_name)
+            if component_name == "main-page":
+                all_components = RawMaterialComponent.objects.all().order_by('identifier')
 
-            filter_components = filtered_objects
-            print(filter_components)
-            for filter_component in filter_components:
-                filter_data.append({
-                    'identifier': filter_component.identifier.parent_item_code,
-                    'identifier_id': filter_component.identifier_id,
-                    'component': filter_component.component,
-                    'component_id': filter_component.id,
-                    'specifications': filter_component.spec,
-                    'create_date': filter_component.create_date,
-                })
+                for all_component in all_components:
+                    filter_data.append({
+                        'identifier': all_component.identifier.parent_item_code,
+                        'identifier_id': all_component.identifier_id,
+                        'component': all_component.component,
+                        'component_id': all_component.id,
+                        'specifications': all_component.spec,
+                        'create_date': all_component.create_date,
+                    })
+            else:
+                # Filter the model objects based on the component name
+                filtered_objects = RawMaterialComponent.objects.filter(component__icontains=component_name)
+
+                filter_components = filtered_objects
+
+                for filter_component in filter_components:
+                    filter_data.append({
+                        'identifier': filter_component.identifier.parent_item_code,
+                        'identifier_id': filter_component.identifier_id,
+                        'component': filter_component.component,
+                        'component_id': filter_component.id,
+                        'specifications': filter_component.spec,
+                        'create_date': filter_component.create_date,
+                    })
 
             
             return JsonResponse(filter_data, safe=False)
         else:
-            return JsonResponse({'error': 'No component name provided'}, status=400)
+            components = RawMaterialComponent.objects.all()
 
-        '''if identifier_id:
-            filter_logs = RawMaterialComponent.objects.filter(component=component_id)
+            component = RawMaterialComponent.objects.values_list('component', flat=True)
+
+            # Extract words and phrases (splitting on commas)
+            all_words = ','.join(component)
+            all_words_list = all_words.split(',')
             
-            for filter_log in filter_logs:
-                filter_data.append({
-                    'identifier': identifiers_based.identifier,
-                    'identifier_id': identifiers_based.identifier.parent_item_code,
-                    'component': identifiers_based.component,
-                    'component_id': identifiers_based.id,
-                    'specifications': identifiers_based.spec,
-                    'create_date': identifiers_based.id,
-                })
-        else:
-            filter_names = RawMaterialComponent.objects.all()
+            simple_words = set() #store only distint data
 
-            for filter_name in filter_names:
-                #print(filter_name.component)
-                filter_data.append({
-                    'identifier': filter_name.identifier.parent_item_code,
-                    'identifier_id': filter_name.identifier.parent_item_code,
-                    'component': filter_name.component,
-                    'component_id': filter_name.id,
-                    'specifications': filter_name.spec,
-                    'create_date': filter_name.id,
-                })'''
+            for word in all_words_list:
+                if 'for' not in word.lower():  # Exclude words with 'for'
+                    simple_words.add(word)
 
+            component_labels = list(simple_words)
 
-        #return JsonResponse(filter_data, safe=False)
+            return JsonResponse(component_labels, safe=False)
 
 
 class RawMaterialComponentUpdateView(LoginRequiredMixin, UpdateView):
@@ -475,8 +453,7 @@ class RawMaterialInventoryIdentifierComponentBasedListView(LoginRequiredMixin, L
         # Extracting a list of distinct components and their IDs
         distinct_components = queryset.values_list('component', flat=True).distinct()
         distinct_components_ids = queryset.values_list('id', flat=True).distinct()
-        print(queryset)
-        print(queryset.exists())
+        
         # Creating a list of dictionaries for components with their ID and name
         components_list = [{'id': component_id, 'name': component_name} for component_id, component_name in zip(distinct_components_ids, distinct_components)]
 
@@ -575,8 +552,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View, QuantityVa
 
         if stock_type == '2':
             current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
-            print(current_raw_material)
-            #print(current_raw_material.stock_in_tag.id)
+
             if current_raw_material_quantity is not None:
                 response_data = {
                     'component': current_raw_material.component.id,
@@ -596,7 +572,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateAJAX(View, QuantityVa
         if stock_type == None:
             current_raw_material, current_raw_material_quantity = self.get_available_quantity(component_id)
             component = RawMaterialComponent.objects.get(id=component_id)
-            print(current_raw_material_quantity)
+
             if current_raw_material is None:
                 response_data = {
                         'component': component_id,
@@ -682,8 +658,6 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
 
             balance_quantity_tag_based = stock_in_tag_based - stock_out_tag_based
 
-            #get data for purchasing doc
-            print(stock_tag_baseds)
             for stock_tag_based in stock_tag_baseds:
                 response_data.append({
                     'log_id': stock_tag_based.id,
@@ -706,8 +680,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                 })
         elif purchasing_doc:
             purchasing_doc_details = PurchasingDocument.objects.filter(id=purchasing_doc).first()
-            print(purchasing_doc_details.AWB_doc)
-            print(purchasing_doc_details.po_doc)
+
             response_data.append({
                 'supplier': purchasing_doc_details.supplier.company_name,
                 'po_number': purchasing_doc_details.po_number,
@@ -736,14 +709,8 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                     response_data.append({
                         'identifier': stock_tag_based.component.identifier.parent_item_code,
                         'component': stock_tag_based.component.id,
-                        #'quantity': stock_tag_based.quantity,
                         'lot': stock_tag_based.lot_number,
-                        #'expiry_date': stock_tag_based.exp_date,
-                        #'stock_in_date': stock_tag_based.stock_in_date,
-                        #'stock_out_date': stock_tag_based.stock_out_date,
-                        #'price_per_unit': stock_tag_based.price_per_unit,
                         'stock_in_tag': stock_tag_based.stock_in_tag.id,
-                        #'stock_type': stock_tag_based.stock_type,
                         'supplier': stock_tag_based.purchasing_doc.supplier.company_name,
                         'purchasing_document': stock_tag_based.purchasing_doc.po_number,
                         'invoice_number': stock_tag_based.purchasing_doc.invoice_number,
@@ -751,7 +718,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                         'k1_form': stock_tag_based.purchasing_doc.k1_form,
                         'AWB_number': stock_tag_based.purchasing_doc.AWB_number,
                     })
-        print(response_data)
+
         return JsonResponse(response_data, safe=False)
 
 class RawMaterialInventoryIdentifierComponentBasedLogUpdateView(LoginRequiredMixin, UpdateView):

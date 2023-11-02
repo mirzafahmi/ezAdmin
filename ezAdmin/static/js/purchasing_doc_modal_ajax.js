@@ -56,7 +56,8 @@ function generateModals(element) {
                         var awbDocUrl = '/media/' + log.AWB_doc;
 
                         console.log(awbDocUrl);
-                        $('#purchasingDocModal').empty()
+                        $('#staticBackdropLabel').append(`Purchasing Document Details For ${log.po_number}`);
+                        $('#purchasingDocModal').empty();
                         $('#purchasingDocModal').append(
                             `<tr>
                                 <td>${log.supplier}</td>

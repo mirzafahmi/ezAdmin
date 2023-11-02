@@ -72,8 +72,7 @@ function rawMaterialLogFilter(){
                             return 'None';
                         }
                     }
-                    console.log('from log')
-                    console.log(data)
+                    
                     $('#logs-table-body').empty();
                     data.forEach(function (log, index) {
                         var formattedStockInDate = formatCustomDate(log.stock_in_date);
@@ -81,7 +80,6 @@ function rawMaterialLogFilter(){
 
                         var editUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/inventory_log_create_main/stock_type:${log.stock_type}-log:${log.log_id}-update`
                         var deleteUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/inventory_log_create_main/stock_type:${log.stock_type}-log:${log.log_id}-delete`
-                        console.log(index)
 
                         if (log.stock_type == '2') {
                             log.quantity = '-' + log.quantity;

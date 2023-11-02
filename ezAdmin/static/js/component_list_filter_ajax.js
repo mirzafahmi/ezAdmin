@@ -1,14 +1,40 @@
 
-function componentLogFilter() { 
-    $(document).ready(function () { 
+function componentLogFilter() {
+    $(document).ready(function () {
         $('#filter-label').on('change', 'label', function () {
             var component = $(this).data('component');
+
+            // Remove the icon from all labels
+            $('#filter-label label .fa-filter').remove();
+
+            // Check if the current radio button is checked
+            if ($(this).prop('checked')) {
+                // Append the icon to the left side of the current label
+                var label = $(this).closest('label');
+                label.prepend(`
+                    <i class="fa-solid fa-filter"></i>
+                `);
+            }
+
             loadLogs(component);
         });
 
         // Event listener for radio button clicks, you might still use it independently if needed
         $('#filter-label').on('change', 'input[type="radio"]', function () {
             var component = $(this).data('component');
+            
+            // Remove the icon from all labels
+            $('#filter-label label .fa-filter').remove();
+
+            // Check if the current radio button is checked
+            if ($(this).prop('checked')) {
+                // Append the icon to the left side of the current label
+                var label = $(this).closest('label');
+                label.prepend(`
+                    <i class="fa-solid fa-filter"></i>
+                `);
+            }
+
             loadLogs(component);
         });
             
@@ -37,9 +63,8 @@ function componentLogFilter() {
                         var formattedCreateDate = formatCustomDate(log.create_date);
                         
 
-                        var editUrl = `production_main/raw_material_component_list/${log.component_id}-update/`
-                        var deleteUrl = `production_main/raw_material_component_list/${log.component_id}-delete/`
-                
+                        var editUrl = `raw_material_component_list/${log.component_id}-update/`
+                        var deleteUrl = `raw_material_component_list/${log.component_id}-delete/`
 
                         var logIndex = index + 1;
 
@@ -74,5 +99,23 @@ function componentLogFilter() {
                 }
             });
         };
+
+        $.ajax({
+            url: baseUrl,
+            method: 'GET',
+            dataType: "json",
+            success: function (data) {
+                data.forEach(function (log) {
+                    logWithUnderScore = log.replace(/ /g, '-');
+                    $('#filter-label').append(
+                        `<input type="radio" class="btn-check" id="${logWithUnderScore}-component" name="vbtn-radio" data-component="${log}">` +
+                        `<label class="btn btn-outline-primary me-1" for="${logWithUnderScore}-component"><a class="no-decoration">${log}</a></label>`
+                    );
+                });
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
     })
 }
