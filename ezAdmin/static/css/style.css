@@ -6,6 +6,11 @@ a {
   text-decoration: none;
 }
 
+a.no-decoration {
+    text-decoration: none;
+    color: inherit;
+}
+
 html {
     height: 100%;
     width:100%;
@@ -69,7 +74,7 @@ footer {
   border-bottom: 0;
   border-left: .3em solid transparent;
   color: #6c757d;
-  margin-left: -3px;
+  margin: 3px 3px 0px -2px;
 }
 
 .dropdown-caret:hover {

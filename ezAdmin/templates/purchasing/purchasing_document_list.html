@@ -19,6 +19,7 @@
             <hr>
             <thead class = "table-dark">
                 <tr>
+                    <th>No.</th>
                     <th>Supplier Name</th>
                     <th>PO Details</th>
                     <th>Invoice Details</th>
@@ -32,6 +33,7 @@
             <tbody> 
                 {% for purchasing_document in purchasing_documents %}       
                 <tr>
+                    <td>{{forloop.counter}}</td>
                     <td>{{purchasing_document.supplier}}</td>
                     <td><a href="{{ purchasing_document.po_doc.url }}" target="_blank">{{purchasing_document.po_number}}</a></td>
                     <td><a href="{{ purchasing_document.invoice_doc.url }}" target="_blank">{{purchasing_document.invoice_number}}</a></td>

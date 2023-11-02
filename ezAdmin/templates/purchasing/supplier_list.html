@@ -14,11 +14,15 @@
         <table class="table table-borderless table-striped table-hover">
             <div class="hstack">
                 <span class="h4">Supplier List</span class="h4">
-                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-supplier-create' %}">Add Supllier</a>
+                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-supplier-create' %}">
+                    <i class="fa-solid fa-square-plus me-1"></i>
+                    Add Supllier
+                </a>
             </div>
             <hr>
             <thead class = "table-dark">
                 <tr>
+                    <th>No.</th>
                     <th>Company Name</th>
                     <th>Address</th>
                     <th>Representative Name</th>
@@ -31,6 +35,7 @@
             <tbody> 
                 {% for supplier in suppliers %}       
                 <tr>
+                    <td>{{forloop.counter}}</td>
                     <td>{{supplier.company_name}}</td>
                     <td>{{supplier.address}}</td>
                     <td>{{supplier.representative_name}}</td>

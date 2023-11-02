@@ -19,6 +19,7 @@
             <hr>
             <thead class = "table-dark">
                 <tr>
+                    <th>No.</th>
                     <th>Product Item Code</th>
                     <th>Raw Material Component</th>
                     <th>Quantity Used (per box)</th>
@@ -29,6 +30,7 @@
             <tbody> 
                 {% for BOMcomponent in BOMcomponents %}       
                 <tr>    
+                    <td>{{forloop.counter}}</td>
                     <td>{{BOMcomponent.product.item_code}}</td>
                     <td>{{BOMcomponent.raw_material_component}}</td>
                     <td>{{BOMcomponent.quantity_used}}</td>

@@ -12,6 +12,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
 from mixins.validation_mixin import QuantityValidationMixin
+from collections import Counter
+import re
 
 class PurchasingMainView(LoginRequiredMixin, TemplateView):
     template_name = 'purchasing/purchasing_main.html'
@@ -214,12 +216,91 @@ class RawMaterialComponentCreateView(LoginRequiredMixin,CreateView):
 class RawMaterialComponentListView(LoginRequiredMixin, ListView):
     model = RawMaterialComponent
     template_name = 'purchasing/raw_material_component_list.html'
-    context_object_name = 'components'  # The variable name in the template
+    #context_object_name = 'components'  # The variable name in the template
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        components = RawMaterialComponent.objects.all()
+
+        component = RawMaterialComponent.objects.values_list('component', flat=True)
+
+        # Extract words and phrases (splitting on commas)
+        all_words = ','.join(component)
+        all_words_list = all_words.split(',')
+        
+        simple_words = set() #store only distint data
+
+        for word in all_words_list:
+            if 'for' not in word.lower():  # Exclude words with 'for'
+                simple_words.add(word)
+
+        context['components'] = components
+        context['unique_components'] = simple_words
+
+        return context
 
     # You can customize the queryset if needed
     def get_queryset(self):
 
         return RawMaterialComponent.objects.all()
+
+class RawMaterialComponentListViewAJAX(View):
+    def get(self, request, *args, **kwargs):
+        component_name = request.GET.get('component_name')
+        print(component_name)
+        filter_data =[]
+
+        if component_name:
+            # Filter the model objects based on the component name
+            filtered_objects = RawMaterialComponent.objects.filter(component__icontains=component_name)
+
+            filter_components = filtered_objects
+            print(filter_components)
+            for filter_component in filter_components:
+                filter_data.append({
+                    'identifier': filter_component.identifier.parent_item_code,
+                    'identifier_id': filter_component.identifier_id,
+                    'component': filter_component.component,
+                    'component_id': filter_component.id,
+                    'specifications': filter_component.spec,
+                    'create_date': filter_component.create_date,
+                })
+
+            
+            return JsonResponse(filter_data, safe=False)
+        else:
+            return JsonResponse({'error': 'No component name provided'}, status=400)
+
+        '''if identifier_id:
+            filter_logs = RawMaterialComponent.objects.filter(component=component_id)
+            
+            for filter_log in filter_logs:
+                filter_data.append({
+                    'identifier': identifiers_based.identifier,
+                    'identifier_id': identifiers_based.identifier.parent_item_code,
+                    'component': identifiers_based.component,
+                    'component_id': identifiers_based.id,
+                    'specifications': identifiers_based.spec,
+                    'create_date': identifiers_based.id,
+                })
+        else:
+            filter_names = RawMaterialComponent.objects.all()
+
+            for filter_name in filter_names:
+                #print(filter_name.component)
+                filter_data.append({
+                    'identifier': filter_name.identifier.parent_item_code,
+                    'identifier_id': filter_name.identifier.parent_item_code,
+                    'component': filter_name.component,
+                    'component_id': filter_name.id,
+                    'specifications': filter_name.spec,
+                    'create_date': filter_name.id,
+                })'''
+
+
+        #return JsonResponse(filter_data, safe=False)
+
 
 class RawMaterialComponentUpdateView(LoginRequiredMixin, UpdateView):
     model = RawMaterialComponent
@@ -602,7 +683,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
             balance_quantity_tag_based = stock_in_tag_based - stock_out_tag_based
 
             #get data for purchasing doc
-
+            print(stock_tag_baseds)
             for stock_tag_based in stock_tag_baseds:
                 response_data.append({
                     'log_id': stock_tag_based.id,
@@ -670,13 +751,8 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                         'k1_form': stock_tag_based.purchasing_doc.k1_form,
                         'AWB_number': stock_tag_based.purchasing_doc.AWB_number,
                     })
-                    
+        print(response_data)
         return JsonResponse(response_data, safe=False)
-
-'''class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredMixin, ListView):
-    def get(self, request, *args, **kwargs):'''
-
-            
 
 class RawMaterialInventoryIdentifierComponentBasedLogUpdateView(LoginRequiredMixin, UpdateView):
     model = RawMaterialInventory

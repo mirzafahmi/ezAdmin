@@ -19,6 +19,7 @@
             <hr>
             <thead class = "table-dark">
                 <tr>
+                    <th>No.</th>
                     <th>Identifier</th>
                     <th>Created Date</th>
                     <th>Activity</th>
@@ -27,6 +28,7 @@
             <tbody> 
                 {% for identifier in identifiers %}       
                 <tr>
+                    <td>{{forloop.counter}}</td>
                     <td>{{identifier.parent_item_code}}</td>
                     <td>{{identifier.create_date}}</td>
                     <td>

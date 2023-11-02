@@ -23,6 +23,8 @@ function rawMaterialLogFilter(){
 
         // Function to generate dynamic buttons for filter based on stock_in_tag
         function generateFilterButtonsAndLoadLogs(data) {
+            console.log('from button')
+            console.log(data)
 
             data.forEach(function (log) {
                 var radioId = 'vbtn-radio-' + log.lot.replace(/\s+/g, '-').toLowerCase();
@@ -70,22 +72,28 @@ function rawMaterialLogFilter(){
                             return 'None';
                         }
                     }
+                    console.log('from log')
                     console.log(data)
                     $('#logs-table-body').empty();
-                    data.forEach(function (log) {
+                    data.forEach(function (log, index) {
                         var formattedStockInDate = formatCustomDate(log.stock_in_date);
                         var formattedStockOutDate = formatCustomDate(log.stock_out_date);
 
                         var editUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/inventory_log_create_main/stock_type:${log.stock_type}-log:${log.log_id}-update`
                         var deleteUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/inventory_log_create_main/stock_type:${log.stock_type}-log:${log.log_id}-delete`
-                        console.log(log.stock_type)
+                        console.log(index)
+
                         if (log.stock_type == '2') {
                             log.quantity = '-' + log.quantity;
                         } else {
                             log.quantity = log.quantity;
                         }
+
+                        var logIndex = index + 1;
+
                         $('#logs-table-body').append(`
                                 <tr>
+                                    <td>${logIndex}</td>
                                     <td>${log.identifier}</td>
                                     <td>${log.component} for ${log.identifier}</td>
                                     <td>${log.quantity}</td>
@@ -114,13 +122,15 @@ function rawMaterialLogFilter(){
                                     </td>
                                 </tr>
                             `);
-                            $('#logs-table-body a.modal-link').css('cursor', 'pointer');
+                        $('#logs-table-body a.modal-link').css('cursor', 'pointer');
+
                     });
                     $('#table-footer').empty();
                     $('#table-footer').append(`
                             <tr class="table-group-divider">
-                                <td colspan="2" class="fw-bold">BALANCE</td>
+                                <td colspan="3" class="fw-bold">BALANCE</td>
                                 <td>${data[0].balance}</td>
+                                <td colspan="7"></td>
                             </tr>
                         `);
                 },

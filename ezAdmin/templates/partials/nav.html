@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient d-flex justify-content-center">
   <div class="container-md">
     <a class="navbar-brand" href="{% url 'dashboard-index' %}">ezAdmin</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
@@ -67,12 +67,22 @@
       <ul class = "navbar-nav ms-auto">
         <li class = "register-button px-1">
           <a href ="{% url 'user-profile' %}">
-            <button type="button" class="btn btn-success">Profile</button>
+            <button type="button" class="btn btn-success">
+              {% if user.is_superuser %}
+              <i class="fa-solid fa-crown me-1"></i>
+              {% else %}
+              <i class="fa-solid fa-user me-1"></i>
+              {% endif %}
+              Profile
+            </button>
           </a>
         </li>
         <li class = "log-in-button px-1">
           <a  href ="{% url 'user-logout' %}">
-            <button type="button" class="btn btn-danger">Logout</button>
+            <button type="button" class="btn btn-danger">
+              <i class="fa-solid fa-right-from-bracket me-1"></i>
+              Logout
+            </button>
           </a>
         </li>
       </ul>
@@ -81,12 +91,18 @@
       <ul class = "navbar-nav ms-auto">
         <li class = "register-button px-1">
           <a href ="{% url 'user-register' %}">
-            <button type="button" class="btn btn-success">Register</button>
+            <button type="button" class="btn btn-success">
+              <i class="fa-solid fa-user-plus me-1"></i>
+              Register
+            </button>
           </a>
         </li>
         <li class = "log-in-button px-1">
           <a  href ="{% url 'user-login' %}">
-            <button type="button" class="btn btn-primary">Login</button>
+            <button type="button" class="btn btn-primary">
+              <i class="fa-solid fa-user me-1"></i>
+              Login
+            </button>
           </a>
         </li>
       </ul>

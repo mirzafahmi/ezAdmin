@@ -20,3 +20,12 @@ todo:
 
 -hr features
     -training record
+
+
+{
+    'id': 1, 
+    'component': 'Uncutsheet', 
+    'spec': '360mm x 70 mm', 
+    'identifier_id': 1, 
+    'create_date': datetime.datetime(2023, 10, 9, 14, 10, 59, 475013, tzinfo=datetime.timezone.utc), 
+    'update_date': datetime.datetime(2023, 10, 23, 3, 51, 9, 52691, tzinfo=datetime.timezone.utc)},

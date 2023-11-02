@@ -19,6 +19,7 @@ urlpatterns = [
     path('production_main/raw_material_identifier_list/<int:pk>-delete/', RawMaterialIdentifierDeleteView.as_view(), name='purchasing-raw-material-identifier-delete'),
     path('production_main/raw_material_component_list/create', RawMaterialComponentCreateView.as_view(), name='purchasing-raw-material-component-create'),
     path('production_main/raw_material_component_list', RawMaterialComponentListView.as_view(), name='purchasing-raw-material-component-list'),
+    path('production_main/raw_material_component_list_ajax', RawMaterialComponentListViewAJAX.as_view(), name='purchasing-raw-material-component-list-ajax'),
     path('production_main/raw_material_component_list/<int:pk>-update/', RawMaterialComponentUpdateView.as_view(), name='purchasing-raw-material-component-update'),
     path('production_main/raw_material_component_list/<int:pk>-delete/', RawMaterialComponentDeleteView.as_view(), name='purchasing-raw-material-component-delete'),
     path('production_main/BOM_component_list/create', BOMComponentCreateView.as_view(), name='purchasing-BOM-component-create'),
