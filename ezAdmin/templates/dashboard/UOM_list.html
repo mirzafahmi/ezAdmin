@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block title %} BOM Components List{% endblock %}
+{% block title %} UOM List{% endblock %}
 
 {% block content %}
 <body>
@@ -13,40 +13,36 @@
         {% endfor %}
         <table class="table table-borderless table-striped table-hover">
             <div class="hstack">
-                <span class="h3" style="margin-bottom: 0px;">BOM Components List</span class="h4">
-                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-BOM-component-create' %}">
+                <span class="h3" style="margin-bottom: 0px;">UOM List</span class="h4">
+                <a class="btn btn-success btn-sm ms-auto" href="{% url 'dashboard-misc-uom-create' %}">
                     <i class="fa-solid fa-plus me-1"></i>
-                    Add BOMComponent
+                    Add UOM
                 </a>
             </div>
             <hr>
             <thead class = "table-dark">
                 <tr>
                     <th>No.</th>
-                    <th>Product Item Code</th>
-                    <th>Raw Material Component</th>
-                    <th>Quantity Used (per box)</th>
+                    <th>Name</th>
                     <th>Created Date</th>
                     <th>Activity</th>
                 </tr>
             </thead>
             <tbody> 
-                {% for BOMcomponent in BOMcomponents %}       
+                {% for UOM in UOMs %}       
                 <tr>    
                     <td>{{forloop.counter}}</td>
-                    <td>{{BOMcomponent.product.item_code}}</td>
-                    <td>{{BOMcomponent.raw_material_component}}</td>
-                    <td>{{BOMcomponent.quantity_used}}</td>
-                    <td>{{BOMcomponent.create_date}}</td>
+                    <td>{{UOM.name}}</td>
+                    <td>{{UOM.create_date}}</td>
                     <td>
                         <div class = "d-grid">
-                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-BOM-component-update' BOMcomponent.id %}">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'dashboard-misc-uom-update' UOM.id %}">
                                     Edit
                                 </a>
                                 <a class="btn btn-outline-success btn-sm btn-block" href ="">
                                     Validate
                                 </a>
-                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'purchasing-BOM-component-delete' BOMcomponent.id %}">
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'dashboard-misc-uom-delete' UOM.id %}">
                                     Delete
                                 </a>
                             </ul>

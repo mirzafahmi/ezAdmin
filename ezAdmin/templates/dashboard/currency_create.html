@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block title %} Add BOMComponents{% endblock %}
+{% block title %} Add Currency{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -14,13 +14,13 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                    <h3>Add BOMComponents</h3>
+                    <h3>Add Currency</h3>
                     <hr>
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <a class="btn btn-light"  href = "{% url 'purchasing-BOM-component-list' %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Create BOMComponent">
+                        <a class="btn btn-light"  href = "{% url 'dashboard-misc-currency-list' %}"> Cancel</a>
+                        <input class="btn btn-success" type="submit" value="Create Currency">
                     </form>
                 </div>
             </div>

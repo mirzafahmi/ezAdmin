@@ -1,26 +1,27 @@
 {% extends 'partials/base.html' %}
-{% block title %} Add BOMComponents{% endblock %}
-{% load crispy_forms_tags %}
+{% block tittle %} Delete Currency{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
+                    {% if messages %}
                     {% for message in messages %}
-                    {% if message %}
                     <div class = "alert alert-{{ message.tags }}">
                         {{ message }}
                     </div>
-                    {% endif %}
                     {% endfor %}
-                    <h3>Add BOMComponents</h3>
+                    {% endif %}
+                    <h3>Deleting Currency</h3>
                     <hr>
-                    <form method="POST">
+                    <div class="alert alert-danger">
+                        <h4>Are you sure you want to delete {{currency}} as currency?</h4>
+                    </div>
+                    <form method = "POST">
                         {% csrf_token %}
-                        {{ form|crispy}}
-                        <a class="btn btn-light"  href = "{% url 'purchasing-BOM-component-list' %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Create BOMComponent">
+                        <a class="btn btn-light"  href = "{% url 'dashboard-misc-uom-list' %}"> Cancel</a>
+                        <input class = "btn btn-danger" type="submit" value = "Delete Currency">
                     </form>
                 </div>
             </div>

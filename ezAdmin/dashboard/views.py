@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Product, Inventory, Customer
-from .forms import ProductForm, InventoryForm, CustomerForm
+from .forms import *
 from django.contrib import messages
 from django.db.models import Sum
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView
+from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
+from .models import *
+from django.urls import reverse_lazy, reverse
 
 # Create your views here.
 def index(request):
@@ -235,14 +239,99 @@ def customer_delete(request, pk):
 
     return render(request, 'customer/customer-delete.html', context)
 
-class BasedMainView(LoginRequiredMixin, TemplateView):
-    template_name = 'dashboard/raw_material_main.html'
+class UOMListView(LoginRequiredMixin, ListView):
+    model = UOM
+    template_name = 'dashboard/UOM_list.html'
+    context_object_name = 'UOMs'
 
-    def get(self, request):
-        breadcrumbs_json = request.GET.get('breadcrumbs')
-        breadcrumbs = json.loads(breadcrumbs_json) if breadcrumbs_json else []
+    def get_queryset(self):
 
-        context = {
-            'breadcrumbs': breadcrumbs,
-        }
-        return render(request, 'partials/base.html', context)
+        return UOM.objects.all()
+
+class UOMCreateView(LoginRequiredMixin, CreateView):
+    model = UOM
+    form_class = UOMForm
+    template_name = 'dashboard/UOM_create.html'
+    success_url = reverse_lazy('dashboard-misc-uom-list')
+
+    def form_valid(self, form):
+        uom_name = form.cleaned_data['name']
+
+        messages.success(self.request, f'{uom_name} UOM created successfully!')
+
+        return super().form_valid(form)
+    
+class UOMUpdateView(LoginRequiredMixin, UpdateView):
+    model = UOM
+    form_class = UOMForm
+    template_name = 'dashboard/UOM_update.html'
+    success_url = reverse_lazy('dashboard-misc-uom-list')
+    context_object_name = 'UOM'
+
+    def form_valid(self, form):
+        uom_name = self.get_object().name
+        
+        messages.success(self.request, f'{uom_name} UOM updated successfully!')
+
+        return super().form_valid(form)
+    
+class UOMDeleteView(LoginRequiredMixin, DeleteView):
+    model = UOM
+    template_name = 'dashboard/UOM_delete.html'
+    success_url = reverse_lazy('dashboard-misc-uom-list')
+    context_object_name = 'UOM'
+
+    def delete(self, request, *args, **kwargs):
+
+        uom_name = self.get_object().name
+        
+        messages.success(self.request, f'{uom_name} UOM deleted successfully!')
+
+        return super().delete(request *args, **kwargs)
+
+class CurrencyListView(LoginRequiredMixin, ListView):
+    model = Currency
+    template_name = 'dashboard/currency_list.html'
+    context_object_name = 'currencies'
+
+class CurrencyCreateView(LoginRequiredMixin, CreateView):
+    model = Currency
+    form_class = CurrencyForm
+    template_name = 'dashboard/currency_create.html'
+    success_url = reverse_lazy('dashboard-misc-currency-list')
+
+    def form_valid(self, form):
+        currency = form.cleaned_data['name']
+        currency_code = form.cleaned_data['currency_code']
+
+        messages.success(self.request, f'{currency}({currency_code}) currency created successfully!')
+
+        return super().form_valid(form)
+
+class CurrencyUpdateView(LoginRequiredMixin, UpdateView):
+    model = Currency
+    form_class = CurrencyForm
+    template_name = 'dashboard/currency_update.html'
+    success_url = reverse_lazy('dashboard-misc-currency-list')
+    context_object_name = 'currency'
+
+    def form_valid(self, form):
+        currency = self.get_object()
+
+        messages.success(self.request, f'{currency.name}({currency.currency_code}) currency updated successfully!')
+
+        return super().form_valid(form)
+
+class CurrencyDeleteView(LoginRequiredMixin, DeleteView):
+    model = Currency
+    template_name = 'dashboard/currency_delete.html'
+    success_url = reverse_lazy('dashboard-misc-currency-list')
+    context_object_name = 'currency'
+    
+    def post(self, request, *args, **kwargs):
+        currency = self.get_object()
+        success_message = f'{currency.name}({currency.currency_code}) currency deleted successfully!'
+        messages.success(self.request, success_message)
+
+        return super().post(request, *args, **kwargs)
+    

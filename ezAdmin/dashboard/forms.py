@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, Inventory, Customer
+from .models import *
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -16,3 +16,13 @@ class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['company_name', 'address', 'posscode', 'pic_name', 'phone_number', 'email', 'currency', 'sales_person']
+
+class UOMForm(forms.ModelForm):
+    class Meta:
+        model = UOM
+        fields = ['name']
+
+class CurrencyForm(forms.ModelForm):
+    class Meta:
+        model = Currency
+        fields = ['name', 'currency_code']
