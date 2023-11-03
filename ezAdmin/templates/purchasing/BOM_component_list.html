@@ -13,8 +13,11 @@
         {% endfor %}
         <table class="table table-borderless table-striped table-hover">
             <div class="hstack">
-                <span class="h4">BOM Components List</span class="h4">
-                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-BOM-component-create' %}">Add BOMComponent</a>
+                <span class="h3" style="margin-bottom: 0px;">BOM Components List</span class="h4">
+                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-BOM-component-create' %}">
+                    <i class="fa-solid fa-plus me-1"></i>
+                    Add BOMComponent
+                </a>
             </div>
             <hr>
             <thead class = "table-dark">

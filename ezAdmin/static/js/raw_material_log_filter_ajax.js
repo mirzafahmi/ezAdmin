@@ -39,6 +39,17 @@ function rawMaterialLogFilter(){
                 var identifier = $(this).data('identifier');
                 var component = $(this).data('component');
                 var stockInTag = $(this).data('stock-in-tag');
+
+                $('#filter-label label .fa-filter').remove();
+
+                if ($(this).prop('checked')) {
+                    // Find the label by the "for" attribute related to the clicked radio button
+                    var label = $('label[for="' + $(this).attr('id') + '"]');
+                    
+                    // Append the icon to the specific label
+                    label.prepend('<i class="fa-solid fa-filter me-1"></i>');
+                }
+
                 loadLogs(identifier, component, stockInTag);
             });
     
@@ -47,6 +58,17 @@ function rawMaterialLogFilter(){
                 var identifier = $(this).data('identifier');
                 var component = $(this).data('component');
                 var stockInTag = $(this).data('stock-in-tag');
+
+                $('#filter-label label .fa-filter').remove();
+
+                if ($(this).prop('checked')) {
+                    // Find the label by the "for" attribute related to the clicked radio button
+                    var label = $('label[for="' + $(this).attr('id') + '"]');
+                    
+                    // Append the icon to the specific label
+                    label.prepend('<i class="fa-solid fa-filter me-1" id="filterIcon"></i>');
+                }
+
                 loadLogs(identifier, component, stockInTag);
             });
         };
@@ -101,7 +123,7 @@ function rawMaterialLogFilter(){
                                     <td>${formattedStockOutDate}</td>
                                     <td>${log.price_per_unit}</td>
                                     <td>
-                                        <a class="modal-link href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-doc-id="${log.purchasing_document_id}">
+                                        <a class="modal-link href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-purchasing-doc-id="${log.purchasing_document_id}">
                                             ${log.purchasing_document}(${log.company_name})
                                         </a>
                                     </td>

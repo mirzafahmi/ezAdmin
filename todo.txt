@@ -3,16 +3,17 @@ todo:
 -rework navbar - done
 -modify all component and bom component follow ajax view raw mat inventory 
 -create bom logic 
--add create account verication
+-add create account verication 
 -add permission based on group 
 -create master list of available asset
 -modify alertbox - done
 -singular vs plural
 -notification for threshold
+- make all container-md col-md-10 offset-md-1
 
 - lot number dictate the override data in log create form
 
--modify modal for ajax filter at rawmat inventory log list
+-modify modal for ajax filter at rawmat inventory log list - done
 
 -purchasing features
     -approved vendored
@@ -23,4 +24,4 @@ todo:
 
 
 next project
--local chatbox
+-local chatbox and streaming

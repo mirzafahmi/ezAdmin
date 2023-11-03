@@ -17,6 +17,9 @@ def keep_session_alive(request):
     request.session.modified = True
     return HttpResponse(status=200)
 
+def permission_denied_view(request, exception):
+    return render(request, 'dashboard/permission_denied.html', status=403)
+
 @login_required
 def product_list(request):
     items = Product.objects.all()

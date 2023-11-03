@@ -13,8 +13,11 @@
         {% endfor %}
         <table class="table table-borderless table-striped table-hover">
             <div class="hstack">
-                <span class="h4">Raw Material Component List</span class="h4">
-                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-raw-material-component-create' %}">Add Component</a>
+                <span class="h3" style="margin-bottom: 0px;">Raw Material Component List</span>
+                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-raw-material-component-create' %}">
+                    <i class="fa-solid fa-plus me-1"></i>
+                    Add Component
+                </a>
             </div>
             <hr>
             <div class="btn-group-horizontal mb-3" id="filter-label" role="group" aria-label="horizontal radio toggle button group">

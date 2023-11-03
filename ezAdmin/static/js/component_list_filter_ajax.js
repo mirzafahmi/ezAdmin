@@ -7,13 +7,12 @@ function componentLogFilter() {
             // Remove the icon from all labels
             $('#filter-label label .fa-filter').remove();
 
-            // Check if the current radio button is checked
             if ($(this).prop('checked')) {
-                // Append the icon to the left side of the current label
-                var label = $(this).closest('label');
-                label.prepend(`
-                    <i class="fa-solid fa-filter"></i>
-                `);
+                // Find the label by the "for" attribute related to the clicked radio button
+                var label = $('label[for="' + $(this).attr('id') + '"]');
+                
+                // Append the icon to the specific label
+                label.prepend('<i class="fa-solid fa-filter me-1"></i>');
             }
 
             loadLogs(component);
@@ -26,13 +25,12 @@ function componentLogFilter() {
             // Remove the icon from all labels
             $('#filter-label label .fa-filter').remove();
 
-            // Check if the current radio button is checked
             if ($(this).prop('checked')) {
-                // Append the icon to the left side of the current label
-                var label = $(this).closest('label');
-                label.prepend(`
-                    <i class="fa-solid fa-filter"></i>
-                `);
+                // Find the label by the "for" attribute related to the clicked radio button
+                var label = $('label[for="' + $(this).attr('id') + '"]');
+                
+                // Append the icon to the specific label
+                label.prepend('<i class="fa-solid fa-filter me-1"></i>');
             }
 
             loadLogs(component);

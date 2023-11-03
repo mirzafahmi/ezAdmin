@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
@@ -74,11 +74,13 @@ class PurchasingDocumentListView(LoginRequiredMixin, ListView):
 
         return PurchasingDocument.objects.all()
 
-class PurchasingDocumentCreateView(LoginRequiredMixin,CreateView):
+class PurchasingDocumentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = PurchasingDocument
     form_class = PurchasingDocumentForm
     template_name = 'purchasing/purchasing_document_create.html'
     success_url = reverse_lazy('purchasing-purchasing-document-list')
+
+    permission_required = 'purchasing.add_purchasingdocument'
 
     def form_valid(self, form):
         po_number = form.cleaned_data['po_number']
@@ -86,12 +88,14 @@ class PurchasingDocumentCreateView(LoginRequiredMixin,CreateView):
 
         return super().form_valid(form)
 
-class PurchasingDocumentUpdateView(LoginRequiredMixin, UpdateView):
+class PurchasingDocumentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = PurchasingDocument
     form_class = PurchasingDocumentForm
     template_name = 'purchasing/purchasing_document_update.html'
     success_url = reverse_lazy('purchasing-purchasing-document-list')
     context_object_name = 'purchasing_document'
+
+    permission_required = 'purchasing.change_purchasingdocument'
 
     def form_valid(self, form):
         purchasing_document = self.get_object().po_number
@@ -99,11 +103,13 @@ class PurchasingDocumentUpdateView(LoginRequiredMixin, UpdateView):
 
         return super().form_valid(form)
 
-class PurchasingDocumentDeleteView(LoginRequiredMixin,DeleteView):
+class PurchasingDocumentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = PurchasingDocument
     template_name = 'purchasing/purchasing_document_delete.html'
     context_object_name = 'purchasing_document'
     success_url = reverse_lazy('purchasing-purchasing-document-list')
+
+    permission_required = 'purchasing.delete_purchasingdocument'
 
     def delete(self, request, *args, **kwargs):
         purchasing_document = self.get_object().company_name
@@ -633,51 +639,85 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
         stock_in_tag = request.GET.get('stock_in_tag') 
         purchasing_doc = request.GET.get('purchasing_doc')
 
-        stock_in_items = RawMaterialInventory.objects.filter(
-            component_id=component_id,
-            stock_type='1',
-        ).order_by('exp_date')
-
         response_data = []
 
         if stock_in_tag:
-            # If stock_in_tag is provided, filter based on it
-            stock_tag_baseds = RawMaterialInventory.objects.filter(
-                stock_in_tag=stock_in_tag
-            )
+            if stock_in_tag == "main-page":
+                all_logs = RawMaterialInventory.objects.filter(
+                    component__identifier__parent_item_code = identifier_id,
+                    component_id = component_id
+                )
 
-            stock_in_tag_based = RawMaterialInventory.objects.filter(
-                stock_in_tag=stock_in_tag,
-                stock_type='1',
-            ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+                stock_in_all = all_logs.filter(
+                    stock_type='1',
+                ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
 
-            stock_out_tag_based = RawMaterialInventory.objects.filter(
-                stock_in_tag=stock_in_tag,
-                stock_type='2',
-            ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+                stock_out_all = all_logs.filter(
+                    stock_type='2',
+                ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
 
-            balance_quantity_tag_based = stock_in_tag_based - stock_out_tag_based
+                balance_quantity_all = stock_in_all - stock_out_all
 
-            for stock_tag_based in stock_tag_baseds:
-                response_data.append({
-                    'log_id': stock_tag_based.id,
-                    'identifier': stock_tag_based.component.identifier.parent_item_code,
-                    'identifier_id': stock_tag_based.component.identifier.id,
-                    'component': stock_tag_based.component.component,
-                    'component_id': stock_tag_based.component.id,
-                    'quantity': stock_tag_based.quantity,
-                    'lot': stock_tag_based.lot_number,
-                    'expiry_date': stock_tag_based.exp_date,
-                    'stock_in_date': stock_tag_based.stock_in_date,
-                    'stock_out_date': stock_tag_based.stock_out_date,
-                    'price_per_unit': stock_tag_based.price_per_unit,
-                    'purchasing_document': stock_tag_based.purchasing_doc.po_number,
-                    'purchasing_document_id': stock_tag_based.purchasing_doc.id,
-                    'company_name': stock_tag_based.purchasing_doc.supplier.company_name,
-                    'stock_in_tag': stock_tag_based.stock_in_tag.id,
-                    'stock_type': stock_tag_based.stock_type,
-                    'balance': balance_quantity_tag_based,
-                })
+                for all_log in all_logs:
+                    response_data.append({
+                        'log_id': all_log.id,
+                        'identifier': all_log.component.identifier.parent_item_code,
+                        'identifier_id': all_log.component.identifier.id,
+                        'component': all_log.component.component,
+                        'component_id': all_log.component.id,
+                        'quantity': all_log.quantity,
+                        'lot': all_log.lot_number,
+                        'expiry_date': all_log.exp_date,
+                        'stock_in_date': all_log.stock_in_date,
+                        'stock_out_date': all_log.stock_out_date,
+                        'price_per_unit': all_log.price_per_unit,
+                        'purchasing_document': all_log.purchasing_doc.po_number,
+                        'purchasing_document_id': all_log.purchasing_doc.id,
+                        'company_name': all_log.purchasing_doc.supplier.company_name,
+                        'stock_in_tag': all_log.stock_in_tag.id,
+                        'stock_type': all_log.stock_type,
+                        'balance': balance_quantity_all,
+                    })
+
+            else:
+                # If stock_in_tag is provided, filter based on it
+                stock_tag_baseds = RawMaterialInventory.objects.filter(
+                    stock_in_tag=stock_in_tag
+                )
+
+                stock_in_tag_based = RawMaterialInventory.objects.filter(
+                    stock_in_tag=stock_in_tag,
+                    stock_type='1',
+                ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+                stock_out_tag_based = RawMaterialInventory.objects.filter(
+                    stock_in_tag=stock_in_tag,
+                    stock_type='2',
+                ).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+                balance_quantity_tag_based = stock_in_tag_based - stock_out_tag_based
+
+                for stock_tag_based in stock_tag_baseds:
+                    response_data.append({
+                        'log_id': stock_tag_based.id,
+                        'identifier': stock_tag_based.component.identifier.parent_item_code,
+                        'identifier_id': stock_tag_based.component.identifier.id,
+                        'component': stock_tag_based.component.component,
+                        'component_id': stock_tag_based.component.id,
+                        'quantity': stock_tag_based.quantity,
+                        'lot': stock_tag_based.lot_number,
+                        'expiry_date': stock_tag_based.exp_date,
+                        'stock_in_date': stock_tag_based.stock_in_date,
+                        'stock_out_date': stock_tag_based.stock_out_date,
+                        'price_per_unit': stock_tag_based.price_per_unit,
+                        'purchasing_document': stock_tag_based.purchasing_doc.po_number,
+                        'purchasing_document_id': stock_tag_based.purchasing_doc.id,
+                        'company_name': stock_tag_based.purchasing_doc.supplier.company_name,
+                        'stock_in_tag': stock_tag_based.stock_in_tag.id,
+                        'stock_type': stock_tag_based.stock_type,
+                        'balance': balance_quantity_tag_based,
+                    })
+                    
         elif purchasing_doc:
             purchasing_doc_details = PurchasingDocument.objects.filter(id=purchasing_doc).first()
 
@@ -695,9 +735,14 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                 'AWB_doc': str(purchasing_doc_details.AWB_doc),
                 'create_date': purchasing_doc_details.create_date,
             })
-
+            
         else:
             # If stock_in_tag is not provided, generate data for buttons
+            stock_in_items = RawMaterialInventory.objects.filter(
+                    component_id=component_id,
+                    stock_type='1',
+                ).order_by('exp_date')
+                
             for stock_in_item in stock_in_items:
                 
                 stock_tag_baseds = RawMaterialInventory.objects.filter(

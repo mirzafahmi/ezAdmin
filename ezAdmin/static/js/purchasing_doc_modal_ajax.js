@@ -33,7 +33,7 @@ function generateModals(element) {
 
         $(document).on('click', '.modal-link', function () {
             var element = this;
-            var purchasingDoc = element.getAttribute('data-doc-id');
+            var purchasingDoc = element.getAttribute('data-purchasing-doc-id');
             console.log(purchasingDoc)
 
             $.ajax({

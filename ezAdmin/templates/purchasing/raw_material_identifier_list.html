@@ -13,8 +13,11 @@
         {% endfor %}
         <table class="table table-borderless table-striped table-hover">
             <div class="hstack">
-                <span class="h4">Raw Material Identifier List</span class="h4">
-                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-raw-material-identifier-create' %}">Add Identifier</a>
+                <span class="h3" style="margin-bottom: 0px;">Raw Material Identifier List</span class="h4">
+                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-raw-material-identifier-create' %}">
+                    <i class="fa-solid fa-plus me-1"></i>
+                    Add Identifier
+                </a>
             </div>
             <hr>
             <thead class = "table-dark">

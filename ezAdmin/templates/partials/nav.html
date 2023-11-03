@@ -1,3 +1,18 @@
+<style>
+  #user-nav-link:hover {
+    color: #0d6efd;
+  }
+  #logout-nav-link:hover {
+    color: #dc3545;
+  }
+  #login-nav-link:hover {
+    color: #0d6efd;
+  }
+  #register-nav-link:hover {
+    color: #198754;
+  }
+  
+</style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient d-flex justify-content-center">
   <div class="container-md">
     <a class="navbar-brand" href="{% url 'dashboard-index' %}">ezAdmin</a>
@@ -65,44 +80,36 @@
 
       {% if user.is_authenticated %}
       <ul class = "navbar-nav ms-auto">
-        <li class = "register-button px-1">
-          <a href ="{% url 'user-profile' %}">
-            <button type="button" class="btn btn-success">
+        <li class = "register-button px-1 nav-item" style="border-right: 1px solid rgba(255, 255, 255, 0.55);">
+          <a id="user-nav-link" class="nav-link" href ="{% url 'user-profile' %}">
               {% if user.is_superuser %}
               <i class="fa-solid fa-crown me-1"></i>
               {% else %}
               <i class="fa-solid fa-user me-1"></i>
               {% endif %}
               Profile
-            </button>
           </a>
         </li>
-        <li class = "log-in-button px-1">
-          <a  href ="{% url 'user-logout' %}">
-            <button type="button" class="btn btn-danger">
+        <li class = "log-in-button px-1 nav-item">
+          <a id="logout-nav-link" class="nav-link" href ="{% url 'user-logout' %}">
               <i class="fa-solid fa-right-from-bracket me-1"></i>
               Logout
-            </button>
           </a>
         </li>
       </ul>
 
       {% else %}
       <ul class = "navbar-nav ms-auto">
-        <li class = "register-button px-1">
-          <a href ="{% url 'user-register' %}">
-            <button type="button" class="btn btn-success">
+        <li class = "register-button px-1 nav-item " style="border-right: 1px solid rgba(255, 255, 255, 0.55);">
+          <a id="register-nav-link" class="nav-link" href ="{% url 'user-register' %}">
               <i class="fa-solid fa-user-plus me-1"></i>
               Register
-            </button>
           </a>
         </li>
-        <li class = "log-in-button px-1">
-          <a  href ="{% url 'user-login' %}">
-            <button type="button" class="btn btn-primary">
+        <li class = "log-in-button px-1 nav-item">
+          <a id="login-nav-link" class="nav-link" href ="{% url 'user-login' %}">
               <i class="fa-solid fa-user me-1"></i>
               Login
-            </button>
           </a>
         </li>
       </ul>
@@ -146,6 +153,16 @@
       e.preventDefault();
       window.location.href = $(this).attr('href');
     });
+
+    $('.nav-link').mouseenter(function() {
+      $(this).find('i').addClass('fa-shake'); // Add your hover class
+    });
+
+  // Mouse leave event
+    $('.nav-link').mouseleave(function() {
+        $(this).find('i').removeClass('fa-shake'); // Remove your hover class
+    });
+
   });
   
 </script>

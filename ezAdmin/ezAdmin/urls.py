@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from dashboard.views import permission_denied_view
+
+
+handler403 = 'dashboard.views.permission_denied_view'
 
 urlpatterns = [
     path('ezadminadminpage/', admin.site.urls),

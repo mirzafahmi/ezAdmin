@@ -13,7 +13,10 @@
     <div class="container-md">
         <div class="hstack align-items-center">
             <h2 class = "text-center flex-grow-1">Raw Material Inventory List For {{parent_item_code}} Identifier Page</h2>
-            <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-raw-material-inventory-identifier-based-component-create' identifier_id %}">Add Component</a>
+            <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-raw-material-inventory-identifier-based-component-create' identifier_id %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add Component
+            </a>
         </div>
         <hr>
         <div class="card-deck row gy-4">
