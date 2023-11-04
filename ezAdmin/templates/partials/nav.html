@@ -11,8 +11,8 @@
   #register-nav-link:hover {
     color: #198754;
   }
-  
 </style>
+{% if user.is_authenticated %} 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient d-flex justify-content-center">
   <div class="container-md">
     <a class="navbar-brand" href="{% url 'dashboard-index' %}">ezAdmin</a>
@@ -130,6 +130,11 @@
     </div>
   </div>    
 </nav>
+{% else %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient">
+    <a class="navbar-brand mx-auto" href="{% url 'user-login' %}">ezAdmin</a>
+</nav>
+{% endif %}
 <script>
   $(document).ready(function () {
     // Click event for dropdown caret and nav label

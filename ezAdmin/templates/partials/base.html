@@ -34,8 +34,10 @@
 </head>
 <body>
   {% include 'partials/nav.html' %}
-
+  
   <div id="main-page" class="container-fluid main bg-light">
+
+    {% if user.is_authenticated %} 
     <div class="container-md">
       <nav class = "bg-light" aria-label="breadcrumb">
         <ol id="breadcrumbs-container" class="breadcrumb bg-light">
@@ -43,7 +45,8 @@
         </ol>
       </nav>
     </div>
-    
+    {% endif %}
+
     {% block content %}
 
     {% endblock %}
@@ -58,9 +61,9 @@
   <footer class="bg-dark bg-gradient text-center text-white">
     <!-- Grid container -->
     <div class="container">
-      <!-- Section: Social media 
+      <!-- Section: Social media -->
       <section class="text-center">
-        Contact at: <br>-->
+        Contact at: <br>
         <!-- Facebook 
         <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
           ><i class="fab fa-facebook-f"></i
@@ -81,15 +84,15 @@
           ><i class="fab fa-instagram"></i
         ></a>-->
   
-        <!-- Linkedin 
+        <!-- Linkedin -->
         <a class="btn btn-outline-light btn-floating" href="https://www.linkedin.com/in/mirza-fahmi/" role="button" target="_blank">
           <i class="fab fa-linkedin-in"></i>
-        </a>-->
+        </a>
   
-        <!-- Github 
+        <!-- Github -->
         <a class="btn btn-outline-light btn-floating" href="https://github.com/mirzafahmi" role="button" target="_blank">
           <i class="fab fa-github"></i>
-        </a>-->
+        </a>
       </section>
       <!-- Section: Social media -->
     </div>

@@ -4,7 +4,7 @@ from dashboard.models import Product, Currency
 from django.utils import timezone
 from mixins.modify_case_fields_mixin import *
 
-class Supplier(CapitalcaseFieldsMixin, models.Model):
+class Supplier(UppercaseFieldsMixin, models.Model):
     company_name = models.CharField(max_length=200, unique=True)
     address = models.CharField(max_length=200)
     representative_name = models.CharField(max_length=200, blank = True, null = True)

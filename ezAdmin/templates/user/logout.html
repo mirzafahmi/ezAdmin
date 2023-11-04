@@ -4,17 +4,19 @@
 
 {% block content %}
 <div class="container">
-    <div class="row mt-2">
-        <div class="col-md-6 offset-md-3">
-            <div class="border p-3">
-                <h3>Logout Page</h3>
+    <div class="row mt-2" style="height:45vh;">
+        <div class="col-md-6 offset-md-3 my-auto">
+            <div class="border p-3" style="min-height: 367.65px; min-width: 542px;">
+                <h3 class="text-center">Logout Page</h3>
                 <hr>
-                <div class="alert alert-danger">
-                    <h4>You have been log out</h4>
+                <div class="d-flex flex-column" style="height: 265px;">
+                    <div class="alert alert-danger">
+                        <h4>You have been log out from the account. Please login again if you want to continue.</h4>
+                    </div>
+                    <a class="btn btn-primary" style="margin-top: 82px;" href = "{% url 'user-login' %}">
+                        Login
+                    </a>
                 </div>
-                <a href = "{% url 'user-login' %}">
-                    <button type="button" class="btn btn-primary">Login</button>
-                </a>
             </div>
         </div>
     </div>    

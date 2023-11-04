@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import validate_email, DecimalValidator
 from django.utils import timezone
 from django.db.models import Q
+from mixins.modify_case_fields_mixin import *
 
 import sys
 sys.path.insert(0, '/ezAdmin/validator')
@@ -11,7 +12,7 @@ from validator.abbreaviation import create_acronym as abv
 
 # Create your models here.
 
-class BrandName(models.Model):
+class BrandName(UppercaseFieldsMixin, models.Model):
     #basics fields
     brand_name = models.CharField(max_length = 20, unique = True)
     company_name = models.CharField(max_length = 20, blank = True, null = True)
@@ -55,7 +56,7 @@ class SalesPerson(models.Model):
     def name_abv(self):
         return self.name
 
-class Currency(models.Model):
+class Currency(UppercaseFieldsMixin, models.Model):
     #basics fields
     name = models.CharField(max_length = 20, unique = True)
     currency_code = models.CharField(max_length = 3, unique = True)
@@ -75,7 +76,7 @@ class Currency(models.Model):
         super(Currency, self).save(*args, **kwargs)
 
 
-class UOM(models.Model):
+class UOM(UppercaseFieldsMixin, models.Model):
     #basics fields
     name = models.CharField(max_length = 5, unique = True)
 
@@ -145,7 +146,7 @@ class Inventory(models.Model): #change to finishedgoodinventory
         self.validation_date = timezone.localtime(timezone.now())
         super(Inventory, self).save(*args, **kwargs)
 
-class Customer(models.Model):
+class Customer(UppercaseFieldsMixin, models.Model):
     #basics fields
     company_name = models.CharField(max_length = 100)
     name_acronym = models.CharField(max_length = 100, blank = True, null = True)
@@ -160,6 +161,8 @@ class Customer(models.Model):
     #utility fields
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
+
+    exempt_fields = ['email']
 
     def __str__(self):
         return self.company_name
