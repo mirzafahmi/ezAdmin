@@ -1,7 +1,7 @@
 function CustomAlert() {
     this.init = function () {
         // Create the dialog elements only once
-        document.body.innerHTML += '<div id="dialogoverlay"></div><div id="dialogbox" "><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
+        document.body.innerHTML += '<div id="dialogoverlay"></div><div id="dialogbox"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div>';
         let dialogoverlay = document.getElementById('dialogoverlay');
         let dialogbox = document.getElementById('dialogbox');
 
@@ -28,7 +28,7 @@ function CustomAlert() {
         if (typeof title === 'undefined') {
             document.getElementById('dialogboxhead').style.display = 'none';
         } else {
-            document.getElementById('dialogboxhead').innerHTML = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ' + title;
+            document.getElementById('dialogboxhead').innerHTML = '<i class="fa fa-exclamation-circle me-2" aria-hidden="true"></i> ' + title;
         }
 
         document.getElementById('dialogboxbody').innerHTML = message;

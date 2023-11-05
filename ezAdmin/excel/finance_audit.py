@@ -6,6 +6,8 @@ def generate_inventory_assets():
     import os
     import sys
 
+    from django.utils import timezone
+
     # Add the path to the parent directory of your_project to the Python path
     sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 
@@ -47,21 +49,19 @@ def generate_inventory_assets():
     data_dict = {}
 
     instances = RawMaterialInventory.objects.all().order_by('component__identifier__parent_item_code', 'component__component').filter(stock_type='1')
-
+    print(timezone.now())
     for instance in instances:    
         stock_in = RawMaterialInventory.objects.filter(
             stock_in_tag=instance.stock_in_tag_id,
             stock_type='1').aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
-
+        print(stock_in)
         stock_out = RawMaterialInventory.objects.filter(
             stock_in_tag=instance.stock_in_tag_id,
             stock_type='2').aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
-
+        print(stock_out)
         balance = stock_in - stock_out
-
-        if balance <=0:
-            break
-        else:
+        print(balance)
+        if balance != 0:
             parent_item_code = instance.component.identifier.parent_item_code
 
             if parent_item_code not in data_dict:

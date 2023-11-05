@@ -12,7 +12,10 @@
                     <form method = "POST" class="d-flex flex-column">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <input class = "btn btn-primary my-3" type ="submit" value = "Login">
+                        <input class = "btn btn-primary mb-2 mt-3" type ="submit" value = "Login">
+                        <a class = "btn btn-success mb-2" href ="{% url 'user-register' %}">
+                            Register Account
+                        </a>
                         <a class = "mx-4 text-center" href = "{% url 'password_reset' %}"> Forget Password? </a>
                     </form>
                 </div>

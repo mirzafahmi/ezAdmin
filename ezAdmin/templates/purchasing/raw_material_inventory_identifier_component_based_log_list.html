@@ -1,5 +1,5 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Raw Material Inventory List{% endblock %}
+{% block title %} Raw Material Inventory Log List{% endblock %}
 
 {% block content %}
 <style>
@@ -19,7 +19,7 @@
         {% endfor %}
         <table class="table table-borderless table-striped table-hover" id="table-log">
             <div class="hstack">
-                <span class="h3" style="margin-bottom: 0px;">{{component.0.0}} Raw Material Inventory List For {{component.0.1}}</span class="h4">
+                <span class="h2" style="margin-bottom: 0px;">{{component.0.0}} Raw Material Inventory List For {{component.0.1}}</span class="h4">
                 <a class="btn btn-success btn-sm float-right ms-auto" href="{% url 'purchasing-raw-material-inventory-identifier-component-based-log-create-main' identifier_id component_id %}">
                     <i class="fa-solid fa-plus me-1"></i>
                     Add Inventory Log

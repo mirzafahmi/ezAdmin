@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
+from django.utils import timezone
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
-from .models import *
-from .forms import *
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views import View
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models import F, Sum, Value
@@ -14,6 +13,17 @@ from django.db.models.functions import Coalesce
 from mixins.validation_mixin import QuantityValidationMixin
 from collections import Counter
 import re
+
+from .models import *
+from .forms import *
+
+import csv
+import pandas as pd
+from openpyxl import Workbook
+from openpyxl.utils.dataframe import dataframe_to_rows
+import os
+import sys
+
 
 class PurchasingMainView(LoginRequiredMixin, TemplateView):
     template_name = 'purchasing/purchasing_main.html'
@@ -28,11 +38,13 @@ class SupplierListView(LoginRequiredMixin, ListView):
 
         return Supplier.objects.all()
 
-class SupplierCreateView(LoginRequiredMixin,CreateView):
+class SupplierCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Supplier
     form_class = SupplierForm
     template_name = 'purchasing/supplier_create.html'
     success_url = reverse_lazy('purchasing-supplier-list')
+
+    permission_required = 'purchasing.add_supplier'
 
     def form_valid(self, form):
         supplier_name = form.cleaned_data['company_name']
@@ -40,11 +52,13 @@ class SupplierCreateView(LoginRequiredMixin,CreateView):
 
         return super().form_valid(form)
 
-class SupplierUpdateView(LoginRequiredMixin, UpdateView):
+class SupplierUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Supplier
     form_class = SupplierForm
     template_name = 'purchasing/supplier_update.html'
     success_url = reverse_lazy('purchasing-supplier-list')
+
+    permission_required = 'purchasing.change_supplier'
 
     def form_valid(self, form):
         supplier_name = self.get_object().company_name
@@ -52,10 +66,12 @@ class SupplierUpdateView(LoginRequiredMixin, UpdateView):
 
         return super().form_valid(form)
 
-class SupplierDeleteView(LoginRequiredMixin,DeleteView):
+class SupplierDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Supplier
     template_name = 'purchasing/supplier_delete.html'
     success_url = reverse_lazy('purchasing-supplier-list')
+
+    permission_required = 'purchasing.delete_supplier'
 
     def delete(self, request, *args, **kwargs):
         supplier_name = self.get_object().company_name
@@ -118,10 +134,12 @@ class PurchasingDocumentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, 
 
         return response
 
-class RawMaterialIdentifierCreateView(LoginRequiredMixin,CreateView):
+class RawMaterialIdentifierCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = RawMaterialIdentifier
     form_class = RawMaterialIdentifierForm
     template_name = 'purchasing/raw_material_identifier_create.html'
+
+    permission_required = 'purchasing.add_identifier'
 
     def get_success_url(self):
         if 'identifier_create' in self.request.get_full_path():
@@ -152,12 +170,14 @@ class RawMaterialIdentifierListView(LoginRequiredMixin, ListView):
 
         return RawMaterialIdentifier.objects.all()
 
-class RawMaterialIdentifierUpdateView(LoginRequiredMixin, UpdateView):
+class RawMaterialIdentifierUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = RawMaterialIdentifier
     form_class = RawMaterialIdentifierForm
     template_name = 'purchasing/raw_material_identifier_update.html'
     success_url = reverse_lazy('purchasing-raw-material-identifier-list')
     context_object_name = 'identifier'
+
+    permission_required = 'purchasing.change_identifier'
 
     def form_valid(self, form):
         identifier = self.get_object().parent_item_code
@@ -166,11 +186,13 @@ class RawMaterialIdentifierUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class RawMaterialIdentifierDeleteView(LoginRequiredMixin,DeleteView):
+class RawMaterialIdentifierDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = RawMaterialIdentifier
     template_name = 'purchasing/raw_material_identifier_delete.html'
     context_object_name = 'identifier'
     success_url = reverse_lazy('purchasing-raw-material-identifier-list')
+
+    permission_required = 'purchasing.delete_identifier'
 
     def delete(self, request, *args, **kwargs):
         identifier = self.get_object().parent_item_code
@@ -179,10 +201,12 @@ class RawMaterialIdentifierDeleteView(LoginRequiredMixin,DeleteView):
 
         return response
 
-class RawMaterialComponentCreateView(LoginRequiredMixin,CreateView):
+class RawMaterialComponentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = RawMaterialComponent
     form_class = RawMaterialComponentForm
     template_name = 'purchasing/raw_material_component_create.html'
+
+    permission_required = 'purchasing.add_component'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -286,12 +310,14 @@ class RawMaterialComponentListViewAJAX(View):
             return JsonResponse(component_labels, safe=False)
 
 
-class RawMaterialComponentUpdateView(LoginRequiredMixin, UpdateView):
+class RawMaterialComponentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = RawMaterialComponent
     form_class = RawMaterialComponentForm
     template_name = 'purchasing/raw_material_component_update.html'
     success_url = reverse_lazy('purchasing-raw-material-component-list')
     context_object_name = 'component'
+
+    permission_required = 'purchasing.change_component'
 
     def form_valid(self, form):
         component = self.get_object()
@@ -299,11 +325,13 @@ class RawMaterialComponentUpdateView(LoginRequiredMixin, UpdateView):
 
         return super().form_valid(form)
 
-class RawMaterialComponentDeleteView(LoginRequiredMixin,DeleteView):
+class RawMaterialComponentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = RawMaterialComponent
     template_name = 'purchasing/raw_material_component_delete.html'
     context_object_name = 'component'
     success_url = reverse_lazy('purchasing-raw-material-component-list')
+
+    permission_required = 'purchasing.delete_component'
 
     def delete(self, request, *args, **kwargs):
         component = self.get_object()
@@ -312,11 +340,13 @@ class RawMaterialComponentDeleteView(LoginRequiredMixin,DeleteView):
 
         return response
 
-class BOMComponentCreateView(LoginRequiredMixin,CreateView):
+class BOMComponentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = BOMComponent
     form_class = BOMComponentForm
     template_name = 'purchasing/BOM_component_create.html'
     success_url = reverse_lazy('purchasing-BOM-component-list')
+
+    permission_required = 'purchasing.add_BOMcomponent'
 
     def form_valid(self, form):
         BOMcomponent = form.cleaned_data['product']
@@ -334,12 +364,14 @@ class BOMComponentListView(LoginRequiredMixin, ListView):
 
         return BOMComponent.objects.all()
 
-class BOMComponentUpdateView(LoginRequiredMixin, UpdateView):
+class BOMComponentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = BOMComponent
     form_class = BOMComponentForm
     template_name = 'purchasing/BOM_component_update.html'
     success_url = reverse_lazy('purchasing-BOM-component-list')
     context_object_name = 'BOMcomponent'
+
+    permission_required = 'purchasing.change_BOMcomponent'
 
     def form_valid(self, form):
         BOMcomponent = self.get_object()
@@ -348,11 +380,13 @@ class BOMComponentUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class BOMComponentDeleteView(LoginRequiredMixin,DeleteView):
+class BOMComponentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = BOMComponent
     template_name = 'purchasing/BOM_component_delete.html'
     context_object_name = 'BOMcomponent'
     success_url = reverse_lazy('purchasing-BOM-component-list')
+
+    permission_required = 'purchasing.delete_BOMcomponent'
 
     def delete(self, request, *args, **kwargs):
         BOMcomponent = self.get_object()
@@ -830,3 +864,136 @@ class RawMaterialInventoryDeleteView(LoginRequiredMixin,DeleteView):
         messages.success(self.request, f'{RawMaterialInventory.component} deleted successfully!')
 
         return response
+
+def generate_balance_assets_excel(request):
+    # Add the path to the parent directory of your_project to the Python path
+    sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+
+    # Now you can import modules from your Django project
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ezAdmin.settings')
+    import django
+    django.setup()
+
+    # Import your Django models
+    from purchasing.models import RawMaterialInventory
+    from django.db.models import Sum
+
+    # Retrieve all data from the Django model with related fields
+    data = RawMaterialInventory.objects.select_related('component__identifier', 'purchasing_doc').values(
+        'id',
+        'component__id',
+        'component__component',
+        'component__identifier_id',
+        'component__identifier__parent_item_code',
+        'quantity',
+        'lot_number',
+        'exp_date',
+        'price_per_unit',
+        'stock_type',
+        'purchasing_doc__id',
+        'purchasing_doc__po_number',
+        'purchasing_doc__invoice_number',
+        'purchasing_doc__packing_list',
+        'purchasing_doc__k1_form',
+        'purchasing_doc__AWB_number',
+        'stock_in_tag__id',
+        'stock_in_date',
+        'stock_out_date',
+        'validation_date',
+        'log_date'
+    ).order_by('component__identifier__parent_item_code', 'component__component')
+
+    # Dictionary to store data based on parent_item_code and component
+    data_dict = {}
+
+    current_time = timezone.localtime(timezone.now()).strftime('%Y-%m-%d-%H_%M_%S')
+
+    instances = RawMaterialInventory.objects.all().order_by('component__identifier__parent_item_code', 'component__component').filter(stock_type='1')
+
+    for instance in instances:    
+        stock_in = RawMaterialInventory.objects.filter(
+            stock_in_tag=instance.stock_in_tag_id,
+            stock_type='1').aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+        stock_out = RawMaterialInventory.objects.filter(
+            stock_in_tag=instance.stock_in_tag_id,
+            stock_type='2').aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+        balance = stock_in - stock_out
+
+        if balance != 0:
+            parent_item_code = instance.component.identifier.parent_item_code
+
+            if parent_item_code not in data_dict:
+                data_dict[parent_item_code] = {}
+
+            component = instance.component.component
+
+            if component not in data_dict[parent_item_code]:
+                data_dict[parent_item_code][component] = []
+
+            flattened_row = {
+                'QUANTITY': balance,
+                'LOT_NUMBER': instance.lot_number,
+                'EXP_DATE': instance.exp_date,
+                'PRICE_PER_UNIT': instance.price_per_unit,
+                'PO_NUMBER': instance.purchasing_doc.po_number,
+                'INVOICE_NUMBER': instance.purchasing_doc.invoice_number,
+                'PACKING_LIST': instance.purchasing_doc.packing_list,
+                'K1_FORM': instance.purchasing_doc.k1_form,
+                'AWB_NUMBER': instance.purchasing_doc.AWB_number
+            }
+
+            data_dict[parent_item_code][component].append(flattened_row)
+
+
+    # Combine all the data into a single list of dictionaries
+    all_data = []
+    for identifier, components_data in data_dict.items():
+        for component, component_data in components_data.items():
+            for row in component_data:
+                row['IDENTIFIER'] = identifier
+                row['COMPONENT'] = component
+                all_data.append(row)
+
+    # Specify the order of columns
+    columns_order = ['IDENTIFIER', 'COMPONENT', 'QUANTITY', 'LOT_NUMBER', 'EXP_DATE', 'PRICE_PER_UNIT', 'PO_NUMBER', 'INVOICE_NUMBER', 'PACKING_LIST', 'K1_FORM', 'AWB_NUMBER']
+
+    # Create a DataFrame with a specified order of columns
+    df = pd.DataFrame(all_data, columns=columns_order)
+
+    # Save the DataFrame to an Excel file
+    output_excel_file_path = f'excel/output-{current_time}.xlsx'
+
+    # Create a new Excel workbook and add a worksheet
+    wb = Workbook()
+    ws = wb.active
+
+    # Write the DataFrame to the worksheet
+    for row in dataframe_to_rows(df, index=False, header=True):
+        ws.append(row)
+
+    # Adjust column widths
+    for column in ws.columns:
+        max_length = 0
+        column = [cell for cell in column]
+        for cell in column:
+            try:
+                if len(str(cell)) > max_length:
+                    max_length = len(cell)
+            except:
+                pass
+        adjusted_width = (max_length + 25)
+        ws.column_dimensions[column[0].column_letter].width = adjusted_width
+
+    # Create an in-memory stream to save the workbook content
+    from io import BytesIO
+    output_stream = BytesIO()
+    wb.save(output_stream)
+    output_stream.seek(0)
+
+    # Create a Django HttpResponse to return the file to the user
+    response = HttpResponse(output_stream.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'inline; filename=output-{current_time}.xlsx'
+
+    return response

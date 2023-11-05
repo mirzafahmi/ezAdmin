@@ -33,6 +33,7 @@ urlpatterns = [
     #path('production_main/raw_material_inventory_main/list', RawMaterialInventoryListView.as_view(), name='purchasing-raw-material-inventory-list'),
     #path('production_main/raw_material_inventory/<int:pk>-update/', RawMaterialInventoryUpdateView.as_view(), name='purchasing-raw-material-inventory-update'),
     #path('production_main/raw_material_inventory/<int:pk>-delete/', RawMaterialInventoryDeleteView.as_view(), name='purchasing-raw-material-inventory-delete'),
+    path('production_main/raw_material_inventory_identifier_based_main/generate_balance_assets_excel', generate_balance_assets_excel, name="purchasing-raw-material-balance-generate-excel"),
     path('production_main/raw_material_inventory_identifier_based_main', RawMaterialInventoryIdentifierBasedListView.as_view(), name='purchasing-raw-material-inventory-identifier-based-list'),
     path('production_main/raw_material_inventory_identifier_based_main/identifier_create', RawMaterialIdentifierCreateView.as_view(), name='purchasing-raw-material-identifier-list-identifier-create'),
     path('production_main/raw_material_inventory_identifier_based_main/identifier:<int:identifier_id>-component-main', RawMaterialInventoryIdentifierComponentBasedListView.as_view(), name='purchasing-raw-material-inventory-identifier-component-based-list'),
