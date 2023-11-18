@@ -1,0 +1,129 @@
+{% extends 'partials/base.html' %}
+{% block title %} BOM Components List{% endblock %}
+
+{% block content %}
+    <div class="container-md">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="hstack">
+            <span class="h3" style="margin-bottom: 0px;">BOM Components List</span class="h4">
+            <a class="btn btn-success btn-sm ms-auto" id="addBOM" href="{% url 'production-BOM-component-create' %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add BOMComponent
+            </a>
+        </div>
+        <hr>
+        <div class="btn-group-horizontal mb-3" id="filter-label" role="group" aria-label="horizontal radio toggle button group">
+            <input type="radio" class="btn-check" id="vbtn-radio1" name="vbtn-radio"  autocomplete="off" checked data-itemCode="main-page">
+            <label class="btn btn-outline-primary" for="vbtn-radio1">
+                <a class="no-decoration">
+                    Main Page
+                </a>
+            </label>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover">
+                <thead class = "table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Product Item Code</th>
+                        <th>Raw Material Component</th>
+                        <th>Quantity Used (per box)</th>
+                        <th>Created Date</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for BOMcomponent in BOMcomponents %}       
+                    <tr>    
+                        <td>{{forloop.counter}}</td>
+                        <td>{{BOMcomponent.product.item_code}}</td>
+                        <td>{{BOMcomponent.raw_material_component}}</td>
+                        <td>{{BOMcomponent.quantity_used}}</td>
+                        <td>{{BOMcomponent.create_date}}</td>
+                        <td>
+                            <div class = "d-grid">
+                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'production-BOM-component-update' BOMcomponent.id %}">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                        Validate
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'production-BOM-component-delete' BOMcomponent.id %}">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </div>    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>                            
+            </table>
+        </div>
+    </div>
+    <script>
+        responsiveButtonText('addBOM')
+        var baseUrl = "{% url 'production-BOM-component-list-ajax' %}"
+        function BOMComponentListFilter() {
+            $(document).ready(function () {
+                $.ajax({
+                    url: baseUrl,
+                    method: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        data.forEach(function (itemCode) {
+                            itemCodeWithUnderScore = itemCode.replace(/ /g, '-');
+                            $('#filter-label').append(
+                                `<input type="radio" class="btn-check" id="${itemCodeWithUnderScore}-item-code" name="vbtn-radio" data-itemCode="${itemCode}">` +
+                                `<label class="btn btn-outline-primary me-1" for="${itemCodeWithUnderScore}-item-code"><a class="no-decoration">${itemCode}</a></label>`
+                            );
+                        });
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+                $('#filter-label').on('change', 'label', function () {
+                    var itemCode = $(this).data('itemCode');
+        
+                    // Remove the icon from all labels
+                    $('#filter-label label .fa-filter').remove();
+        
+                    if ($(this).prop('checked')) {
+                        // Find the label by the "for" attribute related to the clicked radio button
+                        var label = $('label[for="' + $(this).attr('id') + '"]');
+                        
+                        // Append the icon to the specific label
+                        label.prepend('<i class="fa-solid fa-filter me-1"></i>');
+                    }
+        
+                    loadItemCode(itemCode);
+                });
+        
+                // Event listener for radio button clicks, you might still use it independently if needed
+                $('#filter-label').on('change', 'input[type="radio"]', function () {
+                    var itemCode = $(this).data('itemCode');
+                    
+                    // Remove the icon from all labels
+                    $('#filter-label label .fa-filter').remove();
+        
+                    if ($(this).prop('checked')) {
+                        // Find the label by the "for" attribute related to the clicked radio button
+                        var label = $('label[for="' + $(this).attr('id') + '"]');
+                        
+                        // Append the icon to the specific label
+                        label.prepend('<i class="fa-solid fa-filter me-1"></i>');
+                    }
+        
+                    loadItemCode(itemCode);
+                });
+            });
+        }
+        BOMComponentListFilter()
+    </script>
+{% endblock %}

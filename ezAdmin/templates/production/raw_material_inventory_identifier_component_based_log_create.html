@@ -1,0 +1,42 @@
+{% extends 'partials/base.html' %}
+{% block title %} Add Raw Material Inventory Log{% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    {% for message in messages %}
+                    {% if message %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% if form.initial.stock_type == '1' %}
+                    <h3>Log-In Raw Material Inventory ({{component_name}})</h3>
+                    {% endif %}
+                    {% if form.initial.stock_type == '2' %}
+                    <h3>Log-Out Raw Material Inventory</h3>
+                    {% endif %}
+                    <hr>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <a class="btn btn-light"  href = "{% url 'production-raw-material-inventory-identifier-component-based-log-create-main' identifier_id component_id %}"> Cancel</a>
+                        <input class="btn btn-success" type="submit" value="Create Inventory Log">
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <!-- add logic to the stock out thus it can stock out more than stock in -->
+    <script>
+        var baseUrl = '{% url 'production-raw-material-inventory-identifier-component-based-log-create-ajax' %}'
+        var action = 'create'
+        performAjaxAction(action, baseUrl);
+        console.log('from create script')
+    </script>
+{% endblock %}

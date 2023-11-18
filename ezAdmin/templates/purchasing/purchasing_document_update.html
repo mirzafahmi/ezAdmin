@@ -16,11 +16,11 @@
                     {% endif %}
                     <h3>Update {{purchasing_document.po_number}} Details?</h3>
                     <hr>
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy}}
                         <a class="btn btn-light" href = "{% url 'purchasing-purchasing-document-list' %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Update Purchasing Document">
+                        <input class="btn btn-primary" type="submit" value="Update Purchasing Document">
                     </form>
                 </div>
             </div>

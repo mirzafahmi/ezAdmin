@@ -1,0 +1,47 @@
+from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import validate_email, DecimalValidator
+from django.utils import timezone
+from django.db.models import Q
+from mixins.modify_case_fields_mixin import *
+
+class Currency(models.Model):
+    #basics fields
+    name = models.CharField(max_length = 20, unique = True)
+    currency_code = models.CharField(max_length = 3, unique = True)
+
+    #utility fields
+    create_date = models.DateTimeField(blank = True, null = True)
+    update_date = models.DateTimeField(blank = True, null = True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if self.create_date is None:
+            self.create_date = timezone.localtime(timezone.now())
+
+        self.update_date = timezone.localtime(timezone.now())
+        super(Currency, self).save(*args, **kwargs)
+
+
+class UOM(models.Model):
+    #basics fields
+    name = models.CharField(max_length = 5, unique = True)
+
+    #utility fields
+    create_date = models.DateTimeField(blank = True, null = True)
+    update_date = models.DateTimeField(blank = True, null = True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if self.create_date is None:
+            self.create_date = timezone.localtime(timezone.now())
+
+        self.update_date = timezone.localtime(timezone.now())
+        super(UOM, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = 'UOM'

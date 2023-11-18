@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'dashboard.apps.DashboardConfig',
-    'user.apps.UserConfig',
-    'task.apps.TaskConfig',
-    'purchasing.apps.PurchasingConfig',
+    "dashboard.apps.DashboardConfig",
+    "user.apps.UserConfig",
+    "misc.apps.MiscConfig",
+    "production.apps.ProductionConfig",
+    "purchasing.apps.PurchasingConfig",
+    "store.apps.StoreConfig",
 
     'allauth',
     'allauth.account',
@@ -68,6 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     'dashboard.middleware.SessionTimeoutMiddleware',
+    'dashboard.middleware.DarkModeMiddleware',
 ]
 
 ROOT_URLCONF = 'ezAdmin.urls'

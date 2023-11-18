@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Misc Main Page{% endblock %}
+
+{% block content %}
+<body>
+    <div class="container-md">
+        <h2 class = "text-center">Misc Main Page</h2>
+        <hr>
+        <div class="card-deck row gy-4">
+            <div class="col-md-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">UOM List Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete UOM list.</p>
+                    <a href="{% url 'misc-uom-list' %}" class="btn btn-accent mt-auto">View UOM List</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Currency List Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete currency list.</p>
+                    <a href="{% url 'misc-currency-list'%}" class="btn btn-accent mt-auto">View Currency List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

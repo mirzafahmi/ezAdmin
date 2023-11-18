@@ -1,8 +1,8 @@
 from django.db.models import Sum
-from purchasing.models import RawMaterialInventory
+from production.models import RawMaterialInventory
 
 class QuantityValidationMixin:
-    def get_available_quantity(self, component_id, inventory_log = None):
+    def get_available_quantity_fifo(self, component_id, inventory_log = None):
         # Logic to calculate available quantity based on component_id
         current_raw_material = None
         current_raw_material_quantity = None
@@ -45,3 +45,39 @@ class QuantityValidationMixin:
                 break  # Quantity found, exit the loop.
 
         return current_raw_material, current_raw_material_quantity
+
+    def get_overide_data(self, component_id, lot_number, inventory_log = None):
+        lot_number_data = RawMaterialInventory.objects.filter(
+                    component_id=component_id,
+                    lot_number=lot_number,
+                    stock_type='1'
+                    ).first() 
+
+        stock_in_item = RawMaterialInventory.objects.filter(
+            component_id=component_id,
+            lot_number=lot_number,
+            stock_type='1', 
+            ).first()
+
+        if inventory_log:
+            stock_out_item = RawMaterialInventory.objects.filter(
+            stock_type='2',
+            lot_number=lot_number,
+            component_id=component_id,
+        ).exclude(pk=inventory_log)
+
+        else:
+            stock_out_item = RawMaterialInventory.objects.filter(
+            stock_type='2',
+            lot_number=lot_number,
+            component_id=component_id,
+            )
+        
+        lot_number_stock_in =  stock_in_item.quantity
+        lot_number_stock_out = stock_out_item.aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+        lot_number_balance_stock = lot_number_stock_in - lot_number_stock_out
+        print(lot_number_stock_in)
+        print(lot_number_stock_out)
+        print(lot_number_balance_stock)
+        return lot_number_data, lot_number_balance_stock

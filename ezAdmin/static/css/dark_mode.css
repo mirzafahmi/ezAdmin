@@ -1,0 +1,110 @@
+body {
+    background-color: #05161a;
+    color: #6da5c0;
+}
+
+#navBar {
+    background-color: #05161a;
+}
+
+#navBar2{
+    background-color: #05161a;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 20px 20px -20px;
+  }
+
+.navbar-brand {
+    color: #6da5c0;
+}
+
+.navbar-brand:focus, .navbar-brand:hover {
+    color: #6da5c0;
+  }
+
+.navbar .navbar-nav .nav-link {
+    color: #6da5c0;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    color: #fcfcfd;
+}
+
+.dropdown-caret {
+    display: inline-block;
+    margin-left: .255em;
+    vertical-align: .255em;
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+    color: #6da5c0;
+    margin: 3px 3px 0px -2px;
+  }
+  
+.dropdown-caret:hover {
+    color: #fcfcfd;
+}
+
+#main-page{
+    background-color: #05161a;
+}
+
+#breadCrumbsNav {
+    --bs-breadcrumb-divider: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='white'/%3E%3C/svg%3E");
+}
+
+.card {
+    background-color: #072e33;
+}
+
+.form-text {
+    color: #6da5c0;
+  }
+
+.btn-accent {
+    background-color: #119CA3;
+    border: 1px solid #119CA3;
+  }
+
+.btn-accent:hover {
+    background-color: #0C7075;
+    border: 1px solid #0C7075;
+}
+
+.btn-accent:active {
+    background-color: #0C7075;
+    border: 1px solid #0C7075;
+}
+
+.btn-accent:focus {
+    background-color: #0C7075;
+    border: 1px solid #0C7075;
+}
+.btn-outline-primary {
+    border-color: #6da5c0;
+    color: 1px solid #6da5c0;
+}
+
+.btn-outline-primary:hover {
+    border-color: #6da5c0;
+    background-color: #6da5c0;
+    color: #fcfcfd;
+}
+
+footer {
+    background-color: #05161a;
+    color: #6da5c0;
+}
+
+.btn.btn-outline-dark {
+    /* Your custom styles here */
+    color: #6da5c0; /* Custom text color */
+    background-color: #21251F; /* Custom background color */
+    border-color: #6da5c0; /* Custom border color */
+  }
+  
+  /* Add hover styles if needed */
+  .btn.btn-outline-dark:hover {
+    color: #21251F; 
+    background-color: #6da5c0; /* Custom background color on hover */
+    border-color: #6da5c0; /* Custom border color on hover */
+  }

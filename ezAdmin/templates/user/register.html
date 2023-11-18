@@ -1,10 +1,17 @@
 {% extends 'partials/base.html' %}
-{% block tittle %}Register{% endblock %}
+{% block title %} Register{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
     <div class="container">
-        <div class="row mt-5">
+        <div class="row mt-2">
+            {% if messages %}
+            {% for message in messages %}
+            <div class = "alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
                     <h3 class="text-center">Register Here</h3>

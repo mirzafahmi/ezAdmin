@@ -1,0 +1,26 @@
+{% extends 'partials/base.html' %}
+{% block title %} 403 Status{% endblock %}
+
+{% block content %}
+<div class="container-md table-responsive">
+    <h2>Server Error (500 Status)</h2>
+    <hr>
+    <p class="h5 fw-normal">It seems this action cannot be performed due to some circumstances. Please contact your supervisor or HOD regarding this issue.</p>
+    <br>
+    <br>
+    <p class="fw-light fst-italic">-medivenAdmin Team-</p>
+    <br>
+    <a class="btn btn-sm btn-primary" id="backButton">Previous Page<a>
+    <hr>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Retrieving the href from the second last li element
+        var backHref = $('ol.breadcrumb li:nth-last-child(2) a').attr('href');
+
+        // Assigning the href to your back button
+        $('#backButton').attr('href', backHref);
+    });
+</script>
+{% endblock %}

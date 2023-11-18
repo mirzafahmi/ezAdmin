@@ -1,0 +1,270 @@
+{% extends 'partials/base.html' %}
+{% block title %} Add Production Log{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <style>
+        ul {
+            list-style: none; /* Remove bullet points */
+            padding: 0; /* Remove default padding */
+        }
+
+        li {
+            margin-bottom: 5px; /* Add spacing between checkboxes */
+        }
+
+        label {
+            margin-right: 50px; /* Add space between checkbox and label */
+        }
+    </style>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    {% for message in messages %}
+                    {% if message %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <h3>Add Production Log</h3>
+                    <hr>
+                    <form method="POST" id='productLogForm'>
+                        {{ form.errors }}
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <a class="btn btn-light" href = "{% url 'production-production-log-list' %}"> Cancel</a>
+                        <input class="btn btn-success" id="submitBtn" type="submit" value="Create Production Log">
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <script>
+        let customAlert = new CustomAlert();
+        customAlert.init();
+
+        $(document).ready(function() {
+
+            var inventoryDetails = $('<div>').attr('id', 'inventoryDetails').addClass('mb-3');
+            
+            var label = $('<label>')
+                .attr('for', 'inventoryDetails')
+                .addClass('form-label')
+                .html('Inventory Details:');
+
+            // Append the dynamically created div to the main container
+            $('#div_id_BOMComponents').after(inventoryDetails);
+
+            //inventoryDetails.prepend(label);
+
+            $('#id_BOMComponents option').hide();
+            function getBOMComponents(){
+                $('#id_product').change(function() {
+                var productId = $(this).val();
+                $.ajax({
+                    url: '{% url 'production-production-log-create-ajax' %}',
+                    data: {
+                        'product_id': productId
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        // Iterate through the BOMComponent IDs
+                        $('#id_BOMComponents').val([]);
+                        $('#id_BOMComponents option').hide();
+                        data.bom_components.forEach(function(item) {
+                            var bomComponentId = item.BOMComponent_id;
+                            // Loop through each option to find and select the appropriate one
+                            $('#id_BOMComponents').find('option').each(function() {
+                                if ($(this).val() == String(bomComponentId)) {
+                                    $(this).prop('selected', true);
+                                    $(this).addClass("disabled-dropdown");
+                                    $(this).show();
+                                    
+                                    var bomComponentValue = $(this).val();
+                                    var componentName = item.component_name
+
+                                    getInventoryDetails(bomComponentValue, componentName);
+                                    
+                                }
+                            });
+                        });
+                    },
+                    error: function (error) {
+                        $('#id_BOMComponents').val([]);
+                        console.log('Error retrieving BOM components');
+                    }
+                });
+                });
+            }
+
+            function getInventoryDetails(bomComponentValue, componentName) {
+                const inventoryDetails = $('#inventoryDetails');
+                inventoryDetails.children().not('label').remove();
+                    $.ajax({
+                        type: "GET",
+                        url: '{% url 'production-production-log-create-ajax' %}', // URL to your Django view
+                        data: {
+                            BOMComponent_id: bomComponentValue,
+                        },
+                        success: function (data) {
+                            if (data.length === 0) {
+                                customAlert.alert(
+                                    'The stock in raw material inventory is empty for the Component: ' + componentName + '. Please stock up the inventory before log the production log.', 
+                                    'Inventory is empty', 
+                                    '/production_main/raw_material_inventory_identifier_based_main');
+                                return;
+                            }
+
+                            console.log(data);
+                            var componentDetails = $('<div>').attr('id', 'div-' + data[0].component_name.replace(/\s+/g, '-')).addClass('mb-3');
+                            var inventoryDetailsLabel = $('<p>')
+                                .addClass('form-label')
+                                .html(data[0].component_name + ' Batch Details:');
+                
+                            // Append the dynamically created div to the main container
+                            $('#inventoryDetails').append($('<hr>'));
+                            $('#inventoryDetails').append(componentDetails);
+                
+                            componentDetails.prepend(inventoryDetailsLabel);
+                            
+                            var componentDetailsLabel = $('<label>')
+                                .attr('for', data[0].component_name.replace(/\s+/g, '-'))
+                                .addClass('form-label')
+                                .html('Lot Number and Expiry Date:');
+                            
+                            componentDetails.append(componentDetailsLabel);
+                                
+
+                            var select = $('<select>')
+                                .addClass(['form-control', 'select', 'form-select', 'disabled-dropdown'])
+                                .attr('id', data[0].component_name.replace(/\s+/g, '-'));
+
+                            data.forEach(function(item) {
+                                if (item['lot_number'] == '-') {
+                                    var optionText = item['po_number'] + ' (' + item['invoice_number'] + ')';
+                                } else{
+                                    var optionText = item['lot_number'] + ' (' + item['exp_date'] + ')';
+                                }
+                                
+                                var optionValue = item['stock_in_tag']; // or any other unique identifier you'd like to use
+                    
+                                var option = $('<option>').attr('value', optionValue).text(optionText);
+                                select.append(option);
+                            });
+                    
+                            // Append the select element to an existing div with id 'dropdownDivId'
+                            componentDetails.append(select);
+
+                            var quantityUsedLabel = $('<label>')
+                                .attr('for', data[0].component_name.replace(/\s+/g, '-') + '-quantity-used')
+                                .addClass('form-label')
+                                .html('Quantity Used (in pcs):');
+                            
+                            componentDetails.append(quantityUsedLabel);
+
+                            var quantityInput = $('<input>')
+                                .addClass(['numberinput', 'form-control', 'disabled-dropdown'])
+                                .attr('id', data[0].component_name.replace(/\s+/g, '-') + '-quantity-used')
+                                .attr('placeholder', 'Available quantity: ' + data[0].available_quantity)
+                                .attr('data-weightage', data[0].quantity_used);
+
+                            componentDetails.append(quantityInput);
+                            //componentDetails.append($('<hr>'));
+
+                            // Add an event listener to the "quantity produced" input field
+                            $('#id_quantity_produced').on('input', function () {
+                                // Get the entered quantity
+                                var enteredQuantity = parseFloat($(this).val()) || 0;
+
+                                // Iterate through each input field within the #inventoryDetails div
+                                $('#inventoryDetails input[data-weightage]').each(function () {
+                                    // Get the weightage from the data attribute
+                                    var weightage = parseFloat($(this).data('weightage')) || 0;
+                                    if (isNaN(enteredQuantity) || enteredQuantity === 0) {
+                                        $(this).val('');
+                                    } else {
+                                        // Calculate the new value based on the entered quantity and weightage
+                                        var newValue = enteredQuantity * weightage;
+
+                                        // Update the value of the corresponding input field
+                                        $(this).val(newValue);
+                                    }
+                                     
+                                });
+                            });
+                        },
+                        error: function (error) {
+                            console.log("Error fetching raw material lots");
+                        }
+                    });
+            }
+
+            getBOMComponents()
+            var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+            console.log('somethings')
+            $('#submitBtn').on('click', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+                
+                var selectedValues = {};
+
+                // Iterate over each component and store its selected value and additional details
+                $('#inventoryDetails select').each(function () {
+                    var componentId = $(this).attr('id');
+                    var selectedOptionValue = $(this).val();
+
+                    // Include additional details for each component
+                    var componentDetails = {
+                        'value': selectedOptionValue,
+                        // Add more details as needed
+                    };
+
+                    // Assign the component details to the selectedValues object
+                    selectedValues[componentId] = selectedOptionValue;
+                });
+
+                // Combine the selectedValues with formData
+                var combinedData = {
+                    'formData': $('#productLogForm').serialize(),
+                    'inventory_details': selectedValues,
+                };
+
+                // Make an AJAX POST request with JSON data
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'production-production-log-create' %}',
+                    data: JSON.stringify(combinedData),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    success: function (response) {
+                        // Handle the success response from the Django view
+                        console.log('Values sent to Django view');
+                        window.location.href = '/production_main/production_log_list';
+                    },
+                    error: function (xhr, status, error) {
+                        // Log the details of the error response
+                        console.error('Error sending values to Django view');
+                        console.log('XHR:', xhr);
+                        console.log('Status:', status);
+                        console.log('Error:', error);
+                    }
+                });
+            });
+
+            $('#inventoryDetails select').change(function() {
+                var selectedOptionValue = $(this).val();
+                var parentDivId = $(this).parent().attr('id');
+                if (selectedOptionValue) {
+                    console.log('Selected option value for ' + parentDivId + ': ' + selectedOptionValue);
+                } else {
+                    console.log('No option selected for ' + parentDivId);
+                }
+            });
+            
+        });
+    </script>    
+{% endblock %}

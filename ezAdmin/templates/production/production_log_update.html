@@ -1,0 +1,106 @@
+{% extends 'partials/base.html' %}
+{% block title %} Update Production Log{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    {% if message %}
+                    {% for message in messages %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <h3>Update {{ProductionLog.lot_number}} batch for {{ProductionLog.BOMComponents.all.0.product.item_code}} Details?</h3>
+                    <hr>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <a class="btn btn-light" href = "{% url 'production-production-log-list' %}"> Cancel</a>
+                        <input class="btn btn-primary" type="submit" value="Update Production Log">
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <script>
+        $(document).ready(function() {
+            // Target the select element with the id 'id_BOMComponents'
+            var selectElement = $('#id_BOMComponents');
+
+            // Add 'disabled-dropdown' class to selected options
+            selectElement.find('option:selected').addClass('disabled-dropdown');
+
+            // Hide options that are not selected
+            selectElement.find('option:not(:selected)').hide();
+            
+            var inventoryData = {{RelatedInventoryEntries|safe}}
+            var componentData = {{ RawMaterialComponent|safe }};
+
+            var inventoryDetails = $('<div>').attr('id', 'inventoryDetails').addClass('mb-3');
+            
+            var label = $('<label>')
+                .attr('for', 'inventoryDetails')
+                .addClass('form-label')
+                .html('Inventory Details:');
+
+            // Append the dynamically created div to the main container
+            $('#div_id_BOMComponents').after(inventoryDetails);
+
+            inventoryDetails.prepend(label);
+
+            inventoryDetails.children().not('label').remove();
+
+
+            // Map component details to their IDs
+            var componentMap = {};
+            componentData.forEach(function(component) {
+                componentMap[component.pk] = component.fields.component;
+            });
+
+            console.log(componentData)
+            inventoryData.forEach(function(item) {
+                // Retrieve lot_number and exp_date for each object
+                var lotNumber = item.fields.lot_number;
+                var expDate = item.fields.exp_date;
+                var poNumber = item.fields.po_number;
+                var invoiceNumber = item.fields.invoice_number;
+                var componentId = item.fields.component;
+                var componentData = componentMap[componentId];
+    
+                // Do something with the data, for example, log to the console
+                console.log('Lot Number:', lotNumber);
+                console.log('Expiration Date:', expDate);
+                console.log('Component Details:', componentData);
+
+                var componentDetails = $('<div>').attr('id', 'div-' + componentData.replace(/\s+/g, '-')).addClass('mb-3');
+                var label = $('<label>')
+                    .attr('for', componentData.replace(/\s+/g, '-'))
+                    .addClass('form-label')
+                    .html(componentData + ' Batch Details:');
+    
+                // Append the dynamically created div to the main container
+                $('#inventoryDetails').append(componentDetails);
+    
+                componentDetails.prepend(label);
+
+                var select = $('<select>')
+                    .addClass(['form-control', 'select', 'form-select', 'disabled-dropdown'])
+                    .attr('id', componentData.replace(/\s+/g, '-'));
+
+                
+                var optionText = lotNumber + ' (' + expDate + ')';
+                
+                var optionValue = item['stock_in_tag']; // or any other unique identifier you'd like to use
+    
+                var option = $('<option>').attr('value', optionValue).text(optionText);
+                select.append(option);
+                componentDetails.append(select);
+            });
+        });
+    </script>
+
+{% endblock %}

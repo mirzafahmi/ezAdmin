@@ -11,3 +11,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.staff.username.upper()}'s Profile"
+
+class UserPreferences(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    dark_mode = models.BooleanField(default=False)

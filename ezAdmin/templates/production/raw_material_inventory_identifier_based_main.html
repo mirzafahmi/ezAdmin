@@ -1,0 +1,77 @@
+{% extends 'partials/base.html' %}
+{% block title %} Raw Material Inventory List (Identifier Based){% endblock %}
+
+{% block content %}
+    <div class="container-md">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="hstack align-items-center">
+            <h2 class = "flex-grow-1">Raw Material Inventory List (Identifier Based) Page</h2>
+            <div class="d-flex flex-column">
+                <a class="btn btn-success btn-sm ms-auto mb-1" id="addIdentifier" href="{% url 'production-raw-material-identifier-list-identifier-create' %}">
+                    <i class="fa-solid fa-plus me-1"></i>
+                    Add Identifier
+                </a>
+                <button type="button" class="btn btn-success btn-sm ms-auto mb-1" id="generateExcel" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fa-regular fa-file-excel me-1"></i>
+                    Generate Excel
+                </button>            
+            </div>
+        </div>
+        <hr>
+        <div class="row gy-4">
+        {% for RawMaterialInventoryIdentifierBased in RawMaterialInventoriesIdentifierBaseds %}   
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">{{RawMaterialInventoryIdentifierBased.0}} Inventory Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete {{RawMaterialInventoryIdentifierBased.0}} inventory log.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'production-raw-material-inventory-identifier-component-based-list' RawMaterialInventoryIdentifierBased.1 %}">View {{RawMaterialInventoryIdentifierBased.0}} inventory</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Select Upper Limit Date For Query</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Date input form -->
+                <form id="dateForm">
+                    <div class="form-group">
+                        <label for="selectedDate">Date:</label>
+                        <input type="date" class="form-control" id="selectedDate" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-accent" onclick="submitDate()">Generate Excel</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        function submitDate() {
+            // Get the selected date
+            var selectedDate = document.getElementById('selectedDate').value;
+    
+            // Close the modal
+            $('#dateModal').modal('hide');
+    
+            // Redirect with the selected date as a query parameter
+            window.location.href = '{% url "production-raw-material-balance-generate-excel" %}?selected_date=' + selectedDate;
+        }
+        responsiveButtonText('addIdentifier')
+        responsiveButtonText('generateExcel')
+    </script>
+{% endblock %}

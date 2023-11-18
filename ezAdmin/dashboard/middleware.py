@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.conf import settings
 import datetime
 #from ezAdmin.tasks.tasks import log_session_timeout_info
+from user.models import UserPreferences
 
 
 logger = logging.getLogger(__name__)
@@ -30,5 +31,21 @@ class SessionTimeoutMiddleware:
 
         # Update the last activity timestamp in the session
         request.session['last_activity'] = timezone.now().isoformat()
+
+        return response
+
+class DarkModeMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        user_preferences = None
+
+        if request.user.is_authenticated:
+            user_preferences, created = UserPreferences.objects.get_or_create(user=request.user)
+
+        request.dark_mode = user_preferences.dark_mode if user_preferences else False
+
+        response = self.get_response(request)
 
         return response

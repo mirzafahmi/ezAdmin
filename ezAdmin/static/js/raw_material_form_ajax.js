@@ -2,13 +2,21 @@ function performAjaxAction() {
   $(document).ready(function () {
     divCheckboxField = document.getElementById('div_id_data_overide');
     divCheckboxField.classList.add('form-switch');
+    var checkboxField = $("#id_data_overide");
+    var quantityField = $("#id_quantity");
     
     // Function to set the readonly state based on a flag
-    function setReadonlyState(flag) {
-      $("#id_lot_number").prop("readonly", flag);
-      $("#id_exp_date").prop("readonly", flag);
-      $("#id_price_per_unit").prop("readonly", flag);
-      $("#id_purchasing_doc").prop("readonly", flag);
+    function setReadonlyState(flag, stockType) {
+      if (stockType === "2") {
+        if (flag) {
+          $("#id_purchasing_doc").addClass("disabled-dropdown");
+          $("#id_lot_number").addClass("disabled-dropdown");
+          $("#id_exp_date").addClass("disabled-dropdown");
+          $("#id_price_per_unit").addClass("disabled-dropdown");
+        } else {
+          $("#id_lot_number").removeClass("disabled-dropdown");
+        }
+      }
     }
 
     // Check the local storage for the readonly flag
@@ -16,7 +24,8 @@ function performAjaxAction() {
 
     // If the flag is set, apply readonly state
     if (readonlyFlag === "true") {
-      setReadonlyState(true);
+      setReadonlyState(true, stockType);
+      checkboxField.prop("checked", false);
     }
 
     function getUrlParameter(name) {
@@ -39,19 +48,55 @@ function performAjaxAction() {
     var identifierId = getUrlParameter("identifier");
     var componentId = getUrlParameter("component");
     var stockType = getUrlParameter("type");
-    console.log('identifier id ' + identifierId);
-    console.log('component id ' +componentId);
-    console.log('stock type ' +stockType);
+    var inventory_log = getUrlParameter("log");
+    console.log(inventory_log);
+    function fetchDataBasedOnLotNumber() {
+      var initialQuantity = $('#id_quantity').val();
+      var initialLotNumber = $('#id_lot_number').val();
 
+      $('#id_lot_number').change(function () {
+      var lotNumber= $(this).val();  // Get the selected value
+      
+      // Make an AJAX request to get data based on the client's choice
+      $.ajax({
+          url: baseUrl,
+          method: 'GET',
+        data: {
+            component_id: componentId,
+            lot_number: lotNumber,
+            type: stockType,
+            inventory_log: inventory_log !== null ? inventory_log : null,
+          }, 
+          success: function (data) {
+            $("#id_exp_date").val(data.exp_date);
+            $("#id_price_per_unit").val(data.price_per_unit);
+            $("#id_purchasing_doc").val(data.purchasing_doc);
+            $('#id_stock_in_tag').val(data.stock_in_tag);
+
+            setReadonlyState(false, stockType);
+            localStorage.setItem("readonlyFlag", "false");
+
+            
+            if (action === "update" && initialLotNumber == lotNumber) {
+              $('#id_quantity').attr('placeholder', 'Maximum quantity available is ' + data.available_quantity + ' pcs');
+            } else {
+              $('#id_quantity').attr('placeholder', 'Maximum quantity available is ' + parseInt(data.available_quantity) +' pcs');
+            }
+          },
+        error: function () {
+            console.log("Error fetching FIFO information for this lot number choice.");
+          }
+        });
+      });
+    }
+    
     if (action === "create") {
       function fetchComponentOptions(identifierId, componentId, stockType) {
-        var ajaxUrl =
-          baseUrl + "?component_id=" + componentId + "&type=" + stockType;
 
         // Set readonly state and store the flag in local storage
         if (stockType === "2") {
           $.ajax({
-            url: ajaxUrl, // Replace with your actual endpoint
+            url: baseUrl, // Replace with your actual endpoint
             method: "GET",
             data: {
               identifier_id: identifierId,
@@ -68,13 +113,13 @@ function performAjaxAction() {
               $('#id_stock_in_tag').val(data.stock_in_tag);
 
               // Set readonly state and store the flag in local storage
-              setReadonlyState(true);
+              setReadonlyState(true, stockType);
               localStorage.setItem("readonlyFlag", "true");
 
               var availableQuantity = data.available_quantity;
               var quantityField = $("#id_quantity");
               var selectedQuantity = parseFloat(quantityField.val());
-              console.log(selectedQuantity);
+
             },
             error: function () {
               console.log("Error fetching FIFO information.");
@@ -82,65 +127,52 @@ function performAjaxAction() {
           });
         } else {
           // If the type is not '2', remove readonly attribute and clear the flag
-          setReadonlyState(false);
+          setReadonlyState(false, stockType);
           localStorage.removeItem("readonlyFlag");
         }
       }
       if (identifierId && componentId && stockType) {
-        fetchComponentOptions(identifierId, componentId, stockType);
+        if (stockType == '2') {
+          fetchComponentOptions(identifierId, componentId, stockType);
+          fetchDataBasedOnLotNumber();
+          console.log('from create')
+        }
       }
     }
 
     // Listen for changes in the component field
     if (action === "update") {
-      $("#id_component").on("change", function () {
-        var componentId = $(this).val();
-        var type = $("#id_stock_type").val(); // Assuming stock_type has the ID id_stock_type
+      if (stockType === "2") {
+        fetchDataBasedOnLotNumber();
 
-        var ajaxUrl =
-          baseUrl + "?component_id=" + componentId + "&type=" + type;
+        // Set readonly state and store the flag in local storage
+        setReadonlyState(true, stockType);
+        localStorage.setItem("readonlyFlag", "true");
 
-        // Make AJAX request to fetch FIFO information
-        if (type === "2") {
-          $.ajax({
-            url: ajaxUrl, // Replace with your actual endpoint
-            method: "GET",
-            data: {
-              identifier_id: identifierId,
-              component_id: componentId,
-              type: type,
-            },
-            dataType: "json",
-            success: function (data) {
-              // Update form fields with retrieved information
-              $("#id_lot_number").val(data.lot_number);
-              $("#id_exp_date").val(data.exp_date);
-              $("#id_price_per_unit").val(data.price_per_unit);
-              $("#id_purchasing_doc").val(data.purchasing_doc);
-
-              // Set readonly state and store the flag in local storage
-              setReadonlyState(true);
-              localStorage.setItem("readonlyFlag", "true");
-            },
-            error: function () {
-              console.log("Error fetching FIFO information.");
-            },
-          });
-        } else {
-          // If the type is not '2', remove readonly attribute and clear the flag
-          setReadonlyState(false);
-          localStorage.removeItem("readonlyFlag");
-        }
-      });
+        console.log('from update');
+        console.log(localStorage.getItem("readonlyFlag"));
+      } else {
+        // If the type is not '2', remove readonly attribute and clear the flag
+        setReadonlyState(false, stockType);
+        localStorage.removeItem("readonlyFlag");
+      }
     }
 
     var checkboxField = $("#id_data_overide");
 
+    // Check if the checkbox is checked
+    var isChecked = checkboxField.prop("checked");
+
+    // If the checkbox is checked, uncheck it
+    if (isChecked) {
+        checkboxField.prop("checked", false);
+    }
+
     checkboxField.on("change", function () {
       if (checkboxField.prop("checked")) {
-        setReadonlyState(false);
+        setReadonlyState(false, stockType);
       } else {
-        setReadonlyState(true);
+        setReadonlyState(true, stockType);
       }
     });
   });

@@ -1,0 +1,28 @@
+- modify purchasing doc update to be able to change current uploaded file - done
+- readonly for update - done
+- change foreign key delete cascade - done
+- add admin view - done
+-fix toggle button to be unchecked state when clicked - done
+-need to fix lot number ajax bug - done
+-add password change in user update form - done
+-adjust the size of profile view - done
+- resolve circular import error for identifier in product model of store apps - done
+- change temp and rh to float for productionlog - done
+- delete message (post method) and success message - done
+- rework excel view to be filtered by date - done
+- backup sequence - done
+- misc main page - done
+- put all table in div, to make only table responsive - done
+- server error template - done
+
+
+
+- create documentation
+- rejection/defect models
+- rejection logic
+- make bomcomponent unique as component
+- filter dropdown based on product
+- filter list of bomcomponent
+- delete inventory based on log
+- add status 302 for each delete view
+- bug in excel generation, not minus the type 2 one

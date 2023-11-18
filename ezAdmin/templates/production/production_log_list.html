@@ -1,0 +1,82 @@
+{% extends 'partials/base.html' %}
+{% block title %} Production Log List{% endblock %}
+
+{% block content %}
+    <div class="container-md">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="hstack">
+            <span class="h3" style="margin-bottom: 0px;">Production Log List</span class="h4">
+            <a class="btn btn-success btn-sm ms-auto" id="addLog" href="{% url 'production-production-log-create' %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add Production Log
+            </a>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover">
+                <thead class = "table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Product Item Code</th>
+                        <th>Lot Number</th>
+                        <th>Exp Date</th>
+                        <th style="max-width: 120px;">Quantity Produced (Box)</th>
+                        <th>Raw Material Lot Number</th>
+                        <th style="max-width: 120px;">Relative Humidity (rH)</th>
+                        <th>Temperature</th>
+                        <th>Date</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for ProductionLog in ProductionLogs %}       
+                    <tr>    
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                            {{ProductionLog.BOMComponents.all.0.product.item_code}}
+                        </td>
+                        <td>{{ProductionLog.lot_number}}</td>
+                        <td>{{ProductionLog.exp_date}}</td>
+                        <td style="max-width: 120px;">{{ProductionLog.quantity_produced}}</td>
+                        <td>
+                            {% for bom_component in ProductionLog.BOMComponents.all %}
+                            {% for entry in RelatedInventoryEntries %}
+                            {% if entry.production_log.id == ProductionLog.id and entry.component.id == bom_component.raw_material_component.id %}
+                                {{bom_component}}<br>(Lot: {{entry.lot_number}} | Exp: {{entry.exp_date}})<br>
+                                {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                        </td>
+                        <td style="max-width: 120px;">{{ProductionLog.rH}}</td>
+                        <td>{{ProductionLog.temperature}}</td>
+                        <td>{{ProductionLog.create_date}}</td>
+                        <td>
+                            <div class = "d-grid">
+                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'production-production-log-update' ProductionLog.id %}">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                        Validate
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'production-production-log-delete' ProductionLog.id %}">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </div>    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>                            
+            </table>
+        </div>
+    </div>
+    <script>
+        responsiveButtonText('addLog')  
+    </script>
+{% endblock %}

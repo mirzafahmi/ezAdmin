@@ -1,0 +1,60 @@
+{% extends 'partials/base.html' %}
+{% block title %} UOM List{% endblock %}
+
+{% block content %}
+    <div class="container-md">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="hstack">
+            <span class="h3" style="margin-bottom: 0px;">Unit of measurement (UOM) List</span class="h4">
+            <a class="btn btn-success btn-sm ms-auto" id="addUOM" href="{% url 'misc-uom-create' %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add UOM
+            </a>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover">
+                <thead class = "table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Created Date</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for UOM in UOMs %}       
+                    <tr>    
+                        <td>{{forloop.counter}}</td>
+                        <td>{{UOM.name}}</td>
+                        <td>{{UOM.create_date}}</td>
+                        <td>
+                            <div class = "d-grid">
+                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'misc-uom-update' UOM.id %}">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                        Validate
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'misc-uom-delete' UOM.id %}">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </div>    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>                            
+            </table>
+        </div>
+    </div>
+    <script>
+        responsiveButtonText('addUOM')  
+    </script>
+{% endblock %}

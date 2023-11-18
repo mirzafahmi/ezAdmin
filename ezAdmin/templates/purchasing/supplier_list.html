@@ -2,8 +2,7 @@
 {% block title %} Supplier's List{% endblock %}
 
 {% block content %}
-<body>
-    <div class="container-md table-responsive">
+    <div class="container-md">
         {% for message in messages %}
         {% if message %}
         <div class = "alert alert-{{ message.tags }}">
@@ -11,56 +10,60 @@
         </div>
         {% endif %}
         {% endfor %}
-        <table class="table table-borderless table-striped table-hover">
-            <div class="hstack">
-                <span class="h3" style="margin-bottom: 0px;">Supplier List</span class="h4">
-                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-supplier-create' %}">
-                    <i class="fa-solid fa-plus me-1"></i>
-                    Add Supllier
-                </a>
-            </div>
-            <hr>
-            <thead class = "table-dark">
-                <tr>
-                    <th>No.</th>
-                    <th>Company Name</th>
-                    <th>Address</th>
-                    <th>Representative Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Create Date</th>
-                    <th>Activity</th>
-                </tr>
-            </thead>
-            <tbody> 
-                {% for supplier in suppliers %}       
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td>{{supplier.company_name}}</td>
-                    <td>{{supplier.address}}</td>
-                    <td>{{supplier.representative_name}}</td>
-                    <td>{{supplier.phone_number}}</td>
-                    <td>{{supplier.email}}</td>
-                    <td>{{supplier.create_date}}</td>
-                    <td>
-                        <div class = "d-grid">
-                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-supplier-update' pk=supplier.id %}">
-                                    Edit
-                                </a>
-                                <a class="btn btn-outline-success btn-sm btn-block" href ="">
-                                    Validate
-                                </a>
-                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'purchasing-supplier-delete' pk=supplier.id %}">
-                                    Delete
-                                </a>
-                            </ul>
-                        </div>    
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>                            
-        </table>
+        <div class="hstack">
+            <span class="h3" style="margin-bottom: 0px;">Supplier List</span class="h4">
+            <a class="btn btn-success btn-sm ms-auto" id="addSupplier" href="{% url 'purchasing-supplier-create' %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add Supllier
+            </a>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover">
+                
+                <thead class = "table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Company Name</th>
+                        <th>Address</th>
+                        <th>Representative Name</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Create Date</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for supplier in suppliers %}       
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{supplier.company_name}}</td>
+                        <td>{{supplier.address}}</td>
+                        <td>{{supplier.representative_name}}</td>
+                        <td>{{supplier.phone_number}}</td>
+                        <td>{{supplier.email}}</td>
+                        <td>{{supplier.create_date}}</td>
+                        <td>
+                            <div class = "d-grid">
+                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-supplier-update' pk=supplier.id %}">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                        Validate
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'purchasing-supplier-delete' pk=supplier.id %}">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </div>    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>                            
+            </table>
+        </div>
     </div>
-</body>
-</html>
+    <script>
+        responsiveButtonText('addSupplier')  
+    </script>
 {% endblock %}

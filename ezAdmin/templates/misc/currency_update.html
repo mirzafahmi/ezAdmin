@@ -1,0 +1,29 @@
+{% extends 'partials/base.html' %}
+{% block title %} Update Currency{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <h3>Update {{currency}} as currency?</h3>
+                    <hr>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <a class="btn btn-light"  href = "{% url 'misc-currency-list' %}"> Cancel</a>
+                        <input class="btn btn-primary" type="submit" value="Update Currency">
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+{% endblock %}

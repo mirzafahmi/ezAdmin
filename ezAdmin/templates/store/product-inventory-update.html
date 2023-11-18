@@ -1,0 +1,29 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Edit Product's Inventory{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    {% for message in messages %}
+                    {% if message %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <h3>Update {{ inventory_id.product.item_code }}'s inventory?</h3>
+                    <hr>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <a class="btn btn-light"  href = "{% url 'store-product-inventory-list' inventory_id.product_id %}"> Cancel</a>
+                        <input class="btn btn-primary" type="submit" value="Update">
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+{% endblock %}

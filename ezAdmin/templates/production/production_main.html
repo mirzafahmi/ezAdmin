@@ -1,0 +1,41 @@
+{% extends 'partials/base.html' %}
+{% block title %} Inventory{% endblock %}
+
+{% block content %}
+<body>
+    <div class="container-md">
+        <h2 class ="text-center">Production Main Page</h2>
+        <hr>
+        <div class="card-deck row gy-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Raw Material Identifier Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete raw material identifier list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'production-raw-material-identifier-list' %}">View Raw Material Identifier</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Raw Material Component Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete raw material component list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'production-raw-material-component-list' %}">View Raw Material Component</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Raw Material BOMComponent Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete raw material BOMcomponent list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'production-BOM-component-list' %}">View BOMMaterial Component</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Raw Material Inventory Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete raw material inventory list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'production-raw-material-inventory-identifier-based-list' %}">View Raw Material Inventory</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

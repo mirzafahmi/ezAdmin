@@ -29,10 +29,6 @@ function disableLinkAjaxAction() {
         var identifierId = getUrlParameter('identifier');
         var componentId = getUrlParameter('component');
         var stockType = getUrlParameter('type');
-        console.log('from disable link')
-        console.log(identifierId)
-        console.log(componentId)
-        console.log(stockType)
 
         const logLink = document.getElementById("log-link");
         var ajaxUrl = baseUrl + '?component_id=' + componentId
@@ -49,7 +45,7 @@ function disableLinkAjaxAction() {
                 var showAlert = data.alert
                 var componentName = data.component_name
                 var identifier = data.identifier_name
-                console.log(showAlert)
+
                 if (showAlert) {
                     disableLink()
                     $('#log-out-link').click(function () {

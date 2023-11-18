@@ -2,8 +2,7 @@
 {% block title %} Purchasing Document List{% endblock %}
 
 {% block content %}
-<body>
-    <div class="container-md table-responsive">
+    <div class="container-md">
         {% for message in messages %}
         {% if message %}
         <div class = "alert alert-{{ message.tags }}">
@@ -11,58 +10,64 @@
         </div>
         {% endif %}
         {% endfor %}
-        <table class="table table-borderless table-striped table-hover">
-            <div class="hstack">
-                <span class="h3" style="margin-bottom: 0px;">Purchasing Document List</span class="h4">
-                <a class="btn btn-success btn-sm ms-auto" href="{% url 'purchasing-purchasing-document-create' %}">
-                    <i class="fa-solid fa-plus me-1"></i>
-                    Add Purchasing Document
-                </a>
-            </div>
-            <hr>
-            <thead class = "table-dark">
-                <tr>
-                    <th>No.</th>
-                    <th>Supplier Name</th>
-                    <th>PO Details</th>
-                    <th>Invoice Details</th>
-                    <th>Packing List Details</th>
-                    <th>K1 Form Details</th>
-                    <th>AWB Details</th>
-                    <th>Create Date</th>
-                    <th>Activity</th>
-                </tr>
-            </thead>
-            <tbody> 
-                {% for purchasing_document in purchasing_documents %}       
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td>{{purchasing_document.supplier}}</td>
-                    <td><a href="{{ purchasing_document.po_doc.url }}" target="_blank">{{purchasing_document.po_number}}</a></td>
-                    <td><a href="{{ purchasing_document.invoice_doc.url }}" target="_blank">{{purchasing_document.invoice_number}}</a></td>
-                    <td><a href="{{ purchasing_document.pl_doc.url }}" target="_blank">{{purchasing_document.packing_list}}</a></td>
-                    <td><a href="{{ purchasing_document.k1_doc.url }}" target="_blank">{{purchasing_document.k1_form}}</a></td>
-                    <td><a href="{{ purchasing_document.AWB_doc.url }}" target="_blank">{{purchasing_document.AWB_number}}</a></td>
-                    <td>{{purchasing_document.create_date}}</td>
-                    <td>
-                        <div class = "d-grid">
-                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-purchasing-document-update' purchasing_document.id %}">
-                                    Edit
-                                </a>
-                                <a class="btn btn-outline-success btn-sm btn-block" href ="">
-                                    Validate
-                                </a>
-                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'purchasing-purchasing-document-delete' purchasing_document.id %}">
-                                    Delete
-                                </a>
-                            </ul>
-                        </div>    
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>                            
-        </table>
+        <div class="hstack">
+            <span class="h3" style="margin-bottom: 0px;">Purchasing Document List</span class="h4">
+            <a class="btn btn-success btn-sm ms-auto" id="addDocument" href="{% url 'purchasing-purchasing-document-create' %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add Purchasing Document
+            </a>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover">
+                
+                <thead class = "table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Supplier Name</th>
+                        <th>PO Details</th>
+                        <th>Invoice Details</th>
+                        <th>Packing List Details</th>
+                        <th>K1 Form Details</th>
+                        <th>K1 Form Rate</th>
+                        <th>AWB Details</th>
+                        <th>Create Date</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for purchasing_document in purchasing_documents %}       
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{purchasing_document.supplier}}</td>
+                        <td><a href="{{ purchasing_document.po_doc.url }}" target="_blank">{{purchasing_document.po_number}}</a></td>
+                        <td><a href="{{ purchasing_document.invoice_doc.url }}" target="_blank">{{purchasing_document.invoice_number}}</a></td>
+                        <td><a href="{{ purchasing_document.pl_doc.url }}" target="_blank">{{purchasing_document.packing_list}}</a></td>
+                        <td><a href="{{ purchasing_document.k1_doc.url }}" target="_blank">{{purchasing_document.k1_form}}</a></td>
+                        <td>{{purchasing_document.k1_form_rate}}</td>
+                        <td><a href="{{ purchasing_document.AWB_doc.url }}" target="_blank">{{purchasing_document.AWB_number}}</a></td>
+                        <td>{{purchasing_document.create_date}}</td>
+                        <td>
+                            <div class = "d-grid">
+                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'purchasing-purchasing-document-update' purchasing_document.id %}">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                        Validate
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'purchasing-purchasing-document-delete' purchasing_document.id %}">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </div>    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>                            
+            </table>
+        </div>
     </div>
-</body>
-</html>
+    <script>
+        responsiveButtonText('addDocument')  
+    </script>
 {% endblock %}

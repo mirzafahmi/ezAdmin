@@ -1,5 +1,5 @@
 """
-URL configuration for ezAdmin project.
+URL configuration for medivenAdmin project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -18,16 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from dashboard.views import permission_denied_view
+#from dashboard.views import permission_denied_view
 
 
 handler403 = 'dashboard.views.permission_denied_view'
+handler404 = 'dashboard.views.not_found_error_view'
+handler500 = 'dashboard.views.generic_error_view'
 
 urlpatterns = [
-    path('ezadminadminpage/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('dashboard.urls')),
     path('', include('user.urls')),
-    path('', include('task.urls')),
-    path('', include('purchasing.urls'))
+    path('', include('production.urls')),
+    path('', include('purchasing.urls')),
+    path('', include('misc.urls')),
+    path('', include('store.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+

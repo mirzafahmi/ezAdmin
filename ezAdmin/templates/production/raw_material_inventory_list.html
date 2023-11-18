@@ -1,0 +1,74 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Raw Material Inventory List{% endblock %}
+
+{% block content %}
+<body>
+    <div class="col-md-10 offset-md-1 table-responsive">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <table class="table table-borderless table-striped table-hover">
+            <div class="hstack">
+                <span class="h4">Raw Material Inventory List</span class="h4">
+                <a class="btn btn-info btn-sm float-right" href="{% url 'production-raw-material-inventory-main' %}">
+                    <i class="fa-solid fa-plus me-1"></i>
+                    Add Inventory Log
+                </a>
+            </div>
+            <hr>
+            <thead class = "thead-dark">
+                <tr>
+                    <th>Identifier</th>
+                    <th>Component</th>
+                    <th>Quantity</th>
+                    <th>Lot</th>
+                    <th>Expiry Date</th>
+                    <th>Stock In Date</th>
+                    <th>Stock Out Date</th>
+                    <th>Price per Unit</th>
+                    <th>Purchasing Document</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {% for RawMaterialInventory in RawMaterialInventories %}       
+                <tr>
+                    <td>{{RawMaterialInventory.component.identifier}}</td>
+                    <td>{{RawMaterialInventory.component}}</td>
+                    {% if RawMaterialInventory.stock_type == '2'%}
+                    <td>-{{ RawMaterialInventory.quantity }}</td>
+                    {% else %}
+                    <td>{{ RawMaterialInventory.quantity|floatformat }}</td>
+                    {% endif%}
+                    <td>{{RawMaterialInventory.lot_number}}</td>
+                    <td>{{RawMaterialInventory.exp_date}}</td>
+                    <td>{{RawMaterialInventory.stock_in_date}}</td>
+                    <td>{{RawMaterialInventory.stock_out_date}}</td>
+                    <td>{{RawMaterialInventory.price_per_unit}}</td>
+                    <td>{{RawMaterialInventory.purchasing_doc}}</td>
+                    <td>
+                        <div class = "d-grid">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'production-raw-material-inventory-update' RawMaterialInventory.id %} ">
+                                    Edit
+                                </a>
+                                <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                    Validate
+                                </a>
+                                <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'production-raw-material-inventory-delete' RawMaterialInventory.id %} ">
+                                    Delete
+                                </a>
+                            </ul>
+                        </div>    
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>                            
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}
