@@ -13,6 +13,7 @@ from django.db.models.functions import Coalesce
 from django.core.serializers import serialize
 from mixins.validation_mixin import QuantityValidationMixin
 from django.contrib.auth.decorators import login_required
+from django.core.serializers.json import DjangoJSONEncoder
 
 from .models import *
 from .forms import *
@@ -206,9 +207,11 @@ class RawMaterialComponentListViewAJAX(View):
             for word in all_words_list:
                 if 'for' not in word.lower():  # Exclude words with 'for'
                     simple_words.add(word)
+                else:
+                    simple_words.add(word.split('For')[0].strip())
 
             component_labels = list(simple_words)
-
+            
             return JsonResponse(component_labels, safe=False)
 
 
@@ -263,7 +266,7 @@ class BOMComponentCreateView(LoginRequiredMixin, PermissionRequiredMixin, Create
 class BOMComponentListView(LoginRequiredMixin, ListView):
     model = BOMComponent
     template_name = 'production/BOM_component_list.html'
-    context_object_name = 'BOMcomponents'  # The variable name in the template
+    context_object_name = 'BOMComponents'  # The variable name in the template
 
     # You can customize the queryset if needed
     def get_queryset(self):
@@ -273,24 +276,42 @@ class BOMComponentListView(LoginRequiredMixin, ListView):
 class BOMComponentListViewAJAX(View):
     def get(self, request, *args, **kwargs):
         item_code = request.GET.get('item_code')
-
+        
         if item_code:
-            items_code_filtered = BOMComponent.objects.filter(
-                product__item_code=item_code
-                ).order_by(
-                'create_date')     
+            if item_code == 'main-page':
+                BOM_components = BOMComponent.objects.all().order_by('product', 'raw_material_component')
 
-            filtered_data = []
+                filtered_data = []
 
-            for item_code_filtered in items_code_filtered:
-                filtered_data.append({
-                    'product': item_code_filtered.product,
-                    'raw_material_component': item_code_filtered.raw_material_component,
-                    'quantity_used': item_code_filtered.quantity_used,
-                    'create_date': item_code_filtered.create_date
-                })
+                for BOM_component in BOM_components:
+                    print(BOM_component)
+                    filtered_data.append({
+                        'BOMComponent_id': BOM_component.id,
+                        'product': BOM_component.product.item_code,
+                        'raw_material_component': BOM_component.raw_material_component.component,
+                        'quantity_used': BOM_component.quantity_used,
+                        'create_date': BOM_component.create_date
+                    })
 
-            return JsonResponse(filtered_data, safe=False)
+                return JsonResponse(filtered_data, safe=False)
+            else:
+                items_code_filtered = BOMComponent.objects.filter(
+                    product__item_code=item_code
+                    ).order_by(
+                    'create_date')     
+                
+                filtered_data = []
+
+                for item_code_filtered in items_code_filtered:
+                    filtered_data.append({
+                        'BOMComponent_id': item_code_filtered.id,
+                        'product': item_code_filtered.product.item_code,
+                        'raw_material_component': item_code_filtered.raw_material_component.component,
+                        'quantity_used': item_code_filtered.quantity_used,
+                        'create_date': item_code_filtered.create_date
+                    })
+
+                return JsonResponse(filtered_data, safe=False)
         else:
             product = Product.objects.values_list('item_code', flat=True)
 
@@ -337,13 +358,14 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
     success_url = reverse_lazy('production-production-log-list')
 
     permission_required = 'production.add_productionlog'
-
+    
     def post(self, request, *args, **kwargs):
         try:
             # Load JSON data from the request body
             data = json.loads(request.body.decode('utf-8'))
             inventory_details = data.get('inventory_details', {})
             form_data = data.get('formData', '')
+            print(inventory_details)
 
             form_data_dict = {}
 
@@ -384,9 +406,9 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
                 # Save the instance again to update the M2M relationship
                 instance.save()
                 
-                for component, stock_in_tag in inventory_details.items():
+                for component, details in inventory_details.items():
                     stock_in_inventory = RawMaterialInventory.objects.filter(
-                        stock_in_tag=stock_in_tag,
+                        stock_in_tag=details['stock_in_tag'],
                         stock_type="1").first()
 
                     component_id = stock_in_inventory.component.id
@@ -394,7 +416,7 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
                     quantity_per_unit = BOMComponent.objects.get(raw_material_component__id=component_id).quantity_used
                     inventory_entry = RawMaterialInventory.objects.create(
                         component_id=component_id,
-                        quantity= quantity_produced * quantity_per_unit,
+                        quantity= details['quantity'],
                         lot_number=stock_in_inventory.lot_number,
                         exp_date=stock_in_inventory.exp_date,
                         price_per_unit=stock_in_inventory.price_per_unit,
@@ -403,10 +425,12 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
                         stock_in_tag=stock_in_inventory.stock_in_tag,
                         production_log=instance,
                     )
-
+                
 
                 print('Form saved successfully')
-                return JsonResponse({'success': True, 'message': 'Form saved successfully'})
+                success_message = f'Batch {instance.lot_number} production log created successfully for {instance.BOMComponents.all()[0].product.item_code}!'
+                
+                return JsonResponse({'success': True, 'message': success_message})
 
             else:
                 print('Validation failed')
@@ -422,6 +446,7 @@ class ProductionLogCreateViewAJAX(View, QuantityValidationMixin):
         product_id = request.GET.get('product_id')
         #component_id = request.GET.get('component_id')
         BOMComponent_id = request.GET.get('BOMComponent_id')
+        stock_in_tag = request.GET.get('stock_in_tag')
 
         if BOMComponent_id:
 
@@ -467,8 +492,27 @@ class ProductionLogCreateViewAJAX(View, QuantityValidationMixin):
                         'invoice_number': raw_material_inventory.purchasing_doc.invoice_number,
                         'quantity_used': quantity_used,
                         })
-            print(data)
+            
             return JsonResponse(data, safe=False)
+        
+        elif stock_in_tag:
+
+            stock_in_log = RawMaterialInventory.objects.filter(
+                    stock_in_tag=stock_in_tag,
+                    stock_type='1').aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
+            stock_out_log = RawMaterialInventory.objects.filter(
+                    stock_in_tag=stock_in_tag,
+                    stock_type='2').aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+            
+            balance = stock_in_log - stock_out_log
+
+            data = {
+                'available_quantity': balance
+            }
+
+            return JsonResponse(data, safe=False)
+
 
         else: #for the bomcomponent list
             bom_components = BOMComponent.objects.filter(
@@ -512,7 +556,88 @@ class ProductionLogListView(LoginRequiredMixin, ListView):
         # Add the related_inventory_entries to the context
         context['RelatedInventoryEntries'] = related_inventory_entries
 
+        context['exists_flag'] = ProductionLog.objects.all().exists()
+
         return context
+
+class ProductionLogListViewAJAX(View):
+    def get(self, request, *args, **kwargs):
+        item_code = request.GET.get('item_code')
+        if item_code:
+            if item_code == "main-page":
+                logs_filter = ProductionLog.objects.all().order_by('create_date')
+
+                filtered_data = []
+                
+                for log_filter in logs_filter:
+                    raw_material_details = []
+                    components = RawMaterialInventory.objects.filter(production_log=log_filter.id)
+
+                    for component in components:
+                        raw_material_details.append({
+                            'identifier': component.component.identifier.parent_item_code,
+                            'component': component.component.component,
+                            'lot_number': component.lot_number,
+                            'exp_date': component.exp_date,
+                        })
+
+                    print(raw_material_details)
+                    #print(bom_component)
+                    filtered_data.append({
+                        'log_id': log_filter.id,
+                        'item_code': log_filter.BOMComponents.all()[0].product.item_code,
+                        'lot_number': log_filter.lot_number,
+                        'exp_date': log_filter.exp_date,
+                        'quantity_produced': log_filter.quantity_produced,
+                        'component_details': raw_material_details,
+                        'rH': json.dumps(log_filter.rH, cls=DjangoJSONEncoder),
+                        'temperature': json.dumps(log_filter.temperature, cls=DjangoJSONEncoder),
+                        'create_date': log_filter.create_date
+                        })
+
+                return JsonResponse(filtered_data, safe=False)
+
+            else:
+                logs_filter = ProductionLog.objects.filter(
+                    BOMComponents__product__item_code=item_code
+                    )
+                
+                log_filter = logs_filter.first()
+
+                print(log_filter.BOMComponents.all()[0].product.item_code)
+                filtered_data = []
+                
+                raw_material_details = []
+                components = RawMaterialInventory.objects.filter(production_log__in=logs_filter)
+
+                for component in components:
+                    raw_material_details.append({
+                        'identifier': component.component.identifier.parent_item_code,
+                        'component': component.component.component,
+                        'lot_number': component.lot_number,
+                        'exp_date': component.exp_date,
+                    })
+
+                print(raw_material_details)
+                #print(bom_component)
+                filtered_data.append({
+                    'log_id': log_filter.id,
+                    'item_code': log_filter.BOMComponents.all()[0].product.item_code,
+                    'lot_number': log_filter.lot_number,
+                    'exp_date': log_filter.exp_date,
+                    'quantity_produced': log_filter.quantity_produced,
+                    'component_details': raw_material_details,
+                    'rH': json.dumps(log_filter.rH, cls=DjangoJSONEncoder),
+                    'temperature': json.dumps(log_filter.temperature, cls=DjangoJSONEncoder),
+                    'create_date': log_filter.create_date
+                    })
+
+                return JsonResponse(filtered_data, safe=False)
+        
+        else:
+            product = ProductionLog.objects.values_list('BOMComponents__product__item_code', flat=True).distinct()
+
+            return JsonResponse(list(product), safe=False)
 
 class ProductionLogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = ProductionLog
@@ -525,7 +650,7 @@ class ProductionLogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Updat
 
     def form_valid(self, form):
         production_log = self.get_object()
-        messages.success(self.request, f'Batch {production_log.lot_number} for {production_log.BOMComponents.all()[0].product.item_code} updated successfully!')
+        messages.success(self.request, f'Batch {production_log.lot_number} production log for {production_log.BOMComponents.all()[0].product.item_code} updated successfully!')
 
         return super().form_valid(form)
     
@@ -541,6 +666,7 @@ class ProductionLogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Updat
         context['RelatedInventoryEntries'] = serialize('json', related_inventory_entries)
 
         raw_material_component = RawMaterialComponent.objects.all()
+        pprint.pprint(serialize('json', raw_material_component))
         context['RawMaterialComponent'] = serialize('json', raw_material_component)
         
         return context
@@ -553,19 +679,26 @@ class ProductionLogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Delet
 
     permission_required = 'production.delete_productionlog'
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
+        production_log = self.get_object()
+        
+        raw_material_inventory_entries = RawMaterialInventory.objects.filter(production_log=production_log)
+        
+        for entry in raw_material_inventory_entries:
+            entry.delete()
+
+        return super().form_valid(form)
+    
+    def post(self, request, *args, **kwargs):
         production_log = self.get_object()
 
-        # Find and delete related RawMaterialInventory records
-        raw_material_inventory_entries = RawMaterialInventory.objects.filter(production_log=production_log)
-        print(raw_material_inventory_entries)
-        #for entry in raw_material_inventory_entries:
-            #entry.delete()
+        item_code = production_log.BOMComponents.all()[0].product.item_code
 
-        response = super().delete(request, *args, **kwargs)
+        response = super().post(request, *args, **kwargs)
 
-        if response.status_code == 302:
-            messages.success(self.request, f'{production_log.lot_number} for {production_log.BOMComponents.all()[0].product.item_code} deleted successfully!')
+        if response.status_code == 302: 
+            success_message = f'Batch {production_log.lot_number} production log for {item_code} deleted successfully!'
+            messages.success(self.request, success_message)
 
         return response
 
@@ -901,7 +1034,9 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                         'expiry_date': all_log.exp_date,
                         'stock_in_date': all_log.stock_in_date,
                         'stock_out_date': all_log.stock_out_date,
+                        'currency_trade': all_log.purchasing_doc.supplier.currency_trade.currency_code,
                         'price_per_unit': all_log.price_per_unit,
+                        'local_price_per_unit': all_log.price_per_unit * all_log.purchasing_doc.k1_form_rate,
                         'purchasing_document': all_log.purchasing_doc.po_number,
                         'purchasing_document_id': all_log.purchasing_doc.id,
                         'company_name': all_log.purchasing_doc.supplier.company_name,
@@ -940,7 +1075,9 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                         'expiry_date': stock_tag_based.exp_date,
                         'stock_in_date': stock_tag_based.stock_in_date,
                         'stock_out_date': stock_tag_based.stock_out_date,
+                        'currency_trade': stock_tag_based.purchasing_doc.supplier.currency_trade.currency_code,
                         'price_per_unit': stock_tag_based.price_per_unit,
+                        'local_price_per_unit': stock_tag_based.price_per_unit * stock_tag_based.purchasing_doc.k1_form_rate,
                         'purchasing_document': stock_tag_based.purchasing_doc.po_number,
                         'purchasing_document_id': stock_tag_based.purchasing_doc.id,
                         'company_name': stock_tag_based.purchasing_doc.supplier.company_name,
@@ -962,6 +1099,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                 'pl_doc': str(purchasing_doc_details.pl_doc),
                 'k1_form': purchasing_doc_details.k1_form,
                 'k1_doc': str(purchasing_doc_details.k1_doc),
+                'k1_form_rate': purchasing_doc_details.k1_form_rate,
                 'AWB_number': purchasing_doc_details.AWB_number,
                 'AWB_doc': str(purchasing_doc_details.AWB_doc),
                 'create_date': purchasing_doc_details.create_date,

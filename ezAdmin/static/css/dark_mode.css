@@ -1,6 +1,7 @@
 body {
     background-color: #05161a;
     color: #6da5c0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #navBar {

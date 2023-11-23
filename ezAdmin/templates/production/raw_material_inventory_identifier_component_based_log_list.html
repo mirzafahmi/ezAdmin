@@ -1,4 +1,5 @@
 {% extends 'partials/base.html' %}
+{% load mathfilters %}
 {% block title %} Raw Material Inventory Log List{% endblock %}
 
 {% block content %}
@@ -9,7 +10,7 @@
     }
 </style>
 <body>
-    <div class="container-md">
+    <div class="container-md my-3">
         {% for message in messages %}
         {% if message %}
         <div class = "alert alert-{{ message.tags }}">
@@ -45,7 +46,8 @@
                         <th>Expiry Date</th>
                         <th>Stock In Date</th>
                         <th>Stock Out Date</th>
-                        <th>Price per Unit (USD)</th>
+                        <th>Price per Unit (Trade Currency)</th>
+                        <th>Price per Unit (Local Currency)</th>
                         <th>Purchasing Document</th>
                         <th>Activity</th>
                     </tr>
@@ -65,7 +67,8 @@
                         <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.exp_date}}</td>
                         <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.stock_in_date}}</td>
                         <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.stock_out_date}}</td>
-                        <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.price_per_unit}}</td>
+                        <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.purchasing_doc.supplier.currency_trade.currency_code}} {{RawMaterialInventoriesIdentifierComponentBasedLog.price_per_unit}}</td>
+                        <td>MYR {{RawMaterialInventoriesIdentifierComponentBasedLog.price_per_unit|mul:RawMaterialInventoriesIdentifierComponentBasedLog.purchasing_doc.k1_form_rate}}</td>
                         <td>
                             <a 
                             href="#staticBackdrop" 
@@ -99,11 +102,11 @@
                     <tr class="table-group-divider">
                         <td colspan="3" class="fw-bold">BALANCE</td>
                         <td>{{balance}}</td>
-                        <td colspan="7"></td>
+                        <td colspan="8"></td>
                     </tr>
                     {% else %}
                     <tr class="table-group-divider">
-                        <td colspan="11" class="fw-bold">
+                        <td colspan="12" class="fw-bold">
                             <hr>
                             No stock available, please stock in
                             <hr>
@@ -114,7 +117,7 @@
             </table>
         </div>
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
+            <div class="modal-dialog modal-fullscreen-xl-down modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5 text-center" id="staticBackdropLabel"></h1>
@@ -129,6 +132,7 @@
                                 <th>Invoice Details</th>
                                 <th>Packing List Details</th>
                                 <th>K1 Form Details</th>
+                                <th>K1 Rate (MYR)</th>
                                 <th>AWB Details</th>
                                 <th>Create Date</th>
                             </tr>
@@ -139,7 +143,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-accent" data-bs-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>

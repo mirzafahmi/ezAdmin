@@ -2,7 +2,7 @@
 {% block title %} Currency List{% endblock %}
 
 {% block content %}
-    <div class="container-md">
+    <div class="container-md my-3">
         {% for message in messages %}
         {% if message %}
         <div class = "alert alert-{{ message.tags }}">
@@ -52,7 +52,18 @@
                         </td>
                     </tr>
                     {% endfor %}
-                </tbody>                            
+                </tbody>    
+                <tfoot id="table-footer">
+                    {% if not currencies %}
+                    <tr class="table-group-divider">
+                        <td colspan="5" class="fw-bold">
+                            <hr>
+                            No Currency available, please add in
+                            <hr>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tfoot>                         
             </table>
         </div>
     </div>

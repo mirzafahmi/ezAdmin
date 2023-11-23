@@ -2,7 +2,7 @@
 {% block title %} Raw Material Inventory List (Identifier Based){% endblock %}
 
 {% block content %}
-    <div class="container-md">
+    <div class="container-md my-3">
         {% for message in messages %}
         {% if message %}
         <div class = "alert alert-{{ message.tags }}">
@@ -26,7 +26,7 @@
         <hr>
         <div class="row gy-4">
         {% for RawMaterialInventoryIdentifierBased in RawMaterialInventoriesIdentifierBaseds %}   
-            <div class="col-lg-4 col-md-6">
+            <div class="col-xl-4 col-lg-6">
                 <div class="card card-body d-flex flex-column">
                     <h3 class="card-title">{{RawMaterialInventoryIdentifierBased.0}} Inventory Tab</h3>
                     <p class="card-text py-3">To view, create, update and delete {{RawMaterialInventoryIdentifierBased.0}} inventory log.</p>
@@ -48,7 +48,7 @@
                 <!-- Date input form -->
                 <form id="dateForm">
                     <div class="form-group">
-                        <label for="selectedDate">Date:</label>
+                        <label for="selectedDate" class="mb-2">Date:</label>
                         <input type="date" class="form-control" id="selectedDate" required>
                     </div>
                 </form>

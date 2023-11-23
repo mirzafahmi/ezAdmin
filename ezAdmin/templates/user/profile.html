@@ -4,53 +4,54 @@
 
 {% block content %}
     <div class="container">
-        <div class="row mt-2">
-            {% if messages %}
-            {% for message in messages %}
-            <div class = "alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-            {% endif %}
+        <div class="row my-3">
             <div class="col-md-6 offset-md-3">
+                {% if messages %}
+                {% for message in messages %}
+                <div class = "alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
                 <div class="row p-3">
                     <div class="d-flex flex-column">
-                        <table class="table table-borderless">
-                            <thead>
-                                <div class="hstack">
-                                    <span class="h4">Profile Information</span class="h4">
-                                    <a class="btn btn-outline-primary btn-sm ms-auto" href="{% url 'user-profile-update' %}">
-                                        <i class="fa-solid fa-gear me-1"></i>
-                                        Edit
-                                    </a>
-                                </div>
-                                <hr>
-                            </thead>
+                        <div>
+                            <span class="h4">Profile Information</span class="h4">
+                        </div>
+                        <hr>                        
+                        <div class="card card-body d-flex flex-column">
                             <div class="d-flex justify-content-center mb-4">
                                 <img class="img-thumbnail" src="{{ user.profile.image.url }}" alt="profile-image" width="250" height="350">
+                            </div>  
+                            <div class="row text-center profile-field">
+                                <div class="col">User Name</div>
+                                <div class="col profile-detail">{{ user.username }}</div>
                             </div>
-                            <tbody class="mt-3">
-                                <tr>
-                                    <th scope="row">Name</th>
-                                    <td>{{ user.username }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Email</th>
-                                    <td>{{ user.email }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Phone</th>
-                                    <td>{{user.profile.phone}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Address</th>
-                                    <td>{{user.profile.address}}</td>
-                                </tr>
-                            </tbody>                            
-                        </table>
-                        {% if user.is_superuser %}
-                        <a class="btn btn-outline-warning btn-block" href="{% url 'admin:index' %}">Redirect to Admin Page</a>
-                        {% endif%}
+                            <div class="row text-center profile-field">
+                                <div class="col">Email Address</div>
+                                <div class="col profile-detail">{{ user.email }}</div>
+                            </div>
+                            <div class="row text-center profile-field">
+                                <div class="col">Phone Number</div>
+                                <div class="col profile-detail">{{user.profile.phone}}</div>
+                            </div>
+                            <div class="row text-center profile-field">
+                                <div class="col">Address</div>
+                                <div class="col profile-detail">{{user.profile.address}}</div>
+                            </div>
+                            <div class="d-flex flex-column mt-4">
+                                <a class="btn btn-accent btn-block mb-2" href="{% url 'user-profile-update' %}">
+                                    <i class="fa-solid fa-pen-to-square me-1"></i>
+                                    Edit Profile
+                                </a>
+                                {% if user.is_superuser %}
+                                <a class="btn btn-outline-primary btn-block" href="{% url 'admin:index' %}">
+                                    <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                                    Redirect to Admin Page
+                                </a>
+                                {% endif%}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

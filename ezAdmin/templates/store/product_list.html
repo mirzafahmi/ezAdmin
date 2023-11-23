@@ -1,0 +1,85 @@
+{% extends 'partials/base.html' %}
+{% block tittle %} Product's List{% endblock %}
+
+{% block content %}
+    <div class="container-md my-3">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="hstack">
+            <span class="h4">Product Inventory</span class="h4">
+            <a class="btn btn-success btn-sm ms-auto" id="addProduct" href="{% url 'store-product-add' %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add Product
+            </a>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover">
+                <thead class = "table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Identifier</th>
+                        <th>Item Code</th>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Packing</th>
+                        <th>UOM</th>
+                        <th>Quantity</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody>        
+                    {% for product in products %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{ product.identifier }}</td>
+                        <td><a href="{% url 'store-product-inventory-list' product.id%}">{{ product.item_code }}</a></td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.brand }}</td>
+                        <td>{{ product.packing }}</td>
+                        <td>{{ product.uom }}</td>
+                        {% for key, value in stocks.items %}
+                        {% if product.id == key%}
+                        <td>{{value}}</td>
+                        {% endif %}
+                        {% endfor %}
+                        <td>
+                            <div class = "d-grid">
+                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'store-product-update' product.id %}">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                        Validate
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'store-product-delete' product.id %}">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </div>    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>   
+                <tfoot id="table-footer">
+                    {% if not products %}
+                    <tr class="table-group-divider">
+                        <td colspan="9" class="fw-bold">
+                            <hr>
+                            No Products available, please add in
+                            <hr>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tfoot>                         
+            </table>
+        </div>
+    </div>
+    <script>
+        responsiveButtonText('addProduct')  
+    </script>
+{% endblock %}

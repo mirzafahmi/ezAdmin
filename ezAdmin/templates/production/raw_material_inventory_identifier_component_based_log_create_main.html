@@ -3,22 +3,22 @@
 
 {% block content %}
 <body>
-    <div class="container-md">
+    <div class="container-md my-3">
         <h2 class = "text-center">Raw Material Inventory Log Type for {{component.0.1}} of {{component.0.0}} Page</h2>
         <hr>
         <div class="card-deck row gy-4">
-            <div class="col-md-6">
+            <div class="col-lg-6">
                 <div class="card card-body d-flex flex-column">
                     <h3 class="card-title">Raw Material Stock-In for {{component.0.1}} of {{component.0.0}} Tab</h3>
                     <p class="card-text py-3">To log stock-in for raw material inventory.</p>
-                    <a class="btn btn-primary mt-auto" href="{% url 'production-raw-material-inventory-identifier-component-based-log-create' identifier_id component_id 1 %}">Log Stock-In Raw Material Inventory</a>
+                    <a class="btn btn-accent mt-auto" href="{% url 'production-raw-material-inventory-identifier-component-based-log-create' identifier_id component_id 1 %}">Log Stock-In Raw Material Inventory</a>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6">
                 <div class="card card-body d-flex flex-column">
                     <h3 class="card-title">Raw Material Stock-Out for {{component.0.1}} of {{component.0.0}} Tab</h3>
                     <p class="card-text py-3">To log stock-out for raw material inventory.</p>
-                    <a class="btn btn-primary mt-auto" id="log-out-link" href="{% url 'production-raw-material-inventory-identifier-component-based-log-create' identifier_id component_id 2 %}">Log Stock-Out Raw Material Inventory</a>
+                    <a class="btn btn-accent mt-auto" id="log-out-link" href="{% url 'production-raw-material-inventory-identifier-component-based-log-create' identifier_id component_id 2 %}">Log Stock-Out Raw Material Inventory</a>
                 </div>
             </div>
         </div>

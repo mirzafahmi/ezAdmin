@@ -1,9 +1,9 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Delete Raw Material Inventory{% endblock %}
+{% block title %} Delete Brand{% endblock %}
 
 {% block content %}
     <div class="container">
-        <div class="row mt-5">
+        <div class="row my-3">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
                     {% for message in messages %}
@@ -13,15 +13,15 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                    <h3>Deleting Inventory Log</h3>
+                    <h3>Deleting Brand</h3>
                     <hr>
                     <div class="alert alert-danger">
-                        <h4>Are you sure you want to delete {{raw_material_inventory.component}} log?</h4>
+                        <h4>Are you sure you want to delete {{brand.brand_name}}'s brand?</h4>
                     </div>
                     <form method = "POST">
                         {% csrf_token %}
-                        <a class="btn btn-light"  href = "{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list' raw_material_inventory.component.identifier.id raw_material_inventory.component.id %}"> Cancel</a>
-                        <input class = "btn btn-danger" type="submit" value = "Confirm">
+                        <a class="btn btn-light"  href = "{% url 'store-brand-name-list' %}"> Cancel</a>
+                        <input class = "btn btn-danger" type="submit" value = "Delete Brand">
                     </form>
                 </div>
             </div>

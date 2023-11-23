@@ -65,6 +65,7 @@ function generateModals(element) {
                                 <td><a href=${invoiceDocUrl} target="_blank">${log.invoice_number}</a></td>
                                 <td><a href=${plDocUrl} target="_blank">${log.packing_list}</a></td>
                                 <td><a href=${k1DocUrl} target="_blank">${log.k1_form}</a></td>
+                                <td>${log.k1_form_rate}</td>
                                 <td><a href=${awbDocUrl} target="_blank">${log.AWB_number}</a></td>
                                 <td>${formattedCreateDate}</td>
                             </tr>`

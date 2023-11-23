@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container">
-        <div class="row mt-5">
+        <div class="row my-3">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
                     {% if message %}
@@ -50,7 +50,7 @@
             // Append the dynamically created div to the main container
             $('#div_id_BOMComponents').after(inventoryDetails);
 
-            inventoryDetails.prepend(label);
+            //inventoryDetails.prepend(label);
 
             inventoryDetails.children().not('label').remove();
 
@@ -70,6 +70,7 @@
                 var invoiceNumber = item.fields.invoice_number;
                 var componentId = item.fields.component;
                 var componentData = componentMap[componentId];
+                var quantity = item.fields.quantity;
     
                 // Do something with the data, for example, log to the console
                 console.log('Lot Number:', lotNumber);
@@ -77,15 +78,22 @@
                 console.log('Component Details:', componentData);
 
                 var componentDetails = $('<div>').attr('id', 'div-' + componentData.replace(/\s+/g, '-')).addClass('mb-3');
-                var label = $('<label>')
-                    .attr('for', componentData.replace(/\s+/g, '-'))
+                var inventoryDetailsLabel = $('<p>')
                     .addClass('form-label')
                     .html(componentData + ' Batch Details:');
     
                 // Append the dynamically created div to the main container
+                $('#inventoryDetails').append($('<hr>'));
                 $('#inventoryDetails').append(componentDetails);
+
+                componentDetails.prepend(inventoryDetailsLabel);
+
+                var componentDetailsLabel = $('<label>')
+                    .attr('for', componentData.replace(/\s+/g, '-'))
+                    .addClass('form-label')
+                    .html('Lot Number and Expiry Date:');
     
-                componentDetails.prepend(label);
+                componentDetails.append(componentDetailsLabel);
 
                 var select = $('<select>')
                     .addClass(['form-control', 'select', 'form-select', 'disabled-dropdown'])
@@ -99,7 +107,23 @@
                 var option = $('<option>').attr('value', optionValue).text(optionText);
                 select.append(option);
                 componentDetails.append(select);
+
+                var quantityUsedLabel = $('<label>')
+                    .attr('for', componentData.replace(/\s+/g, '-') + '-quantity-used')
+                    .addClass('form-label')
+                    .html('Quantity Used (in pcs):');
+                
+                componentDetails.append(quantityUsedLabel);
+
+                var quantityInput = $('<input>')
+                    .addClass(['numberinput', 'form-control', 'disabled-dropdown'])
+                    .attr('id', componentData.replace(/\s+/g, '-') + '-quantity-used')
+                    .attr('placeholder', `Available quantity:  unit(s)`)
+                    .attr('data-availableQuantity', quantity);
+
+                componentDetails.append(quantityInput.val(quantity));
             });
+            $('#inventoryDetails').append($('<hr>'));
         });
     </script>
 

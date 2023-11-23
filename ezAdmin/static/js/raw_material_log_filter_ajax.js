@@ -100,8 +100,8 @@ function rawMaterialLogFilter(){
                         var formattedStockInDate = formatCustomDate(log.stock_in_date);
                         var formattedStockOutDate = formatCustomDate(log.stock_out_date);
 
-                        var editUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/inventory_log_create_main/stock_type:${log.stock_type}-log:${log.log_id}-update`
-                        var deleteUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/inventory_log_create_main/stock_type:${log.stock_type}-log:${log.log_id}-delete`
+                        var editUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/stock_type:${log.stock_type}-log:${log.log_id}-update`
+                        var deleteUrl = `/production_main/raw_material_inventory_identifier_based_main/identifier:${log.identifier_id}-component-main/component:${log.component_id}-list/stock_type:${log.stock_type}-log:${log.log_id}-delete`
 
                         if (log.stock_type == '2') {
                             log.quantity = '-' + log.quantity;
@@ -121,7 +121,8 @@ function rawMaterialLogFilter(){
                                     <td>${log.expiry_date}</td>
                                     <td>${formattedStockInDate}</td>
                                     <td>${formattedStockOutDate}</td>
-                                    <td>${log.price_per_unit}</td>
+                                    <td>${log.currency_trade} ${log.price_per_unit}</td>
+                                    <td>MYR ${log.local_price_per_unit}</td>
                                     <td>
                                         <a class="modal-link href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-purchasing-doc-id="${log.purchasing_document_id}">
                                             ${log.purchasing_document}(${log.company_name})
@@ -150,7 +151,7 @@ function rawMaterialLogFilter(){
                             <tr class="table-group-divider">
                                 <td colspan="3" class="fw-bold">BALANCE</td>
                                 <td>${data[0].balance}</td>
-                                <td colspan="7"></td>
+                                <td colspan="8"></td>
                             </tr>
                         `);
                 },

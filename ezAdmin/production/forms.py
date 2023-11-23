@@ -84,6 +84,8 @@ class ProductionLogForm(forms.ModelForm):
         to_field_name='id',
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+
+    data_overide = forms.BooleanField(required=False)
     class Meta:
         model = ProductionLog
         fields = ['rH', 'temperature', 'BOMComponents', 'lot_number', 'exp_date', 'quantity_produced']
@@ -116,7 +118,7 @@ class ProductionLogForm(forms.ModelForm):
         self.fields = new_fields
 
     def __iter__(self):
-        field_order = ['product', 'lot_number', 'exp_date', 'quantity_produced', 'rH', 'temperature', 'BOMComponents',]  # Order of fields you want
+        field_order = ['product', 'lot_number', 'exp_date', 'quantity_produced', 'rH', 'temperature', 'BOMComponents', 'data_overide']  # Order of fields you want
         for field_name in field_order:
             yield self[field_name]
     

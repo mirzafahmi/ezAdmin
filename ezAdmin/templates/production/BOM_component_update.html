@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container">
-        <div class="row mt-5">
+        <div class="row my-3">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
                     {% if message %}
@@ -14,7 +14,7 @@
                     </div>
                     {% endfor %}
                     {% endif %}
-                    <h3>Update {{BOMcomponent.raw_material_component}} details for {{BOMcomponent.product.item_code}}?</h3>
+                    <h3>Update {{BOMComponent.raw_material_component}} details for {{BOMComponent.product.item_code}}?</h3>
                     <hr>
                     <form method="POST">
                         {% csrf_token %}

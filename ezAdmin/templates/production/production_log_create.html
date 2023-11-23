@@ -18,16 +18,16 @@
         }
     </style>
     <div class="container">
-        <div class="row mt-5">
+        <div class="row my-3">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
+                    {% if messages %}
                     {% for message in messages %}
-                    {% if message %}
                     <div class = "alert alert-{{ message.tags }}">
                         {{ message }}
                     </div>
-                    {% endif %}
                     {% endfor %}
+                    {% endif %}
                     <h3>Add Production Log</h3>
                     <hr>
                     <form method="POST" id='productLogForm'>
@@ -46,6 +46,7 @@
         customAlert.init();
 
         $(document).ready(function() {
+            //select bomcomponent function and create div for raw materials details
 
             var inventoryDetails = $('<div>').attr('id', 'inventoryDetails').addClass('mb-3');
             
@@ -56,156 +57,254 @@
 
             // Append the dynamically created div to the main container
             $('#div_id_BOMComponents').after(inventoryDetails);
-
-            //inventoryDetails.prepend(label);
-
             $('#id_BOMComponents option').hide();
+
             function getBOMComponents(){
                 $('#id_product').change(function() {
-                var productId = $(this).val();
-                $.ajax({
-                    url: '{% url 'production-production-log-create-ajax' %}',
-                    data: {
-                        'product_id': productId
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        // Iterate through the BOMComponent IDs
-                        $('#id_BOMComponents').val([]);
-                        $('#id_BOMComponents option').hide();
-                        data.bom_components.forEach(function(item) {
-                            var bomComponentId = item.BOMComponent_id;
-                            // Loop through each option to find and select the appropriate one
-                            $('#id_BOMComponents').find('option').each(function() {
-                                if ($(this).val() == String(bomComponentId)) {
-                                    $(this).prop('selected', true);
-                                    $(this).addClass("disabled-dropdown");
-                                    $(this).show();
-                                    
-                                    var bomComponentValue = $(this).val();
-                                    var componentName = item.component_name
+                    var productId = $(this).val();
+                    $.ajax({
+                        url: '{% url 'production-production-log-create-ajax' %}',
+                        data: {
+                            'product_id': productId
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            // Iterate through the BOMComponent IDs
+                            $('#id_BOMComponents').val([]);
+                            $('#id_BOMComponents option').hide();
+                            data.bom_components.forEach(function(item) {
+                                var bomComponentId = item.BOMComponent_id;
+                                // Loop through each option to find and select the appropriate one
+                                $('#id_BOMComponents').find('option').each(function() {
+                                    if ($(this).val() == String(bomComponentId)) {
+                                        $(this).prop('selected', true);
+                                        $(this).addClass("disabled-dropdown");
+                                        $(this).show();
+                                        
+                                        var bomComponentValue = $(this).val();
+                                        var componentName = item.component_name
 
-                                    getInventoryDetails(bomComponentValue, componentName);
-                                    
-                                }
+                                        getInventoryDetails(bomComponentValue, componentName);
+                                        
+                                    }
+                                });
                             });
-                        });
-                    },
-                    error: function (error) {
-                        $('#id_BOMComponents').val([]);
-                        console.log('Error retrieving BOM components');
-                    }
-                });
+                        },
+                        error: function (error) {
+                            $('#id_BOMComponents').val([]);
+                            console.log('Error retrieving BOM components');
+                        }
+                    });
                 });
             }
 
             function getInventoryDetails(bomComponentValue, componentName) {
                 const inventoryDetails = $('#inventoryDetails');
                 inventoryDetails.children().not('label').remove();
-                    $.ajax({
-                        type: "GET",
-                        url: '{% url 'production-production-log-create-ajax' %}', // URL to your Django view
-                        data: {
-                            BOMComponent_id: bomComponentValue,
-                        },
-                        success: function (data) {
-                            if (data.length === 0) {
-                                customAlert.alert(
-                                    'The stock in raw material inventory is empty for the Component: ' + componentName + '. Please stock up the inventory before log the production log.', 
-                                    'Inventory is empty', 
-                                    '/production_main/raw_material_inventory_identifier_based_main');
-                                return;
-                            }
-
-                            console.log(data);
-                            var componentDetails = $('<div>').attr('id', 'div-' + data[0].component_name.replace(/\s+/g, '-')).addClass('mb-3');
-                            var inventoryDetailsLabel = $('<p>')
-                                .addClass('form-label')
-                                .html(data[0].component_name + ' Batch Details:');
                 
-                            // Append the dynamically created div to the main container
-                            $('#inventoryDetails').append($('<hr>'));
-                            $('#inventoryDetails').append(componentDetails);
-                
-                            componentDetails.prepend(inventoryDetailsLabel);
-                            
-                            var componentDetailsLabel = $('<label>')
-                                .attr('for', data[0].component_name.replace(/\s+/g, '-'))
-                                .addClass('form-label')
-                                .html('Lot Number and Expiry Date:');
-                            
-                            componentDetails.append(componentDetailsLabel);
-                                
-
-                            var select = $('<select>')
-                                .addClass(['form-control', 'select', 'form-select', 'disabled-dropdown'])
-                                .attr('id', data[0].component_name.replace(/\s+/g, '-'));
-
-                            data.forEach(function(item) {
-                                if (item['lot_number'] == '-') {
-                                    var optionText = item['po_number'] + ' (' + item['invoice_number'] + ')';
-                                } else{
-                                    var optionText = item['lot_number'] + ' (' + item['exp_date'] + ')';
-                                }
-                                
-                                var optionValue = item['stock_in_tag']; // or any other unique identifier you'd like to use
-                    
-                                var option = $('<option>').attr('value', optionValue).text(optionText);
-                                select.append(option);
-                            });
-                    
-                            // Append the select element to an existing div with id 'dropdownDivId'
-                            componentDetails.append(select);
-
-                            var quantityUsedLabel = $('<label>')
-                                .attr('for', data[0].component_name.replace(/\s+/g, '-') + '-quantity-used')
-                                .addClass('form-label')
-                                .html('Quantity Used (in pcs):');
-                            
-                            componentDetails.append(quantityUsedLabel);
-
-                            var quantityInput = $('<input>')
-                                .addClass(['numberinput', 'form-control', 'disabled-dropdown'])
-                                .attr('id', data[0].component_name.replace(/\s+/g, '-') + '-quantity-used')
-                                .attr('placeholder', 'Available quantity: ' + data[0].available_quantity)
-                                .attr('data-weightage', data[0].quantity_used);
-
-                            componentDetails.append(quantityInput);
-                            //componentDetails.append($('<hr>'));
-
-                            // Add an event listener to the "quantity produced" input field
-                            $('#id_quantity_produced').on('input', function () {
-                                // Get the entered quantity
-                                var enteredQuantity = parseFloat($(this).val()) || 0;
-
-                                // Iterate through each input field within the #inventoryDetails div
-                                $('#inventoryDetails input[data-weightage]').each(function () {
-                                    // Get the weightage from the data attribute
-                                    var weightage = parseFloat($(this).data('weightage')) || 0;
-                                    if (isNaN(enteredQuantity) || enteredQuantity === 0) {
-                                        $(this).val('');
-                                    } else {
-                                        // Calculate the new value based on the entered quantity and weightage
-                                        var newValue = enteredQuantity * weightage;
-
-                                        // Update the value of the corresponding input field
-                                        $(this).val(newValue);
-                                    }
-                                     
-                                });
-                            });
-                        },
-                        error: function (error) {
-                            console.log("Error fetching raw material lots");
+                $.ajax({
+                    type: "GET",
+                    url: '{% url 'production-production-log-create-ajax' %}', // URL to your Django view
+                    data: {
+                        BOMComponent_id: bomComponentValue,
+                    },
+                    success: function (data) {
+                        if (data.length === 0) {
+                            customAlert.alert(
+                                'The stock in raw material inventory is empty for the Component: ' + componentName + '. Please stock up the inventory before log the production log.', 
+                                'Inventory is empty', 
+                                '/production_main/raw_material_inventory_identifier_based_main');
+                            return;
                         }
-                    });
+
+                        console.log(data);
+                        var componentDetails = $('<div>').attr('id', 'div-' + data[0].component_name.replace(/\s+/g, '-')).addClass('mb-3');
+                        var inventoryDetailsLabel = $('<p>')
+                            .addClass('form-label')
+                            .html(data[0].component_name + ' Batch Details:');
+            
+                        // Append the dynamically created div to the main container
+                        $('#inventoryDetails').append($('<hr>'));
+                        $('#inventoryDetails').append(componentDetails);
+            
+                        componentDetails.prepend(inventoryDetailsLabel);
+                        
+                        var componentDetailsLabel = $('<label>')
+                            .attr('for', data[0].component_name.replace(/\s+/g, '-'))
+                            .addClass('form-label')
+                            .html('Lot Number and Expiry Date:');
+                        
+                        componentDetails.append(componentDetailsLabel);
+
+                        var select = $('<select>')
+                            .addClass(['form-control', 'select', 'form-select', 'disabled-dropdown'])
+                            .attr('id', data[0].component_name.replace(/\s+/g, '-'));
+
+                        data.forEach(function(item) {
+                            if (item['lot_number'] == '-') {
+                                var optionText = item['po_number'] + ' (' + item['invoice_number'] + ')';
+                            } else{
+                                var optionText = item['lot_number'] + ' (' + item['exp_date'] + ')';
+                            }
+                            
+                            var optionValue = item['stock_in_tag']; // or any other unique identifier you'd like to use
+                
+                            var option = $('<option>').attr('value', optionValue).text(optionText);
+                            select.append(option);
+                        });
+                
+                        // Append the select element to an existing div with id 'dropdownDivId'
+                        componentDetails.append(select);
+
+                        var quantityUsedLabel = $('<label>')
+                            .attr('for', data[0].component_name.replace(/\s+/g, '-') + '-quantity-used')
+                            .addClass('form-label')
+                            .html('Quantity Used (in pcs):');
+                        
+                        componentDetails.append(quantityUsedLabel);
+
+                        var quantityInput = $('<input>')
+                            .addClass(['numberinput', 'form-control', 'disabled-dropdown'])
+                            .attr('id', data[0].component_name.replace(/\s+/g, '-') + '-quantity-used')
+                            .attr('placeholder', 'Available quantity: ' + data[0].available_quantity + ' unit(s)')
+                            .attr('data-weightage', data[0].quantity_used)
+                            .attr('data-availableQuantity', data[0].available_quantity);
+
+                        componentDetails.append(quantityInput);
+                        //componentDetails.append($('<hr>'));
+
+                        // Add an event listener to the "quantity produced" input field
+                        $('#id_quantity_produced').on('input', function () {
+                            // Get the entered quantity
+                            var enteredQuantity = parseFloat($(this).val()) || 0;
+
+                            // Iterate through each input field within the #inventoryDetails div
+                            $('#inventoryDetails input[data-weightage]').each(function () {
+                                // Get the weightage from the data attribute
+                                var weightage = parseFloat($(this).data('weightage')) || 0;
+                                if (isNaN(enteredQuantity) || enteredQuantity === 0) {
+                                    $(this).val('');
+                                } else {
+                                    // Calculate the new value based on the entered quantity and weightage
+                                    var newValue = enteredQuantity * weightage;
+
+                                    // Update the value of the corresponding input field
+                                    $(this).val(newValue);
+                                }
+                                    
+                            });
+                        });
+                    },
+                    error: function (error) {
+                        console.log("Error fetching raw material lots");
+                    }
+                });
             }
 
             getBOMComponents()
+            $('#inventoryDetails').append($('<hr>'));
+            //override button function
+            divCheckboxField = $('#div_id_data_overide');
+            divCheckboxField.addClass('form-switch');
+
+            function setReadonlyState(flag) {
+                if (flag) {
+                    $('#inventoryDetails select').each(function() {
+                        $(this).addClass('disabled-dropdown');
+                    });
+                    
+                    // Loop through input elements
+                    $('#inventoryDetails input').each(function() {
+                        $(this).addClass('disabled-dropdown');
+                    });
+                    
+                } else {
+                    $('#inventoryDetails select').each(function() {
+                        $(this).removeClass('disabled-dropdown');
+                    });
+                    
+                    // Loop through input elements
+                    $('#inventoryDetails input').each(function() {
+                        $(this).removeClass('disabled-dropdown');
+                    });
+                }
+            }
+
+            var checkboxField = $("#id_data_overide");
+
+            // Check if the checkbox is checked
+            var isChecked = checkboxField.prop("checked");
+
+            // If the checkbox is checked, uncheck it
+            if (isChecked) {
+                checkboxField.prop("checked", false);
+            }
+
+            checkboxField.on("change", function () {
+                if (checkboxField.prop("checked")) {
+                setReadonlyState(false);
+                } else {
+                setReadonlyState(true);
+                }
+            });
+
+            // overide the raw material details function
+            function updateQuantityPlaceholder(componentId, stockInTag) {
+                // Make an AJAX call to get the available quantity based on the selected value
+                $.ajax({
+                    url: '{% url 'production-production-log-create-ajax' %}',  // Replace with your actual endpoint
+                    method: 'GET',
+                    data: { stock_in_tag: stockInTag },
+                    success: function (data) {
+                        // Assuming data is the available quantity
+                        var quantityInput = $('#' + componentId.replace('div-', '') + '-quantity-used');
+                        quantityInput.attr('placeholder', 'Available quantity: ' + data.available_quantity + 'unit(s)');
+                    },
+                    error: function (error) {
+                        console.log('Error fetching available quantity:', error);
+                    }
+                });
+            }
+            
+            $('#inventoryDetails').on('change', 'select', function () {
+                var componentId = $(this).closest('.mb-3').attr('id');
+                var stockInTag = $(this).val();
+                console.log(componentId)
+                updateQuantityPlaceholder(componentId, stockInTag);
+            });
+
+            //submition function
             var csrftoken = $("[name=csrfmiddlewaretoken]").val();
             console.log('somethings')
             $('#submitBtn').on('click', function (e) {
                 e.preventDefault(); // Prevent the default form submission
+
+                var validationPassed = true;
+
+                // Iterate through each input field within the #inventoryDetails div
+                $('#inventoryDetails input[data-availablequantity]').each(function () {
+                    var enteredQuantity = parseFloat($(this).val()) || 0;
+                    var availableQuantity = parseFloat($(this).data('availablequantity')) || 0;
+
+                    var parentContainer = $(this).closest('.mb-3'); // Adjust this selector based on your HTML structure
+
+                    // Remove existing error message
+                    parentContainer.find('.error-message').remove();
+
+                    if (enteredQuantity > availableQuantity) {
+                        // Display error message
+                        var errorElement = $('<strong>').addClass(['error-message', 'text-danger']).text(`Quantity exceeds available quantity:${availableQuantity} unit(s)`);
+                        
+                        parentContainer.append(errorElement);
+
+                        validationPassed = false;
+                    }
+                });
+
+                // If validation fails, stop form submission
+                if (!validationPassed) {
+                    return;
+                }
                 
                 var selectedValues = {};
 
@@ -214,22 +313,30 @@
                     var componentId = $(this).attr('id');
                     var selectedOptionValue = $(this).val();
 
+                    var quantityInputId = componentId + '-quantity-used';
+                    var quantityInput = $('#' + quantityInputId);
+
+                    // Get the raw value of the quantity input
+                    var rawQuantityValue = quantityInput.val();
+
                     // Include additional details for each component
                     var componentDetails = {
                         'value': selectedOptionValue,
-                        // Add more details as needed
                     };
 
                     // Assign the component details to the selectedValues object
-                    selectedValues[componentId] = selectedOptionValue;
+                    selectedValues[componentId] = {
+                        'stock_in_tag': selectedOptionValue,
+                        'quantity': rawQuantityValue
+                    };
                 });
-
+                console.log(selectedValues)
                 // Combine the selectedValues with formData
                 var combinedData = {
                     'formData': $('#productLogForm').serialize(),
                     'inventory_details': selectedValues,
                 };
-
+                console.log(combinedData)
                 // Make an AJAX POST request with JSON data
                 $.ajax({
                     type: 'POST',
@@ -241,9 +348,8 @@
                         'X-CSRFToken': csrftoken
                     },
                     success: function (response) {
-                        // Handle the success response from the Django view
                         console.log('Values sent to Django view');
-                        window.location.href = '/production_main/production_log_list';
+                        window.location.href = `/production_main/production_log_list?successMessage=${response.message}`;
                     },
                     error: function (xhr, status, error) {
                         // Log the details of the error response

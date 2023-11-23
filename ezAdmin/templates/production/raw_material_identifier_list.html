@@ -2,7 +2,7 @@
 {% block title %} Raw Material Identifier List{% endblock %}
 
 {% block content %}
-    <div class="container-md">
+    <div class="container-md my-3">
         {% for message in messages %}
         {% if message %}
         <div class = "alert alert-{{ message.tags }}">
@@ -20,7 +20,7 @@
         <hr>
         <div class="table-responsive">
             <table class="table table-borderless table-striped table-hover">
-                <thead class = "table-dark">
+                <thead class ="table-dark">
                     <tr>
                         <th>No.</th>
                         <th>Identifier</th>
@@ -50,7 +50,18 @@
                         </td>
                     </tr>
                     {% endfor %}
-                </tbody>                            
+                </tbody>      
+                <tfoot id="table-footer">
+                    {% if not identifiers %}
+                    <tr class="table-group-divider">
+                        <td colspan="4" class="fw-bold">
+                            <hr>
+                            No Identifier available, please add in
+                            <hr>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tfoot>                      
             </table>
         </div>
     </div>

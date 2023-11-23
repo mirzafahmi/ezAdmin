@@ -1,10 +1,10 @@
 {% extends 'partials/base.html' %}
-{% block tittle %}Login{% endblock %}
+{% block title %}Login{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
     <div class="container">
-        <div class="row mt-2" style="min-height:45vh;">
+        <div class="row my-3" style="min-height:45vh;">
             <div class="col-md-6 offset-md-3 my-auto">
                 {% if messages %}
                 {% for message in messages %}

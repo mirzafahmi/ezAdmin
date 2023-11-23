@@ -1,26 +1,26 @@
 {% extends 'partials/base.html' %}
-{% block tittle %} Update Raw Material Inventory{% endblock %}
+{% block tittle %} Add Product{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
     <div class="container">
-        <div class="row mt-5">
+        <div class="row my-3">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
-                    {% if message %}
                     {% for message in messages %}
+                    {% if message %}
                     <div class = "alert alert-{{ message.tags }}">
                         {{ message }}
                     </div>
-                    {% endfor %}
                     {% endif %}
-                    <h3>Update {{raw_material_inventory.component}} Details?</h3>
+                    {% endfor %}
+                    <h3>Add Products</h3>
                     <hr>
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy}}
-                        <a class="btn btn-light" href = "{% url 'purchasing-raw-material-inventory-identifier-component-based-log-list' raw_material_inventory.component.identifier.id raw_material_inventory.component.id %}"> Cancel</a>
-                        <input class="btn btn-success" type="submit" value="Update Inventory">
+                        <a class="btn btn-light"  href = "{% url 'store-product-list' %}"> Cancel</a>
+                        <input class="btn btn-success" type="submit" value="Register">
                     </form>
                 </div>
             </div>

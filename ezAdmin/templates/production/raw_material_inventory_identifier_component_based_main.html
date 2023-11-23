@@ -2,14 +2,14 @@
 {% block title %} Raw Material Inventory List {% endblock %}
 
 {% block content %}
-    {% for message in messages %}
-    {% if message %}
-    <div class = "alert alert-{{ message.tags }}">
-        {{ message }}
-    </div>
-    {% endif %}
-    {% endfor %}
-    <div class="container-md">
+    <div class="container-md my-3">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
         <div class="hstack align-items-center">
             <h2 class = "flex-grow-1">Raw Material Inventory List For {{parent_item_code}} Identifier Page</h2>
             <a class="btn btn-success btn-sm ms-auto" id="addComponent" href="{% url 'production-raw-material-inventory-identifier-based-component-create' identifier_id %}">
@@ -21,7 +21,7 @@
         <div class="card-deck row gy-4">
             {% if exists_flag %}
             {% for raw_material_inventory_list_identifier_component_based in raw_material_inventory_list_identifier_component_baseds %}
-            <div class="col-lg-4 col-md-6">
+            <div class="col-xl-4 col-lg-6">
                 <div class="card card-body d-flex flex-column">
                     <h3 class="card-title">{{raw_material_inventory_list_identifier_component_based.name}} Inventory Tab</h3>
                     <p class="card-text py-3">To view, create, update and delete {{raw_material_inventory_list_identifier_component_based.name}} inventory log for {{parent_item_code}}.</p>

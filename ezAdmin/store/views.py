@@ -6,11 +6,146 @@ from .forms import *
 from django.contrib import messages
 from django.db.models import Sum
 from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
 from .models import *
 from django.urls import reverse_lazy, reverse
+
+class StoreMainView(LoginRequiredMixin, TemplateView):
+    template_name = 'store/store_main.html'
+
+class BrandNameListView(LoginRequiredMixin, ListView):
+    model = BrandName
+    template_name = 'store/brand_name_list.html'
+    context_object_name = 'brands'  # The variable name in the template
+
+class BrandNameCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = BrandName
+    form_class = BrandNameForm
+    template_name = 'store/brand_name_create.html'
+    success_url = reverse_lazy('store-brand-name-list')
+
+    permission_required = 'store.add_brandname'
+
+    def form_valid(self, form):
+        brand_name = form.cleaned_data['brand_name']
+        company_name = form.cleaned_data['company_name']
+        messages.success(self.request, f'{brand_name} brand from {company_name} created successfully!')
+
+        return super().form_valid(form)
+
+class BrandNameUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = BrandName
+    form_class = BrandNameForm
+    template_name = 'store/brand_name_update.html'
+    success_url = reverse_lazy('store-brand-name-list')
+    context_object_name = 'brand'
+
+    permission_required = 'purchasing.change_brandname'
+
+    def form_valid(self, form):
+        brand_name = self.get_object().brand_name
+        company_name = self.get_object().company_name
+
+        messages.success(self.request, f'{brand_name} brand from {company_name} updated successfully!')
+
+        return super().form_valid(form)
+
+class BrandNameDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = BrandName
+    template_name = 'store/brand_name_delete.html'
+    success_url = reverse_lazy('store-brand-name-list')
+    context_object_name = 'brand'
+
+    permission_required = 'purchasing.delete_brandname'
+    
+    def post(self, request, *args, **kwargs):
+        brand_name = self.get_object().brand_name
+        company_name = self.get_object().company_name
+
+        response = super().post(request, *args, **kwargs)
+
+        if response.status_code == 302:
+            success_message = f'{brand_name} brand from {company_name} deleted successfully!'
+            messages.success(self.request, success_message)
+
+        return response
+
+class ProductListView(LoginRequiredMixin, ListView):
+    model = Product
+    template_name = 'store/product_list.html'
+    #context_object_name = 'products'  # The variable name in the template
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        items = Product.objects.all()
+        stocks_total = {}
+        
+        for item in items:
+            stock_in = FinishedGoodsInventory.objects.filter(product_id = item.id).filter(stock_type = '1').aggregate(sum = Sum('quantity'))['sum'] or 0
+            stock_out = FinishedGoodsInventory.objects.filter(product_id = item.id).filter(stock_type = '2').aggregate(sum = Sum('quantity'))['sum'] or 0
+
+            stocks_total.update({item.id: stock_in - stock_out})
+
+        context["products"] = items
+        context["stocks"] = stocks_total
+
+        return context
+    
+
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'store/product_create.html'
+    success_url = reverse_lazy('store-product-list')
+
+    permission_required = 'store.add_product'
+
+    def form_valid(self, form):
+        product_name = form.cleaned_data['name']
+        item_code = form.cleaned_data['item_code']
+        messages.success(self.request, f'{product_name} ({item_code}) created successfully!')
+
+        return super().form_valid(form)
+
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'store/product_update.html'
+    success_url = reverse_lazy('store-product-list')
+    context_object_name = 'product'
+
+    permission_required = 'purchasing.change_brandname'
+
+    def form_valid(self, form):
+        product_name = form.cleaned_data['name']
+        item_code = form.cleaned_data['item_code']
+
+        messages.success(self.request, f'{product_name} ({item_code}) updated successfully!')
+
+        return super().form_valid(form)
+
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Product
+    template_name = 'store/product_delete.html'
+    success_url = reverse_lazy('store-product-list')
+    context_object_name = 'product'
+
+    permission_required = 'purchasing.delete_product'
+    
+    def post(self, request, *args, **kwargs):
+        product_name = self.get_object().product_name
+        item_code = self.get_object().item_code
+
+        response = super().post(request, *args, **kwargs)
+
+        if response.status_code == 302:
+            success_message = f'{product_name} ({item_code}) deleted successfully!'
+            messages.success(self.request, success_message)
+
+        return response
 
 @login_required
 def product_list(request):

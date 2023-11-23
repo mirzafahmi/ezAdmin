@@ -88,7 +88,7 @@ class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
     quantity = models.FloatField()
     lot_number = models.CharField(max_length=200, blank = True, null = True)
     exp_date = models.CharField(max_length=200, blank = True, null = True)
-    price_per_unit = models.CharField(max_length=200, blank = True, null = True)
+    price_per_unit = models.FloatField()
     stock_type = models.CharField(max_length=2,choices=(('1','Stock-in'),('2','Stock-Out')), default = 1)
     purchasing_doc = models.ForeignKey(PurchasingDocument, on_delete=models.PROTECT)
     stock_in_tag = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='stock_in_tag_entries')

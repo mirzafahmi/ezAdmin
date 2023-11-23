@@ -2,14 +2,16 @@
 {% block title %} Production Log List{% endblock %}
 
 {% block content %}
-    <div class="container-md">
+    <div class="container-md my-3">
+        {% if messages %}
         {% for message in messages %}
-        {% if message %}
         <div class = "alert alert-{{ message.tags }}">
             {{ message }}
         </div>
-        {% endif %}
         {% endfor %}
+        {% endif %}
+        <div id="divMessage">
+        </div>
         <div class="hstack">
             <span class="h3" style="margin-bottom: 0px;">Production Log List</span class="h4">
             <a class="btn btn-success btn-sm ms-auto" id="addLog" href="{% url 'production-production-log-create' %}">
@@ -18,15 +20,23 @@
             </a>
         </div>
         <hr>
+        <div class="btn-group-horizontal mb-3" id="filter-label" role="group" aria-label="horizontal radio toggle button group">
+            <input type="radio" class="btn-check" id="vbtn-radio1" name="vbtn-radio"  autocomplete="off" checked data-itemCode="main-page">
+            <label class="btn btn-outline-primary" for="vbtn-radio1">
+                <a class="no-decoration">
+                    Main Page
+                </a>
+            </label>
+        </div>
         <div class="table-responsive">
             <table class="table table-borderless table-striped table-hover">
                 <thead class = "table-dark">
                     <tr>
                         <th>No.</th>
-                        <th>Product Item Code</th>
+                        <th style="max-width: 110px">Product Item Code</th>
                         <th>Lot Number</th>
                         <th>Exp Date</th>
-                        <th style="max-width: 120px;">Quantity Produced (Box)</th>
+                        <th style="max-width: 110px;">Quantity Produced (Box)</th>
                         <th>Raw Material Lot Number</th>
                         <th style="max-width: 120px;">Relative Humidity (rH)</th>
                         <th>Temperature</th>
@@ -34,7 +44,7 @@
                         <th>Activity</th>
                     </tr>
                 </thead>
-                <tbody> 
+                <tbody id="logs-table-body"> 
                     {% for ProductionLog in ProductionLogs %}       
                     <tr>    
                         <td>{{forloop.counter}}</td>
@@ -72,11 +82,193 @@
                         </td>
                     </tr>
                     {% endfor %}
-                </tbody>                            
+                </tbody>
+                <tfoot id="table-footer">
+                    {% if not exists_flag %}
+                    <tr class="table-group-divider">
+                        <td colspan="10" class="fw-bold">
+                            <hr>
+                            No Production Log available, please add in
+                            <hr>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tfoot>                            
             </table>
         </div>
     </div>
     <script>
         responsiveButtonText('addLog')  
+
+        function addDjangoMessage(tags, message) {
+            // Clear existing messages
+            $('#divMessage').empty();
+    
+            // Create a new message element and add it to the messages container
+            var messageElement = $('<div>', { class: 'alert alert-' + tags, role: 'alert' }).text(message);
+            $('#divMessage').append(messageElement);
+        }
+
+        // Function to remove a URL parameter
+        function removeUrlParameter(url, parameter) {
+            const urlParts = url.split('?');
+            if (urlParts.length >= 2) {
+                const prefix = encodeURIComponent(parameter) + '=';
+                const params = urlParts[1].split(/[&;]/g);
+
+                // Iterate through the parameters and remove the specified one
+                for (let i = params.length; i-- > 0;) {
+                    if (params[i].lastIndexOf(prefix, 0) !== -1) {
+                        params.splice(i, 1);
+                    }
+                }
+
+                // Rebuild the URL without the removed parameter
+                return urlParts[0] + (params.length > 0 ? '?' + params.join('&') : '');
+            }
+            return url;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get('successMessage');
+        console.log(successMessage)
+        if (successMessage) {
+            // Display the success message as needed
+            addDjangoMessage('success', successMessage);
+
+            // Remove the success message parameter from the URL to avoid displaying it again on subsequent visits
+            const updatedUrl = removeUrlParameter(window.location.href, 'successMessage');
+            window.history.replaceState({}, document.title, updatedUrl);
+        }
+
+        function productionLogFilter() {
+            $(document).ready(function () {
+                $.ajax({
+                    url: '{% url "production-production-log-list-ajax" %}',
+                    method: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        data.forEach(function (itemCode) {
+                            itemCodeWithUnderScore = itemCode.replace(/ /g, '-');
+                            $('#filter-label').append(
+                                `<input type="radio" class="btn-check" id="${itemCodeWithUnderScore}-item-code" name="vbtn-radio" data-itemcode="${itemCode}">` +
+                                `<label class="btn btn-outline-primary me-1" for="${itemCodeWithUnderScore}-item-code"><a class="no-decoration">${itemCode}</a></label>`
+                            );
+                        });
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+
+                function loadItemCode(itemCode) {
+                    $.ajax({
+                        url: '{% url "production-production-log-list-ajax" %}',
+                        method: 'GET',
+                        data: {
+                            item_code: itemCode,
+                        },
+                        dataType: "json",
+                        success: function (data) {
+
+                            function formatCustomDate(dateString) {
+                                if (dateString) {
+                                    var date = new Date(dateString);
+                                    var options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                                    return new Intl.DateTimeFormat('en-US', options).format(date);
+                                } else {
+                                    return 'None';
+                                }
+                            }
+                            
+                            $('#logs-table-body').empty();
+                            data.forEach(function (log, index) {
+                                
+                                var formattedCreateDate = formatCustomDate(log.create_date);
+                                
+                                var editUrl = `production_log_list/${log.product_id}-update/`
+                                var deleteUrl = `production_log_list/${log.product_id}-delete/`
+        
+                                var logIndex = index + 1;
+                                var componentDetails = "";
+
+                                log.component_details.forEach(function (component) {
+                                    componentDetails+= `${component.component} for ${component.identifier} <br> (Lot: ${component.lot_number} | Exp: ${component.exp_date}) <br>`
+                                })
+                                
+                                $('#logs-table-body').append(`
+                                        <tr>
+                                            <td>${logIndex}</td>
+                                            <td>${log.item_code}</td>
+                                            <td>${log.lot_number !== null ? log.lot_number : 'None'}</td>
+                                            <td>${log.exp_date !== null ? log.exp_date : 'None'}</td>
+                                            <td style="max-width: 120px;">${log.quantity_produced}</td>
+                                            <td>${componentDetails}</td>
+                                            <td style="max-width: 120px;">${log.rH}</td>
+                                            <td>${log.temperature}</td>
+                                            <td>${formattedCreateDate}</td>
+                                            <td>
+                                                <div class="d-grid">
+                                                    <a class="btn btn-outline-primary btn-sm btn-block" href="${editUrl}">
+                                                        Edit
+                                                    </a>
+                                                    <a class="btn btn-outline-success btn-sm btn-block" href="">
+                                                        Validate
+                                                    </a>
+                                                    <a class="btn btn-outline-danger btn-sm btn-block" href="${deleteUrl}">
+                                                        Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `);
+                                $('#logs-table-body a.modal-link').css('cursor', 'pointer');
+        
+                            });
+                        },
+                        error: function (error) {
+                            console.log('Error:', error);
+                        }
+                    });
+                };
+
+                $('#filter-label').on('change', 'label', function () {
+                    var itemCode = $(this).data('itemcode');
+        
+                    // Remove the icon from all labels
+                    $('#filter-label label .fa-filter').remove();
+        
+                    if ($(this).prop('checked')) {
+                        // Find the label by the "for" attribute related to the clicked radio button
+                        var label = $('label[for="' + $(this).attr('id') + '"]');
+                        
+                        // Append the icon to the specific label
+                        label.prepend('<i class="fa-solid fa-filter me-1"></i>');
+                    }
+        
+                    loadItemCode(itemCode);
+                });
+        
+                // Event listener for radio button clicks, you might still use it independently if needed
+                $('#filter-label').on('change', 'input[type="radio"]', function () {
+                    var itemCode = $(this).data('itemcode');
+                    
+                    // Remove the icon from all labels
+                    $('#filter-label label .fa-filter').remove();
+        
+                    if ($(this).prop('checked')) {
+                        // Find the label by the "for" attribute related to the clicked radio button
+                        var label = $('label[for="' + $(this).attr('id') + '"]');
+                        
+                        // Append the icon to the specific label
+                        label.prepend('<i class="fa-solid fa-filter me-1"></i>');
+                    }
+        
+                    loadItemCode(itemCode);
+                });
+            })
+        }
+
+        productionLogFilter()
     </script>
 {% endblock %}

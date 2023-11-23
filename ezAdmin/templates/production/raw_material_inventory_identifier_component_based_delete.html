@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="container">
-        <div class="row mt-5">
+        <div class="row my-3">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
                     {% for message in messages %}
@@ -16,12 +16,12 @@
                     <h3>Deleting Inventory Log</h3>
                     <hr>
                     <div class="alert alert-danger">
-                        <h4>Are you sure you want to delete {{raw_material_inventory.component}} log?</h4>
+                        <h4>Are you sure you want to delete {{raw_material_inventory.component}} inventory log for {{ raw_material_inventory.purchasing_doc }}?</h4>
                     </div>
                     <form method = "POST">
                         {% csrf_token %}
                         <a class="btn btn-light"  href = "{% url 'production-raw-material-inventory-identifier-component-based-log-list' raw_material_inventory.component.identifier.id raw_material_inventory.component.id %}"> Cancel</a>
-                        <input class = "btn btn-danger" type="submit" value = "Confirm">
+                        <input class = "btn btn-danger" type="submit" value = "Delete Inventory Log">
                     </form>
                 </div>
             </div>

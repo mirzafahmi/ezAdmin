@@ -19,6 +19,7 @@ urlpatterns = [
     path('production_main/BOM_component_list/<int:pk>-update/', BOMComponentUpdateView.as_view(), name='production-BOM-component-update'),
     path('production_main/BOM_component_list/<int:pk>-delete/', BOMComponentDeleteView.as_view(), name='production-BOM-component-delete'),
     path('production_main/production_log_list/create', ProductionLogCreateView.as_view(), name='production-production-log-create'),
+    path('production_main/production_log_list_ajax', ProductionLogListViewAJAX.as_view(), name='production-production-log-list-ajax'),
     path('production_main/production_log_list', ProductionLogListView.as_view(), name='production-production-log-list'),
     path('production_main/production_log_list/<int:pk>-update/', ProductionLogUpdateView.as_view(), name='production-production-log-update'),
     path('production_main/production_log_list/<int:pk>-delete/', ProductionLogDeleteView.as_view(), name='production-production-log-delete'),

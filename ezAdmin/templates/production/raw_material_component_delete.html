@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="container">
-        <div class="row mt-5">
+        <div class="row my-3">
             <div class="col-md-6 offset-md-3">
                 <div class="border p-3">
                     {% for message in messages %}
@@ -21,7 +21,7 @@
                     <form method = "POST">
                         {% csrf_token %}
                         <a class="btn btn-light"  href = "{% url 'production-raw-material-component-list' %}"> Cancel</a>
-                        <input class = "btn btn-danger" type="submit" value = "Confirm">
+                        <input class = "btn btn-danger" type="submit" value = "Delete Component">
                     </form>
                 </div>
             </div>
