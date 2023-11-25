@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from credential import apps_pass, host_email
 import os
+import colorlog
+
 
 from pathlib import Path
 
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     "production.apps.ProductionConfig",
     "purchasing.apps.PurchasingConfig",
     "store.apps.StoreConfig",
+    "office.apps.OfficeConfig",
 
     'allauth',
     'allauth.account',
@@ -71,6 +74,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'dashboard.middleware.SessionTimeoutMiddleware',
     'dashboard.middleware.DarkModeMiddleware',
+    'dashboard.middleware.ExceptionLoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'ezAdmin.urls'
@@ -193,6 +197,50 @@ ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180  # Cooldown period'''
 SITE_ID = 1
 
 SESSION_COOKIE_AGE = 1800
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR/'error_log/debug.log',
+            'formatter': 'verbose',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'INFO',
+            'formatter': 'colored',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[%(asctime)s] %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S',
+        },
+        'colored': {
+            '()': 'colorlog.ColoredFormatter',  # Use colorlog.ColoredFormatter
+            'format': '[%(asctime)s] %(log_color)s%(levelname)-8s%(reset)s %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S',
+            'log_colors': {  # Define log colors
+                'DEBUG': 'bold_cyan',
+                'INFO': 'bold_green',
+                'WARNING': 'bold_yellow',
+                'ERROR': 'bold_red',
+                'CRITICAL': 'bold_red,bg_white',
+            },
+        },
+    },
+}
+
 
 #DATE_FORMAT = 'j/M/Y'
 

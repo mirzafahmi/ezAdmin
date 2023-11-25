@@ -151,9 +151,10 @@
     </div>
 </body>
 <script>
+    responsiveButtonText('addLog')  
+    
     var baseUrl = "{% url 'production-raw-material-inventory-identifier-component-based-log-list-ajax' %}"
     rawMaterialLogFilter();
-    generateModals();   
-    responsiveButtonText('addLog')    
+    generateModals();     
 </script>
 {% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'partials/base.html' %}
+{% block title %} Electronic Inventory List{% endblock %}
+
+{% block content %}
+    <div class="container-md my-3">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="hstack">
+            <span class="h3" style="margin-bottom: 0px;">Electronic Inventory List</span class="h4">
+            <a class="btn btn-success btn-sm ms-auto" id="addInventory" href="{% url 'office-electronic-inventory-create' %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add Inventory
+            </a>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover">
+                <thead class ="table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Electronic Item</th>
+                        <th>Serial Number</th>
+                        <th>Price Per Unit</th>
+                        <th>Date of Purchase</th>
+                        <th>Purchasing Document</th>
+                        <th>Status</th>
+                        <th>Remark</th>
+                        <th>Created Date</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for electronicinventory in electronicinventories %}       
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{electronicinventory.electronic_item}}</td>
+                        <td>{{electronicinventory.serial_number}}</td>
+                        <td>{{electronicinventory.purchasing_document.supplier.currency_trade.currency_code}} {{electronicinventory.price_per_unit}}</td>
+                        <td>{{electronicinventory.date_of_purchase}}</td>
+                        <td>{{electronicinventory.purchasing_document}}</td>
+                        <td>{{electronicinventory.status}}</td>
+                        <td>{{electronicinventory.remark}}</td>
+                        <td>{{electronicinventory.create_date}}</td>
+                        <td>
+                            <div class = "d-grid">
+                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'office-electronic-inventory-update' electronicinventory.id %}">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                        Validate
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'office-electronic-inventory-delete' electronicinventory.id %}">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </div>    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>      
+                <tfoot id="table-footer">
+                    {% if not electronicinventories %}
+                    <tr class="table-group-divider">
+                        <td colspan="10" class="fw-bold">
+                            <hr>
+                            No Electronic Inventory available, please add in
+                            <hr>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tfoot>                      
+            </table>
+        </div>
+    </div>
+    <script>
+        responsiveButtonText('addInventory')
+    </script>
+{% endblock %}

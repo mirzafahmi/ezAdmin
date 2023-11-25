@@ -1,48 +1,31 @@
 
 function componentLogFilter() {
     $(document).ready(function () {
-        $('#filter-label').on('change', 'label', function () {
-            var component = $(this).data('component');
-
-            // Remove the icon from all labels
-            $('#filter-label label .fa-filter').remove();
-
-            if ($(this).prop('checked')) {
-                // Find the label by the "for" attribute related to the clicked radio button
-                var label = $('label[for="' + $(this).attr('id') + '"]');
-                
-                // Append the icon to the specific label
-                label.prepend('<i class="fa-solid fa-filter me-1"></i>');
+        $.ajax({
+            url: baseUrl,
+            method: 'GET',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                data.forEach(function (log) {
+                    logWithUnderScore = log.replace(/ /g, '-');
+                    $('#filter-label').append(
+                        `<input type="radio" class="btn-check" id="${logWithUnderScore}-identifier" name="vbtn-radio" data-identifier="${log}">` +
+                        `<label class="btn btn-outline-primary me-1" for="${logWithUnderScore}-identifier"><a class="no-decoration">${log}</a></label>`
+                    );
+                });
+            },
+            error: function (error) {
+                console.log('Error:', error);
             }
-
-            loadLogs(component);
         });
 
-        // Event listener for radio button clicks, you might still use it independently if needed
-        $('#filter-label').on('change', 'input[type="radio"]', function () {
-            var component = $(this).data('component');
-            
-            // Remove the icon from all labels
-            $('#filter-label label .fa-filter').remove();
-
-            if ($(this).prop('checked')) {
-                // Find the label by the "for" attribute related to the clicked radio button
-                var label = $('label[for="' + $(this).attr('id') + '"]');
-                
-                // Append the icon to the specific label
-                label.prepend('<i class="fa-solid fa-filter me-1"></i>');
-            }
-
-            loadLogs(component);
-        });
-            
-
-        function loadLogs(component) {
+        function loadLogs(identifier) {
             $.ajax({
                 url: baseUrl,
                 method: 'GET',
                 data: {
-                    component_name: component,
+                    identifier_name: identifier,
                 },
                 dataType: "json",
                 success: function (data) {
@@ -71,7 +54,7 @@ function componentLogFilter() {
                                     <td>${logIndex}</td>
                                     <td>${log.identifier}</td>
                                     <td>${log.component}</td>
-                                    <td>${log.specifications}</td>
+                                    <td>${log.specifications == null? 'None': log.specifications}</td>
                                     <td>${formattedCreateDate}</td>
                                     <td>
                                         <div class="d-grid">
@@ -98,22 +81,39 @@ function componentLogFilter() {
             });
         };
 
-        $.ajax({
-            url: baseUrl,
-            method: 'GET',
-            dataType: "json",
-            success: function (data) {
-                data.forEach(function (log) {
-                    logWithUnderScore = log.replace(/ /g, '-');
-                    $('#filter-label').append(
-                        `<input type="radio" class="btn-check" id="${logWithUnderScore}-component" name="vbtn-radio" data-component="${log}">` +
-                        `<label class="btn btn-outline-primary me-1" for="${logWithUnderScore}-component"><a class="no-decoration">${log}</a></label>`
-                    );
-                });
-            },
-            error: function (error) {
-                console.log('Error:', error);
+        $('#filter-label').on('change', 'label', function () {
+            var identifier = $(this).data('identifier');
+
+            // Remove the icon from all labels
+            $('#filter-label label .fa-filter').remove();
+
+            if ($(this).prop('checked')) {
+                // Find the label by the "for" attribute related to the clicked radio button
+                var label = $('label[for="' + $(this).attr('id') + '"]');
+                
+                // Append the icon to the specific label
+                label.prepend('<i class="fa-solid fa-filter me-1"></i>');
             }
+
+            loadLogs(identifier);
+        });
+
+        // Event listener for radio button clicks, you might still use it independently if needed
+        $('#filter-label').on('change', 'input[type="radio"]', function () {
+            var identifier = $(this).data('identifier');
+            
+            // Remove the icon from all labels
+            $('#filter-label label .fa-filter').remove();
+
+            if ($(this).prop('checked')) {
+                // Find the label by the "for" attribute related to the clicked radio button
+                var label = $('label[for="' + $(this).attr('id') + '"]');
+                
+                // Append the icon to the specific label
+                label.prepend('<i class="fa-solid fa-filter me-1"></i>');
+            }
+
+            loadLogs(identifier);
         });
     })
 }

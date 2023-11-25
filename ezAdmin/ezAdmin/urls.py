@@ -34,5 +34,6 @@ urlpatterns = [
     path('', include('purchasing.urls')),
     path('', include('misc.urls')),
     path('', include('store.urls')),
+    path('', include('office.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

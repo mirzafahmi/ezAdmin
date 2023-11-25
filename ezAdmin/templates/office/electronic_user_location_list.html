@@ -1,0 +1,75 @@
+{% extends 'partials/base.html' %}
+{% block title %} Electronic User Location List{% endblock %}
+
+{% block content %}
+    <div class="container-md my-3">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="hstack">
+            <span class="h3" style="margin-bottom: 0px;">Electronic User Location List</span class="h4">
+            <a class="btn btn-success btn-sm ms-auto" id="addUserLocation" href="{% url 'office-electronic-user-location-create' %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add User Location
+            </a>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover">
+                <thead class ="table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Location</th>
+                        <th>Careholder Name</th>
+                        <th>Phone Number</th>
+                        <th>Created Date</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for electronicuserlocation in electronicuserlocations %}       
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{electronicuserlocation.company_name}}</td>
+                        <td>{{electronicuserlocation.careholder_name}}</td>
+                        <td>{{electronicuserlocation.phone_number}}</td>
+                        <td>{{electronicuserlocation.create_date}}</td>
+                        <td>
+                            <div class = "d-grid">
+                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'office-electronic-user-location-update' electronicuserlocation.id %}">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                        Validate
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'office-electronic-user-location-delete' electronicuserlocation.id %}">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </div>    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>      
+                <tfoot id="table-footer">
+                    {% if not electronicuserlocations %}
+                    <tr class="table-group-divider">
+                        <td colspan="6" class="fw-bold">
+                            <hr>
+                            No User Location available, please add in
+                            <hr>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tfoot>                      
+            </table>
+        </div>
+    </div>
+    <script>
+        responsiveButtonText('addUserLocation')
+    </script>
+{% endblock %}

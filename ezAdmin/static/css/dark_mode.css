@@ -1,28 +1,37 @@
+:root {
+    --primary-ezadmin: #05161a;
+    --primary-shade-ezadmin: #072e33;
+    --secondary-ezadmin: #6da5c0;
+    --secondary-shade-ezadmin: #000;
+    --accent-ezadmin: #119CA3;
+    --accent-shade-ezadmin: #0e878d;
+}
+
 body {
-    background-color: #05161a;
-    color: #6da5c0;
+    background-color: var(--primary-ezadmin);
+    color: var(--secondary-ezadmin);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #navBar {
-    background-color: #05161a;
+    background-color: var(--primary-ezadmin);
 }
 
 #navBar2{
-    background-color: #05161a;
+    background-color: var(--primary-ezadmin);
     box-shadow: rgba(0, 0, 0, 0.45) 0px 20px 20px -20px;
   }
 
 .navbar-brand {
-    color: #6da5c0;
+    color: var(--secondary-ezadmin);
 }
 
 .navbar-brand:focus, .navbar-brand:hover {
-    color: #6da5c0;
+    color: var(--secondary-ezadmin);
   }
 
 .navbar .navbar-nav .nav-link {
-    color: #6da5c0;
+    color: var(--secondary-ezadmin);
 }
 
 .navbar .navbar-nav .nav-link:hover {
@@ -37,7 +46,7 @@ body {
     border-right: .3em solid transparent;
     border-bottom: 0;
     border-left: .3em solid transparent;
-    color: #6da5c0;
+    color: var(--secondary-ezadmin);
     margin: 3px 3px 0px -2px;
   }
   
@@ -45,8 +54,26 @@ body {
     color: #fcfcfd;
 }
 
+.dropdown-menu {
+    background-color: var(--primary-ezadmin);
+}
+
+.dropdown-item {
+    color: var(--secondary-ezadmin)
+}
+
+.dropdown-item:hover {
+    background-color: var(--primary-shade-ezadmin);
+    color: var(--secondary-ezadmin)
+}
+
+.dropdown-item:active {
+    background-color: var(--accent-shade-ezadmin);
+    color: var(--secondary-shade-ezadmin)
+}
+
 #main-page{
-    background-color: #05161a;
+    background-color: var(--primary-ezadmin);
 }
 
 #breadCrumbsNav {
@@ -54,58 +81,55 @@ body {
 }
 
 .card {
-    background-color: #072e33;
+    background-color: var(--primary-shade-ezadmin);
 }
 
 .form-text {
-    color: #6da5c0;
+    color: var(--secondary-ezadmin);
   }
 
 .btn-accent {
-    background-color: #119CA3;
-    border: 1px solid #119CA3;
+    background-color: var(--accent-ezadmin);
+    border: 1px solid var(--accent-ezadmin);
+    color: var(--secondary-shade-ezadmin)
   }
 
 .btn-accent:hover {
-    background-color: #0C7075;
-    border: 1px solid #0C7075;
+    background-color: var(--accent-shade-ezadmin);
+    border: 1px solid var(--accent-shade-ezadmin);
+    color: var(--secondary-shade-ezadmin)
 }
 
 .btn-accent:active {
-    background-color: #0C7075;
-    border: 1px solid #0C7075;
+    background-color: var(--accent-shade-ezadmin);
+    border: 1px solid var(--accent-shade-ezadmin);
+    color: var(--secondary-shade-ezadmin)
 }
 
 .btn-accent:focus {
-    background-color: #0C7075;
-    border: 1px solid #0C7075;
-}
-.btn-outline-primary {
-    border-color: #6da5c0;
-    color: 1px solid #6da5c0;
-}
-
-.btn-outline-primary:hover {
-    border-color: #6da5c0;
-    background-color: #6da5c0;
-    color: #fcfcfd;
+    background-color: var(--accent-shade-ezadmin);
+    border: 1px solid var(--accent-shade-ezadmin);
+    color: var(--secondary-shade-ezadmin)
 }
 
 footer {
-    background-color: #05161a;
-    color: #6da5c0;
+    background-color: var(--primary-ezadmin);
+    color: var(--secondary-ezadmin);
 }
 
 .btn.btn-outline-dark {
     /* Your custom styles here */
-    color: #6da5c0; /* Custom text color */
-    background-color: #21251F; /* Custom background color */
-    border-color: #6da5c0; /* Custom border color */
-  }
+    color: var(--secondary-ezadmin); /* Custom text color */
+    border-color: var(--secondary-ezadmin); /* Custom border color */
+}
   
   /* Add hover styles if needed */
-  .btn.btn-outline-dark:hover {
+.btn.btn-outline-dark:hover {
     color: #21251F; 
-    background-color: #6da5c0; /* Custom background color on hover */
-    border-color: #6da5c0; /* Custom border color on hover */
-  }
+    background-color: var(--secondary-ezadmin); /* Custom background color on hover */
+    border-color: var(--secondary-ezadmin)0; /* Custom border color on hover */
+}
+
+.version {
+    color: var(--secondary-ezadmin);
+}

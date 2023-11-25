@@ -1,0 +1,29 @@
+{% extends 'partials/base.html' %}
+{% block title %} Update Electronic Purchasing Document{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row my-3">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    {% if message %}
+                    {% for message in messages %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <h3>Update {{electronicpurchasingdocument.po_number}} ({{electronicpurchasingdocument.supplier}}) electronic purchasing document details?</h3>
+                    <hr>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <a class="btn btn-light" href = "{% url 'office-electronic-purchasing-document-list' %}"> Cancel</a>
+                        <input class="btn btn-primary" type="submit" value="Update Purchasing Document">
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+{% endblock %}

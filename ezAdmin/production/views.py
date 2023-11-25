@@ -111,6 +111,14 @@ class RawMaterialComponentCreateView(LoginRequiredMixin, PermissionRequiredMixin
 
     permission_required = 'production.add_component'
 
+    def get_initial(self):
+        initial = super().get_initial()
+
+        # Set a default value for the my_input_name field
+        initial['spec'] = '-'
+
+        return initial
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         if 'identifier_id' in self.kwargs:
@@ -158,12 +166,12 @@ class RawMaterialComponentListView(LoginRequiredMixin, ListView):
 
 class RawMaterialComponentListViewAJAX(View):
     def get(self, request, *args, **kwargs):
-        component_name = request.GET.get('component_name')
+        identifier_name = request.GET.get('identifier_name')
 
         filter_data =[] #empty array could cause bug of empty filter button
-
-        if component_name:
-            if component_name == "main-page":
+        print(identifier_name)
+        if identifier_name:
+            if identifier_name == "main-page":
                 all_components = RawMaterialComponent.objects.all().order_by('identifier')
 
                 for all_component in all_components:
@@ -177,7 +185,7 @@ class RawMaterialComponentListViewAJAX(View):
                     })
             else:
                 # Filter the model objects based on the component name
-                filtered_objects = RawMaterialComponent.objects.filter(component__icontains=component_name)
+                filtered_objects = RawMaterialComponent.objects.filter(identifier__parent_item_code=identifier_name)
 
                 filter_components = filtered_objects
 
@@ -194,26 +202,9 @@ class RawMaterialComponentListViewAJAX(View):
             
             return JsonResponse(filter_data, safe=False)
         else:
-            components = RawMaterialComponent.objects.all()
+            identifiers = RawMaterialIdentifier.objects.values_list('parent_item_code', flat=True)
 
-            component = RawMaterialComponent.objects.values_list('component', flat=True)
-
-            # Extract words and phrases (splitting on commas)
-            all_words = ','.join(component)
-            all_words_list = all_words.split(',')
-            
-            simple_words = set() #store only distint data
-
-            for word in all_words_list:
-                if 'for' not in word.lower():  # Exclude words with 'for'
-                    simple_words.add(word)
-                else:
-                    simple_words.add(word.split('For')[0].strip())
-
-            component_labels = list(simple_words)
-            
-            return JsonResponse(component_labels, safe=False)
-
+            return JsonResponse(list(identifiers), safe=False)
 
 class RawMaterialComponentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = RawMaterialComponent

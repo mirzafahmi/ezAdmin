@@ -1,0 +1,62 @@
+{% extends 'partials/base.html' %}
+{% block title %} Office Task{% endblock %}
+
+{% block content %}
+<body>
+    <div class="container-md my-3">
+        <h2 class = "text-center">Office Main Page</h2>
+        <hr>
+        <div class="card-deck row g-4">
+            <div class="col-xl-4 col-lg-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">User Location Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete user location list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'office-electronic-user-location-list' %}">View User Location List</a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">User Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete user list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'office-electronic-user-list' %}">View User List</a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Brand Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete brand list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'office-electronic-brand-list' %}">View Brand List</a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Model Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete model list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'office-electronic-model-list' %}">View Model List</a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Purchasing Document Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete purchasing document list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'office-electronic-purchasing-document-list' %}">View Purchasing Document List</a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Inventory Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete inventory list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'office-electronic-inventory-list' %}">View Inventory List</a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <div class="card card-body d-flex flex-column">
+                    <h3 class="card-title">Transaction Tab</h3>
+                    <p class="card-text py-3">To view, create, update and delete transaction list.</p>
+                    <a class="btn btn-accent mt-auto" href="{% url 'office-electronic-transaction-list' %}">View Transaction List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

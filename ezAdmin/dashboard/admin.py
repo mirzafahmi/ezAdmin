@@ -2,4 +2,4 @@ from django.contrib import admin
 
 # Register your models here.
 
-admin.site.site_header = 'medivenAdmin Administrative View'
+admin.site.site_header = 'ezAdmin Administrative View'

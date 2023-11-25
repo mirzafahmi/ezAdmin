@@ -1,12 +1,12 @@
 @echo off
 setlocal enabledelayedexpansion
 
-echo Backup sequence is running...
+echo BACKUP SEQUENCE FOR EZADMIN is running...
 
 REM Set the relative paths from the batch script location
-set DB_SOURCE=.\medivenAdmin\db.sqlite3
-set MEDIA_SOURCE=.\medivenAdmin\media\purchasing_documents
-set BACKUP_DIR=.\..\backup
+set DB_SOURCE=.\ezAdmin\db.sqlite3
+set MEDIA_SOURCE=.\ezAdmin\media
+set BACKUP_DIR=.\..\ezAdmin_backup
 
 REM Get the current date and time in the desired format (YYYY-MM-DD_HH:MM:SS)
 for /f "delims=" %%a in ('wmic OS Get localdatetime ^| find "."') do set datetime=%%a
@@ -21,5 +21,11 @@ copy "%DB_SOURCE%" "%BACKUP_FOLDER%"
 REM Copy the media folder (recursively)
 xcopy "%MEDIA_SOURCE%" "%BACKUP_FOLDER%\media\" /E /I
 
-echo Backup sequence completed successfully...
+REM Compress the backup folder using PowerShell
+powershell Compress-Archive -Path "%BACKUP_FOLDER%" -DestinationPath "%BACKUP_FOLDER%.zip"
+
+REM Remove the original backup folder
+rmdir /s /q "%BACKUP_FOLDER%"
+
+echo BACKUP SEQUENCE FOR EZADMIN completed successfully...
 pause

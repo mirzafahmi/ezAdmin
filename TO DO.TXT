@@ -14,15 +14,64 @@
 - misc main page - done
 - put all table in div, to make only table responsive - done
 - server error template - done
+- add status 302 for each delete view
+- bug in excel generation, not minus the type 2 one - done
+- add manage logic for production log create - done
+- add delete message for production log create (as ajax base submition) - done
+- filter list of bomcomponent - done
+- delete inventory based on log - done
+- brand CRUD - done
+- make bomcomponent unique as component - done
+- fix 302 success message in misc apps - done
+- change accent button - done
+- add modal-xl modal-fullscreen-xl-down for rawmaterial inventory list - done
+- change title of modal - done
+- set email credential - done
+- production log filter - done
+- refactor fbv view to cbv - done
+- function to summarize the stock available
+- add context for each views update and delete - done
+- fixes some wording for update and delete header - done
+- add k1 form rate in modal - done
+- add local trade price per unit -done
+- add local trade price per unit for filter ajax rawmaterialinventory - done
+- bug in filtered log of rawmaterialinventory for edit and delete fx - done
+- add empty place holder for all list table - done
+- add empty placeholder for all empty filtered table - done
+- rework main col size - done
+- fix active accent button - done
+- change charfield of price per unit rawmaterialinventory - done
+ - change action button text - done
+- rework profile - done
+- bug uncutsheet filter button not appear if uncutsheet other than uncutsheet only in raw material component - done
+- footer empty placeholder for ajax bomcomponent - done
+- bug / in igg/igm caused error, symbols & or / caused error - done
 
 
 
-- create documentation
+
+
+- create documentation - partial
 - rejection/defect models
 - rejection logic
-- make bomcomponent unique as component
-- filter dropdown based on product
-- filter list of bomcomponent
-- delete inventory based on log
-- add status 302 for each delete view
-- bug in excel generation, not minus the type 2 one
+- filter dropdown based on product 
+- put breadcrumb in own js file
+- create form_valid for update view to make message show the latest info
+- make filter list modular
+- refactor fbv view to cbv for login logout profile register
+- change unique constraint for the RawMaterialComponent to be constraint based on identifier, component and spec
+
+
+
+- adjust disabled field color
+- add validation error in js for all field for production log
+- make table vertical when reach breakview point
+- placeholder for quantity produced
+- change component filter to identifier filter for raw material component - done
+- remove validate button
+- add logic for transaction electronic to be 
+- change remark of inventory
+- change wording for the transaction
+
+
+- change filter for raw material component

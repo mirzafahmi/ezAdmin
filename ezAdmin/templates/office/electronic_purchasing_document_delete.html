@@ -1,0 +1,30 @@
+{% extends 'partials/base.html' %}
+{% block title %} Delete Electronic Purchasing Document{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row my-3">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    {% for message in messages %}
+                    {% if message %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <h3>Deleting Electronic Purchasing Document</h3>
+                    <hr>
+                    <div class="alert alert-danger">
+                        <h4>Are you sure you want to delete {{electronicpurchasingdocument.po_number}} ({{electronicpurchasingdocument.supplier}}) purchasing document details?</h4>
+                    </div>
+                    <form method = "POST">
+                        {% csrf_token %}
+                        <a class="btn btn-light"  href = "{% url 'office-electronic-purchasing-document-list' %}"> Cancel</a>
+                        <input class = "btn btn-danger" type="submit" value = "Delete Purchasing Document">
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+{% endblock %}

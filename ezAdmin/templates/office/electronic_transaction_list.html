@@ -1,0 +1,89 @@
+{% extends 'partials/base.html' %}
+{% block title %} Electronic Transaction List{% endblock %}
+
+{% block content %}
+    <div class="container-md my-3">
+        {% for message in messages %}
+        {% if message %}
+        <div class = "alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="hstack">
+            <span class="h3" style="margin-bottom: 0px;">Electronic Transaction List</span class="h4">
+            <a class="btn btn-success btn-sm ms-auto" id="addTransaction" href="{% url 'office-electronic-transaction-create' %}">
+                <i class="fa-solid fa-plus me-1"></i>
+                Add Transaction
+            </a>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover">
+                <thead class ="table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Current User</th>
+                        <th>Electronic Item</th>
+                        <th>Transaction Type</th>
+                        <th>Agreement Details</th>
+                        <th>Created Date</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for electronictransaction in electronictransactions %}       
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                            {{electronictransaction.current_user.name}} <br> 
+                            ({{electronictransaction.current_user.position}} at {{electronictransaction.current_user.location}})
+                        </td>
+                        <td>
+                            {{electronictransaction.electronic_item.electronic_item.brand.brand_name}} 
+                            {{electronictransaction.electronic_item.electronic_item.model_name}} <br>
+                            (SN: {{electronictransaction.electronic_item.serial_number}})
+                        </td>
+                        <td>{{electronictransaction.transaction_type}}</td>
+                        <td>
+                            <a href="{{ electronictransaction.initial_agreement_doc.url }}">Initial Agreement</a> <br>
+                            {% if electronictransaction.return_agreement_doc %}
+                            <a href="{{ electronictransaction.return_agreement_doc.url }}">Return Agreement</a>
+                            {% endif %}
+                        </td>
+                        <td>{{electronictransaction.create_date}}</td>
+                        <td>
+                            <div class = "d-grid">
+                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'office-electronic-transaction-update' electronictransaction.id %}">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
+                                        Validate
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'office-electronic-transaction-delete' electronictransaction.id %}">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </div>    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>      
+                <tfoot id="table-footer">
+                    {% if not electronictransactions %}
+                    <tr class="table-group-divider">
+                        <td colspan="7" class="fw-bold">
+                            <hr>
+                            No Transaction available, please add in
+                            <hr>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tfoot>                      
+            </table>
+        </div>
+    </div>
+    <script>
+        responsiveButtonText('addTransaction')
+    </script>
+{% endblock %}

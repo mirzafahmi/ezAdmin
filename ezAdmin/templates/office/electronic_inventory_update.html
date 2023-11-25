@@ -1,0 +1,29 @@
+{% extends 'partials/base.html' %}
+{% block title %} Update Electronic Inventory{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row my-3">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    {% if message %}
+                    {% for message in messages %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <h3>Update {{electronicinventory}} ({{electronicinventory.serial_number}}) as Electronic Inventory details?</h3>
+                    <hr>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <a class="btn btn-light" href = "{% url 'office-electronic-inventory-list' %}"> Cancel</a>
+                        <input class="btn btn-primary" type="submit" value="Update Inventory">
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+{% endblock %}

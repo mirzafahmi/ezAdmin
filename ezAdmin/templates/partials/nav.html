@@ -57,18 +57,35 @@
             <a class="dropdown-item" href="{% url 'misc-uom-list' %}"misc-uom-list>UOM List</a>
             <a class="dropdown-item" href="{% url 'misc-currency-list' %}">Currency List</a>
           </div>
+          <li class="nav-item dropdown sticky-dropdown">
+            <div class="nav-link-wrapper">
+              <a class="nav-link nav-label" href="{% url 'office-main' %}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Office 
+              </a>
+              <span class="dropdown-caret"></span>
+            </div>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url 'office-electronic-user-location-list' %}">User Location List</a>
+              <a class="dropdown-item" href="{% url 'office-electronic-user-list' %}">User List</a>
+              <a class="dropdown-item" href="{% url 'office-electronic-brand-list' %}">Brand List</a>
+              <a class="dropdown-item" href="{% url 'office-electronic-model-list' %}">Model List</a>
+              <a class="dropdown-item" href="{% url 'office-electronic-purchasing-document-list' %}">Purchasing Document List</a>
+              <a class="dropdown-item" href="{% url 'office-electronic-inventory-list' %}">Inventory List</a>
+              <a class="dropdown-item" href="{% url 'office-electronic-transaction-list' %}">Transaction List</a>
+            </div>
+          </li>
         </li>
       </ul>
       
 
-      {% if user.is_authenticated %}
+      
       <ul class = "navbar-nav ms-auto">
         <li id="divDarkModeToggle" class="nav-item d-flex align-items-center px-1">
-          <div class="form-check form-switch d-flex align-items-center">
+          <div class="form-check form-switch d-flex align-items-center" id="div-dark-mode-toggle">
             <input class="form-check-input" id="dark-mode-toggle" type="checkbox" role="switch" id="flexSwitchCheckDefault" {% if request.dark_mode %}checked{% endif %}>
           </div>
         </li>
-        <li class ="register-button px-1 nav-item" style="border-right: 1px solid rgba(255, 255, 255, 0.55);">
+        <li class ="register-button px-1 nav-item" style="">
           <a id="user-nav-link" class="nav-link" href ="{% url 'user-profile' %}">
               {% if user.is_superuser %}
               <i class="fa-solid fa-crown me-1"></i>
@@ -85,23 +102,6 @@
           </a>
         </li>
       </ul>
-
-      {% else %}
-      <ul class = "navbar-nav ms-auto">
-        <li class = "register-button px-1 nav-item " style="border-right: 1px solid rgba(255, 255, 255, 0.55);">
-          <a id="register-nav-link" class="nav-link" href ="{% url 'user-register' %}">
-              <i class="fa-solid fa-user-plus me-1"></i>
-              Register
-          </a>
-        </li>
-        <li class = "log-in-button px-1 nav-item">
-          <a id="login-nav-link" class="nav-link" href ="{% url 'user-login' %}">
-              <i class="fa-solid fa-user me-1"></i>
-              Login
-          </a>
-        </li>
-      </ul>
-      {% endif %}
 
     </div>
   </div>    

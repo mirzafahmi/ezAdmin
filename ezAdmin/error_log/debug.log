@@ -1,0 +1,1204 @@
+[25/Nov/2023 22:08:47] Watching for file changes with StatReloader
+[25/Nov/2023 22:08:49] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 22:08:49] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:08:49] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 22:09:04] "GET /profile/ HTTP/1.1" 200 16105
+[25/Nov/2023 22:09:05] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:09:05] - Broken pipe from ('127.0.0.1', 60887)
+[25/Nov/2023 22:09:05] - Broken pipe from ('127.0.0.1', 60888)
+[25/Nov/2023 22:09:05] - Broken pipe from ('127.0.0.1', 60889)
+[25/Nov/2023 22:09:17] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 22:09:17] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:09:17] - Broken pipe from ('127.0.0.1', 60890)
+[25/Nov/2023 22:09:17] - Broken pipe from ('127.0.0.1', 60891)
+[25/Nov/2023 22:09:17] - Broken pipe from ('127.0.0.1', 60892)
+[25/Nov/2023 22:10:37] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 22:10:37] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:10:37] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 22:10:37] - Broken pipe from ('127.0.0.1', 60896)
+[25/Nov/2023 22:10:39] "GET /logout/ HTTP/1.1" 200 8772
+[25/Nov/2023 22:10:39] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:10:42] "GET /login/ HTTP/1.1" 200 10065
+[25/Nov/2023 22:10:42] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:10:43] - Broken pipe from ('127.0.0.1', 60897)
+[25/Nov/2023 22:10:43] - Broken pipe from ('127.0.0.1', 60899)
+[25/Nov/2023 22:10:44] Forbidden: /dashboard/update-dark-mode/
+[25/Nov/2023 22:10:44] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[25/Nov/2023 22:10:45] Forbidden: /dashboard/update-dark-mode/
+[25/Nov/2023 22:10:45] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[25/Nov/2023 22:11:02] "GET /password_reset/ HTTP/1.1" 200 9865
+[25/Nov/2023 22:11:02] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:11:03] Not Found: /favicon.ico
+[25/Nov/2023 22:11:03] "GET /favicon.ico HTTP/1.1" 404 28044
+[25/Nov/2023 22:11:03] - Broken pipe from ('127.0.0.1', 60900)
+[25/Nov/2023 22:11:03] - Broken pipe from ('127.0.0.1', 60902)
+[25/Nov/2023 22:11:44] "GET /login/ HTTP/1.1" 200 10065
+[25/Nov/2023 22:11:44] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:11:45] "GET /logout/ HTTP/1.1" 200 9254
+[25/Nov/2023 22:11:45] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:11:46] Forbidden: /dashboard/update-dark-mode/
+[25/Nov/2023 22:11:46] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[25/Nov/2023 22:11:48] Forbidden: /dashboard/update-dark-mode/
+[25/Nov/2023 22:11:48] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[25/Nov/2023 22:11:48] "GET /login/ HTTP/1.1" 200 10065
+[25/Nov/2023 22:11:48] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:11:56] "POST /login/ HTTP/1.1" 302 0
+[25/Nov/2023 22:11:56] "GET / HTTP/1.1" 200 15916
+[25/Nov/2023 22:11:56] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:13:34] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\ezAdmin\settings.py changed, reloading.
+[25/Nov/2023 22:17:15] Watching for file changes with StatReloader
+[25/Nov/2023 22:17:22] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 22:17:22] "GET /static/css/style.css HTTP/1.1" 200 4667
+[25/Nov/2023 22:17:22] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:17:27] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 22:17:27] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:17:28] "GET /office_main/electronic_user HTTP/1.1" 200 15898
+[25/Nov/2023 22:17:28] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:17:28] "GET /static/css/dark_mode.css HTTP/1.1" 200 2302
+[25/Nov/2023 22:17:28] - Broken pipe from ('127.0.0.1', 60973)
+[25/Nov/2023 22:17:28] - Broken pipe from ('127.0.0.1', 60974)
+[25/Nov/2023 22:17:28] - Broken pipe from ('127.0.0.1', 60975)
+[25/Nov/2023 22:17:30] "GET /logout/ HTTP/1.1" 200 9245
+[25/Nov/2023 22:17:30] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:17:31] Forbidden: /dashboard/update-dark-mode/
+[25/Nov/2023 22:17:31] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[25/Nov/2023 22:17:33] Forbidden: /dashboard/update-dark-mode/
+[25/Nov/2023 22:17:33] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[25/Nov/2023 22:17:34] "GET /login/ HTTP/1.1" 200 10065
+[25/Nov/2023 22:17:34] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:17:38] "POST /login/ HTTP/1.1" 302 0
+[25/Nov/2023 22:17:38] "GET / HTTP/1.1" 200 15916
+[25/Nov/2023 22:17:38] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:17:44] "GET /logout/ HTTP/1.1" 200 9245
+[25/Nov/2023 22:17:44] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:17:45] "GET /login/ HTTP/1.1" 200 10065
+[25/Nov/2023 22:17:45] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:17:55] "POST /login/ HTTP/1.1" 200 10253
+[25/Nov/2023 22:17:56] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:18:09] Forbidden: /dashboard/update-dark-mode/
+[25/Nov/2023 22:18:09] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[25/Nov/2023 22:18:11] Forbidden: /dashboard/update-dark-mode/
+[25/Nov/2023 22:18:11] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[25/Nov/2023 22:18:24] "POST /login/ HTTP/1.1" 302 0
+[25/Nov/2023 22:18:24] "GET / HTTP/1.1" 200 15916
+[25/Nov/2023 22:18:24] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:18:28] "GET /admin/auth/user/ HTTP/1.1" 200 19868
+[25/Nov/2023 22:18:28] "GET /static/admin/css/base.css HTTP/1.1" 200 21207
+[25/Nov/2023 22:18:28] "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+[25/Nov/2023 22:18:28] "GET /static/admin/css/changelists.css HTTP/1.1" 200 6566
+[25/Nov/2023 22:18:28] "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+[25/Nov/2023 22:18:28] "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+[25/Nov/2023 22:18:28] "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[25/Nov/2023 22:18:28] "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+[25/Nov/2023 22:18:28] "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+[25/Nov/2023 22:18:28] "GET /static/admin/js/core.js HTTP/1.1" 200 5682
+[25/Nov/2023 22:18:28] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+[25/Nov/2023 22:18:28] "GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+[25/Nov/2023 22:18:28] "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+[25/Nov/2023 22:18:28] "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+[25/Nov/2023 22:18:28] "GET /static/admin/css/responsive.css HTTP/1.1" 200 18533
+[25/Nov/2023 22:18:28] "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+[25/Nov/2023 22:18:28] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+[25/Nov/2023 22:18:28] "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+[25/Nov/2023 22:18:28] "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+[25/Nov/2023 22:18:28] "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+[25/Nov/2023 22:18:28] "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[25/Nov/2023 22:18:28] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[25/Nov/2023 22:18:28] "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+[25/Nov/2023 22:18:28] Not Found: /favicon.ico
+[25/Nov/2023 22:18:28] "GET /favicon.ico HTTP/1.1" 404 28044
+[25/Nov/2023 22:18:30] "GET /admin/office/electronicinventory/ HTTP/1.1" 200 19642
+[25/Nov/2023 22:18:42] Not Found: /asd
+[25/Nov/2023 22:18:42] "GET /asd HTTP/1.1" 404 28020
+[25/Nov/2023 22:18:52] "GET /office_main/electronic_transaction HTTP/1.1" 200 16462
+[25/Nov/2023 22:18:52] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:18:54] "GET /office_main/electronic_transaction/1-update/ HTTP/1.1" 200 16689
+[25/Nov/2023 22:18:54] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:19:00] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 22:19:00] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:22:02] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\ezAdmin\settings.py changed, reloading.
+[25/Nov/2023 22:22:35] Watching for file changes with StatReloader
+[25/Nov/2023 22:22:35] "GET /login/ HTTP/1.1" 200 10065
+[25/Nov/2023 22:22:35] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:22:38] "POST /login/ HTTP/1.1" 302 0
+[25/Nov/2023 22:22:38] "GET / HTTP/1.1" 200 15916
+[25/Nov/2023 22:22:38] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:22:40] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 22:22:40] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:26:01] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 22:26:01] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:26:02] "GET /production_main/production_log_list HTTP/1.1" 200 30413
+[25/Nov/2023 22:26:03] "GET /production_main/production_log_list_ajax HTTP/1.1" 200 27
+[25/Nov/2023 22:26:03] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:26:04] "GET /store_brand HTTP/1.1" 200 14522
+[25/Nov/2023 22:26:04] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:26:05] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 22:26:05] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:28:08] "GET /office_main/electronic_transaction HTTP/1.1" 200 16462
+[25/Nov/2023 22:28:08] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 22:28:08] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:30:13] "GET /office_main/electronic_transaction HTTP/1.1" 200 16462
+[25/Nov/2023 22:30:13] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:41:48] "GET /office_main/electronic_transaction HTTP/1.1" 200 16462
+[25/Nov/2023 22:41:49] "GET /static/css/style.css HTTP/1.1" 200 4667
+[25/Nov/2023 22:41:49] "GET /static/css/dark_mode.css HTTP/1.1" 200 2302
+[25/Nov/2023 22:41:49] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:41:49] - Broken pipe from ('127.0.0.1', 61144)
+[25/Nov/2023 22:41:49] - Broken pipe from ('127.0.0.1', 61140)
+[25/Nov/2023 22:41:49] - Broken pipe from ('127.0.0.1', 61145)
+[25/Nov/2023 22:41:49] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 22:41:49] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:41:55] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 22:41:55] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 22:41:57] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[25/Nov/2023 22:41:59] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 22:41:59] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:47:23] Watching for file changes with StatReloader
+[25/Nov/2023 22:47:25] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 22:47:25] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[25/Nov/2023 22:47:25] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:47:25] "GET /static/css/style.css HTTP/1.1" 200 4667
+[25/Nov/2023 22:47:25] - Broken pipe from ('127.0.0.1', 61227)
+[25/Nov/2023 22:54:52] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\models.py changed, reloading.
+[25/Nov/2023 22:54:53] Watching for file changes with StatReloader
+[25/Nov/2023 22:54:56] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\models.py changed, reloading.
+[25/Nov/2023 22:54:56] Watching for file changes with StatReloader
+[25/Nov/2023 22:54:58] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\models.py changed, reloading.
+[25/Nov/2023 22:54:59] Watching for file changes with StatReloader
+[25/Nov/2023 22:55:15] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\forms.py changed, reloading.
+[25/Nov/2023 22:55:16] Watching for file changes with StatReloader
+[25/Nov/2023 22:55:17] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\forms.py changed, reloading.
+[25/Nov/2023 22:55:18] Watching for file changes with StatReloader
+[25/Nov/2023 22:55:47] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:55:48] Watching for file changes with StatReloader
+[25/Nov/2023 22:55:50] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:55:51] Watching for file changes with StatReloader
+[25/Nov/2023 22:55:52] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:55:53] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:18] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:19] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:21] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:22] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:27] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:28] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:30] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:31] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:34] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:35] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:37] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:37] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:39] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:40] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:41] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:42] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:43] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:44] Watching for file changes with StatReloader
+[25/Nov/2023 22:56:46] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:56:47] Watching for file changes with StatReloader
+[25/Nov/2023 22:57:08] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:57:09] Watching for file changes with StatReloader
+[25/Nov/2023 22:57:16] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:57:17] Watching for file changes with StatReloader
+[25/Nov/2023 22:57:23] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:57:24] Watching for file changes with StatReloader
+[25/Nov/2023 22:57:29] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[25/Nov/2023 22:57:30] Watching for file changes with StatReloader
+[25/Nov/2023 22:57:37] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\models.py changed, reloading.
+[25/Nov/2023 22:57:37] Watching for file changes with StatReloader
+[25/Nov/2023 22:57:44] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\forms.py changed, reloading.
+[25/Nov/2023 22:57:45] Watching for file changes with StatReloader
+[25/Nov/2023 22:57:53] "GET /purchasing_main HTTP/1.1" 200 14617
+[25/Nov/2023 22:57:53] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 22:57:53] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 22:57:54] "GET /misc_main/ HTTP/1.1" 200 14526
+[25/Nov/2023 22:57:54] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:10:01] "GET /production_main/raw_material_inventory_identifier_based_main HTTP/1.1" 200 17195
+[25/Nov/2023 23:10:01] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[25/Nov/2023 23:10:01] "GET /static/fontawesomefree/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 24488
+[25/Nov/2023 23:10:01] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:10:01] - Broken pipe from ('127.0.0.1', 61360)
+[25/Nov/2023 23:10:14] "GET /production_main/raw_material_inventory_identifier_based_main/identifier:1-component-main HTTP/1.1" 200 17106
+[25/Nov/2023 23:10:15] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:10:15] "GET /static/css/style.css HTTP/1.1" 200 4667
+[25/Nov/2023 23:10:15] - Broken pipe from ('127.0.0.1', 61368)
+[25/Nov/2023 23:10:15] - Broken pipe from ('127.0.0.1', 61369)
+[25/Nov/2023 23:10:15] - Broken pipe from ('127.0.0.1', 61367)
+[25/Nov/2023 23:10:15] - Broken pipe from ('127.0.0.1', 61370)
+[25/Nov/2023 23:10:15] - Broken pipe from ('127.0.0.1', 61371)
+[25/Nov/2023 23:10:15] - Broken pipe from ('127.0.0.1', 61372)
+[25/Nov/2023 23:10:42] "GET /production_main/raw_material_inventory_identifier_based_main/identifier:1-component-main/component:1-list HTTP/1.1" 200 22103
+[25/Nov/2023 23:10:42] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:10:42] "GET /production_main/raw_material_inventory_identifier_based_main/identifier_component_based/component-list-ajax?identifier_id=1&component_id=1 HTTP/1.1" 200 243
+[25/Nov/2023 23:10:42] - Broken pipe from ('127.0.0.1', 61378)
+[25/Nov/2023 23:10:42] - Broken pipe from ('127.0.0.1', 61379)
+[25/Nov/2023 23:11:12] "GET /production_main/raw_material_inventory_identifier_based_main/identifier_component_based/component-list-ajax?identifier_id=1&component_id=1&purchasing_doc=1 HTTP/1.1" 200 556
+[25/Nov/2023 23:11:19] "GET /production_main/raw_material_inventory_identifier_based_main/identifier_component_based/component-list-ajax?identifier_id=1&component_id=1&purchasing_doc=1 HTTP/1.1" 200 556
+[25/Nov/2023 23:22:24] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:22:24] "GET /static/css/style.css HTTP/1.1" 200 4667
+[25/Nov/2023 23:22:24] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:22:25] - Broken pipe from ('127.0.0.1', 61435)
+[25/Nov/2023 23:22:25] - Broken pipe from ('127.0.0.1', 61434)
+[25/Nov/2023 23:22:25] - Broken pipe from ('127.0.0.1', 61442)
+[25/Nov/2023 23:28:42] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:28:42] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:28:42] - Broken pipe from ('127.0.0.1', 61465)
+[25/Nov/2023 23:28:42] - Broken pipe from ('127.0.0.1', 61469)
+[25/Nov/2023 23:28:42] - Broken pipe from ('127.0.0.1', 61470)
+[25/Nov/2023 23:28:45] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:28:45] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:29:02] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:29:02] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:29:02] - Broken pipe from ('127.0.0.1', 61471)
+[25/Nov/2023 23:29:03] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:29:03] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:29:03] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:29:04] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:29:04] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:29:04] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:29:04] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:29:04] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:29:05] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:29:05] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:29:09] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:29:10] "GET /static/css/dark_mode.css HTTP/1.1" 200 2302
+[25/Nov/2023 23:29:10] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[25/Nov/2023 23:29:10] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[25/Nov/2023 23:29:10] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[25/Nov/2023 23:29:10] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[25/Nov/2023 23:29:10] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[25/Nov/2023 23:29:10] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[25/Nov/2023 23:29:10] "GET /static/css/style.css HTTP/1.1" 200 4921
+[25/Nov/2023 23:29:10] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[25/Nov/2023 23:29:10] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[25/Nov/2023 23:29:10] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5264
+[25/Nov/2023 23:29:10] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:29:10] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[25/Nov/2023 23:29:10] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[25/Nov/2023 23:29:10] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[25/Nov/2023 23:29:10] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:29:10] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:29:10] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[25/Nov/2023 23:29:10] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[25/Nov/2023 23:29:10] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[25/Nov/2023 23:29:10] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[25/Nov/2023 23:29:10] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:29:21] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:29:21] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[25/Nov/2023 23:29:21] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[25/Nov/2023 23:29:21] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[25/Nov/2023 23:29:21] "GET /static/css/style.css HTTP/1.1" 200 4935
+[25/Nov/2023 23:29:21] - Broken pipe from ('127.0.0.1', 61481)
+[25/Nov/2023 23:29:21] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:29:26] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:29:26] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[25/Nov/2023 23:29:26] "GET /static/css/dark_mode.css HTTP/1.1" 200 2302
+[25/Nov/2023 23:29:26] "GET /static/css/style.css HTTP/1.1" 200 4935
+[25/Nov/2023 23:29:26] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[25/Nov/2023 23:29:26] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[25/Nov/2023 23:29:26] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[25/Nov/2023 23:29:26] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[25/Nov/2023 23:29:26] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[25/Nov/2023 23:29:26] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[25/Nov/2023 23:29:26] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[25/Nov/2023 23:29:26] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5264
+[25/Nov/2023 23:29:26] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:29:26] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[25/Nov/2023 23:29:26] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[25/Nov/2023 23:29:26] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[25/Nov/2023 23:29:26] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:29:26] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:29:26] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[25/Nov/2023 23:29:26] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[25/Nov/2023 23:29:26] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[25/Nov/2023 23:29:26] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[25/Nov/2023 23:29:27] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:29:28] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:29:28] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:29:28] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:30:06] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:30:06] - Broken pipe from ('127.0.0.1', 61485)
+[25/Nov/2023 23:30:06] "GET /static/css/style.css HTTP/1.1" 200 4952
+[25/Nov/2023 23:30:06] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:30:27] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:30:27] "GET /static/css/style.css HTTP/1.1" 200 4986
+[25/Nov/2023 23:30:27] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:30:27] - Broken pipe from ('127.0.0.1', 61482)
+[25/Nov/2023 23:30:27] - Broken pipe from ('127.0.0.1', 61483)
+[25/Nov/2023 23:30:27] - Broken pipe from ('127.0.0.1', 61484)
+[25/Nov/2023 23:30:27] - Broken pipe from ('127.0.0.1', 61480)
+[25/Nov/2023 23:30:27] - Broken pipe from ('127.0.0.1', 61486)
+[25/Nov/2023 23:30:37] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:30:37] "GET /static/css/style.css HTTP/1.1" 200 5003
+[25/Nov/2023 23:30:37] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:30:40] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:30:41] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:30:41] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:31:56] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:31:56] "GET /static/css/style.css HTTP/1.1" 200 5113
+[25/Nov/2023 23:31:56] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:32:30] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:32:31] "GET /static/css/style.css HTTP/1.1" 200 5163
+[25/Nov/2023 23:32:31] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:33:13] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:33:13] "GET /static/css/style.css HTTP/1.1" 200 5180
+[25/Nov/2023 23:33:13] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:33:13] "GET / HTTP/1.1" 200 15826
+[25/Nov/2023 23:33:13] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:33:14] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:33:45] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:33:45] "GET /static/css/style.css HTTP/1.1" 200 5208
+[25/Nov/2023 23:33:45] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:33:46] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:33:46] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:33:47] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:34:15] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:34:15] "GET /static/css/style.css HTTP/1.1" 200 5329
+[25/Nov/2023 23:34:15] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:34:55] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:34:55] "GET /static/css/style.css HTTP/1.1" 200 5333
+[25/Nov/2023 23:34:55] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:34:58] "GET /office_main HTTP/1.1" 200 16767
+[25/Nov/2023 23:34:58] "GET /static/css/style.css HTTP/1.1" 200 5333
+[25/Nov/2023 23:34:58] "GET /static/css/dark_mode.css HTTP/1.1" 200 2302
+[25/Nov/2023 23:34:58] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[25/Nov/2023 23:34:58] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[25/Nov/2023 23:34:58] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[25/Nov/2023 23:34:58] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[25/Nov/2023 23:34:58] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[25/Nov/2023 23:34:58] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[25/Nov/2023 23:34:58] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[25/Nov/2023 23:34:58] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:34:58] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5264
+[25/Nov/2023 23:34:58] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[25/Nov/2023 23:34:58] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[25/Nov/2023 23:34:58] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[25/Nov/2023 23:34:58] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[25/Nov/2023 23:34:58] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:34:58] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:34:58] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[25/Nov/2023 23:34:58] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[25/Nov/2023 23:34:58] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[25/Nov/2023 23:34:58] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[25/Nov/2023 23:34:58] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:34:59] "GET /office_main/electronic_user HTTP/1.1" 200 15900
+[25/Nov/2023 23:34:59] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:34:59] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:35:00] Not Found: /favicon.ico
+[25/Nov/2023 23:35:00] "GET /favicon.ico HTTP/1.1" 404 28044
+[25/Nov/2023 23:35:01] "GET /office_main/electronic_user HTTP/1.1" 200 15900
+[25/Nov/2023 23:35:01] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:35:01] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:35:10] "GET /office_main/electronic_user HTTP/1.1" 200 15900
+[25/Nov/2023 23:35:10] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:35:10] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[25/Nov/2023 23:35:30] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[25/Nov/2023 23:35:30] - Broken pipe from ('127.0.0.1', 61495)
+[25/Nov/2023 23:35:30] - Broken pipe from ('127.0.0.1', 61518)
+[25/Nov/2023 23:37:36] "GET /office_main/electronic_user HTTP/1.1" 200 15898
+[25/Nov/2023 23:37:36] "GET /static/css/style.css HTTP/1.1" 200 5335
+[25/Nov/2023 23:37:36] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:38:46] "GET /office_main/electronic_user HTTP/1.1" 200 15898
+[25/Nov/2023 23:38:46] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:38:46] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:38:47] - Broken pipe from ('127.0.0.1', 61524)
+[25/Nov/2023 23:38:47] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:38:47] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:38:47] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:38:50] "GET /office_main/electronic_user HTTP/1.1" 200 15898
+[25/Nov/2023 23:38:50] "GET /static/css/dark_mode.css HTTP/1.1" 200 2219
+[25/Nov/2023 23:38:50] "GET /static/css/style.css HTTP/1.1" 200 5335
+[25/Nov/2023 23:38:50] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[25/Nov/2023 23:38:50] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[25/Nov/2023 23:38:50] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[25/Nov/2023 23:38:50] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[25/Nov/2023 23:38:50] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[25/Nov/2023 23:38:50] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[25/Nov/2023 23:38:50] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[25/Nov/2023 23:38:50] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[25/Nov/2023 23:38:50] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:38:50] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5264
+[25/Nov/2023 23:38:51] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[25/Nov/2023 23:38:51] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[25/Nov/2023 23:38:51] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[25/Nov/2023 23:38:51] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:38:51] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:38:51] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[25/Nov/2023 23:38:51] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[25/Nov/2023 23:38:51] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[25/Nov/2023 23:38:51] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[25/Nov/2023 23:38:51] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:39:45] "GET /office_main/electronic_user HTTP/1.1" 200 15898
+[25/Nov/2023 23:39:45] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:39:45] - Broken pipe from ('127.0.0.1', 61546)
+[25/Nov/2023 23:39:45] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[25/Nov/2023 23:39:45] "GET /static/css/dark_mode.css HTTP/1.1" 200 2411
+[25/Nov/2023 23:39:46] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:41:01] "GET /office_main/electronic_user HTTP/1.1" 200 15898
+[25/Nov/2023 23:41:01] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:41:01] "GET /static/css/dark_mode.css HTTP/1.1" 200 2599
+[25/Nov/2023 23:41:01] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:41:17] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:41:17] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[25/Nov/2023 23:41:17] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:41:43] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:41:43] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:41:43] "GET /static/css/dark_mode.css HTTP/1.1" 200 2620
+[25/Nov/2023 23:41:43] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:43:48] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:43:48] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:43:48] "GET /static/css/dark_mode.css HTTP/1.1" 200 2768
+[25/Nov/2023 23:43:48] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:43:49] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:43:49] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:43:49] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:44:17] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:44:17] "GET /static/css/dark_mode.css HTTP/1.1" 200 2803
+[25/Nov/2023 23:44:17] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:44:26] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:44:26] "GET /static/css/dark_mode.css HTTP/1.1" 200 2811
+[25/Nov/2023 23:44:26] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:44:38] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:44:38] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:44:38] "GET /static/css/dark_mode.css HTTP/1.1" 200 2811
+[25/Nov/2023 23:44:39] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:45:10] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:45:10] "GET /static/css/dark_mode.css HTTP/1.1" 200 2897
+[25/Nov/2023 23:45:10] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:45:14] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:45:14] "GET /static/css/dark_mode.css HTTP/1.1" 200 2897
+[25/Nov/2023 23:45:14] "GET /static/css/style.css HTTP/1.1" 200 5335
+[25/Nov/2023 23:45:14] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[25/Nov/2023 23:45:14] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[25/Nov/2023 23:45:14] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[25/Nov/2023 23:45:14] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[25/Nov/2023 23:45:14] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[25/Nov/2023 23:45:14] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[25/Nov/2023 23:45:14] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[25/Nov/2023 23:45:14] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:45:14] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5264
+[25/Nov/2023 23:45:14] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[25/Nov/2023 23:45:14] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[25/Nov/2023 23:45:14] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[25/Nov/2023 23:45:14] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[25/Nov/2023 23:45:14] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:45:14] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:45:14] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[25/Nov/2023 23:45:15] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[25/Nov/2023 23:45:15] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[25/Nov/2023 23:45:15] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[25/Nov/2023 23:45:15] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:47:09] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:47:10] "GET /static/css/style.css HTTP/1.1" 200 5335
+[25/Nov/2023 23:47:10] - Broken pipe from ('127.0.0.1', 61593)
+[25/Nov/2023 23:47:10] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[25/Nov/2023 23:47:10] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[25/Nov/2023 23:47:10] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:47:14] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:47:14] "GET /static/css/style.css HTTP/1.1" 200 5335
+[25/Nov/2023 23:47:14] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[25/Nov/2023 23:47:14] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[25/Nov/2023 23:47:14] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[25/Nov/2023 23:47:14] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[25/Nov/2023 23:47:14] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[25/Nov/2023 23:47:14] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[25/Nov/2023 23:47:14] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[25/Nov/2023 23:47:14] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[25/Nov/2023 23:47:14] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[25/Nov/2023 23:47:14] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[25/Nov/2023 23:47:14] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5264
+[25/Nov/2023 23:47:14] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[25/Nov/2023 23:47:14] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[25/Nov/2023 23:47:14] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[25/Nov/2023 23:47:14] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:47:14] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[25/Nov/2023 23:47:14] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[25/Nov/2023 23:47:14] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[25/Nov/2023 23:47:14] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[25/Nov/2023 23:47:14] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[25/Nov/2023 23:47:14] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:47:15] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:47:15] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[25/Nov/2023 23:47:15] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:47:24] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:47:24] "GET /static/css/dark_mode.css HTTP/1.1" 200 2944
+[25/Nov/2023 23:47:24] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:48:03] "GET /office_main HTTP/1.1" 200 16765
+[25/Nov/2023 23:48:03] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[25/Nov/2023 23:48:03] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:48:36] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 23:48:36] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:48:36] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[25/Nov/2023 23:48:36] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:48:39] "GET /profile/ HTTP/1.1" 200 16105
+[25/Nov/2023 23:48:39] "GET /media/default-avatar.png HTTP/1.1" 200 45117
+[25/Nov/2023 23:48:39] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:48:48] "GET / HTTP/1.1" 200 15824
+[25/Nov/2023 23:48:48] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[25/Nov/2023 23:48:48] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:53:30] "GET / HTTP/1.1" 200 15814
+[25/Nov/2023 23:53:30] "GET /static/css/style.css HTTP/1.1" 200 5335
+[25/Nov/2023 23:53:30] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[25/Nov/2023 23:53:30] - Broken pipe from ('127.0.0.1', 61674)
+[25/Nov/2023 23:53:30] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:53:30] - Broken pipe from ('127.0.0.1', 61676)
+[25/Nov/2023 23:53:30] - Broken pipe from ('127.0.0.1', 61675)
+[25/Nov/2023 23:53:30] - Broken pipe from ('127.0.0.1', 61671)
+[25/Nov/2023 23:56:38] "GET / HTTP/1.1" 200 15822
+[25/Nov/2023 23:56:38] "GET /static/css/style.css HTTP/1.1" 304 0
+[25/Nov/2023 23:56:38] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[25/Nov/2023 23:56:38] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:56:38] - Broken pipe from ('127.0.0.1', 61714)
+[25/Nov/2023 23:56:38] - Broken pipe from ('127.0.0.1', 61713)
+[25/Nov/2023 23:56:38] - Broken pipe from ('127.0.0.1', 61715)
+[25/Nov/2023 23:58:32] "GET / HTTP/1.1" 200 15822
+[25/Nov/2023 23:58:32] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[25/Nov/2023 23:58:32] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[25/Nov/2023 23:58:33] "GET / HTTP/1.1" 200 15822
+[25/Nov/2023 23:58:33] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:02:28] "GET / HTTP/1.1" 200 16134
+[26/Nov/2023 00:02:28] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:02:28] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:02:31] "GET / HTTP/1.1" 200 16134
+[26/Nov/2023 00:02:31] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[26/Nov/2023 00:02:31] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:02:31] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[26/Nov/2023 00:02:31] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:02:31] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[26/Nov/2023 00:02:31] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[26/Nov/2023 00:02:31] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[26/Nov/2023 00:02:31] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[26/Nov/2023 00:02:31] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[26/Nov/2023 00:02:31] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[26/Nov/2023 00:02:31] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[26/Nov/2023 00:02:31] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5264
+[26/Nov/2023 00:02:31] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[26/Nov/2023 00:02:31] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[26/Nov/2023 00:02:31] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[26/Nov/2023 00:02:31] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:02:31] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:02:31] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[26/Nov/2023 00:02:31] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[26/Nov/2023 00:02:31] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[26/Nov/2023 00:02:31] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[26/Nov/2023 00:02:33] "GET /purchasing_main HTTP/1.1" 200 14922
+[26/Nov/2023 00:02:34] "GET /office_main HTTP/1.1" 200 17072
+[26/Nov/2023 00:02:53] "GET /office_main HTTP/1.1" 200 14989
+[26/Nov/2023 00:02:54] "GET /office_main HTTP/1.1" 200 14989
+[26/Nov/2023 00:02:57] "GET /office_main HTTP/1.1" 200 14989
+[26/Nov/2023 00:02:58] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:02:58] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[26/Nov/2023 00:02:58] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[26/Nov/2023 00:02:58] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[26/Nov/2023 00:02:58] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[26/Nov/2023 00:02:58] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[26/Nov/2023 00:02:58] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[26/Nov/2023 00:02:58] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[26/Nov/2023 00:02:58] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:02:58] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[26/Nov/2023 00:02:58] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[26/Nov/2023 00:02:58] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5264
+[26/Nov/2023 00:02:58] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[26/Nov/2023 00:02:58] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[26/Nov/2023 00:02:58] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[26/Nov/2023 00:02:58] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:02:58] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:02:58] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[26/Nov/2023 00:02:58] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[26/Nov/2023 00:02:58] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[26/Nov/2023 00:02:58] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[26/Nov/2023 00:02:59] "GET /production_main HTTP/1.1" 200 14337
+[26/Nov/2023 00:02:59] "GET / HTTP/1.1" 200 14051
+[26/Nov/2023 00:05:18] "GET / HTTP/1.1" 200 16012
+[26/Nov/2023 00:05:18] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[26/Nov/2023 00:05:19] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:05:22] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:05:23] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:05:30] "GET / HTTP/1.1" 200 14062
+[26/Nov/2023 00:06:09] "GET / HTTP/1.1" 200 14120
+[26/Nov/2023 00:06:09] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:06:09] "GET /static/js/light_dark_mode.js HTTP/1.1" 200 1908
+[26/Nov/2023 00:06:09] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:06:12] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:06:13] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:06:14] "GET /office_main/electronic_user_location HTTP/1.1" 200 14235
+[26/Nov/2023 00:06:14] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:06:14] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:06:15] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:06:16] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:06:17] "GET /office_main/electronic_brand HTTP/1.1" 200 13995
+[26/Nov/2023 00:06:17] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:06:18] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:06:19] "GET /office_main/electronic_purchasing_document HTTP/1.1" 200 14474
+[26/Nov/2023 00:06:19] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:06:19] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:06:21] "GET /office_main/electronic_inventory HTTP/1.1" 200 15874
+[26/Nov/2023 00:06:21] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:06:22] "GET /office_main/electronic_inventory/1-update/ HTTP/1.1" 200 15006
+[26/Nov/2023 00:06:22] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:06:23] Not Found: /favicon.ico
+[26/Nov/2023 00:06:23] "GET /favicon.ico HTTP/1.1" 404 28044
+[26/Nov/2023 00:06:24] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:06:25] "GET /profile/ HTTP/1.1" 200 14398
+[26/Nov/2023 00:06:25] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:06:25] "GET /media/default-avatar.png HTTP/1.1" 200 45117
+[26/Nov/2023 00:06:25] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:06:31] "GET / HTTP/1.1" 200 14120
+[26/Nov/2023 00:06:31] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:06:31] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:06:34] "GET / HTTP/1.1" 200 14120
+[26/Nov/2023 00:06:34] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:06:35] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:06:36] "GET /office_main HTTP/1.1" 200 15060
+[26/Nov/2023 00:06:36] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:06:38] "GET /office_main/electronic_inventory HTTP/1.1" 200 15874
+[26/Nov/2023 00:06:38] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:06:38] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:06:40] "GET /office_main/electronic_inventory/1-update/ HTTP/1.1" 200 15006
+[26/Nov/2023 00:06:40] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:06:44] "GET /office_main/electronic_inventory/1-update/ HTTP/1.1" 200 15006
+[26/Nov/2023 00:06:44] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[26/Nov/2023 00:06:44] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:06:44] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[26/Nov/2023 00:06:44] "GET /static/js/light_dark_mode.js HTTP/1.1" 200 1908
+[26/Nov/2023 00:06:44] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[26/Nov/2023 00:06:44] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[26/Nov/2023 00:06:44] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[26/Nov/2023 00:06:44] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[26/Nov/2023 00:06:44] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[26/Nov/2023 00:06:44] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:06:44] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[26/Nov/2023 00:06:44] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[26/Nov/2023 00:06:44] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5264
+[26/Nov/2023 00:06:44] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[26/Nov/2023 00:06:44] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[26/Nov/2023 00:06:44] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[26/Nov/2023 00:06:44] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:06:44] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:06:44] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[26/Nov/2023 00:06:44] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[26/Nov/2023 00:06:44] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[26/Nov/2023 00:06:44] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[26/Nov/2023 00:06:44] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:06:47] "GET /office_main/electronic_inventory/1-update/ HTTP/1.1" 200 15006
+[26/Nov/2023 00:06:47] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:06:48] "GET /office_main/electronic_inventory HTTP/1.1" 200 15874
+[26/Nov/2023 00:06:48] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:06:52] "GET / HTTP/1.1" 200 14122
+[26/Nov/2023 00:06:53] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:06:53] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:07:47] "GET /production_main/BOM_component_list HTTP/1.1" 200 28648
+[26/Nov/2023 00:07:47] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:07:47] "GET /production_main/BOM_component_list_ajax HTTP/1.1" 200 39
+[26/Nov/2023 00:07:47] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:07:48] "GET /production_main/BOM_component_list_ajax?item_code=PR-DEN-1 HTTP/1.1" 200 161
+[26/Nov/2023 00:07:48] "GET /production_main/BOM_component_list_ajax?item_code=PR-DEN-3-2 HTTP/1.1" 200 802
+[26/Nov/2023 00:07:49] "GET /production_main/BOM_component_list_ajax?item_code=PR-GAST-3 HTTP/1.1" 200 157
+[26/Nov/2023 00:07:49] "GET /production_main/BOM_component_list_ajax?item_code=main-page HTTP/1.1" 200 1120
+[26/Nov/2023 00:08:15] "GET /production_main HTTP/1.1" 200 14398
+[26/Nov/2023 00:08:15] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:08:15] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:08:16] "GET /misc_main/ HTTP/1.1" 200 12809
+[26/Nov/2023 00:08:17] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:08:17] "GET /misc_main/uom_list/ HTTP/1.1" 200 13949
+[26/Nov/2023 00:08:17] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:08:18] "GET /misc_main/uom_list/UOM:1-update HTTP/1.1" 200 12838
+[26/Nov/2023 00:08:18] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:08:19] "GET /misc_main/uom_list HTTP/1.1" 301 0
+[26/Nov/2023 00:08:19] "GET /misc_main/uom_list/ HTTP/1.1" 200 13949
+[26/Nov/2023 00:08:19] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:08:20] "GET / HTTP/1.1" 200 14112
+[26/Nov/2023 00:08:20] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:08:23] "GET / HTTP/1.1" 200 14112
+[26/Nov/2023 00:08:23] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:08:25] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20583
+[26/Nov/2023 00:08:25] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 74
+[26/Nov/2023 00:08:25] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:08:26] "GET /production_main/raw_material_component_list_ajax?component_name=Uncutsheet%20%26 HTTP/1.1" 200 162
+[26/Nov/2023 00:08:28] "GET /production_main/raw_material_component_list_ajax?component_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:08:32] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20583
+[26/Nov/2023 00:08:32] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:08:32] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 74
+[26/Nov/2023 00:08:32] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:08:58] "GET /production_main/raw_material_component_list_ajax?component_name=Uncutsheet%20%26 HTTP/1.1" 200 162
+[26/Nov/2023 00:09:01] "GET /production_main/raw_material_component_list/7-delete/ HTTP/1.1" 200 12762
+[26/Nov/2023 00:09:01] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:09:01] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:09:01] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:02] Internal Server Error: /production_main/raw_material_component_list/7-delete/
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\contrib\auth\mixins.py", line 109, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\desktop\python\ezadmin\ezadmin\production\views.py", line 244, in post
+    response = super().post(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\views\generic\edit.py", line 278, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\views\generic\edit.py", line 284, in form_valid
+    self.object.delete()
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\db\models\base.py", line 1131, in delete
+    collector.collect([self], keep_parents=keep_parents)
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\db\models\deletion.py", line 355, in collect
+    raise ProtectedError(
+django.db.models.deletion.ProtectedError: ("Cannot delete some instances of model 'RawMaterialComponent' because they are referenced through protected foreign keys: 'BOMComponent.raw_material_component', 'RawMaterialInventory.component'.", {<RawMaterialInventory: Uncutsheet & for PR-GAST (G123)>, <BOMComponent: Uncutsheet & for PR-GAST>, <RawMaterialInventory: Uncutsheet & for PR-GAST (G123)>})
+[26/Nov/2023 00:09:02] "POST /production_main/raw_material_component_list/7-delete/ HTTP/1.1" 500 119361
+[26/Nov/2023 00:09:02] Not Found: /favicon.ico
+[26/Nov/2023 00:09:02] "GET /favicon.ico HTTP/1.1" 404 28044
+[26/Nov/2023 00:09:04] "GET /production_main/raw_material_component_list/7-delete/ HTTP/1.1" 200 12762
+[26/Nov/2023 00:09:04] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:07] "GET /production_main/production_log_list HTTP/1.1" 200 28698
+[26/Nov/2023 00:09:07] "GET /production_main/production_log_list_ajax HTTP/1.1" 200 27
+[26/Nov/2023 00:09:07] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:12] "GET /production_main/production_log_list/1-delete/ HTTP/1.1" 200 12755
+[26/Nov/2023 00:09:12] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:13] "POST /production_main/production_log_list/1-delete/ HTTP/1.1" 302 0
+[26/Nov/2023 00:09:13] "GET /production_main/production_log_list HTTP/1.1" 200 26598
+[26/Nov/2023 00:09:13] "GET /production_main/production_log_list_ajax HTTP/1.1" 200 14
+[26/Nov/2023 00:09:13] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:15] "GET /production_main HTTP/1.1" 200 14398
+[26/Nov/2023 00:09:15] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:18] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20583
+[26/Nov/2023 00:09:18] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 74
+[26/Nov/2023 00:09:18] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:19] "GET /production_main/raw_material_component_list_ajax?component_name=Uncutsheet%20%26 HTTP/1.1" 200 162
+[26/Nov/2023 00:09:24] "GET /production_main/raw_material_component_list/7-delete/ HTTP/1.1" 200 12762
+[26/Nov/2023 00:09:24] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:09:24] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:25] Internal Server Error: /production_main/raw_material_component_list/7-delete/
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\contrib\auth\mixins.py", line 109, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\desktop\python\ezadmin\ezadmin\production\views.py", line 244, in post
+    response = super().post(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\views\generic\edit.py", line 278, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\views\generic\edit.py", line 284, in form_valid
+    self.object.delete()
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\db\models\base.py", line 1131, in delete
+    collector.collect([self], keep_parents=keep_parents)
+  File "C:\Users\User\Desktop\python\ezAdmin\myenv\Lib\site-packages\django\db\models\deletion.py", line 355, in collect
+    raise ProtectedError(
+django.db.models.deletion.ProtectedError: ("Cannot delete some instances of model 'RawMaterialComponent' because they are referenced through protected foreign keys: 'BOMComponent.raw_material_component', 'RawMaterialInventory.component'.", {<BOMComponent: Uncutsheet & for PR-GAST>, <RawMaterialInventory: Uncutsheet & for PR-GAST (G123)>})
+[26/Nov/2023 00:09:25] "POST /production_main/raw_material_component_list/7-delete/ HTTP/1.1" 500 118909
+[26/Nov/2023 00:09:26] "GET /production_main/raw_material_component_list/7-delete/ HTTP/1.1" 200 12762
+[26/Nov/2023 00:09:26] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:30] "GET /production_main/BOM_component_list HTTP/1.1" 200 28648
+[26/Nov/2023 00:09:30] "GET /production_main/BOM_component_list_ajax HTTP/1.1" 200 39
+[26/Nov/2023 00:09:30] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:35] "GET /production_main/BOM_component_list/6-delete/ HTTP/1.1" 200 12729
+[26/Nov/2023 00:09:35] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:35] "POST /production_main/BOM_component_list/6-delete/ HTTP/1.1" 302 0
+[26/Nov/2023 00:09:36] "GET /production_main/BOM_component_list HTTP/1.1" 200 27677
+[26/Nov/2023 00:09:36] "GET /production_main/BOM_component_list_ajax HTTP/1.1" 200 39
+[26/Nov/2023 00:09:36] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:09:42] "GET /production_main/BOM_component_list_ajax?item_code=PR-GAST-3 HTTP/1.1" 200 2
+[26/Nov/2023 00:09:44] "GET /production_main/BOM_component_list_ajax?item_code=PR-DEN-3-2 HTTP/1.1" 200 802
+[26/Nov/2023 00:09:44] "GET /production_main/BOM_component_list_ajax?item_code=PR-DEN-1 HTTP/1.1" 200 161
+[26/Nov/2023 00:09:45] "GET /production_main/BOM_component_list_ajax?item_code=main-page HTTP/1.1" 200 963
+[26/Nov/2023 00:09:45] "GET /production_main/BOM_component_list_ajax?item_code=PR-GAST-3 HTTP/1.1" 200 2
+[26/Nov/2023 00:10:28] "GET /production_main/BOM_component_list HTTP/1.1" 200 27494
+[26/Nov/2023 00:10:28] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:10:28] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:10:28] "GET /production_main/BOM_component_list_ajax HTTP/1.1" 200 39
+[26/Nov/2023 00:10:28] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:10:30] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20583
+[26/Nov/2023 00:10:30] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 74
+[26/Nov/2023 00:10:30] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:10:31] "GET /production_main/raw_material_component_list_ajax?component_name=Uncutsheet HTTP/1.1" 200 504
+[26/Nov/2023 00:10:32] "GET /production_main/raw_material_component_list_ajax?component_name=Buffer HTTP/1.1" 200 156
+[26/Nov/2023 00:10:32] "GET /production_main/raw_material_component_list_ajax?component_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:10:40] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20583
+[26/Nov/2023 00:10:40] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:10:40] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[26/Nov/2023 00:10:40] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[26/Nov/2023 00:10:40] "GET /static/js/light_dark_mode.js HTTP/1.1" 200 1908
+[26/Nov/2023 00:10:40] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[26/Nov/2023 00:10:40] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[26/Nov/2023 00:10:40] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[26/Nov/2023 00:10:40] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[26/Nov/2023 00:10:40] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[26/Nov/2023 00:10:40] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[26/Nov/2023 00:10:40] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:10:40] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[26/Nov/2023 00:10:40] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5298
+[26/Nov/2023 00:10:40] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[26/Nov/2023 00:10:40] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[26/Nov/2023 00:10:40] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[26/Nov/2023 00:10:40] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:10:40] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:10:40] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[26/Nov/2023 00:10:40] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[26/Nov/2023 00:10:40] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[26/Nov/2023 00:10:40] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[26/Nov/2023 00:10:40] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 74
+[26/Nov/2023 00:10:40] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:10:41] "GET /production_main/raw_material_component_list_ajax?identifier_name=Uncutsheet HTTP/1.1" 200 74
+[26/Nov/2023 00:10:41] "GET /production_main/raw_material_component_list_ajax?identifier_name=Buffer HTTP/1.1" 200 74
+[26/Nov/2023 00:10:41] "GET /production_main/raw_material_component_list_ajax?identifier_name=Cassette%20Panel HTTP/1.1" 200 74
+[26/Nov/2023 00:10:42] "GET /production_main/raw_material_component_list_ajax?identifier_name=Cassette%20Cap HTTP/1.1" 200 74
+[26/Nov/2023 00:10:42] "GET /production_main/raw_material_component_list_ajax?identifier_name=Uncutsheet%20%26 HTTP/1.1" 200 74
+[26/Nov/2023 00:10:43] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 74
+[26/Nov/2023 00:12:28] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[26/Nov/2023 00:12:29] Watching for file changes with StatReloader
+[26/Nov/2023 00:12:31] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[26/Nov/2023 00:12:32] Watching for file changes with StatReloader
+[26/Nov/2023 00:12:47] C:\Users\User\Desktop\python\ezAdmin\ezAdmin\production\views.py changed, reloading.
+[26/Nov/2023 00:12:48] Watching for file changes with StatReloader
+[26/Nov/2023 00:12:51] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20583
+[26/Nov/2023 00:12:51] "GET /static/js/light_dark_mode.js HTTP/1.1" 200 1908
+[26/Nov/2023 00:12:51] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:12:51] - Broken pipe from ('127.0.0.1', 61846)
+[26/Nov/2023 00:12:51] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:12:51] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:12:52] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:12:53] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-GAST HTTP/1.1" 200 162
+[26/Nov/2023 00:12:55] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:12:56] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:14:03] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20584
+[26/Nov/2023 00:14:03] "GET /static/js/light_dark_mode.js HTTP/1.1" 200 1908
+[26/Nov/2023 00:14:03] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[26/Nov/2023 00:14:03] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5298
+[26/Nov/2023 00:14:03] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:14:03] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:14:04] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:14:04] "GET /production_main/raw_material_component_list_ajax?identifier_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:14:05] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:14:06] "GET /production_main/raw_material_component_list_ajax?identifier_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:14:07] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:14:07] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-GAST HTTP/1.1" 200 162
+[26/Nov/2023 00:14:08] "GET /production_main/raw_material_component_list_ajax?identifier_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:14:24] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:14:25] "GET /production_main/raw_material_component_list_ajax?identifier_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:14:31] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20584
+[26/Nov/2023 00:14:31] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:14:31] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:14:31] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:14:31] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:16:09] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20584
+[26/Nov/2023 00:16:09] "GET /static/js/light_dark_mode.js HTTP/1.1" 200 1908
+[26/Nov/2023 00:16:09] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[26/Nov/2023 00:16:09] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5331
+[26/Nov/2023 00:16:09] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:16:09] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:16:10] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:16:11] "GET /production_main/raw_material_component_list_ajax?identifier_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:17:06] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20584
+[26/Nov/2023 00:17:06] "GET /static/js/light_dark_mode.js HTTP/1.1" 200 1908
+[26/Nov/2023 00:17:06] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[26/Nov/2023 00:17:06] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5330
+[26/Nov/2023 00:17:06] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:17:06] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:17:07] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:17:07] "GET /production_main/raw_material_component_list_ajax?identifier_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:18:40] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20584
+[26/Nov/2023 00:18:40] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:18:40] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[26/Nov/2023 00:18:40] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[26/Nov/2023 00:18:40] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[26/Nov/2023 00:18:40] "GET /static/js/light_dark_mode.js HTTP/1.1" 200 1908
+[26/Nov/2023 00:18:40] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[26/Nov/2023 00:18:40] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[26/Nov/2023 00:18:40] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[26/Nov/2023 00:18:40] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[26/Nov/2023 00:18:40] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:18:40] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[26/Nov/2023 00:18:40] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[26/Nov/2023 00:18:40] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5329
+[26/Nov/2023 00:18:40] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[26/Nov/2023 00:18:40] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[26/Nov/2023 00:18:40] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[26/Nov/2023 00:18:40] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:18:40] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:18:40] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[26/Nov/2023 00:18:40] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[26/Nov/2023 00:18:40] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[26/Nov/2023 00:18:40] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[26/Nov/2023 00:18:40] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:18:40] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:18:41] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:19:09] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20584
+[26/Nov/2023 00:19:09] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5334
+[26/Nov/2023 00:19:09] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:19:09] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:19:10] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-DEN HTTP/1.1" 200 822
+[26/Nov/2023 00:19:11] "GET /production_main/raw_material_component_list_ajax?identifier_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:19:12] "GET /production_main/raw_material_component_list_ajax?identifier_name=PR-GAST HTTP/1.1" 200 162
+[26/Nov/2023 00:19:13] "GET /production_main/raw_material_component_list_ajax?identifier_name=main-page HTTP/1.1" 200 984
+[26/Nov/2023 00:19:14] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20584
+[26/Nov/2023 00:19:14] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:19:14] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:19:14] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:19:54] "GET /production_main/raw_material_component_list HTTP/1.1" 200 20584
+[26/Nov/2023 00:19:54] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:19:54] "GET /production_main/raw_material_component_list_ajax HTTP/1.1" 200 21
+[26/Nov/2023 00:19:54] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:19:58] "GET /production_main/BOM_component_list HTTP/1.1" 200 20602
+[26/Nov/2023 00:19:58] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:19:58] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:20:29] "GET /production_main/BOM_component_list HTTP/1.1" 200 20674
+[26/Nov/2023 00:20:29] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:20:29] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5334
+[26/Nov/2023 00:20:29] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 200 5991
+[26/Nov/2023 00:20:29] "GET /production_main/BOM_component_list_ajax HTTP/1.1" 200 39
+[26/Nov/2023 00:20:29] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:20:30] "GET /production_main/BOM_component_list_ajax?item_code=PR-DEN-1 HTTP/1.1" 200 161
+[26/Nov/2023 00:20:31] "GET /production_main/BOM_component_list_ajax?item_code=PR-DEN-3-2 HTTP/1.1" 200 802
+[26/Nov/2023 00:20:31] "GET /production_main/BOM_component_list_ajax?item_code=PR-GAST-3 HTTP/1.1" 200 2
+[26/Nov/2023 00:20:33] "GET /production_main/BOM_component_list_ajax?item_code=PR-DEN-1 HTTP/1.1" 200 161
+[26/Nov/2023 00:20:35] "GET /production_main/BOM_component_list_ajax?item_code=main-page HTTP/1.1" 200 963
+[26/Nov/2023 00:20:36] "GET / HTTP/1.1" 200 14184
+[26/Nov/2023 00:20:36] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:20:36] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:25:31] "GET / HTTP/1.1" 200 14184
+[26/Nov/2023 00:25:31] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:25:31] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:25:31] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:25:31] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:25:31] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:25:31] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:25:33] "GET /store_brand HTTP/1.1" 200 12879
+[26/Nov/2023 00:25:33] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:25:36] "GET /production_main HTTP/1.1" 200 14470
+[26/Nov/2023 00:25:36] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:25:38] "GET /purchasing_main/purchasing_document_list HTTP/1.1" 200 16826
+[26/Nov/2023 00:25:38] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:30:27] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:30:28] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:32:46] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:32:47] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:34:05] "GET /purchasing_main/purchasing_document_list HTTP/1.1" 200 16818
+[26/Nov/2023 00:34:05] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:34:05] "GET /static/css/style.css HTTP/1.1" 200 5335
+[26/Nov/2023 00:34:05] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:34:05] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:34:05] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:34:05] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:34:06] "GET /logout/ HTTP/1.1" 200 7609
+[26/Nov/2023 00:34:06] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:34:06] - Broken pipe from ('127.0.0.1', 62007)
+[26/Nov/2023 00:34:06] - Broken pipe from ('127.0.0.1', 62008)
+[26/Nov/2023 00:34:06] - Broken pipe from ('127.0.0.1', 62009)
+[26/Nov/2023 00:34:07] "GET /login/ HTTP/1.1" 200 8420
+[26/Nov/2023 00:34:07] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:34:08] Forbidden: /dashboard/update-dark-mode/
+[26/Nov/2023 00:34:08] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[26/Nov/2023 00:34:09] Forbidden: /dashboard/update-dark-mode/
+[26/Nov/2023 00:34:09] "POST /dashboard/update-dark-mode/ HTTP/1.1" 403 18
+[26/Nov/2023 00:34:11] "POST /login/ HTTP/1.1" 302 0
+[26/Nov/2023 00:34:11] "GET / HTTP/1.1" 200 14268
+[26/Nov/2023 00:34:11] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:34:12] "GET / HTTP/1.1" 200 14176
+[26/Nov/2023 00:34:12] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:34:13] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:34:13] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:34:13] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:36:11] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:36:11] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:36:11] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:36:11] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:36:12] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:36:12] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:36:12] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:36:12] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:36:13] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:36:13] - Broken pipe from ('127.0.0.1', 62023)
+[26/Nov/2023 00:36:16] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:36:16] "GET /static/css/alert_box.css HTTP/1.1" 200 3911
+[26/Nov/2023 00:36:16] "GET /static/css/dark_mode.css HTTP/1.1" 200 2940
+[26/Nov/2023 00:36:16] "GET /static/js/breadcrumbs_nav.js HTTP/1.1" 200 3278
+[26/Nov/2023 00:36:16] "GET /static/js/light_dark_mode.js HTTP/1.1" 200 1908
+[26/Nov/2023 00:36:16] "GET /static/js/alert_box.js HTTP/1.1" 200 3307
+[26/Nov/2023 00:36:16] "GET /static/js/responsive_button.js HTTP/1.1" 200 986
+[26/Nov/2023 00:36:16] "GET /static/js/raw_material_form_ajax.js HTTP/1.1" 200 6528
+[26/Nov/2023 00:36:16] "GET /static/js/disable_link_ajax.js HTTP/1.1" 200 2203
+[26/Nov/2023 00:36:16] "GET /static/css/style.css HTTP/1.1" 200 5414
+[26/Nov/2023 00:36:16] "GET /static/js/purchasing_doc_modal_ajax.js HTTP/1.1" 200 3659
+[26/Nov/2023 00:36:16] "GET /static/fontawesomefree/css/all.min.css HTTP/1.1" 200 102217
+[26/Nov/2023 00:36:16] "GET /static/js/raw_material_log_filter_ajax.js HTTP/1.1" 200 9136
+[26/Nov/2023 00:36:16] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 200 5991
+[26/Nov/2023 00:36:16] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5334
+[26/Nov/2023 00:36:16] "GET /static/icon/javascript.ico HTTP/1.1" 200 7290
+[26/Nov/2023 00:36:16] "GET /static/icon/html.ico HTTP/1.1" 200 10938
+[26/Nov/2023 00:36:16] "GET /static/icon/python.ico HTTP/1.1" 200 18385
+[26/Nov/2023 00:36:16] "GET /static/icon/sqlite.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:36:16] "GET /static/icon/css.ico HTTP/1.1" 200 67646
+[26/Nov/2023 00:36:16] "GET /static/icon/django.ico HTTP/1.1" 200 213054
+[26/Nov/2023 00:36:16] "GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 150020
+[26/Nov/2023 00:36:16] "GET /static/fontawesomefree/webfonts/fa-brands-400.woff2 HTTP/1.1" 200 109808
+[26/Nov/2023 00:36:16] "GET /static/icon/favicon.ico HTTP/1.1" 200 15086
+[26/Nov/2023 00:36:16] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:37:14] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:37:14] "GET /static/css/style.css HTTP/1.1" 200 5413
+[26/Nov/2023 00:37:14] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:37:26] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:37:26] - Broken pipe from ('127.0.0.1', 62026)
+[26/Nov/2023 00:37:26] - Broken pipe from ('127.0.0.1', 62027)
+[26/Nov/2023 00:37:27] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:37:28] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:38:15] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:39:09] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:39:09] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:39:09] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 200 5334
+[26/Nov/2023 00:39:09] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 200 5991
+[26/Nov/2023 00:39:09] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:10] "GET /office_main/electronic_user_location HTTP/1.1" 200 14241
+[26/Nov/2023 00:39:10] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:11] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:39:11] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:15] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:39:16] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:39:17] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:39:19] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:39:29] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:39:31] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:39:34] "GET /office_main HTTP/1.1" 200 15064
+[26/Nov/2023 00:39:34] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:39:34] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:39:34] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:40] "GET /production_main HTTP/1.1" 200 14412
+[26/Nov/2023 00:39:40] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:43] "GET /office_main HTTP/1.1" 200 15064
+[26/Nov/2023 00:39:44] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:45] "GET /office_main/electronic_user HTTP/1.1" 200 14197
+[26/Nov/2023 00:39:45] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:47] "GET /office_main/electronic_purchasing_document HTTP/1.1" 200 14478
+[26/Nov/2023 00:39:47] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:48] Not Found: /favicon.ico
+[26/Nov/2023 00:39:48] - Broken pipe from ('127.0.0.1', 62025)
+[26/Nov/2023 00:39:48] "GET /office_main/electronic_user HTTP/1.1" 200 14197
+[26/Nov/2023 00:39:48] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:39:48] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:49] Not Found: /favicon.ico
+[26/Nov/2023 00:39:49] "GET /favicon.ico HTTP/1.1" 404 28044
+[26/Nov/2023 00:39:50] "GET /office_main/electronic_purchasing_document HTTP/1.1" 200 14478
+[26/Nov/2023 00:39:50] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:39:53] "GET /office_main/electronic_transaction HTTP/1.1" 200 14761
+[26/Nov/2023 00:39:53] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:40:16] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:40:17] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:40:19] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:40:21] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:41:33] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:42:00] "GET /office_main/electronic_transaction HTTP/1.1" 200 14759
+[26/Nov/2023 00:42:00] "GET /static/css/style.css HTTP/1.1" 200 5413
+[26/Nov/2023 00:42:00] "GET /static/css/dark_mode.css HTTP/1.1" 200 3176
+[26/Nov/2023 00:42:00] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:42:00] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:42:01] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:42:14] "GET /office_main/electronic_transaction HTTP/1.1" 200 14759
+[26/Nov/2023 00:42:14] "GET /static/css/dark_mode.css HTTP/1.1" 200 3180
+[26/Nov/2023 00:42:14] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:42:50] "GET /office_main/electronic_transaction HTTP/1.1" 200 14759
+[26/Nov/2023 00:42:50] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:42:50] "GET /static/css/dark_mode.css HTTP/1.1" 200 3180
+[26/Nov/2023 00:42:50] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:43:10] "GET /office_main/electronic_transaction HTTP/1.1" 200 14759
+[26/Nov/2023 00:43:10] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:43:10] "GET /static/css/dark_mode.css HTTP/1.1" 200 3192
+[26/Nov/2023 00:43:10] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:43:11] - Broken pipe from ('127.0.0.1', 62074)
+[26/Nov/2023 00:43:11] - Broken pipe from ('127.0.0.1', 62073)
+[26/Nov/2023 00:43:11] - Broken pipe from ('127.0.0.1', 62024)
+[26/Nov/2023 00:43:26] "GET /office_main HTTP/1.1" 200 15062
+[26/Nov/2023 00:43:26] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:43:26] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:43:26] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:43:55] "GET /office_main HTTP/1.1" 200 15062
+[26/Nov/2023 00:43:55] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:43:55] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:44:58] "GET /office_main HTTP/1.1" 200 15062
+[26/Nov/2023 00:44:58] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:44:58] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:44:58] "GET /static/css/style.css HTTP/1.1" 200 5413
+[26/Nov/2023 00:44:58] "GET /static/css/dark_mode.css HTTP/1.1" 200 3312
+[26/Nov/2023 00:44:58] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:45:43] "GET /office_main HTTP/1.1" 200 15062
+[26/Nov/2023 00:45:43] "GET /static/css/dark_mode.css HTTP/1.1" 200 3311
+[26/Nov/2023 00:45:43] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:46:11] "GET /office_main HTTP/1.1" 200 15062
+[26/Nov/2023 00:46:11] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:46:11] "GET /static/css/dark_mode.css HTTP/1.1" 200 3308
+[26/Nov/2023 00:46:11] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:46:29] "GET /office_main HTTP/1.1" 200 15062
+[26/Nov/2023 00:46:29] "GET /static/css/dark_mode.css HTTP/1.1" 200 3314
+[26/Nov/2023 00:46:29] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:46:48] "GET / HTTP/1.1" 200 14124
+[26/Nov/2023 00:46:48] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:46:48] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 19
+[26/Nov/2023 00:47:30] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:47:31] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:47:31] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:47:31] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:47:31] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:47:31] "GET /static/css/style.css HTTP/1.1" 200 5775
+[26/Nov/2023 00:47:32] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:48:10] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:48:10] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:48:10] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:48:10] "GET /static/css/style.css HTTP/1.1" 200 5771
+[26/Nov/2023 00:48:10] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:48:23] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:48:23] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:48:23] "GET /static/css/style.css HTTP/1.1" 200 5768
+[26/Nov/2023 00:48:23] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:48:39] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:48:39] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:48:39] "GET /static/css/style.css HTTP/1.1" 200 5768
+[26/Nov/2023 00:48:39] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:49:05] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:49:09] "POST /dashboard/update-dark-mode/ HTTP/1.1" 200 17
+[26/Nov/2023 00:49:11] "GET / HTTP/1.1" 200 14126
+[26/Nov/2023 00:49:11] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:49:11] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:49:11] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:49:42] "GET /profile/ HTTP/1.1" 200 14404
+[26/Nov/2023 00:49:42] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:49:42] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:49:42] "GET /media/default-avatar.png HTTP/1.1" 200 45117
+[26/Nov/2023 00:49:43] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:53:34] "GET /profile/ HTTP/1.1" 200 14667
+[26/Nov/2023 00:53:34] "GET /static/css/style.css HTTP/1.1" 304 0
+[26/Nov/2023 00:53:34] "GET /static/css/dark_mode.css HTTP/1.1" 304 0
+[26/Nov/2023 00:53:34] "GET /static/js/component_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:53:34] "GET /static/js/light_dark_mode.js HTTP/1.1" 304 0
+[26/Nov/2023 00:53:34] "GET /static/js/BOMComponent_list_filter_ajax.js HTTP/1.1" 304 0
+[26/Nov/2023 00:53:34] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20
+[26/Nov/2023 00:53:34] - Broken pipe from ('127.0.0.1', 62272)
+[26/Nov/2023 00:53:34] - Broken pipe from ('127.0.0.1', 62267)
+[26/Nov/2023 00:53:34] - Broken pipe from ('127.0.0.1', 62271)
+[26/Nov/2023 00:54:01] "GET /profile/ HTTP/1.1" 200 14683
+[26/Nov/2023 00:54:01] "GET /dashboard/update-dark-mode/ HTTP/1.1" 200 20

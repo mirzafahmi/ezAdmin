@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{% static 'css/alert_box.css' %}">
 
     <!-- JavaScript -->
+    <script src="{% static 'js/light_dark_mode.js' %}"></script>
     <script src="{% static 'js/breadcrumbs_nav.js' %}"></script>
     <script src="{% static 'js/alert_box.js' %}"></script>
     <script src="{% static 'js/responsive_button.js' %}"></script>
@@ -37,6 +38,7 @@
     <script src="{% static 'js/purchasing_doc_modal_ajax.js' %}"></script>
     <script src="{% static 'js/raw_material_log_filter_ajax.js' %}"></script>
     <script src="{% static 'js/component_list_filter_ajax.js' %}"></script>
+    <script src="{% static 'js/BOMComponent_list_filter_ajax.js' %}"></script>
 
     <!-- jQuery, Popper.js, Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -45,7 +47,7 @@
     <link rel="icon" href="{% static 'icon/favicon.ico' %}" type="image/x-icon">
     <link rel="shortcut icon" href="{% static 'icon/favicon.ico' %}" type="image/x-icon">
 
-    <title>medivenAdmin | {% block title %}{% endblock %}</title>
+    <title>ezAdmin | {% block title %}{% endblock %}</title>
 </head>
 <body>
   {% include 'partials/nav.html' %}
@@ -125,52 +127,18 @@
     <div class="text-center">
       © 2023 Copyright: ezAdmin
     </div>
+    <div class="text-center version">
+      (ver: 0.23.11.25.0) <br>
+      <a href="https://www.freepik.com/free-vector/cute-cool-cat-wearing-eyeglasses-hoodie-cartoon-vector-icon-illustration-animal-fashion-icon-concept-isolated-premium-vector-flat-cartoon-style_23006693.htm#position=1">Default Profile Image by catalyststuff</a> on Freepik
+    </div>
     <!-- Copyright -->
   </footer>
 
   <script>
     breadCrumbs()
-    $(document).ready(function () {
-      const darkModeToggle = $('#dark-mode-toggle');
-      const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-      $.ajax({
-        type: 'GET',
-        url: '{% url "dashboard-update-dark-mode" %}',  // Replace with the actual endpoint to get user's dark mode preference
-        success: function (response) {
-          console.log(response)
-            // Set the initial state of the toggle based on the response
-            const initialDarkModeState = response.dark_mode;  // Assuming the response has a 'dark_mode' property
-            darkModeToggle.prop('checked', initialDarkModeState);
-            $('body').toggleClass('dark-mode', initialDarkModeState);
-            $('#dark-mode-styles').prop('disabled', !initialDarkModeState);
-        },
-        error: function () {
-            console.error('Failed to retrieve dark mode preference.');
-        }
-      });
-  
-      darkModeToggle.change(function () {
-        const isChecked = darkModeToggle.prop('checked');
-        $('body').toggleClass('dark-mode', isChecked);
-        $('#dark-mode-styles').prop('disabled', !isChecked);
-
-        //console.log(isChecked.toUpperCase().charAt(0) + isChecked.slice(1))
-          $.ajax({
-            type: 'POST',
-            url: '{% url "dashboard-update-dark-mode" %}',  // Update this URL with your actual endpoint
-            data: { dark_mode: isChecked.toString().charAt(0).toUpperCase() + isChecked.toString().slice(1) },
-            headers: { 'X-CSRFToken': csrfToken },
-            success: function () {
-                // Optionally, you can update the styles dynamically here
-                document.body.classList.toggle('dark-mode', isChecked);
-            },
-            error: function () {
-                console.error('Failed to update dark mode preference.');
-            }
-        });
-      });
-  });
+    var urlDarkMode = '{% url "dashboard-update-dark-mode" %}'
+    darkModeFunction(urlDarkMode)
   </script>
 </body>
 </html>

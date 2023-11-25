@@ -20,7 +20,7 @@
         </div>
         <hr>
         <div class="btn-group-horizontal mb-3" id="filter-label" role="group" aria-label="horizontal radio toggle button group">
-            <input type="radio" class="btn-check" id="vbtn-radio1" name="vbtn-radio"  autocomplete="off" checked data-component="main-page">
+            <input type="radio" class="btn-check" id="vbtn-radio1" name="vbtn-radio"  autocomplete="off" checked data-identifier="main-page">
             <label class="btn btn-outline-primary" for="vbtn-radio1">
                 <a class="no-decoration">
                     Main Page
@@ -80,8 +80,9 @@
     </div>
 </body>
 <script>
+    responsiveButtonText('addComponent')
+
     var baseUrl = "{% url 'production-raw-material-component-list-ajax' %}";
     componentLogFilter()
-    responsiveButtonText('addComponent')
 </script>
 {% endblock %}
