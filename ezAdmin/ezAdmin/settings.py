@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'django.contrib.humanize',
     'mathfilters',
+    'phonenumber_field',
     #'celery',
 ]
 

@@ -94,10 +94,9 @@ class ElectronicUserUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Upda
     permission_required = 'office.change_electronicuser'
 
     def form_valid(self, form):
-        user_name = self.get_object()
-        location = self.get_object().location
+        user = self.get_object()
 
-        messages.success(self.request, f'{user_name} electronic user from {user_location} updated successfully!')
+        messages.success(self.request, f'{user.name} ({user.position}) electronic user from {user.location} updated successfully!')
 
         return super().form_valid(form)
 
@@ -115,7 +114,7 @@ class ElectronicUserDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Dele
         response = super().post(request, *args, **kwargs)
 
         if response.status_code == 302:
-            success_message = f'{user_name} electronic user from {user_location} deleted successfully!'
+            success_message = f'{user.name} ({user.position}) electronic user from {user.location} deleted successfully!'
             messages.success(self.request, success_message)
 
         return response

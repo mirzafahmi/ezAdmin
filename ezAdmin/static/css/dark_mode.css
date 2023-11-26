@@ -130,6 +130,12 @@ footer {
     border-color: var(--secondary-ezadmin)0; /* Custom border color on hover */
 }
 
+.alert-success {
+    background-color: var(--primary-shade-ezadmin);
+    color: var(--secondary-ezadmin);
+    border: 1px solid var(--secondary-shade-ezadmin);
+}
+
 .version {
     color: var(--secondary-ezadmin);
 }

@@ -4,6 +4,7 @@ from misc.models import Currency
 from django.utils import timezone
 from mixins.modify_case_fields_mixin import CapitalcaseFieldsMixin, UppercaseFieldsMixin
 
+
 class Supplier(UppercaseFieldsMixin, models.Model):
     company_name = models.CharField(max_length=200, unique=True)
     address = models.CharField(max_length=200)
@@ -31,16 +32,31 @@ class Supplier(UppercaseFieldsMixin, models.Model):
 class PurchasingDocument(UppercaseFieldsMixin, models.Model):
     supplier = models.ForeignKey(Supplier, on_delete = models.PROTECT)
     po_number = models.CharField(max_length=200, blank = True, null = True)
-    po_doc = models.FileField(upload_to='purchasing_documents/PO')
+    po_doc = models.FileField(
+        upload_to='purchasing_documents/PO',
+        help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
+    )
     invoice_number = models.CharField(max_length=200, blank = True, null = True)
-    invoice_doc = models.FileField(upload_to='purchasing_documents/invoice')
+    invoice_doc = models.FileField(
+        upload_to='purchasing_documents/invoice',
+        help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
+    )
     packing_list = models.CharField(max_length=200, blank = True, null = True)
-    pl_doc = models.FileField(upload_to='purchasing_documents/PL')
+    pl_doc = models.FileField(
+        upload_to='purchasing_documents/PL',
+        help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
+    )
     k1_form = models.CharField(max_length=200, blank = True, null = True)
-    k1_doc = models.FileField(upload_to='purchasing_documents/K1')
+    k1_doc = models.FileField(
+        upload_to='purchasing_documents/K1',
+        help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
+    )
     k1_form_rate = models.FloatField()
     AWB_number = models.CharField(max_length=200, blank = True, null = True)
-    AWB_doc = models.FileField(upload_to='purchasing_documents/AWB')
+    AWB_doc = models.FileField(
+        upload_to='purchasing_documents/AWB',
+        help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
+    )
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
@@ -53,5 +69,5 @@ class PurchasingDocument(UppercaseFieldsMixin, models.Model):
             self.create_date = timezone.localtime(timezone.now())
 
         self.update_date = timezone.localtime(timezone.now())
-
+        
         super(PurchasingDocument, self).save(*args, **kwargs)

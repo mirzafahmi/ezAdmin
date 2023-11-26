@@ -4,7 +4,6 @@ from django.utils import timezone
 from purchasing.models import Supplier
 from mixins.modify_case_fields_mixin import *
 
-
 class ElectronicUserLocation(UppercaseFieldsMixin, models.Model):
     company_name = models.CharField(max_length = 100, unique = True)
     careholder_name = models.CharField(max_length = 100, unique = True)
@@ -81,9 +80,15 @@ class ElectronicModel(UppercaseFieldsMixin, models.Model):
 class ElectronicPurchasingDocument(UppercaseFieldsMixin, models.Model):
     supplier = models.ForeignKey(Supplier, on_delete = models.PROTECT)
     po_number = models.CharField(max_length=200, blank = True, null = True)
-    po_doc = models.FileField(upload_to='office/purchasing_documents/PO')
+    po_doc = models.FileField(
+        upload_to='office/purchasing_documents/PO',
+        help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
+        )
     invoice_number = models.CharField(max_length=200, blank = True, null = True)
-    invoice_doc = models.FileField(upload_to='office/purchasing_documents/invoice')
+    invoice_doc = models.FileField(
+        upload_to='office/purchasing_documents/invoice',
+        help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
+    )
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
@@ -132,8 +137,15 @@ class ElectronicTransaction(models.Model):
     current_user = models.ForeignKey(ElectronicUser, on_delete=models.PROTECT)
     electronic_item = models.ForeignKey(ElectronicInventory, on_delete=models.CASCADE)
     transaction_type = models.CharField(max_length=20,choices=(('Checked-Out','Checked-Out'),('Checked-In','Checked-In')), default = 'Checked-Out') 
-    initial_agreement_doc = models.FileField(upload_to='office/agreement/initial')
-    return_agreement_doc = models.FileField(upload_to='office/agreement/return', blank=True)
+    initial_agreement_doc = models.FileField(
+        upload_to='office/agreement/initial',
+        help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
+    )
+    return_agreement_doc = models.FileField(
+        upload_to='office/agreement/return',
+        blank=True,
+        help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
+    )
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)

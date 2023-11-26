@@ -30,6 +30,7 @@
                         <th>Purchasing Document</th>
                         <th>Status</th>
                         <th>Remark</th>
+                        <th>Previous User</th>
                         <th>Created Date</th>
                         <th>Activity</th>
                     </tr>
@@ -45,6 +46,11 @@
                         <td>{{electronicinventory.purchasing_document}}</td>
                         <td>{{electronicinventory.status}}</td>
                         <td>{{electronicinventory.remark}}</td>
+                        <td>
+                            {% for previous_user in electronicinventory.previous_users.all %}
+                            -{{ previous_user }} <br>
+                            {% endfor %}
+                        </td>
                         <td>{{electronicinventory.create_date}}</td>
                         <td>
                             <div class = "d-grid">

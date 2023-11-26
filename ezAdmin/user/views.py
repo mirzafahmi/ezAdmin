@@ -32,15 +32,16 @@ def login_page(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
 
-            # Authenticate the user
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Login successful!')
                 return redirect('dashboard-index')
+
             else:
                 messages.error(request, 'Invalid username or password.')
+                
     else:
         form = LoginForm()
 
@@ -65,7 +66,7 @@ def profile_update(request):
             profile_update_form.save()
 
             # Check if the password change form is valid and if the user wants to change the password
-            if password_change_form.is_valid() and password_change_form.cleaned_data['new_password1']:
+            if password_change_form.is_valid() and password_change_form.cleaned_data['new_password1'] and password_change_form.cleaned_data['new_password2']:
                 password_change_form.save()
                 messages.success(request, 'Your password was successfully updated.')
             

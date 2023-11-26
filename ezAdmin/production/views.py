@@ -169,7 +169,6 @@ class RawMaterialComponentListViewAJAX(View):
         identifier_name = request.GET.get('identifier_name')
 
         filter_data =[] #empty array could cause bug of empty filter button
-        print(identifier_name)
         if identifier_name:
             if identifier_name == "main-page":
                 all_components = RawMaterialComponent.objects.all().order_by('identifier')
@@ -275,7 +274,6 @@ class BOMComponentListViewAJAX(View):
                 filtered_data = []
 
                 for BOM_component in BOM_components:
-                    print(BOM_component)
                     filtered_data.append({
                         'BOMComponent_id': BOM_component.id,
                         'product': BOM_component.product.item_code,
@@ -356,7 +354,7 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
             data = json.loads(request.body.decode('utf-8'))
             inventory_details = data.get('inventory_details', {})
             form_data = data.get('formData', '')
-            print(inventory_details)
+            
 
             form_data_dict = {}
 
@@ -572,8 +570,6 @@ class ProductionLogListViewAJAX(View):
                             'exp_date': component.exp_date,
                         })
 
-                    print(raw_material_details)
-                    #print(bom_component)
                     filtered_data.append({
                         'log_id': log_filter.id,
                         'item_code': log_filter.BOMComponents.all()[0].product.item_code,
@@ -595,7 +591,6 @@ class ProductionLogListViewAJAX(View):
                 
                 log_filter = logs_filter.first()
 
-                print(log_filter.BOMComponents.all()[0].product.item_code)
                 filtered_data = []
                 
                 raw_material_details = []
@@ -609,8 +604,6 @@ class ProductionLogListViewAJAX(View):
                         'exp_date': component.exp_date,
                     })
 
-                print(raw_material_details)
-                #print(bom_component)
                 filtered_data.append({
                     'log_id': log_filter.id,
                     'item_code': log_filter.BOMComponents.all()[0].product.item_code,
@@ -653,11 +646,11 @@ class ProductionLogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Updat
 
         production_log_id = self.kwargs.get('pk')
         related_inventory_entries = RawMaterialInventory.objects.filter(production_log=production_log_id)
-        pprint.pprint(serialize('json', related_inventory_entries))
+        
         context['RelatedInventoryEntries'] = serialize('json', related_inventory_entries)
 
         raw_material_component = RawMaterialComponent.objects.all()
-        pprint.pprint(serialize('json', raw_material_component))
+        
         context['RawMaterialComponent'] = serialize('json', raw_material_component)
         
         return context
@@ -718,7 +711,7 @@ class RawMaterialInventoryCreateView(LoginRequiredMixin,CreateView):
 
     def form_valid(self, form):
         RawMaterialInventory = form.cleaned_data
-        print(RawMaterialInventory)
+        
         messages.success(self.request, f'{RawMaterialInventory["component"]} log of {RawMaterialInventory["purchasing_doc"]} created successfully!')
 
         return super().form_valid(form)
@@ -1213,7 +1206,7 @@ def generate_balance_assets_excel(request):
     # Make the datetime object aware by associating it with a time zone
     selected_date_aware = timezone.make_aware(selected_date_naive, timezone.get_current_timezone()).replace(hour=23, minute=59, second=59)
 
-    print(selected_date_aware)
+    
 
     # Dictionary to store data based on parent_item_code and component
     data_dict = {}
@@ -1221,7 +1214,7 @@ def generate_balance_assets_excel(request):
     current_time = timezone.localtime(timezone.now()).strftime('%Y-%m-%d %H:%M:%S')
 
     instances = RawMaterialInventory.objects.all().order_by('component__identifier__parent_item_code', 'component__component').filter(stock_type='1')
-    print(instances)
+    
     
     for instance in instances:    
         stock_in = RawMaterialInventory.objects.filter(
@@ -1236,7 +1229,7 @@ def generate_balance_assets_excel(request):
 
         balance = stock_in - stock_out
 
-        print(balance)
+        
         if balance != 0:
             parent_item_code = instance.component.identifier.parent_item_code
 
