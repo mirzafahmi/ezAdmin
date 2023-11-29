@@ -11,6 +11,9 @@ from django.views.generic.edit import CreateView
 from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
 from .models import *
 from django.urls import reverse_lazy, reverse
+from django.views import View
+from production.models import RawMaterialIdentifier
+from django.http import JsonResponse, HttpResponse
 
 class StoreMainView(LoginRequiredMixin, TemplateView):
     template_name = 'store/store_main.html'
@@ -94,6 +97,51 @@ class ProductListView(LoginRequiredMixin, ListView):
 
         return context
     
+class ProductListViewAJAX(View):
+    def get(self, request, *args, **kwargs):
+        identifier_name = request.GET.get('identifier')
+
+        filter_data =[] 
+        
+        if identifier_name:
+            if identifier_name == "main-page":
+                all_products = Product.objects.all().order_by('identifier')
+
+                for all_product in all_products:
+                    filter_data.append({
+                        'identifier': all_product.identifier.parent_item_code,
+                        'item_code': all_product.item_code,
+                        'product_name': all_product.name,
+                        'product_id': all_product.id,
+                        'brand': all_product.brand.brand_name,
+                        'packing': all_product.packing,
+                        'uom': all_product.uom.name,
+                        'create_date': all_product.create_date,
+                    })
+            else:
+                # Filter the model objects based on the product name
+                filtered_objects = Product.objects.filter(identifier__parent_item_code=identifier_name)
+
+                filter_products = filtered_objects
+
+                for filter_product in filter_products:
+                    filter_data.append({
+                        'identifier': filter_product.identifier.parent_item_code,
+                        'item_code': filter_product.item_code,
+                        'product_name': filter_product.name,
+                        'product_id': filter_product.id,
+                        'brand': filter_product.brand.brand_name,
+                        'packing': filter_product.packing,
+                        'uom': filter_product.uom.name,
+                        'create_date': filter_product.create_date,
+                    })
+
+            
+            return JsonResponse(filter_data, safe=False)
+        else:
+            identifiers = RawMaterialIdentifier.objects.values_list('parent_item_code', flat=True)
+
+            return JsonResponse(list(identifiers), safe=False)
 
 class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product

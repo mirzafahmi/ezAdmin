@@ -43,14 +43,14 @@ function BOMComponentListFilter() {
                     if (data.length <= 0) {
                         $('#table-footer').empty();
                         $('#table-footer').append(`
-                                <tr class="table-group-divider">
-                                    <td colspan="6" class="fw-bold">
-                                        <hr>
-                                        No BOMComponents available, please add in
-                                        <hr>
-                                    </td>
-                                </tr>
-                            `);
+                            <tr class="table-group-divider">
+                                <td colspan="6" class="fw-bold">
+                                    <hr>
+                                    No BOMComponents available, please add in
+                                    <hr>
+                                </td>
+                            </tr>
+                        `);
                     }
                     
                     data.forEach(function (log, index) {

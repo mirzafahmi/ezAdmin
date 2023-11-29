@@ -9,7 +9,21 @@ from mixins.file_size_mixin import FileValidatorMixin
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
-        fields = ['company_name', 'address', 'representative_name', 'phone_number', 'email', 'currency_trade']
+        fields = ['company_name', 'address', 'representative_name', 
+        'phone_number', 'email', 'currency_trade']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['company_name'].widget.attrs['placeholder'] = 'Enter supplier company name'
+        self.fields['address'].widget.attrs['placeholder'] = 'Enter supplier address'
+        self.fields['representative_name'].widget.attrs['placeholder'] = 'Enter supplier PIC name'
+        self.fields['phone_number'].widget.attrs['placeholder'] = 'Enter supplier phone number'
+        self.fields['email'].widget.attrs['placeholder'] = f"Enter supplier PIC's email"
+
+        self.fields['currency_trade'].empty_label = "Select a currency trade code"
+
+        self.fields['phone_number'].initial = '+60'
 
 class PurchasingDocumentForm(FileValidatorMixin, forms.ModelForm):
     allowed_extensions = ['pdf']
@@ -21,7 +35,15 @@ class PurchasingDocumentForm(FileValidatorMixin, forms.ModelForm):
         
     def __init__(self, *args, **kwargs):
         super(PurchasingDocumentForm, self).__init__(*args, **kwargs)
-        self.fields['po_doc'].widget.attrs['class'] = 'form-control-file'
+        
+        self.fields['po_number'].widget.attrs['placeholder'] = f"Enter a PO number"
+        self.fields['invoice_number'].widget.attrs['placeholder'] = f"Enter a Invoice number"
+        self.fields['packing_list'].widget.attrs['placeholder'] = f"Enter a Packing List number"
+        self.fields['k1_form'].widget.attrs['placeholder'] = f"Enter a K1 Form number"
+        self.fields['k1_form_rate'].widget.attrs['placeholder'] = f"Enter a K1 Form Rate"
+        self.fields['AWB_number'].widget.attrs['placeholder'] = f"Enter a AWB number"
+
+        self.fields['supplier'].empty_label = "Select a supplier"
         
     def clean(self):
         cleaned_data = super().clean()

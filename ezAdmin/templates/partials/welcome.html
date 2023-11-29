@@ -9,20 +9,59 @@
     <div class="welcome-page">
 
         {% if user.is_authenticated %} 
-        <h1>Welcome to ezAdmin, {{ user.username|capfirst }}</h1>
+        <h1>Welcome to ezAdmin, 
+            <span id="rotating-text" class="random-move">
+                {{ user.username|capfirst }}
+            </span>
+        </h1>
         {% else %}
         <h1>Welcome to ezAdmin</h1>
         {% endif %}
         <hr>
+        <h3 class="text-decoration-underline">What is ezAdmin?</h3>
+        <br>
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas non enim rhoncus, porttitor urna et, volutpat ex. Nunc efficitur fermentum dolor, eu fermentum metus accumsan et. Fusce neque nisl, blandit vel fermentum ut, rhoncus a enim. Integer semper dapibus magna, ac mattis odio pulvinar vel. Integer lobortis massa vitae lacus rhoncus hendrerit sit amet efficitur quam. Proin interdum placerat tellus, et fermentum lorem. Fusce vitae neque volutpat lectus pretium ornare nec ac tellus. Nulla tempor id neque in efficitur. Phasellus purus enim, convallis vehicula dignissim ac, venenatis vel urna. Aliquam tincidunt justo nec quam consectetur, eu vulputate nisl varius. Nunc eu elementum lorem. Integer quis odio vitae est tempus auctor. Quisque dignissim iaculis turpis, eget varius metus convallis ullamcorper. Nulla eu tincidunt dui.
-            Sed eget dictum odio, sit amet blandit arcu. Nullam venenatis pharetra augue, ut consectetur sem scelerisque laoreet. Aliquam tempor lacus a massa rutrum, eu lacinia dolor lobortis. Cras nec libero a velit convallis luctus et at nisi. Mauris sed nisl ac urna tempor finibus eget non lacus. Donec eleifend cursus ex, at facilisis ligula commodo id. Proin at turpis eget dui vulputate rhoncus nec sit amet nibh. Aliquam commodo lacus at neque tincidunt vestibulum. Pellentesque consectetur sed ipsum ac ultricies. Vivamus tempor facilisis lacus, quis mollis lacus interdum eu. Sed sed est a nunc dignissim rhoncus. Aenean tempor consequat sagittis.
-            Proin eget facilisis purus, in consequat enim. Sed ex tellus, egestas nec odio id, scelerisque vulputate purus. Sed placerat convallis iaculis. Aliquam mi lacus, euismod id feugiat vitae, mollis eget mi. Mauris mollis rutrum augue ac tristique. Suspendisse potenti. Donec rhoncus sagittis porttitor. In ut neque ac ante bibendum cursus in ut nibh. Sed eget posuere lectus, in pharetra tellus. Sed eu enim quis ipsum pellentesque sagittis. Phasellus convallis laoreet libero, vel dictum justo congue et. Mauris rutrum nisi eu blandit lobortis. 
+            ezAdmin is a comprehensive web-based solution designed to streamline administrative tasks, 
+            minimize manual workload, automate repetitive processes, and create a centralized management 
+            system for your organization. This powerful tool is engineered with the aim of simplifying and 
+            enhancing the overall administrative experience, enabling your team to focus on more strategic and 
+            value-added activities.
         </p>
         <br>
+        <h3 class="text-decoration-underline">Key Objectives:</h3>
+        <ol>
+            <li>
+                Efficiency Enhancement: ezAdmin aims to optimize the efficiency of administrative operations by automating routine tasks, reducing human errors, and improving data accuracy.
+            </li>
+            <li>
+                Centralized Management: The system centralizes various administrative functions, including inventory management, document generation, and data analysis, providing a single platform for all your administrative needs.
+            </li>
+            <li>
+                Workload Reduction: By automating mundane and time-consuming tasks, ezAdmin helps reduce the workload on administrative staff, allowing them to allocate more time to critical tasks.
+            </li>
+            <li>
+                Data-Driven Decision Making: Through advanced data analysis and visualization tools, ezAdmin empowers your organization to make informed, data-driven decisions based on real-time information.
+            </li>
+            <li>
+                User-Friendly Interface: The user-friendly interface ensures that employees across different departments can easily navigate and utilize the system, enhancing overall usability.
+            </li>
+            <li>
+                Scalability: ezAdmin is designed to adapt and scale with your organization's evolving administrative requirements, ensuring it remains a valuable asset as your company grows.
+            </li>
+        </ol>
         <br>
-        {% if not user.is_authenticated %} 
-        <button class = 'btn btn-primary'><a href="{% url 'user-login' %}" style="text-decoration: none; color: white;">Login or Register here -></a></button>
-        {% endif %}
+        <h3 class="text-decoration-underline">This webapps/project consist of 5 major component/apps which are:</h3>
+            <ol>
+                <li>Store</li>
+                <li>Production</li>
+                <li>Purchasing</li>
+                <li>Misc</li>
+                <li>Office</li>
+            </ol>
+        <br>
+        <button class = 'button-56'><a href="{% url 'dashboard-documentation' %}" style="text-decoration: none; color: white;">
+            Read more here ->
+        </a>
+        </button>
     </div>
 </div>

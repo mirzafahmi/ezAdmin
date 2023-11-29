@@ -8,27 +8,73 @@ class ElectronicUserLocationForm(forms.ModelForm):
     class Meta:
         model = ElectronicUserLocation
         fields = ['company_name', 'careholder_name', 'phone_number']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['company_name'].widget.attrs['placeholder'] = 'Enter a Careholder Company Name'
+        self.fields['careholder_name'].widget.attrs['placeholder'] = 'Enter a Careholder Name'
+        self.fields['phone_number'].widget.attrs['placeholder'] = 'Enter a Careholder Phone Number'
+
+        self.fields['phone_number'].initial = '+60'
+    
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"]
+
+        cleaned_phone_number = ''.join(filter(str.isdigit, str(phone_number)))
+        
+        formatted_phone_number = f"+{cleaned_phone_number[0:2]} {cleaned_phone_number[2:4]}-{cleaned_phone_number[4:7]} {cleaned_phone_number[7:]}"
+
+        return formatted_phone_number
 
 class ElectronicUserForm(forms.ModelForm):
     class Meta:
         model = ElectronicUser
         fields = ['name', 'position', 'location']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['name'].widget.attrs['placeholder'] = 'Enter an User Name'
+        self.fields['position'].widget.attrs['placeholder'] = 'Enter an User Position'
+        
+        self.fields['location'].empty_label = "Select an User Location"
 
 class ElectronicBrandForm(forms.ModelForm):
     class Meta:
         model = ElectronicBrand
         fields = ['brand_name']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['brand_name'].widget.attrs['placeholder'] = 'Enter a Brand Name'
 
 class ElectronicModelForm(forms.ModelForm):
     class Meta:
         model = ElectronicModel
         fields = ['brand', 'model_name']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['model_name'].widget.attrs['placeholder'] = 'Enter a Model Name'
+        
+        self.fields['brand'].empty_label = "Select a Brand Name"
 
 class ElectronicPurchasingDocumentForm(FileValidatorMixin, forms.ModelForm):
     allowed_extensions = ['pdf']
     class Meta:
         model = ElectronicPurchasingDocument
         fields = ['supplier', 'po_number', 'po_doc', 'invoice_number', 'invoice_doc']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['po_number'].widget.attrs['placeholder'] = 'Enter a PO Number'
+        self.fields['invoice_number'].widget.attrs['placeholder'] = 'Enter an Invoice Number'
+        
+        self.fields['supplier'].empty_label = "Select a Supplier Name"
     
     def clean(self):
         cleaned_data = super().clean()
@@ -53,6 +99,16 @@ class ElectronicInventoryForm(forms.ModelForm):
             'date_of_purchase': forms.DateInput(attrs={'type': 'date'})
         }
     
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['serial_number'].widget.attrs['placeholder'] = 'Enter a Serial Number'
+        self.fields['price_per_unit'].widget.attrs['placeholder'] = 'Enter an Price per Unit'
+        self.fields['remark'].widget.attrs['placeholder'] = 'Enter a remark if any'
+        
+        self.fields['electronic_item'].empty_label = "Select an Electronic Item"
+        self.fields['purchasing_document'].empty_label = "Select a related Purchasing Document"
+    
 class ElectronicTransactionForm(FileValidatorMixin, forms.ModelForm):
     allowed_extensions = ['pdf', 'png', 'jpeg']
     class Meta:
@@ -67,6 +123,8 @@ class ElectronicTransactionForm(FileValidatorMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.fields['current_user'].empty_label = "Select a Current User"
+        
         # Filter the queryset for the electronic_item field to include only items with status 'Idle'
         self.fields['electronic_item'].queryset = self.get_idle_items()
 

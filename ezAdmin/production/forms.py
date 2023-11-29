@@ -10,14 +10,26 @@ class RawMaterialIdentifierForm(forms.ModelForm):
     class Meta:
         model = RawMaterialIdentifier
         fields = ['parent_item_code']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['parent_item_code'].label = "Identifier"
+
+        self.fields['parent_item_code'].widget.attrs['placeholder'] = 'Enter Identifier'
 
 class RawMaterialComponentForm(forms.ModelForm):
     class Meta:
         model = RawMaterialComponent
-        fields = ['identifier', 'component', 'spec', ]
+        fields = ['identifier', 'component', 'spec']
     
     def __init__(self, *args, **kwargs):
         super(RawMaterialComponentForm, self).__init__(*args, **kwargs)
+
+        self.fields['component'].widget.attrs['placeholder'] = 'Enter Component for this identifier'
+        self.fields['spec'].widget.attrs['placeholder'] = 'Enter Specification for this component'
+
+        self.fields['identifier'].empty_label = "Select a Identifier"
 
         identifier_id = self.initial.get('identifier_id') or self.data.get('identifier_id')
 
@@ -26,28 +38,32 @@ class RawMaterialComponentForm(forms.ModelForm):
             self.initial['identifier'] = identifier_id
         else:
             self.fields['identifier'].disabled = False
+        
+        self.fields['identifier'].queryset = self.fields['identifier'].queryset.order_by('parent_item_code')
     
     def clean(self):
         cleaned_data = super().clean()
         component = cleaned_data.get('component')
         identifier = cleaned_data.get('identifier')
+        spec = cleaned_data.get('spec')
 
-        if component and identifier:
+        if component and identifier and spec:
             # Check if a similar component already exists for the identifier
             similar_components = RawMaterialComponent.objects.filter(
                 identifier=identifier,
-                component__iexact=component  # Case-insensitive comparison
+                component__iexact=component,
+                spec__iexact=spec
             ).exclude(pk=self.instance.pk if self.instance else None)
 
             if similar_components.exists():
-                self.add_error("component", "A similar component already exists for this identifier.")
+                self.add_error("spec", "A similar component with same specification already exists for this identifier.")
 
         return cleaned_data
 
 class BOMComponentForm(forms.ModelForm):
     class Meta:
         model = BOMComponent
-        fields = ['product', 'raw_material_component', 'quantity_used']
+        fields = ['product', 'raw_material_component', 'quantity_used', 'uom']
     
     def __init__(self, *args, **kwargs):
         super(BOMComponentForm, self).__init__(*args, **kwargs)
@@ -56,8 +72,13 @@ class BOMComponentForm(forms.ModelForm):
         self.fields['product'].queryset = Product.objects.all()
         self.fields['product'].label_from_instance = lambda obj: f"{obj.item_code}" if obj.item_code else obj.name
 
+        self.fields['quantity_used'].widget.attrs['placeholder'] = 'Enter Quantity Used for this BOMcomponent'
+
         self.fields['product'].empty_label = "Select a product's item code"
         self.fields['raw_material_component'].empty_label = "Select a raw material component"
+        self.fields['uom'].empty_label = "Select a UOM"
+
+        self.fields['raw_material_component'].queryset = self.fields['raw_material_component'].queryset.order_by('identifier__parent_item_code', 'component')
 
     def clean(self):
         cleaned_data = super().clean()
@@ -99,8 +120,9 @@ class ProductionLogForm(forms.ModelForm):
 
         self.fields['lot_number'].widget.attrs['placeholder'] = f'In format of ITEMCODEYYMMMDD (Ex.: PRDEN123OCT21)'
         self.fields['exp_date'].widget.attrs['placeholder'] = f'In format of YYYY-MM (Ex.: 2023-10)'
-        self.fields['rH'].widget.attrs['placeholder'] = f'Please enter in 1 decimal place'
-        self.fields['temperature'].widget.attrs['placeholder'] = f'Please enter in 1 decimal place'
+        self.fields['quantity_produced'].widget.attrs['placeholder'] = f'Please enter a Quantity Produced'
+        self.fields['rH'].widget.attrs['placeholder'] = f'Please enter a rH value'
+        self.fields['temperature'].widget.attrs['placeholder'] = f'Please enter a Temperature value'
         
         if 'instance' in kwargs and kwargs['instance'] is not None:
             self.fields['product'].initial = kwargs['instance'].BOMComponents.all()[0].product.id
@@ -127,13 +149,23 @@ class RawMaterialInventoryForm(forms.ModelForm, QuantityValidationMixin):
     
     class Meta:
         model = RawMaterialInventory
-        fields = ['component', 'quantity', 'stock_type', 'price_per_unit', 'purchasing_doc', 'lot_number', 'exp_date', 'stock_in_tag']
+        fields = ['component', 'quantity', 'uom', 'stock_type', 'price_per_unit', 'purchasing_doc', 'lot_number', 'exp_date', 
+        'stock_in_tag']
         widgets = {
             'stock_in_tag': forms.HiddenInput(),  # Hide the related_stock_in field
         }
 
     def __init__(self, *args, **kwargs):
         super(RawMaterialInventoryForm, self).__init__(*args, **kwargs)
+
+        self.fields['quantity'].widget.attrs['placeholder'] = f'Please enter a Quantity'
+        self.fields['price_per_unit'].widget.attrs['placeholder'] = f'Please enter a Price per Unit'
+        self.fields['lot_number'].widget.attrs['placeholder'] = f'Please enter a Lot Number'
+        self.fields['exp_date'].widget.attrs['placeholder'] = f'Please enter a Expiry Date in format of YYYY-MM'
+
+        self.fields['purchasing_doc'].empty_label = "Select a related Purchasing Document"
+        self.fields['uom'].empty_label = "Select a UOM"
+        
         self.fields['lot_number'].required = False
         self.fields['exp_date'].required = False
 

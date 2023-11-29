@@ -2,11 +2,13 @@ from django.db import models
 from django.core.validators import validate_email, DecimalValidator
 from store.models import Product
 from purchasing.models import *
+from misc.models import *
 from django.utils import timezone
 from mixins.modify_case_fields_mixin import *
 
+
 class RawMaterialIdentifier(UppercaseFieldsMixin, models.Model):
-    parent_item_code = models.CharField(max_length=20, unique=True)
+    parent_item_code = models.CharField(max_length=30, unique=True)
     #add description of identifier
 
     create_date = models.DateTimeField(blank = True, null = True)
@@ -23,7 +25,7 @@ class RawMaterialIdentifier(UppercaseFieldsMixin, models.Model):
 
         super(RawMaterialIdentifier, self).save(*args, **kwargs)
 
-class RawMaterialComponent(CapitalcaseFieldsMixin, models.Model):
+class RawMaterialComponent(UppercaseFieldsMixin, models.Model):
     component = models.CharField(max_length=200, blank=True, null=True)
     spec = models.CharField(max_length=200, blank = True, null = True)
     identifier = models.ForeignKey(RawMaterialIdentifier, on_delete=models.PROTECT)
@@ -45,7 +47,8 @@ class RawMaterialComponent(CapitalcaseFieldsMixin, models.Model):
 class BOMComponent(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     raw_material_component = models.ForeignKey(RawMaterialComponent, on_delete=models.PROTECT)
-    quantity_used = models.FloatField(default=0)
+    quantity_used = models.FloatField()
+    uom = models.ForeignKey(UOM, on_delete=models.PROTECT)
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
@@ -86,6 +89,7 @@ class ProductionLog(models.Model):
 class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
     component = models.ForeignKey(RawMaterialComponent, on_delete=models.PROTECT)
     quantity = models.FloatField()
+    uom = models.ForeignKey(UOM, on_delete=models.PROTECT)
     lot_number = models.CharField(max_length=200, blank = True, null = True)
     exp_date = models.CharField(max_length=200, blank = True, null = True)
     price_per_unit = models.FloatField()

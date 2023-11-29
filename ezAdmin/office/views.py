@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
+from django.http import JsonResponse
 
 from .models import *
 from .forms import *
@@ -281,6 +282,27 @@ class ElectronicInventoryListView(LoginRequiredMixin, ListView):
     model = ElectronicInventory
     template_name = 'office/electronic_inventory_list.html'
     context_object_name = 'electronicinventories' 
+
+class ElectronicInventoryListViewAJAX(LoginRequiredMixin, ListView):
+    def get(self, request, *args, **kwargs):
+        purchasing_doc = request.GET.get('purchasing_doc')
+
+        response_data = []
+
+        if purchasing_doc:
+
+            purchasing_doc_details = ElectronicPurchasingDocument.objects.filter(id=purchasing_doc).first()
+
+            response_data.append({
+                'supplier': purchasing_doc_details.supplier.company_name,
+                'po_number': purchasing_doc_details.po_number,
+                'po_doc': str(purchasing_doc_details.po_doc),
+                'invoice_number': purchasing_doc_details.invoice_number,
+                'invoice_doc': str(purchasing_doc_details.invoice_doc),
+                'create_date': purchasing_doc_details.create_date,
+            })
+
+        return JsonResponse(response_data, safe=False)
 
 class ElectronicInventoryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = ElectronicInventory

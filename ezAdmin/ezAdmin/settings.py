@@ -199,7 +199,7 @@ SITE_ID = 1
 
 SESSION_COOKIE_AGE = 1800
 
-LOGGING = {
+'''LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
@@ -240,7 +240,7 @@ LOGGING = {
             },
         },
     },
-}
+}'''
 
 
 #DATE_FORMAT = 'j/M/Y'

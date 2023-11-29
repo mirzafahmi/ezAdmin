@@ -9,7 +9,7 @@ class Supplier(UppercaseFieldsMixin, models.Model):
     company_name = models.CharField(max_length=200, unique=True)
     address = models.CharField(max_length=200)
     representative_name = models.CharField(max_length=200, blank = True, null = True)
-    phone_number = models.PositiveIntegerField(null = True)
+    phone_number = models.CharField(max_length = 15, blank = True, null = True)
     email = models.CharField(max_length = 100, validators = [validate_email], blank = True, null = True)
     currency_trade = models.ForeignKey(Currency, on_delete=models.PROTECT)
 

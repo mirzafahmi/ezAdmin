@@ -11,8 +11,8 @@ from mixins.modify_case_fields_mixin import *
 
 class BrandName(UppercaseFieldsMixin, models.Model):
     #basics fields
-    brand_name = models.CharField(max_length = 20, unique = True)
-    company_name = models.CharField(max_length = 20, blank = True, null = True)
+    brand_name = models.CharField(max_length = 30, unique = True)
+    company_name = models.CharField(max_length = 30, blank = True, null = True)
 
     #utility fields
     create_date = models.DateTimeField(blank = True, null = True)
@@ -30,7 +30,7 @@ class BrandName(UppercaseFieldsMixin, models.Model):
 
 class Product(UppercaseFieldsMixin, models.Model):
     identifier = models.ForeignKey('production.RawMaterialIdentifier', on_delete = models.PROTECT)
-    item_code = models.CharField(max_length = 20, unique = True)
+    item_code = models.CharField(max_length = 30, unique = True)
     name = models.CharField(max_length = 200)
     description = models.CharField(max_length = 200, blank = True, null = True)
     brand = models.ForeignKey(BrandName, on_delete = models.PROTECT)

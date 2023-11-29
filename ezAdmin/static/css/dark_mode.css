@@ -72,9 +72,6 @@ body {
     color: var(--secondary-shade-ezadmin)
 }
 
-#main-page{
-    background-color: var(--primary-ezadmin);
-}
 
 #breadCrumbsNav {
     --bs-breadcrumb-divider: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='white'/%3E%3C/svg%3E");
@@ -136,6 +133,50 @@ footer {
     border: 1px solid var(--secondary-shade-ezadmin);
 }
 
+.modal-content {
+    background-color: var(--primary-shade-ezadmin);
+}
+
+.modal-header, .modal-footer {
+    border-color: var(--accent-shade-ezadmin);
+}
+  
 .version {
     color: var(--secondary-ezadmin);
 }
+
+.markdown-body {
+    color: var(--navbar-silver)
+}
+
+.markdown-body code {
+    background-color: #f5f3ee;
+    color: #000;
+}
+
+/* custom button */
+
+.button-56 {
+    background-color: transparent;
+    border: 2px solid black;
+}
+  
+.button-56:after {
+    background-color: var(--accent-ezadmin);
+    border-radius: 8px;
+    content: "";
+    display: block;
+    height: 48px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    top: -2px;
+    transform: translate(8px, 8px);
+    transition: transform .2s ease-out;
+    z-index: -1;
+}
+  
+.button-56:hover:after {
+    transform: translate(0, 0);
+}
+  

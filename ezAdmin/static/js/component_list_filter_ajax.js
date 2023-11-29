@@ -38,6 +38,20 @@ function componentLogFilter() {
                             return 'None';
                         }
                     }
+
+                    $('#table-footer').empty();
+                    if (data.length <= 0) {
+                        $('#table-footer').empty();
+                        $('#table-footer').append(`
+                            <tr class="table-group-divider">
+                                <td colspan="6" class="fw-bold">
+                                    <hr>
+                                    No Components available, please add in
+                                    <hr>
+                                </td>
+                            </tr>
+                        `);
+                    }
                     
                     $('#logs-table-body').empty();
                     data.forEach(function (log, index) {

@@ -1,0 +1,18 @@
+{% extends 'partials/base.html' %}
+{% block title %} Add Electronic Brand{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container markdown-body">
+    {{ rendered_content | safe }}
+</div>
+<script>
+    $(document).ready(function () {
+        // Your dynamic image path (you can get this from Django context or any other source)
+        var dynamicImagePath = "/static/medivenAdmin_DB.png";
+
+        // Update the src attribute of the image with the dynamic path
+        $("p img").attr("src", dynamicImagePath);
+    });
+</script>
+{% endblock %}

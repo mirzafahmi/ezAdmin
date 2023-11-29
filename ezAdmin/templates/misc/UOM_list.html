@@ -1,4 +1,5 @@
 {% extends 'partials/base.html' %}
+{% load humanize %}
 {% block title %} UOM List{% endblock %}
 
 {% block content %}
@@ -24,6 +25,8 @@
                     <tr>
                         <th>No.</th>
                         <th>Name</th>
+                        <th>Unit</th>
+                        <th>Weightage</th>
                         <th>Created Date</th>
                         <th>Activity</th>
                     </tr>
@@ -33,6 +36,8 @@
                     <tr>    
                         <td>{{forloop.counter}}</td>
                         <td>{{UOM.name}}</td>
+                        <td>{{UOM.unit}}</td>
+                        <td>{{UOM.weightage|intcomma}}</td>
                         <td>{{UOM.create_date}}</td>
                         <td>
                             <div class = "d-grid">

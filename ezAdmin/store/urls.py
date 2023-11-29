@@ -10,6 +10,7 @@ urlpatterns = [
     path('store_brand/brand_name/<int:pk>-update/', BrandNameUpdateView.as_view(), name='store-brand-name-update'),
     path('store_brand/brand_name/<int:pk>-delete/', BrandNameDeleteView.as_view(), name='store-brand-name-delete'),
     path('store_brand/product_list/', ProductListView.as_view(), name = 'store-product-list'),
+    path('store_brand/product_list_ajax/', ProductListViewAJAX.as_view(), name = 'store-product-list-ajax'),
     path('store_brand/product_list/create/', ProductCreateView.as_view(), name = 'store-product-add'),
     path('store_brand/product_list/<int:pk>-update/', ProductUpdateView.as_view(), name = 'store-product-update'),
     path('store_brand/product_list/<int:pk>-delete/', ProductDeleteView.as_view(), name = 'store-product-delete'),

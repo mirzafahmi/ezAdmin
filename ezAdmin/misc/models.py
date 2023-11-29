@@ -27,14 +27,16 @@ class Currency(models.Model):
 
 class UOM(models.Model):
     #basics fields
-    name = models.CharField(max_length = 5, unique = True)
+    name = models.CharField(max_length = 10, unique = True)
+    unit = models.CharField(max_length = 10)
+    weightage = models.FloatField()
 
     #utility fields
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.unit})' 
 
     def save(self, *args, **kwargs):
         if self.create_date is None:

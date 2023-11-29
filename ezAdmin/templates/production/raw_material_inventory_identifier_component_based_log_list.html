@@ -1,5 +1,6 @@
 {% extends 'partials/base.html' %}
 {% load mathfilters %}
+{% load humanize %}
 {% block title %} Raw Material Inventory Log List{% endblock %}
 
 {% block content %}
@@ -42,12 +43,11 @@
                         <th>Identifier</th>
                         <th>Component</th>
                         <th>Quantity</th>
+                        <th>Unit</th>
                         <th>Lot</th>
                         <th>Expiry Date</th>
                         <th>Stock In Date</th>
                         <th>Stock Out Date</th>
-                        <th>Price per Unit (Trade Currency)</th>
-                        <th>Price per Unit (Local Currency)</th>
                         <th>Purchasing Document</th>
                         <th>Activity</th>
                     </tr>
@@ -59,16 +59,15 @@
                         <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.component.identifier}}</td>
                         <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.component}}</td>
                         {% if RawMaterialInventoriesIdentifierComponentBasedLog.stock_type == '2'%}
-                        <td>-{{ RawMaterialInventoriesIdentifierComponentBasedLog.quantity }}</td>
+                        <td>-{{ RawMaterialInventoriesIdentifierComponentBasedLog.quantity|intcomma }}</td>
                         {% else %}
                         <td>{{ RawMaterialInventoriesIdentifierComponentBasedLog.quantity|floatformat }}</td>
                         {% endif%}
+                        <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.uom}}</td>
                         <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.lot_number}}</td>
                         <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.exp_date}}</td>
                         <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.stock_in_date}}</td>
                         <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.stock_out_date}}</td>
-                        <td>{{RawMaterialInventoriesIdentifierComponentBasedLog.purchasing_doc.supplier.currency_trade.currency_code}} {{RawMaterialInventoriesIdentifierComponentBasedLog.price_per_unit}}</td>
-                        <td>MYR {{RawMaterialInventoriesIdentifierComponentBasedLog.price_per_unit|mul:RawMaterialInventoriesIdentifierComponentBasedLog.purchasing_doc.k1_form_rate}}</td>
                         <td>
                             <a 
                             href="#staticBackdrop" 
@@ -106,7 +105,7 @@
                     </tr>
                     {% else %}
                     <tr class="table-group-divider">
-                        <td colspan="12" class="fw-bold">
+                        <td colspan="11" class="fw-bold">
                             <hr>
                             No stock available, please stock in
                             <hr>
@@ -121,7 +120,6 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5 text-center" id="staticBackdropLabel"></h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <table class="table table-borderless table-striped table-hover">

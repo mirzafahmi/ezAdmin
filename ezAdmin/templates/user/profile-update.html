@@ -38,50 +38,50 @@
                                 <i class="fa-solid fa-xmark me-1"></i>
                                 Cancel Update
                             </a>
-                        <div>
-                            <script>
-                                $(document).ready(function($) {
+                        </div>
+                        <script>
+                            $(document).ready(function($) {
 
-                                    var input = $("#id_phone");
+                                var input = $("#id_phone");
 
-                                    // Save the initial value
-                                    var initialValue = input.val();
+                                // Save the initial value
+                                var initialValue = input.val();
 
-                                    // Check if the initial value contains the country code
-                                    var hasCountryCode = initialValue.startsWith("+");
+                                // Check if the initial value contains the country code
+                                var hasCountryCode = initialValue.startsWith("+");
 
-                                    if (hasCountryCode) {
-                                        // Remove the country code
-                                        initialValue = initialValue.replace(/\D/g, '');
-                                    }
-                                    
-                                    input.intlTelInput({
-                                        preferredCountries: ["my"],  
-                                        nationalMode: true,
-                                        separateDialCode: true,
-                                    });
-
-                                    // Save the initial value
-                                    var initialValue = input.val();
-
-                                    // Remove the country code from the initial value
-                                    var numericValue = initialValue.replace(/\D/g, '');
-                                    initialValue = "+" + numericValue;
-
-                                    // Set the initial value without the country code
-                                    input.val(numericValue);
-
-                                    // Add the country code back on form submission
-                                    $("form").submit(function() {
-                                        // Get the current input value
-                                        var currentValue = input.val().slice(0, 2) + "-" + numericValue.slice(2, 5) + " " + numericValue.slice(5, 9);
-
-                                        // Add the country code back to the value
-                                        var countryCode = input.intlTelInput("getSelectedCountryData").dialCode;
-                                        input.val("+" + countryCode + " " + currentValue);
-                                    });
+                                if (hasCountryCode) {
+                                    // Remove the country code
+                                    initialValue = initialValue.replace(/\D/g, '');
+                                }
+                                
+                                input.intlTelInput({
+                                    preferredCountries: ["my"],  
+                                    nationalMode: true,
+                                    separateDialCode: true,
                                 });
-                            </script>                            
+
+                                // Save the initial value
+                                var initialValue = input.val();
+
+                                // Remove the country code from the initial value
+                                var numericValue = initialValue.replace(/\D/g, '');
+                                initialValue = "+" + numericValue;
+
+                                // Set the initial value without the country code
+                                input.val(numericValue);
+
+                                // Add the country code back on form submission
+                                $("form").submit(function() {
+                                    // Get the current input value
+                                    var currentValue = input.val().slice(0, 2) + "-" + numericValue.slice(2, 5) + " " + numericValue.slice(5, 9);
+
+                                    // Add the country code back to the value
+                                    var countryCode = input.intlTelInput("getSelectedCountryData").dialCode;
+                                    input.val("+" + countryCode + " " + currentValue);
+                                });
+                            });
+                        </script>                            
                     </form>
                 </div>
             </div>

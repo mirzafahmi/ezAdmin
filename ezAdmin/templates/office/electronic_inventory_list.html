@@ -1,4 +1,5 @@
 {% extends 'partials/base.html' %}
+{% load humanize %}
 {% block title %} Electronic Inventory List{% endblock %}
 
 {% block content %}
@@ -41,9 +42,21 @@
                         <td>{{forloop.counter}}</td>
                         <td>{{electronicinventory.electronic_item}}</td>
                         <td>{{electronicinventory.serial_number}}</td>
-                        <td>{{electronicinventory.purchasing_document.supplier.currency_trade.currency_code}} {{electronicinventory.price_per_unit}}</td>
+                        <td>
+                            {{electronicinventory.purchasing_document.supplier.currency_trade.currency_code}} 
+                            {{electronicinventory.price_per_unit|intcomma}}</td>
                         <td>{{electronicinventory.date_of_purchase}}</td>
-                        <td>{{electronicinventory.purchasing_document}}</td>
+                        <td>
+                            <a 
+                            href="#staticBackdrop" 
+                            class="modal-link"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#staticBackdrop" 
+                            data-purchasing-doc-id="{{ electronicinventory.purchasing_document.id }}"
+                            >
+                            {{electronicinventory.purchasing_document}}
+                            </a>
+                        </td>
                         <td>{{electronicinventory.status}}</td>
                         <td>{{electronicinventory.remark}}</td>
                         <td>
@@ -82,8 +95,38 @@
                 </tfoot>                      
             </table>
         </div>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen-xl-down modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5 text-center" id="staticBackdropLabel"></h1>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-borderless table-striped table-hover">
+                        <thead class ="table-dark">
+                            <tr>
+                                <th>Supplier</th>
+                                <th>PO Details</th>
+                                <th>PO Details</th>
+                                <th>Created Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchasingDocModal"> 
+                            
+                        </tbody> 
+                    </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-accent" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+        </div>
     </div>
     <script>
         responsiveButtonText('addInventory')
+
+        var baseUrl = "{% url 'office-electronic-inventory-list-ajax' %}"   
+        generateElectronicInventoryModals()  
     </script>
 {% endblock %}

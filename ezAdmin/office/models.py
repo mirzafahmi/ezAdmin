@@ -7,7 +7,7 @@ from mixins.modify_case_fields_mixin import *
 class ElectronicUserLocation(UppercaseFieldsMixin, models.Model):
     company_name = models.CharField(max_length = 100, unique = True)
     careholder_name = models.CharField(max_length = 100, unique = True)
-    phone_number = models.PositiveIntegerField()
+    phone_number = models.CharField(max_length = 15, blank = True, null = True)
 
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)

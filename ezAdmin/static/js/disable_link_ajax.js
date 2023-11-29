@@ -3,7 +3,7 @@ function disableLinkAjaxAction() {
 
         function disableLink() {
             $('#log-out-link')
-                .removeClass('btn-primary')
+                .removeClass('btn-accent')
                 .addClass('btn-secondary')
                 .off('click')
                 .click(function (e) {

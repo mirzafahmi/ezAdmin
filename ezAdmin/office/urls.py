@@ -27,6 +27,7 @@ urlpatterns = [
     path('office_main/electronic_purchasing_document/<int:pk>-delete/', ElectronicPurchasingDocumentDeleteView.as_view(), name='office-electronic-purchasing-document-delete'),
     path('office_main/electronic_inventory/create', ElectronicInventoryCreateView.as_view(), name='office-electronic-inventory-create'),
     path('office_main/electronic_inventory', ElectronicInventoryListView.as_view(), name='office-electronic-inventory-list'),
+    path('office_main/electronic_inventory_ajax', ElectronicInventoryListViewAJAX.as_view(), name='office-electronic-inventory-list-ajax'),
     path('office_main/electronic_inventory/<int:pk>-update/', ElectronicInventoryUpdateView.as_view(), name='office-electronic-inventory-update'),
     path('office_main/electronic_inventory/<int:pk>-delete/', ElectronicInventoryDeleteView.as_view(), name='office-electronic-inventory-delete'),
     path('office_main/electronic_transaction/create', ElectronicTransactionCreateView.as_view(), name='office-electronic-transaction-create'),

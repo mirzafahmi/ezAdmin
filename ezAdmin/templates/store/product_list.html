@@ -2,7 +2,7 @@
 {% block tittle %} Product's List{% endblock %}
 
 {% block content %}
-    <div class="container-md my-3">
+    <div class="container-md">
         {% for message in messages %}
         {% if message %}
         <div class = "alert alert-{{ message.tags }}">
@@ -11,16 +11,24 @@
         {% endif %}
         {% endfor %}
         <div class="hstack">
-            <span class="h4">Product Inventory</span class="h4">
+            <span class="h3">Product Inventory</span class="h4">
             <a class="btn btn-success btn-sm ms-auto" id="addProduct" href="{% url 'store-product-add' %}">
                 <i class="fa-solid fa-plus me-1"></i>
                 Add Product
             </a>
         </div>
         <hr>
+        <div class="btn-group-horizontal mb-3" id="filter-label" role="group" aria-label="horizontal radio toggle button group">
+            <input type="radio" class="btn-check" id="vbtn-radio1" name="vbtn-radio"  autocomplete="off" checked data-identifier="main-page">
+            <label class="btn btn-outline-primary mb-1" for="vbtn-radio1">
+                <a class="no-decoration">
+                    Main Page
+                </a>
+            </label>
+        </div>
         <div class="table-responsive">
             <table class="table table-borderless table-striped table-hover">
-                <thead class = "table-dark">
+                <thead class ="table-dark">
                     <tr>
                         <th>No.</th>
                         <th>Identifier</th>
@@ -29,34 +37,27 @@
                         <th>Brand</th>
                         <th>Packing</th>
                         <th>UOM</th>
-                        <th>Quantity</th>
+                        <th>Create Date</th>
                         <th>Activity</th>
                     </tr>
                 </thead>
-                <tbody>        
+                <tbody id="logs-table-body">        
                     {% for product in products %}
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td>{{ product.identifier }}</td>
-                        <td><a href="{% url 'store-product-inventory-list' product.id%}">{{ product.item_code }}</a></td>
+                        <td class="text-break" style="max-width: 150px;">{{ product.item_code }}</td>
                         <td>{{ product.name }}</td>
                         <td>{{ product.brand }}</td>
                         <td>{{ product.packing }}</td>
                         <td>{{ product.uom }}</td>
-                        {% for key, value in stocks.items %}
-                        {% if product.id == key%}
-                        <td>{{value}}</td>
-                        {% endif %}
-                        {% endfor %}
+                        <td style="max-width: 100px;">{{ product.create_date }}</td>
                         <td>
                             <div class = "d-grid">
-                                    <a class="btn btn-outline-primary btn-sm btn-block" href ="{% url 'store-product-update' product.id %}">
+                                    <a class="btn btn-outline-primary btn-sm" href ="{% url 'store-product-update' product.id %}">
                                         Edit
                                     </a>
-                                    <a class="btn btn-outline-success btn-sm btn-block" href ="">
-                                        Validate
-                                    </a>
-                                    <a class="btn btn-outline-danger btn-sm btn-block" href ="{% url 'store-product-delete' product.id %}">
+                                    <a class="btn btn-outline-danger btn-sm" href ="{% url 'store-product-delete' product.id %}">
                                         Delete
                                     </a>
                                 </ul>
@@ -80,6 +81,141 @@
         </div>
     </div>
     <script>
-        responsiveButtonText('addProduct')  
+        responsiveButtonText('addProduct') 
+        
+        var baseUrl ='{% url 'store-product-list-ajax' %}'
+        function productListFilter() {
+            $(document).ready(function () {
+                $.ajax({
+                    url: baseUrl,
+                    method: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        data.forEach(function (identifier) {
+                            identifierWithUnderScore = identifier.replace(/ /g, '-');
+                            $('#filter-label').append(
+                                `<input type="radio" class="btn-check" id="${identifierWithUnderScore}-identifier" name="vbtn-radio" data-identifier="${identifier}">` +
+                                `<label class="btn btn-outline-primary me-1 mb-1" for="${identifierWithUnderScore}-identifier"><a class="no-decoration">${identifier}</a></label>`
+                            );
+                        });
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+        
+                function loadItemCode(identifier) {
+                    $.ajax({
+                        url: baseUrl,
+                        method: 'GET',
+                        data: {
+                            identifier: identifier,
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data)
+                            function formatCustomDate(dateString) {
+                                if (dateString) {
+                                    var date = new Date(dateString);
+                                    var options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                                    return new Intl.DateTimeFormat('en-US', options).format(date);
+                                } else {
+                                    return 'None';
+                                }
+                            }
+                            
+                            $('#logs-table-body').empty();
+                            $('#table-footer').empty();
+                            if (data.length <= 0) {
+                                $('#table-footer').empty();
+                                $('#table-footer').append(`
+                                    <tr class="table-group-divider">
+                                        <td colspan="9" class="fw-bold">
+                                            <hr>
+                                            No Products available, please add in
+                                            <hr>
+                                        </td>
+                                    </tr>
+                                `);
+                            }
+                            
+                            data.forEach(function (log, index) {
+                                var formattedCreateDate = formatCustomDate(log.create_date);
+                                
+                                var editUrl = `${log.product_id}-update/`
+                                var deleteUrl = `${log.product_id}-delete/`
+        
+                                var logIndex = index + 1;
+        
+                                $('#logs-table-body').append(`
+                                        <tr>
+                                            <td>${logIndex}</td>
+                                            <td>${log.identifier}</td>
+                                            <td class="text-break" style="max-width: 150px;">${log.item_code}</td>
+                                            <td>${log.product_name}</td>
+                                            <td>${log.brand}</td>
+                                            <td>${log.packing}</td>
+                                            <td>${log.uom}</td>
+                                            <td style="max-width: 100px;">${formattedCreateDate}</td>
+                                            <td>
+                                                <div class="d-grid">
+                                                    <a class="btn btn-outline-primary btn-sm" href="${editUrl}">
+                                                        Edit
+                                                    </a>
+                                                    <a class="btn btn-outline-danger btn-sm" href="${deleteUrl}">
+                                                        Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `);
+                                $('#logs-table-body a.modal-link').css('cursor', 'pointer');
+        
+                            });
+                        },
+                        error: function (error) {
+                            console.log('Error:', error);
+                        }
+                    });
+                };
+        
+                $('#filter-label').on('change', 'label', function () {
+                    var identifier = $(this).data('identifier');
+        
+                    // Remove the icon from all labels
+                    $('#filter-label label .fa-filter').remove();
+        
+                    if ($(this).prop('checked')) {
+                        // Find the label by the "for" attribute related to the clicked radio button
+                        var label = $('label[for="' + $(this).attr('id') + '"]');
+                        
+                        // Append the icon to the specific label
+                        label.prepend('<i class="fa-solid fa-filter me-1"></i>');
+                    }
+        
+                    loadItemCode(identifier);
+                });
+        
+                // Event listener for radio button clicks, you might still use it independently if needed
+                $('#filter-label').on('change', 'input[type="radio"]', function () {
+                    var identifier = $(this).data('identifier');
+                    
+                    // Remove the icon from all labels
+                    $('#filter-label label .fa-filter').remove();
+        
+                    if ($(this).prop('checked')) {
+                        // Find the label by the "for" attribute related to the clicked radio button
+                        var label = $('label[for="' + $(this).attr('id') + '"]');
+                        
+                        // Append the icon to the specific label
+                        label.prepend('<i class="fa-solid fa-filter me-1"></i>');
+                    }
+        
+                    loadItemCode(identifier);
+                });
+            });
+        }
+
+        productListFilter()
     </script>
 {% endblock %}

@@ -33,7 +33,8 @@
                         <th>No.</th>
                         <th>Product Item Code</th>
                         <th>Raw Material Component</th>
-                        <th>Quantity Used (per box)</th>
+                        <th>Quantity Used (per UOM)</th>
+                        <th>Unit</th>
                         <th>Created Date</th>
                         <th>Activity</th>
                     </tr>
@@ -45,6 +46,7 @@
                         <td>{{BOMcomponent.product.item_code}}</td>
                         <td>{{BOMcomponent.raw_material_component}}</td>
                         <td>{{BOMcomponent.quantity_used}}</td>
+                        <td>{{BOMcomponent.uom}}</td>
                         <td>{{BOMcomponent.create_date}}</td>
                         <td>
                             <div class = "d-grid">
