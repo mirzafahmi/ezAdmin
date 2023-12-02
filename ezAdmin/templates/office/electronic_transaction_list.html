@@ -46,9 +46,9 @@
                         </td>
                         <td>{{electronictransaction.transaction_type}}</td>
                         <td>
-                            <a href="{{ electronictransaction.initial_agreement_doc.url }}">Initial Agreement</a> <br>
+                            <a href="{{ electronictransaction.initial_agreement_doc.url }}" target="_blank">Initial Agreement</a> <br>
                             {% if electronictransaction.return_agreement_doc %}
-                            <a href="{{ electronictransaction.return_agreement_doc.url }}">Return Agreement</a>
+                            <a href="{{ electronictransaction.return_agreement_doc.url }}" target="_blank">Return Agreement</a>
                             {% endif %}
                         </td>
                         <td>{{electronictransaction.create_date}}</td>

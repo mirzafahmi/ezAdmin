@@ -25,6 +25,15 @@ class ElectronicUserLocationCreateView(LoginRequiredMixin, PermissionRequiredMix
 
     permission_required = 'office.add_electronicuserlocation'
 
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"]
+
+        cleaned_phone_number = ''.join(filter(str.isdigit, str(phone_number)))
+        
+        formatted_phone_number = f"+{cleaned_phone_number[0:2]} {cleaned_phone_number[2:4]}-{cleaned_phone_number[4:7]} {cleaned_phone_number[7:]}"
+
+        return formatted_phone_number
+
     def form_valid(self, form):
         company_name = form.cleaned_data['company_name']
         careholder_name = form.cleaned_data['careholder_name']
@@ -39,6 +48,15 @@ class ElectronicUserLocationUpdateView(LoginRequiredMixin, PermissionRequiredMix
     success_url = reverse_lazy('office-electronic-user-location-list')
 
     permission_required = 'office.change_electronicuserlocation'
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"]
+
+        cleaned_phone_number = ''.join(filter(str.isdigit, str(phone_number)))
+        
+        formatted_phone_number = f"+{cleaned_phone_number[0:2]} {cleaned_phone_number[2:4]}-{cleaned_phone_number[4:7]} {cleaned_phone_number[7:]}"
+
+        return formatted_phone_number
 
     def form_valid(self, form):
         company_name = self.get_object()

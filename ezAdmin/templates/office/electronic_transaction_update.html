@@ -29,4 +29,21 @@
             </div>
         </div>    
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#id_current_user').addClass('disabled-dropdown');
+            $('#id_electronic_item').addClass('disabled-dropdown');
+            //$('#id_initial_agreement_doc').addClass('disabled-dropdown');
+
+            var selectedValue = $('#id_transaction_type').val();
+
+            // Add or remove classes based on the selected value
+            if (selectedValue === 'Checked-In') {
+                $('#id_transaction_type').addClass('disabled-dropdown');
+                $('#return_agreement_doc-clear_id').addClass('disabled-dropdown');
+            } else {
+                console.log('flase')
+            }
+        });
+    </script>
 {% endblock %}

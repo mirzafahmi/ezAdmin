@@ -104,7 +104,7 @@
                 
                 $.ajax({
                     type: "GET",
-                    url: '{% url 'production-production-log-create-ajax' %}', // URL to your Django view
+                    url: '{% url 'production-production-log-create-ajax' %}', 
                     data: {
                         BOMComponent_id: bomComponentValue,
                     },
@@ -167,8 +167,12 @@
                             .addClass(['numberinput', 'form-control', 'disabled-dropdown'])
                             .attr('id', data[0].component_name.replace(/\s+/g, '-') + '-quantity-used')
                             .attr('placeholder', 'Available quantity: ' + data[0].available_quantity + ' unit(s)')
-                            .attr('data-weightage', data[0].quantity_used)
-                            .attr('data-availableQuantity', data[0].available_quantity);
+                            .attr('data-availablequantity', data[0].available_quantity)
+                            .attr('data-inventoryuom', data[0].inventory_uom)
+                            .attr('data-inventoryuomweightage', data[0].inventory_uom_weightage)
+                            .attr('data-bomquantityused', data[0].bom_quantity_used)
+                            .attr('data-bomuom', data[0].bom_uom)
+                            .attr('data-bomweightage', data[0].bom_uom_weightage)
 
                         componentDetails.append(quantityInput);
                         //componentDetails.append($('<hr>'));
@@ -179,14 +183,14 @@
                             var enteredQuantity = parseFloat($(this).val()) || 0;
 
                             // Iterate through each input field within the #inventoryDetails div
-                            $('#inventoryDetails input[data-weightage]').each(function () {
+                            $('#inventoryDetails input[data-bomquantityused]').each(function () {
                                 // Get the weightage from the data attribute
-                                var weightage = parseFloat($(this).data('weightage')) || 0;
+                                var quantityused = parseFloat($(this).data('bomquantityused')) || 0;
                                 if (isNaN(enteredQuantity) || enteredQuantity === 0) {
                                     $(this).val('');
                                 } else {
                                     // Calculate the new value based on the entered quantity and weightage
-                                    var newValue = enteredQuantity * weightage;
+                                    var newValue = enteredQuantity * quantityused;
 
                                     // Update the value of the corresponding input field
                                     $(this).val(newValue);
@@ -319,6 +323,8 @@
                     // Get the raw value of the quantity input
                     var rawQuantityValue = quantityInput.val();
 
+                    var uomQuantity = quantityInput.data('bomuom')
+
                     // Include additional details for each component
                     var componentDetails = {
                         'value': selectedOptionValue,
@@ -327,7 +333,8 @@
                     // Assign the component details to the selectedValues object
                     selectedValues[componentId] = {
                         'stock_in_tag': selectedOptionValue,
-                        'quantity': rawQuantityValue
+                        'quantity': rawQuantityValue,
+                        'uom': uomQuantity
                     };
                 });
                 console.log(selectedValues)

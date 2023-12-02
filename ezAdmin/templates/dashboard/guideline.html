@@ -8,11 +8,44 @@
 </div>
 <script>
     $(document).ready(function () {
+        
         // Your dynamic image path (you can get this from Django context or any other source)
-        var dynamicImagePath = "/static/medivenAdmin_DB.png";
+        var dynamicImagePath = "/static/ezAdmin_DB.png";
 
         // Update the src attribute of the image with the dynamic path
         $("p img").attr("src", dynamicImagePath);
+
+        // Select both h2 and h3 elements
+        var $headings = $("h2, h3, h4");
+
+        // Loop through each heading element
+        $headings.each(function () {
+            // Get the text content of the heading element
+            var textContent = $(this).text().trim();
+
+            // Remove colons and backslashes from the text
+            var cleanedText = textContent.replace(/[\\:()/?]/g, '');
+
+            // Replace spaces with hyphens and convert to lowercase for the ID
+            var id = cleanedText.replace(/\s+/g, '-').toLowerCase();
+
+            // Assign the generated ID to the heading element
+            $(this).attr("id", id);
+        });
+
+        $('p a').each(function(index) {
+            // Get the href attribute of the anchor tag
+            var progressLink = $(this).attr('href');
+
+            // Check if the href attribute is not empty
+            if (progressLink) {
+                // Create a new img tag with the src attribute set to the href value
+                var imgTag = $('<img>').attr('src', progressLink);
+
+                // Replace the original anchor tag with the new img tag
+                $(this).replaceWith(imgTag);
+            }
+        });
     });
 </script>
 {% endblock %}

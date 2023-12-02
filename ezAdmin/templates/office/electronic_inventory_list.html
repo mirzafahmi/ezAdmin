@@ -61,7 +61,10 @@
                         <td>{{electronicinventory.remark}}</td>
                         <td>
                             {% for previous_user in electronicinventory.previous_users.all %}
-                            -{{ previous_user }} <br>
+                                {{ previous_user }} <br>
+                                {% if not forloop.last %}
+                                    <hr class="production-log-divider">
+                                {% endif %}
                             {% endfor %}
                         </td>
                         <td>{{electronicinventory.create_date}}</td>

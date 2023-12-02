@@ -8,11 +8,12 @@
   - [Key Objectives:](#key-objectives)
   - [Setup](#setup)
   - [How to Setup the webapps](#how-to-setup-the-webapps)
-    - [Guideline to Install:](#guideline-to-install)
+    - [Guideline to Install (CMD):](#guideline-to-install-cmd)
     - [Guideline to runserver:](#guideline-to-runserver)
       - [Development server (Localhost):](#development-server-localhost)
       - [Wifi host server:](#wifi-host-server)
   - [What is ezAdmin?](#what-is-ezadmin)
+    - [Database overview diagram](#database-overview-diagram)
     - [Apps list](#apps-list)
       - [Store App](#store-app)
       - [Production App](#production-app)
@@ -47,39 +48,54 @@ ezAdmin is a comprehensive web-based solution designed to streamline administrat
 
 ## How to Setup the webapps
 
-### Guideline to Install:
+### Guideline to Install (CMD):
 
 1. Install python and pip that required to run this project. Download it at the specified link below:
-   1. Python: https://www.python.org/downloads/ (Note: this project build on Python 3.11.5)
-   2. Pip: https://bootstrap.pypa.io/get-pip.py (Note: this project build on pip 23.3.1)
-      1. Change directory to the installed python directory, paste the `get-pip.py` file, open a terminal/command prompt at that directory, and run: <br>
-            ```bash
-            python get-pip.py
-            ```
-        1. or follow this guideline at https://www.geeksforgeeks.org/how-to-install-pip-on-windows/
+      1. Python: https://www.python.org/downloads/ (Note: this project build on Python 3.11.5)
+      2. Pip: https://bootstrap.pypa.io/get-pip.py (Note: this project build on pip 23.3.1)
+         1. Change directory to the installed python directory, paste the `get-pip.py` file, open a terminal/command prompt at that directory, and run: <br>
+               ```
+               python get-pip.py
+               ```
+           1. or follow this guideline at https://www.geeksforgeeks.org/how-to-install-pip-on-windows/
 
-2. To install the required packages for this project, run the following command in your terminal: <br>
+2. Install virtual enviroment package by this command: <br>
+   ```
+   pip install virtualenv
+   ``` 
+   <br>
 
-    ```bash
-    pip install virtualenv
-    python -m venv myenv
+3. Create virtual enviroment: <br>
+   ```
+   python -m venv myenv
+   ``` 
+   <br>
+
+4. To install the required packages for this project, run the following command in your terminal: <br>
+    ```
     pip install -r requirements.txt
     ```
-
 
 ### Guideline to runserver:
 
 #### Development server (Localhost):
 
-1. Change to the project directory where your Django project is located. You should be in the same directory as ```manage.py``` by running this code. <br>
-    ```bash
+1. Activate virtual enviroment by run this command: <br>
+   ```
+    myenv\scripts\activate.bat
+    ```
+    <br> 
+2. Change to the project directory where your Django project is located. You should be in the same directory as ```manage.py``` by running this code.<br>
+    ```
     cd ezAdmin
     ```
-2. Once you're in the project directory (run `dir` command in cmd to make sure in same directory with `manage.py`), you can start the development server using the following command: <br>
-    ```bash
+    <br>
+3. Once you're in the project directory (run `dir` command in cmd to make sure in same directory with `manage.py`), you can start the development server using the following command:<br>
+    ```
     python manage.py runserver
     ```
-3. This command will launch the Django development server, and you can access this project in a web browser at the specified address (usually http://127.0.0.1:8000/). Click or copy and paste it at browser and it will open the landing page of the webapp. `Register/Login` if necessary.
+    <br>
+4. This command will launch the Django development server, and you can access your project in a web browser at the specified address (usually http://127.0.0.1:8000/). Click or copy and paste it at browser and it will open the landing page of the webapp. `Register/Login` if necessary.
 
 
 #### Wifi host server:
@@ -90,9 +106,15 @@ ezAdmin is a comprehensive web-based solution designed to streamline administrat
 
 ## What is ezAdmin?
 
+### Database overview diagram
+
+Attached here is the overview of the DB for this project: <br>
+<br> ![ezAdmin-db](/ezAdmin/static/ezAdmin_DB.png)
+
 ### Apps list
 
 This project consist of 5 main major apps which are: <br>
+
    1. Store App <br>
    2. Production App <br>
    3. Purchasing App <br>
@@ -130,13 +152,13 @@ For Production app, it consist of 5 models which are:
 4. **Raw Material Inventory:** <br>
    Raw Material Inventory have Create, Read, Update, Delete (CRUD) operations. This `Raw Material Inventory` model have field such as quantity, lot number, exp date and etc. that will be used through out this webapp. 
    <br>
-
+   <br>
    This subcomponent has `Raw Material Inventory List (Identifier Based) Page` that will list all added identifier. It also have button features that will shortcut to add `Raw Material Identifier` and feature to generate available raw material with its detail up to certain date. 
    <br>
-
+   <br>
    If click at any card's button of the corresponding `Raw Material Identifier`, it will redirect to `Raw Material Inventory List  Identifier Based Page` that will list all added component for specific identifier. It also have shortcut button to add component of related `Raw Material Identifier`. 
    <br>
-
+   <br>
    If click at any card's button of the corresponding `Raw Material Component`, it will redirect to `Identifier Raw Material Inventory List` for the corrensponding component. This page consist of details of that specific component of specific identifier such as quantity, lot number, and etc. And it also have modals that can be toggle to have quick access of related purchasing documents.
    <br>
 
@@ -195,14 +217,14 @@ For Office app, it consist of 7 models which are:
 6. **Electronic Inventory:** <br>
    Electronic Inventory have Create, Read, Update, Delete (CRUD) operations. This `Electronic Inventory` model data have details such as electronic item, serial number, price per unit and etc. that will be used through out this webapp. 
    <br>
-
+   <br>
    *Status* field in this model inter-connected with *Transaction Type* field in `Electronic Transaction` that would reflect each other. If that `Electronic Inventory`'s data/instance of *Status* show **Idle**, it mean that there is no instance of `Electronic Transaction` currently **Checked-Out** that `Electronic Inventory` instance and vice versa.
    <br>
 
 7. **Electronic Transaction:** <br>
    Electronic Transaction have Create, Read, Update, Delete (CRUD) operations. This `Electronic Transaction` model data have details such as current user, electronic item details, transaction type and etc that will be used through out this webapp.
    <br>
-
+   <br>
    It also have features to store the initial agreement document or return agreement document in the form to ease the reference and query in future. *Transaction Type* field in this model is inter-connected with *Status* field in `Electronic Inventory` that would reflect each other. If `Electronic Transaction`'s data/instance of *Transaction Type* show **Check-Out**, it mean that the selected electronic item in that instance of `Electronic Transaction` will reflect it as **In-Use** in *Status* field of `Electronic Inventory` model and vice versa.
    <br>
 
@@ -216,18 +238,21 @@ For Office app, it consist of 7 models which are:
 ## To-do/add-on features
 
 1. Expand store apps
-  
-    <label for="file">Progress:  </label> ![](https://geps.dev/progress/000)
+   <br>
+   <br>
+   <label for="file">Progress:  </label> [](https://geps.dev/progress/000)
 
 2. Optimize the layout for mobile user
-  
-    <label for="file">Progress:  </label> ![](https://geps.dev/progress/000)
+   <br>
+   <br>
+   <label for="file">Progress:  </label> [](https://geps.dev/progress/000)
 
 3. Create Sales apps
-  
-    <label for="file">Progress:  </label> ![](https://geps.dev/progress/000)
+   <br>
+   <br>
+   <label for="file">Progress:  </label> [](https://geps.dev/progress/000)
 
 4. Make the project/webapp general that able to host multiple company simultaneously
-  
-    <label for="file">Progress:  </label> ![](https://geps.dev/progress/000)
-
+   <br>
+   <br>
+   <label for="file">Progress:  </label> [](https://geps.dev/progress/000)

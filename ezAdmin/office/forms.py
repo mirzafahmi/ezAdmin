@@ -90,6 +90,9 @@ class ElectronicPurchasingDocumentForm(FileValidatorMixin, forms.ModelForm):
         return cleaned_data
 
 class ElectronicInventoryForm(forms.ModelForm):
+    remark = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
+        required=False)
     class Meta:
         model = ElectronicInventory
         fields = ['electronic_item', 'serial_number', 
@@ -129,8 +132,8 @@ class ElectronicTransactionForm(FileValidatorMixin, forms.ModelForm):
         self.fields['electronic_item'].queryset = self.get_idle_items()
 
         # If the instance exists (when updating the form) and has a value for electronic_item, include it in the queryset
-        if self.instance and self.instance.transaction_type == 'Checked-Out' and hasattr(self.instance, 'electronic_item') and self.instance.electronic_item:
-            self.fields['electronic_item'].queryset |= ElectronicInventory.objects.filter(pk=self.instance.electronic_item.pk)
+        if self.instance and hasattr(self.instance, 'electronic_item') and self.instance.electronic_item:
+            self.fields['electronic_item'].queryset = ElectronicInventory.objects.all()
         elif not self.instance:
             # For create form, set the initial queryset to include only 'Idle' items
             self.fields['electronic_item'].queryset = self.get_idle_items()

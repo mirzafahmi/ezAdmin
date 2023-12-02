@@ -44,7 +44,7 @@ function BOMComponentListFilter() {
                         $('#table-footer').empty();
                         $('#table-footer').append(`
                             <tr class="table-group-divider">
-                                <td colspan="6" class="fw-bold">
+                                <td colspan="7" class="fw-bold">
                                     <hr>
                                     No BOMComponents available, please add in
                                     <hr>
@@ -66,8 +66,9 @@ function BOMComponentListFilter() {
                                 <tr>
                                     <td>${logIndex}</td>
                                     <td>${log.product}</td>
-                                    <td>${log.raw_material_component}</td>
+                                    <td>${log.raw_material_component} for ${log.identifier}</td>
                                     <td>${log.quantity_used}</td>
+                                    <td>${log.uom} (${log.uom_unit})</td>
                                     <td>${formattedCreateDate}</td>
                                     <td>
                                         <div class="d-grid">

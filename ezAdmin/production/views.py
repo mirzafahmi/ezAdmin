@@ -278,7 +278,10 @@ class BOMComponentListViewAJAX(View):
                         'BOMComponent_id': BOM_component.id,
                         'product': BOM_component.product.item_code,
                         'raw_material_component': BOM_component.raw_material_component.component,
+                        'identifier': BOM_component.raw_material_component.identifier.parent_item_code,
                         'quantity_used': BOM_component.quantity_used,
+                        'uom': BOM_component.uom.name,
+                        'uom_unit': BOM_component.uom.unit,
                         'create_date': BOM_component.create_date
                     })
 
@@ -287,7 +290,8 @@ class BOMComponentListViewAJAX(View):
                 items_code_filtered = BOMComponent.objects.filter(
                     product__item_code=item_code
                     ).order_by(
-                    'create_date')     
+                    'product', 
+                    'raw_material_component')     
                 
                 filtered_data = []
 
@@ -296,7 +300,10 @@ class BOMComponentListViewAJAX(View):
                         'BOMComponent_id': item_code_filtered.id,
                         'product': item_code_filtered.product.item_code,
                         'raw_material_component': item_code_filtered.raw_material_component.component,
+                        'identifier': item_code_filtered.raw_material_component.identifier.parent_item_code,
                         'quantity_used': item_code_filtered.quantity_used,
+                        'uom': item_code_filtered.uom.name,
+                        'uom_unit': item_code_filtered.uom.unit,
                         'create_date': item_code_filtered.create_date
                     })
 
@@ -355,7 +362,6 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
             inventory_details = data.get('inventory_details', {})
             form_data = data.get('formData', '')
             
-
             form_data_dict = {}
 
             for param in form_data.split('&'):
@@ -395,17 +401,24 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
                 # Save the instance again to update the M2M relationship
                 instance.save()
                 
+                print(inventory_details)
                 for component, details in inventory_details.items():
                     stock_in_inventory = RawMaterialInventory.objects.filter(
                         stock_in_tag=details['stock_in_tag'],
                         stock_type="1").first()
+
+                    if stock_in_inventory.uom.weightage == 1:    
+                        uom_weightage = UOM.objects.get(name=details['uom']).weightage
+                    else:
+                        uom_weightage = 1 / stock_in_inventory.uom.weightage
 
                     component_id = stock_in_inventory.component.id
                     stock_in_details = stock_in_inventory
                     quantity_per_unit = BOMComponent.objects.get(raw_material_component__id=component_id).quantity_used
                     inventory_entry = RawMaterialInventory.objects.create(
                         component_id=component_id,
-                        quantity= details['quantity'],
+                        quantity= float(details['quantity']) * float(uom_weightage),
+                        uom_id = stock_in_inventory.uom_id,
                         lot_number=stock_in_inventory.lot_number,
                         exp_date=stock_in_inventory.exp_date,
                         price_per_unit=stock_in_inventory.price_per_unit,
@@ -450,6 +463,13 @@ class ProductionLogCreateViewAJAX(View, QuantityValidationMixin):
                 ).values_list(
                 'quantity_used',
                  flat=True)[0]
+            
+            bom_uom = BOMComponent.objects.filter(
+                id=BOMComponent_id
+                ).values_list(
+                'uom__name',
+                'uom__unit',
+                'uom__weightage')[0]
 
             raw_material_inventories = RawMaterialInventory.objects.filter(
                 component__id=component_id, 
@@ -476,10 +496,16 @@ class ProductionLogCreateViewAJAX(View, QuantityValidationMixin):
                         'lot_number': raw_material_inventory.lot_number,
                         'exp_date': raw_material_inventory.exp_date,
                         'available_quantity': balance,
+                        'inventory_uom': raw_material_inventory.uom.name,
+                        'inventory_uom_unit': raw_material_inventory.uom.unit,
+                        'inventory_uom_weightage': raw_material_inventory.uom.weightage,
                         'component_name': raw_material_inventory.component.component,
                         'po_number': raw_material_inventory.purchasing_doc.po_number,
                         'invoice_number': raw_material_inventory.purchasing_doc.invoice_number,
-                        'quantity_used': quantity_used,
+                        'bom_quantity_used': quantity_used,
+                        'bom_uom': bom_uom[0],
+                        'bom_uom_unit': bom_uom[1],
+                        'bom_uom_weightage': bom_uom[2],
                         })
             
             return JsonResponse(data, safe=False)
@@ -1027,6 +1053,8 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                         'stock_in_tag': all_log.stock_in_tag.id,
                         'stock_type': all_log.stock_type,
                         'balance': balance_quantity_all,
+                        'uom_name': all_log.uom.name,
+                        'uom_unit': all_log.uom.unit,
                     })
 
             else:
@@ -1068,6 +1096,8 @@ class RawMaterialInventoryIdentifierComponentBasedLogListViewAJAX(LoginRequiredM
                         'stock_in_tag': stock_tag_based.stock_in_tag.id,
                         'stock_type': stock_tag_based.stock_type,
                         'balance': balance_quantity_tag_based,
+                        'uom_name': stock_tag_based.uom.name,
+                        'uom_unit': stock_tag_based.uom.unit,
                     })
                     
         elif purchasing_doc:

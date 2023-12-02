@@ -36,7 +36,7 @@
                         <th style="max-width: 110px">Product Item Code</th>
                         <th>Lot Number</th>
                         <th>Exp Date</th>
-                        <th style="max-width: 110px;">Quantity Produced (Box)</th>
+                        <th style="max-width: 110px;">Quantity Produced (UOM)</th>
                         <th>Raw Material Lot Number</th>
                         <th style="max-width: 120px;">Relative Humidity (rH)</th>
                         <th>Temperature</th>
@@ -56,11 +56,14 @@
                         <td style="max-width: 120px;">{{ProductionLog.quantity_produced}}</td>
                         <td>
                             {% for bom_component in ProductionLog.BOMComponents.all %}
-                            {% for entry in RelatedInventoryEntries %}
-                            {% if entry.production_log.id == ProductionLog.id and entry.component.id == bom_component.raw_material_component.id %}
-                                {{bom_component}}<br>(Lot: {{entry.lot_number}} | Exp: {{entry.exp_date}})<br>
-                                {% endif %}
-                            {% endfor %}
+                                {% for entry in RelatedInventoryEntries %}
+                                    {% if entry.production_log.id == ProductionLog.id and entry.component.id == bom_component.raw_material_component.id %}
+                                        {{bom_component}}<br>(Lot: {{entry.lot_number}} | Exp: {{entry.exp_date}})<br>
+                                        {% if not forloop.last %}
+                                            <hr class="production-log-divider">
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
                         </td>
                         <td style="max-width: 120px;">{{ProductionLog.rH}}</td>
@@ -192,9 +195,14 @@
                                 var logIndex = index + 1;
                                 var componentDetails = "";
 
-                                log.component_details.forEach(function (component) {
-                                    componentDetails+= `${component.component} for ${component.identifier} <br> (Lot: ${component.lot_number} | Exp: ${component.exp_date}) <br>`
-                                })
+                                log.component_details.forEach(function (component, innerIndex, array) {
+                                    componentDetails += `${component.component} for ${component.identifier} <br> (Lot: ${component.lot_number} | Exp: ${component.exp_date}) <br>`;
+                            
+                                    // Add <hr> only if it's not the last item in the inner loop
+                                    if (innerIndex < array.length - 1) {
+                                        componentDetails += `<hr class="production-log-divider">`;
+                                    }
+                                });
                                 
                                 $('#logs-table-body').append(`
                                         <tr>

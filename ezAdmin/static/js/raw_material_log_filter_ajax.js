@@ -117,12 +117,11 @@ function rawMaterialLogFilter(){
                                     <td>${log.identifier}</td>
                                     <td>${log.component} for ${log.identifier}</td>
                                     <td>${log.quantity}</td>
+                                    <td>${log.uom_name} (${log.uom_unit})</td>
                                     <td>${log.lot}</td>
                                     <td>${log.expiry_date}</td>
                                     <td>${formattedStockInDate}</td>
                                     <td>${formattedStockOutDate}</td>
-                                    <td>${log.currency_trade} ${log.price_per_unit}</td>
-                                    <td>MYR ${log.local_price_per_unit}</td>
                                     <td>
                                         <a class="modal-link href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-purchasing-doc-id="${log.purchasing_document_id}">
                                             ${log.purchasing_document}(${log.company_name})
@@ -151,7 +150,8 @@ function rawMaterialLogFilter(){
                             <tr class="table-group-divider">
                                 <td colspan="3" class="fw-bold">BALANCE</td>
                                 <td>${data[0].balance}</td>
-                                <td colspan="8"></td>
+                                <td>${data[0].uom_name} (${data[0].uom_unit})</td>
+                                <td colspan="6"></td>
                             </tr>
                         `);
                 },

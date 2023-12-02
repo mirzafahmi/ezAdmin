@@ -7,6 +7,9 @@ from collections import OrderedDict
 from mixins.file_size_mixin import FileValidatorMixin
 
 class SupplierForm(forms.ModelForm):
+    address= forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
+        required=False)
     class Meta:
         model = Supplier
         fields = ['company_name', 'address', 'representative_name', 
@@ -23,7 +26,14 @@ class SupplierForm(forms.ModelForm):
 
         self.fields['currency_trade'].empty_label = "Select a currency trade code"
 
-        self.fields['phone_number'].initial = '+60'
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"]
+
+        cleaned_phone_number = ''.join(filter(str.isdigit, str(phone_number)))
+        
+        formatted_phone_number = f"+{cleaned_phone_number[0:2]} {cleaned_phone_number[2:4]}-{cleaned_phone_number[4:7]} {cleaned_phone_number[7:]}"
+
+        return formatted_phone_number
 
 class PurchasingDocumentForm(FileValidatorMixin, forms.ModelForm):
     allowed_extensions = ['pdf']

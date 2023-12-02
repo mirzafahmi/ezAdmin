@@ -66,6 +66,15 @@ class ProfileUpdateForm(FileValidatorMixin, forms.ModelForm):
         model = Profile
         fields = ['address', 'phone', 'image']
 
+    def clean_phone(self):
+        phone_number = self.cleaned_data["phone"]
+
+        cleaned_phone_number = ''.join(filter(str.isdigit, str(phone_number)))
+        
+        formatted_phone_number = f"+{cleaned_phone_number[0:2]} {cleaned_phone_number[2:4]}-{cleaned_phone_number[4:7]} {cleaned_phone_number[7:]}"
+
+        return formatted_phone_number
+
     def clean(self):
         cleaned_data = super().clean()
         image = cleaned_data.get('image')
