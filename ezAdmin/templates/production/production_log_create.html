@@ -159,7 +159,7 @@
                         var quantityUsedLabel = $('<label>')
                             .attr('for', data[0].component_name.replace(/\s+/g, '-') + '-quantity-used')
                             .addClass('form-label')
-                            .html('Quantity Used (in pcs):');
+                            .html(`Quantity Used (${data[0].inventory_uom}):`);
                         
                         componentDetails.append(quantityUsedLabel);
 
@@ -172,7 +172,7 @@
                             .attr('data-inventoryuomweightage', data[0].inventory_uom_weightage)
                             .attr('data-bomquantityused', data[0].bom_quantity_used)
                             .attr('data-bomuom', data[0].bom_uom)
-                            .attr('data-bomweightage', data[0].bom_uom_weightage)
+                            .attr('data-bomuomweightage', data[0].bom_uom_weightage)
 
                         componentDetails.append(quantityInput);
                         //componentDetails.append($('<hr>'));
@@ -188,11 +188,18 @@
                                 var quantityused = parseFloat($(this).data('bomquantityused')) || 0;
                                 if (isNaN(enteredQuantity) || enteredQuantity === 0) {
                                     $(this).val('');
-                                } else {
-                                    // Calculate the new value based on the entered quantity and weightage
-                                    var newValue = enteredQuantity * quantityused;
+                                }
+                                
+                                var inventoryUOMWeightage = parseFloat($(this).data('inventoryuomweightage'))
+                                var bomUOMWeightage = parseFloat($(this).data('bomuomweightage'))
 
-                                    // Update the value of the corresponding input field
+                                if (inventoryUOMWeightage == 1){
+                                    var newValue = enteredQuantity  * quantityused * bomUOMWeightage;
+
+                                    $(this).val(newValue);
+                                } else {
+                                    var newValue = enteredQuantity  * quantityused * 1 / inventoryUOMWeightage;
+
                                     $(this).val(newValue);
                                 }
                                     

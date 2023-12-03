@@ -150,7 +150,7 @@ footer {
 }
 
 .markdown-body code {
-    background-color: #f5f3ee;
+    background-color: #b1afab;
     color: #000;
 }
 
@@ -179,4 +179,11 @@ footer {
 .button-56:hover:after {
     transform: translate(0, 0);
 }
-  
+
+.custom-form {
+    color: var(--primary-ezadmin);
+}
+
+.custom-form .form-text {
+    color: var(--primary-shade-ezadmin);
+}

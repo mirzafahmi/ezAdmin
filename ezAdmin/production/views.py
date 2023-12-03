@@ -407,17 +407,12 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
                         stock_in_tag=details['stock_in_tag'],
                         stock_type="1").first()
 
-                    if stock_in_inventory.uom.weightage == 1:    
-                        uom_weightage = UOM.objects.get(name=details['uom']).weightage
-                    else:
-                        uom_weightage = 1 / stock_in_inventory.uom.weightage
-
                     component_id = stock_in_inventory.component.id
                     stock_in_details = stock_in_inventory
                     quantity_per_unit = BOMComponent.objects.get(raw_material_component__id=component_id).quantity_used
                     inventory_entry = RawMaterialInventory.objects.create(
                         component_id=component_id,
-                        quantity= float(details['quantity']) * float(uom_weightage),
+                        quantity= float(details['quantity']),
                         uom_id = stock_in_inventory.uom_id,
                         lot_number=stock_in_inventory.lot_number,
                         exp_date=stock_in_inventory.exp_date,

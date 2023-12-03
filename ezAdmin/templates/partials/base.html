@@ -57,7 +57,7 @@
 <body>
   {% include 'partials/nav.html' %}
   
-  <div id="main-page" class="container-fluid main">
+  <div id="main-page" class="container main">
 
     {% if user.is_authenticated %} 
     <div class="container-md mb-3">
@@ -134,7 +134,9 @@
     </div>
     <div class="text-center version">
       (ver: 0.23.11.25.0) <br>
-      <a href="https://www.freepik.com/free-vector/cute-cool-cat-wearing-eyeglasses-hoodie-cartoon-vector-icon-illustration-animal-fashion-icon-concept-isolated-premium-vector-flat-cartoon-style_23006693.htm#position=1">Default Profile Image by catalyststuff</a> on Freepik
+      {% block attr %}
+
+      {% endblock %}
     </div>
     <!-- Copyright -->
   </footer>

@@ -3,8 +3,13 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="container">
-        <div class="row mt-2">
+    <style>
+        #main-page{
+            margin-bottom: 0px;
+        }
+    </style>
+    <div class="container-sm" id="register">
+        <div class="row">
             {% if messages %}
             {% for message in messages %}
             <div class = "alert alert-{{ message.tags }}">
@@ -13,7 +18,7 @@
             {% endfor %}
             {% endif %}
             <div class="col-md-6 offset-md-3">
-                <div class="border p-3">
+                <div class="border p-3 custom-form">
                     <div id="divDarkModeToggle" class="nav-item d-flex align-items-center justify-content-center py-1">
                         <div class="form-check form-switch d-flex align-items-center" id="div-dark-mode-toggle" style="margin:0px; padding:0px">
                           <input class="form-check-input" id="dark-mode-toggle" type="checkbox" role="switch" style="height:1.5em; width:1.5em; margin-left: 0px"checked>
@@ -33,4 +38,8 @@
             </div>
         </div>    
     </div>
+{% endblock %}
+
+{% block attr %}
+<a href="https://www.freepik.com/free-vector/fill-out-concept-illustration_13316496.htm#query=register&position=3&from_view=search&track=sph&uuid=4faea8cb-8cea-48b7-b56f-929f3ac68fc7">Image by storyset</a> on Freepik
 {% endblock %}

@@ -3,9 +3,14 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="container">
-        <div class="row my-3" style="min-height:45vh;">
-            <div class="col-md-6 offset-md-3 my-auto">
+    <style>
+        #main-page{
+            margin-bottom: 0px;
+        }
+    </style>
+    <div class="container" id="log-in">
+        <div class="row" style="min-height:45vh;">
+            <div class="col-sm-6 offset-sm-3">
                 {% if messages %}
                 {% for message in messages %}
                 <div class = "alert alert-{{ message.tags }}">
@@ -13,10 +18,10 @@
                 </div>
                 {% endfor %}
                 {% endif %}
-                <div class="border p-3">
+                <div class="border p-3 custom-form">
                     <div id="divDarkModeToggle" class="nav-item d-flex align-items-center justify-content-center py-1">
                         <div class="form-check form-switch d-flex align-items-center" id="div-dark-mode-toggle" style="margin:0px; padding:0px">
-                          <input class="form-check-input" id="dark-mode-toggle" type="checkbox" role="switch" style="height:1.5em; width:1.5em; margin-left: 0px"checked>
+                          <input class="form-check-input" id="dark-mode-toggle" type="checkbox" role="switch" style="height:1.5em; width:1.5em; margin-left: 0px"checked data-is-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}">
                         </div>
                     </div>
                     <h3 class="text-center">Login Here</h3>
@@ -35,3 +40,8 @@
         </div>
     </div>
 {% endblock%}
+
+{% block attr %}
+<a href="https://www.freepik.com/free-vector/people-working-together-project-office-room-isometric-colored-object-white-background-isolated-vector-illustration_40273571.htm#page=2&query=office%20illustraion&position=29&from_view=search&track=ais&uuid=55af9f93-3025-414c-987c-363005e0239d">Image by macrovector</a> on Freepik
+
+{% endblock %}
