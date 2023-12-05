@@ -37,6 +37,8 @@ class ElectronicUserLocationCreateView(LoginRequiredMixin, PermissionRequiredMix
     def form_valid(self, form):
         company_name = form.cleaned_data['company_name']
         careholder_name = form.cleaned_data['careholder_name']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{company_name} ({careholder_name}) electronic user location created successfully!')
 
         return super().form_valid(form)
@@ -100,6 +102,8 @@ class ElectronicUserCreateView(LoginRequiredMixin, PermissionRequiredMixin, Crea
         user_name = form.cleaned_data['name']
         user_position = form.cleaned_data['position']
         user_location = form.cleaned_data['location']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{user_name} ({user_position}) electronic user from {user_location} created successfully!')
 
         return super().form_valid(form)
@@ -153,6 +157,8 @@ class ElectronicBrandCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
 
     def form_valid(self, form):
         brand_name = form.cleaned_data['brand_name']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{brand_name} electronic brand created successfully!')
 
         return super().form_valid(form)
@@ -206,6 +212,8 @@ class ElectronicModelCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
     def form_valid(self, form):
         brand = form.cleaned_data['brand']
         model_name = form.cleaned_data['model_name']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{brand} ({model_name}) electronic model created successfully!')
 
         return super().form_valid(form)
@@ -259,6 +267,8 @@ class ElectronicPurchasingDocumentCreateView(LoginRequiredMixin, PermissionRequi
     def form_valid(self, form):
         po_number = form.cleaned_data['po_number']
         supplier = form.cleaned_data['supplier']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{po_number} ({supplier}) electronic purchasing document created successfully!')
 
         return super().form_valid(form)
@@ -333,6 +343,8 @@ class ElectronicInventoryCreateView(LoginRequiredMixin, PermissionRequiredMixin,
     def form_valid(self, form):
         electronic_item = form.cleaned_data['electronic_item']
         serial_number = form.cleaned_data['serial_number']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{electronic_item} ({serial_number}) electronic inventory created successfully!')
 
         return super().form_valid(form)
@@ -386,6 +398,8 @@ class ElectronicTransactionCreateView(LoginRequiredMixin, PermissionRequiredMixi
     def form_valid(self, form):
         electronic_item = form.cleaned_data['electronic_item']
         current_user = form.cleaned_data['current_user']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{current_user} ({electronic_item} | {electronic_item.serial_number}) transaction created successfully!')
 
         return super().form_valid(form)

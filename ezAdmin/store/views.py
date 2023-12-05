@@ -34,6 +34,8 @@ class BrandNameCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
     def form_valid(self, form):
         brand_name = form.cleaned_data['brand_name']
         company_name = form.cleaned_data['company_name']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{brand_name} brand from {company_name} created successfully!')
 
         return super().form_valid(form)
@@ -154,6 +156,8 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     def form_valid(self, form):
         product_name = form.cleaned_data['name']
         item_code = form.cleaned_data['item_code']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{product_name} ({item_code}) created successfully!')
 
         return super().form_valid(form)

@@ -34,6 +34,7 @@ class UOMCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         uom_name = form.cleaned_data['name']
 
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{uom_name} UOM created successfully!')
 
         return super().form_valid(form)
@@ -87,6 +88,7 @@ class CurrencyCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView
         currency = form.cleaned_data['name']
         currency_code = form.cleaned_data['currency_code']
 
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{currency}({currency_code}) currency created successfully!')
 
         return super().form_valid(form)

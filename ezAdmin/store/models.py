@@ -10,11 +10,10 @@ from mixins.modify_case_fields_mixin import *
 
 
 class BrandName(UppercaseFieldsMixin, models.Model):
-    #basics fields
     brand_name = models.CharField(max_length = 30, unique = True)
     company_name = models.CharField(max_length = 30, blank = True, null = True)
 
-    #utility fields
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -38,7 +37,7 @@ class Product(UppercaseFieldsMixin, models.Model):
     packing = models.PositiveIntegerField()
     status = models.CharField(max_length=2, choices=(('1','Active'),('2','Inactive')), default=1)
     
-    #utility fields
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -55,14 +54,13 @@ class Product(UppercaseFieldsMixin, models.Model):
         super(Product, self).save(*args, **kwargs)
 
 class FinishedGoodsInventory(models.Model): #change to finishedgoodinventory
-    #basics fields
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     lot_number = models.CharField(max_length = 100)
     expiry_date = models.CharField(max_length = 100)
     quantity = models.PositiveIntegerField()
     stock_type = models.CharField(max_length=2,choices=(('1','Stock-in'),('2','Stock-Out')), default = 1)
 
-    #utility fields
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     stock_in_date = models.DateTimeField(blank = True, null = True)
     stock_out_date = models.DateTimeField(blank = True, null = True)
     validation_date = models.DateTimeField(blank = True, null = True)

@@ -48,6 +48,8 @@ class SupplierCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView
 
     def form_valid(self, form):
         supplier_name = form.cleaned_data['company_name']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{supplier_name} supplier account created successfully!')
 
         return super().form_valid(form)
@@ -104,6 +106,8 @@ class PurchasingDocumentCreateView(LoginRequiredMixin, PermissionRequiredMixin, 
 
     def form_valid(self, form):
         po_number = form.cleaned_data['po_number']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{po_number} purchasing document created successfully!')
 
         return super().form_valid(form)

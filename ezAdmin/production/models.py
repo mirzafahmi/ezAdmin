@@ -11,6 +11,7 @@ class RawMaterialIdentifier(UppercaseFieldsMixin, models.Model):
     parent_item_code = models.CharField(max_length=30, unique=True)
     #add description of identifier
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -30,6 +31,7 @@ class RawMaterialComponent(UppercaseFieldsMixin, models.Model):
     spec = models.CharField(max_length=200, blank = True, null = True)
     identifier = models.ForeignKey(RawMaterialIdentifier, on_delete=models.PROTECT)
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -50,6 +52,7 @@ class BOMComponent(models.Model):
     quantity_used = models.FloatField()
     uom = models.ForeignKey(UOM, on_delete=models.PROTECT)
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -72,6 +75,7 @@ class ProductionLog(models.Model):
     lot_number = models.CharField(max_length=200, blank = True, null = True)
     exp_date = models.CharField(max_length=200, blank = True, null = True)
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -98,11 +102,13 @@ class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
     stock_in_tag = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='stock_in_tag_entries')
     production_log = models.ForeignKey(ProductionLog, on_delete=models.SET_NULL, blank=True, null=True)
 
-    #utility fields
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    create_date = models.DateTimeField(blank = True, null = True)
+    update_date = models.DateTimeField(blank = True, null = True)
     stock_in_date = models.DateTimeField(blank = True, null = True)
     stock_out_date = models.DateTimeField(blank = True, null = True)
     validation_date = models.DateTimeField(blank = True, null = True)
-    log_date = models.DateTimeField(blank = True, null = True)
+    
 
     exempt_fields = ['lot_number']
 
@@ -123,8 +129,8 @@ class RawMaterialInventory(CapitalcaseFieldsMixin, models.Model):
         if self.stock_type == '2':
             self.stock_out_date = timezone.localtime(timezone.now())
         
-        if self.log_date is None:
-            self.log_date = timezone.localtime(timezone.now())
+        if self.create_date  is None:
+            self.create_date  = timezone.localtime(timezone.now())
 
         self.validation_date = timezone.localtime(timezone.now())
         super(RawMaterialInventory, self).save(*args, **kwargs)

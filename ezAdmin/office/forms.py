@@ -113,7 +113,7 @@ class ElectronicInventoryForm(forms.ModelForm):
         self.fields['purchasing_document'].empty_label = "Select a related Purchasing Document"
     
 class ElectronicTransactionForm(FileValidatorMixin, forms.ModelForm):
-    allowed_extensions = ['pdf', 'png', 'jpeg']
+    allowed_extensions = ['pdf', 'png', 'jpeg'] 
     class Meta:
         model = ElectronicTransaction
         fields = ['current_user', 'electronic_item', 

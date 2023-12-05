@@ -55,6 +55,8 @@ class RawMaterialIdentifierCreateView(LoginRequiredMixin, PermissionRequiredMixi
 
     def form_valid(self, form):
         identifier = form.cleaned_data['parent_item_code'].upper()
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{identifier} identifier created successfully!')
 
         return super().form_valid(form)
@@ -150,6 +152,8 @@ class RawMaterialComponentCreateView(LoginRequiredMixin, PermissionRequiredMixin
 
     def form_valid(self, form):
         component = form.cleaned_data['component']
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f'{component} component for {form.cleaned_data["identifier"]} created successfully!')
 
         return super().form_valid(form)
@@ -249,6 +253,8 @@ class BOMComponentCreateView(LoginRequiredMixin, PermissionRequiredMixin, Create
 
     def form_valid(self, form):
         BOMcomponent = form.save()
+
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
         messages.success(self.request, f"{BOMcomponent.raw_material_component}'s BOMComponent for {BOMcomponent.product.item_code} created successfully!")
 
         return super().form_valid(form)
@@ -391,6 +397,7 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
 
             if form.is_valid():
                 instance = form.save(commit=False)
+                instance.create_by = self.request.user if self.request.user.is_authenticated else None
 
                 # Save the instance to get an ID
                 instance.save()
@@ -401,7 +408,6 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
                 # Save the instance again to update the M2M relationship
                 instance.save()
                 
-                print(inventory_details)
                 for component, details in inventory_details.items():
                     stock_in_inventory = RawMaterialInventory.objects.filter(
                         stock_in_tag=details['stock_in_tag'],
@@ -421,6 +427,7 @@ class ProductionLogCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
                         purchasing_doc=stock_in_inventory.purchasing_doc,
                         stock_in_tag=stock_in_inventory.stock_in_tag,
                         production_log=instance,
+                        create_by=self.request.user if self.request.user.is_authenticated else None
                     )
                 
 
@@ -610,32 +617,33 @@ class ProductionLogListViewAJAX(View):
                     BOMComponents__product__item_code=item_code
                     )
                 
-                log_filter = logs_filter.first()
+                #log_filter = logs_filter.first()
 
                 filtered_data = []
                 
-                raw_material_details = []
-                components = RawMaterialInventory.objects.filter(production_log__in=logs_filter)
+                for log_filter in logs_filter:
+                    raw_material_details = []
+                    components = RawMaterialInventory.objects.filter(production_log=log_filter.id)
 
-                for component in components:
-                    raw_material_details.append({
-                        'identifier': component.component.identifier.parent_item_code,
-                        'component': component.component.component,
-                        'lot_number': component.lot_number,
-                        'exp_date': component.exp_date,
-                    })
+                    for component in components:
+                        raw_material_details.append({
+                            'identifier': component.component.identifier.parent_item_code,
+                            'component': component.component.component,
+                            'lot_number': component.lot_number,
+                            'exp_date': component.exp_date,
+                        })
 
-                filtered_data.append({
-                    'log_id': log_filter.id,
-                    'item_code': log_filter.BOMComponents.all()[0].product.item_code,
-                    'lot_number': log_filter.lot_number,
-                    'exp_date': log_filter.exp_date,
-                    'quantity_produced': log_filter.quantity_produced,
-                    'component_details': raw_material_details,
-                    'rH': json.dumps(log_filter.rH, cls=DjangoJSONEncoder),
-                    'temperature': json.dumps(log_filter.temperature, cls=DjangoJSONEncoder),
-                    'create_date': log_filter.create_date
-                    })
+                    filtered_data.append({
+                        'log_id': log_filter.id,
+                        'item_code': log_filter.BOMComponents.all()[0].product.item_code,
+                        'lot_number': log_filter.lot_number,
+                        'exp_date': log_filter.exp_date,
+                        'quantity_produced': log_filter.quantity_produced,
+                        'component_details': raw_material_details,
+                        'rH': json.dumps(log_filter.rH, cls=DjangoJSONEncoder),
+                        'temperature': json.dumps(log_filter.temperature, cls=DjangoJSONEncoder),
+                        'create_date': log_filter.create_date
+                        })
 
                 return JsonResponse(filtered_data, safe=False)
         
@@ -883,6 +891,7 @@ class RawMaterialInventoryIdentifierComponentBasedLogCreateView(LoginRequiredMix
 
         component = raw_material_inventory.component
         purchasing_doc = raw_material_inventory.purchasing_doc
+        form.instance.create_by = self.request.user if self.request.user.is_authenticated else None
 
         raw_material_inventory.save()
 

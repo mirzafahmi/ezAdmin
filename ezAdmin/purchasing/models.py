@@ -1,8 +1,10 @@
 from django.db import models
 from django.core.validators import validate_email, DecimalValidator
-from misc.models import Currency
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 from mixins.modify_case_fields_mixin import CapitalcaseFieldsMixin, UppercaseFieldsMixin
+from misc.models import Currency
 
 
 class Supplier(UppercaseFieldsMixin, models.Model):
@@ -13,6 +15,7 @@ class Supplier(UppercaseFieldsMixin, models.Model):
     email = models.CharField(max_length = 100, validators = [validate_email], blank = True, null = True)
     currency_trade = models.ForeignKey(Currency, on_delete=models.PROTECT)
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -58,6 +61,7 @@ class PurchasingDocument(UppercaseFieldsMixin, models.Model):
         help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
     )
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from purchasing.models import Supplier
 from mixins.modify_case_fields_mixin import *
@@ -9,6 +10,7 @@ class ElectronicUserLocation(UppercaseFieldsMixin, models.Model):
     careholder_name = models.CharField(max_length = 100, unique = True)
     phone_number = models.CharField(max_length = 15, blank = True, null = True)
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -25,9 +27,10 @@ class ElectronicUserLocation(UppercaseFieldsMixin, models.Model):
 
 class ElectronicUser(UppercaseFieldsMixin, models.Model):
     name = models.CharField(max_length = 100, unique = True)
-    position = models.CharField(max_length = 100, unique = True)
+    position = models.CharField(max_length = 100)
     location = models.ForeignKey(ElectronicUserLocation, on_delete=models.PROTECT)
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -45,6 +48,7 @@ class ElectronicUser(UppercaseFieldsMixin, models.Model):
 class ElectronicBrand(UppercaseFieldsMixin, models.Model):
     brand_name = models.CharField(max_length = 100, unique = True)
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -63,6 +67,7 @@ class ElectronicModel(UppercaseFieldsMixin, models.Model):
     brand = models.ForeignKey(ElectronicBrand, on_delete=models.PROTECT)
     model_name = models.CharField(max_length = 100, unique = True)
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -90,6 +95,7 @@ class ElectronicPurchasingDocument(UppercaseFieldsMixin, models.Model):
         help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
     )
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -119,6 +125,7 @@ class ElectronicInventory(UppercaseFieldsMixin, models.Model):
 
     exempt_fields = ['status']
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -147,6 +154,7 @@ class ElectronicTransaction(models.Model):
         help_text='Maximum file size: 5 MB. Allowed extensions: .pdf',
     )
 
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -158,16 +166,27 @@ class ElectronicTransaction(models.Model):
         # Get the related ElectronicInventory
         electronic_inventory = self.electronic_item
 
-        # Update the status based on the transaction_type
-        if self.transaction_type == 'Checked-Out':
-            electronic_inventory.status = 'In-Use'
-        elif self.transaction_type == 'Checked-In':
-            electronic_inventory.status = 'Idle'
+        try:
+            # Try to get the current state of the transaction
+            current_transaction = ElectronicTransaction.objects.get(pk=self.pk)
 
-        # Save the changes to the ElectronicInventory
+            # Check if the transaction type changed
+            if (
+                current_transaction.transaction_type != self.transaction_type
+            ):
+                if self.transaction_type == 'Checked-Out':
+                    electronic_inventory.status = 'In-Use'
+                elif self.transaction_type == 'Checked-In':
+                    electronic_inventory.status = 'Idle'
+
+        except ElectronicTransaction.DoesNotExist:
+            if self.transaction_type == 'Checked-Out':
+                    electronic_inventory.status = 'In-Use'
+            elif self.transaction_type == 'Checked-In':
+                electronic_inventory.status = 'Idle'
+
         electronic_inventory.save()
 
-        # Add current_user to the previous_users ManyToMany field
         electronic_inventory.previous_users.add(self.current_user)
 
 

@@ -3,19 +3,19 @@ from production.views import *
 # Register your models here.
 
 class RawMaterialIdentifierAdmin(admin.ModelAdmin):
-    list_display = ['parent_item_code']
+    list_display = ['parent_item_code', 'create_by', 'create_date', 'update_date']
     list_filter = ['parent_item_code']
 
 class RawMaterialComponentAdmin(admin.ModelAdmin):
-    list_display = ['component', 'spec', 'identifier']
+    list_display = ['component', 'spec', 'identifier', 'create_by', 'create_date', 'update_date']
     list_filter = ['component']
 
 class BOMComponentAdmin(admin.ModelAdmin):
-    list_display = ['product', 'raw_material_component', 'quantity_used']
+    list_display = ['product', 'raw_material_component', 'quantity_used', 'create_by', 'create_date', 'update_date']
     list_filter = ['product', 'raw_material_component']
 
 class ProductionLogAdmin(admin.ModelAdmin):
-    list_display = ['display_item_code', 'rH', 'temperature','display_bom_components', 'lot_number', 'exp_date', 'quantity_produced',]
+    list_display = ['display_item_code', 'rH', 'temperature','display_bom_components', 'lot_number', 'exp_date', 'quantity_produced', 'create_by', 'create_date', 'update_date']
     list_filter = ['lot_number']
 
     fieldsets = (
@@ -23,7 +23,7 @@ class ProductionLogAdmin(admin.ModelAdmin):
             'fields': ('display_item_code',),  # Add the new field here
         }),
         ('General', {
-            'fields': ('lot_number', 'exp_date', 'quantity_produced', 'BOMComponents', 'rH', 'temperature', 'create_date', 'update_date'),
+            'fields': ('lot_number', 'exp_date', 'quantity_produced', 'BOMComponents', 'rH', 'temperature', 'create_by', 'create_date', 'update_date'),
         }),
     )
 
@@ -39,7 +39,8 @@ class ProductionLogAdmin(admin.ModelAdmin):
 
 
 class RawMaterialInventoryAdmin(admin.ModelAdmin):
-    list_display = ['component', 'quantity', 'stock_type', 'price_per_unit', 'purchasing_doc', 'lot_number', 'exp_date', 'production_log']
+    list_display = ['component', 'quantity', 'stock_type', 'price_per_unit', 'purchasing_doc', 'lot_number', 
+        'exp_date', 'production_log', 'create_by', 'create_date', 'stock_in_date', 'stock_out_date']
     list_filter = ['component', 'stock_type', 'purchasing_doc']
 
 

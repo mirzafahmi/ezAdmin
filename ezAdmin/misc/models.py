@@ -6,11 +6,10 @@ from django.db.models import Q
 from mixins.modify_case_fields_mixin import *
 
 class Currency(models.Model):
-    #basics fields
     name = models.CharField(max_length = 20, unique = True)
     currency_code = models.CharField(max_length = 3, unique = True)
 
-    #utility fields
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
@@ -26,12 +25,11 @@ class Currency(models.Model):
 
 
 class UOM(models.Model):
-    #basics fields
     name = models.CharField(max_length = 10, unique = True)
     unit = models.CharField(max_length = 10)
     weightage = models.FloatField()
 
-    #utility fields
+    create_by = models.ForeignKey(User, on_delete=models.PROTECT)
     create_date = models.DateTimeField(blank = True, null = True)
     update_date = models.DateTimeField(blank = True, null = True)
 
