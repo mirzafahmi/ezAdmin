@@ -1,27 +1,50 @@
-# ezAdmin: Admin Made Effortless
+<div style="display: flex; justify-content: center;">
+  <img src="./ezAdmin/static/login_page.PNG" alt="Website Landing Page" style="width: 50%; max-width: 700px; margin-right: 10px;">
+  <img src="./ezAdmin/static/landing_page.PNG" alt="Website Landing Page" style="width: 50%; max-width: 700px;">
+</div>
+
+<p align="center">
+  ezAdmin: Admin Made Effortless
+<p>
+
+<p align="center">
+  <a href="http://ezadmin.online"><strong>---Browse Website---</strong></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" />
+  <img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />
+  <img src="https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
+  <img src="https://img.shields.io/badge/ChatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white" />
+  <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" />
+  <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white" />
+  <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green" />
+  <img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white" />
+</p>
 
 
 ## Table of Contents
-- [ezAdmin: Admin Made Effortless](#ezadmin-admin-made-effortless)
-  - [Table of Contents](#table-of-contents)
-  - [General Info](#general-info)
-  - [Key Objectives:](#key-objectives)
-  - [Setup](#setup)
-  - [How to Setup the webapps](#how-to-setup-the-webapps)
-    - [Guideline to Install (CMD):](#guideline-to-install-cmd)
-    - [Guideline to runserver:](#guideline-to-runserver)
-      - [Development server (Localhost):](#development-server-localhost)
-      - [Wifi host server:](#wifi-host-server)
-  - [What is ezAdmin?](#what-is-ezadmin)
-    - [Database overview diagram](#database-overview-diagram)
-    - [Apps list](#apps-list)
-      - [Store App](#store-app)
-      - [Production App](#production-app)
-      - [Purchasing App](#purchasing-app)
-      - [Misc App](#misc-app)
-      - [Office App](#office-app)
-  - [Known bug/issue to fix:](#known-bugissue-to-fix)
-  - [To-do/add-on features](#to-doadd-on-features)
+- [Table of Contents](#table-of-contents)
+- [General Info](#general-info)
+- [Key Objectives:](#key-objectives)
+- [Setup](#setup)
+- [How to Setup the webapps](#how-to-setup-the-webapps)
+  - [Guideline to Install (CMD):](#guideline-to-install-cmd)
+  - [Guideline to runserver:](#guideline-to-runserver)
+    - [Development server (Localhost):](#development-server-localhost)
+    - [Wifi host server:](#wifi-host-server)
+- [What is ezAdmin?](#what-is-ezadmin)
+  - [Database overview diagram](#database-overview-diagram)
+  - [Apps list](#apps-list)
+    - [Store App](#store-app)
+    - [Production App](#production-app)
+    - [Purchasing App](#purchasing-app)
+    - [Misc App](#misc-app)
+    - [Office App](#office-app)
+- [Known bug/issue to fix:](#known-bugissue-to-fix)
+- [To-do/add-on features](#to-doadd-on-features)
 
 
 ## General Info
