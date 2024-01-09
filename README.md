@@ -1,14 +1,15 @@
-<div style="display: flex; justify-content: center;">
-  <img src="./ezAdmin/static/login_page.PNG" alt="Website Landing Page" style="width: 50%; max-width: 700px; margin-right: 10px;">
-  <img src="./ezAdmin/static/landing_page.PNG" alt="Website Landing Page" style="width: 50%; max-width: 700px;">
-</div>
+<p align="center">
+  <img src="./ezAdmin/static/login_page.PNG" alt="Website Landing Page" width="100%">
+  <img src="./ezAdmin/static/landing_page.PNG" alt="Website Landing Page" width="100%">
+</p>
+
 
 <p align="center">
   ezAdmin: Admin Made Effortless
 <p>
 
 <p align="center">
-  <a href="http://ezadmin.online"><strong>---Browse Website---</strong></a>
+  <a href="http://ezadmin.online" target="_blank"><strong>---Browse Website---</strong></a>
 </p>
 
 <p align="center">
