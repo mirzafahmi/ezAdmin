@@ -68,8 +68,6 @@ ezAdmin is a comprehensive web-based solution designed to streamline administrat
 6. Scalability: ezAdmin is designed to adapt and scale with your organization's evolving administrative requirements, ensuring it remains a valuable asset as your company grows.
 
 
-## Setup 
-
 ## How to Setup the webapps
 
 ### Guideline to Install (CMD):
@@ -114,7 +112,7 @@ ezAdmin is a comprehensive web-based solution designed to streamline administrat
     cd ezAdmin
     ```
     <br>
-3. Once you're in the project directory (run `dir` command in cmd to make sure in same directory with `manage.py`), you can start the development server using the following command:<br>
+3. Once you're in the project directory (run `dir` command in cmd to make sure in the same directory as `manage.py`), you can start the development server using the following command:<br>
     ```
     python manage.py runserver
     ```
@@ -125,7 +123,15 @@ ezAdmin is a comprehensive web-based solution designed to streamline administrat
 #### Wifi host server:
 
 1. Run ```runserver_local_wifi.bat``` and let the batch file configure the settings.
-2. Once server is running, you can access this project in a web browser at the specified address (usually start with http://.../../..). Click or copy and paste it at browser and it will open the landing page of the webapp. `Register/Login` if necessary.
+2. Once the server is running, you can access this project in a web browser at the specified address (usually starting with http://.../../..). Click or copy and paste it in the browser and it will open the landing page of the webapp. `Register/Login` if necessary.
+
+
+## Login Credentials
+
+1. Username: public_user
+2. Password: Qwerty_12345
+
+*Note that this account is for demo purposes only.
 
 
 ## What is ezAdmin?
